@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTabBackground"
+    android:orientation="horizontal"
+    tools:ignore="Overdraw">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgAudio"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/corner_event"
+            android:scaleType="fitXY"
+            android:padding="2dp"
+            android:src="@android:drawable/ic_menu_gallery"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/imgPlayAudio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:paddingTop="15dp"
+            android:src="@drawable/play"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/imgPlayPush"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:paddingTop="15dp"
+            android:src="@drawable/audio_white_push"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/imgPlayAudio1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:paddingTop="15dp"
+            android:src="@drawable/play"
+            android:visibility="gone"
+
+            tools:ignore="ContentDescription" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtAudioName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="10dp"
+            android:text="AudioName"
+            android:lines="1"
+            android:textColor="@color/red"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/txtAudioDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Date"
+            android:textColor="#111"
+            android:textSize="12sp"
+            android:lines="1"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/txtDate"
+            android:layout_alignParentRight="true"
+            android:padding="10sp"
+            >
+            <TextView
+                android:id="@+id/txt_views"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5sp"
+                android:gravity="right"
+                android:lines="1"
+                android:text="10120"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText,RtlHardcoded"
+                android:textColor="@color/views"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5sp"
+                android:gravity="right"
+                android:text="Views"
+                android:lines="1"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText,RtlHardcoded"
+                android:textColor="@color/views"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Duration"
+            android:textColor="@color/colorTabBackground"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/lin_like"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:id="@+id/img_like"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/like"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/txt_like_event"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="like"
+                    android:textColor="@color/colorTabColor"
+                    android:maxLines="1"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lin_comment"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                tools:ignore="RtlHardcoded,UseCompoundDrawables">
+
+                <ImageView
+                    android:id="@+id/img_comment"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/comment"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/txt_comment_event"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="com"
+                    android:textColor="@color/colorTabColor"
+                    android:maxLines="1"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnLike"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0.5"
+        android:drawableLeft="@drawable/like"
+        android:padding="5dp"
+        android:text="Like"
+        android:textAllCaps="false"
+        android:textColor="@color/colorTabColor"
+        android:textSize="16sp"
+        android:visibility="gone"
+        tools:ignore="HardcodedText,RtlHardcoded" />
+
+    <Button
+        android:id="@+id/btnLikeClick"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0.5"
+        android:drawableLeft="@drawable/like_select"
+        android:padding="10dp"
+        android:text=""
+        android:textAllCaps="false"
+        android:textColor="@color/colorTabColor"
+        android:textSize="16sp"
+        android:visibility="gone"
+        tools:ignore="RtlHardcoded" />
+
+
+    <Button
+        android:id="@+id/btnComment"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0.5"
+        android:drawableLeft="@drawable/comment"
+        android:padding="10dp"
+        android:text="Comment"
+        android:textAllCaps="false"
+        android:textColor="@color/colorTabColor"
+        android:textSize="16sp"
+        android:visibility="gone"
+        tools:ignore="HardcodedText,RtlHardcoded" />
+</LinearLayout>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTabBackground"
+    android:orientation="vertical"
+    tools:ignore="Overdraw">
+
+
+    <include
+        android:id="@+id/toolbar_information"
+        layout="@layout/toolbar_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/header"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etText"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="8"
+            android:background="@color/header"
+            android:focusable="false"
+            android:hint=" Search Information"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/colorPrimary"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/imgSerch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:padding="2dp"
+            android:src="@drawable/ic_action_search"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="-8dp"
+        android:background="@color/colorPrimary" />
+
+    <LinearLayout
+        android:id="@+id/lin_main"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorTabBackground"
+        android:baselineAligned="false"
+        android:gravity="center"
+
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_today"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Today"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText,InefficientWeight,NestedWeights" />
+
+            <View
+                android:id="@+id/view_today"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/colorPrimary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_thisweek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="This Week"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText,InefficientWeight,NestedWeights" />
+
+            <View
+                android:id="@+id/view_week"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/colorPrimary"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_thismonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="This Month"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText,InefficientWeight,NestedWeights" />
+
+            <View
+                android:id="@+id/view_month"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/colorPrimary"
+                android:visibility="gone"
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="All"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText,InefficientWeight,NestedWeights" />
+
+            <View
+                android:id="@+id/view_all"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/colorPrimary"
+                android:visibility="gone" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary" />
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/btn_addpost"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:text="Add Post"
+        android:layout_gravity="right"
+        />
+    <FrameLayout
+        android:id="@+id/framecontent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorTabBackground">
+
+    </FrameLayout>
+</LinearLayout>
+
+

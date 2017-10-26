@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Nayi Soch</string>
+    <string name="text_test">Playing</string>
+    <string name="internet">Internet not connected.</string>
+    <string name="notregister">Please first register.</string>
+
+    <string name="authkey">170539A1PovTWJpc0s5996ef0e</string>
+    <string name="title_activity_main2">Nayi Soch Nayi Disha</string>
+    <!--<string name="title_activity_main2">Aacharya Vimalsagarsooriji</string>-->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="title_name">Nayi Soch</string>
+    <!--<string name="title_name">Aacharya Vimalsagarsooriji</string>-->
+    <string name="title_activity_register" />
+
+
+    <string name="buy">Buy</string>
+    <string name="alert">Latest posts</string>
+    <string name="about">About</string>
+    <string name="information">Information</string>
+    <string name="event">Event</string>
+    <string name="audio">Audio</string>
+    <string name="video">Video</string>
+    <string name="thought">Thought</string>
+    <string name="gallaery">Gallery</string>
+    <string name="question">Q &amp; A</string>
+    <string name="competition">Competition</string>
+    <string name="Opinionpoll">Opinion Poll</string>
+    <string name="bypeople">By People</string>
+    <string name="setting">Setting</string>
+
+</resources>

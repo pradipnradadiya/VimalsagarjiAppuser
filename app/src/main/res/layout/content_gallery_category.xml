@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rel_gallary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTabBackground"
+    tools:context=".today_week_month_year.GalleryCategory"
+    tools:ignore="Overdraw">
+
+    <include
+        android:id="@+id/toolbar_gallery"
+        layout="@layout/toolbar_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etGalleryTitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/toolbar_gallery"
+        android:background="@color/header"
+        android:focusable="false"
+        android:hint="Gallery"
+        android:padding="10dp"
+        android:lines="1"
+        android:textColorHint="@color/colorPrimary"
+        tools:ignore="HardcodedText" />
+
+    <View
+        android:id="@+id/gridview_viewline"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/etGalleryTitle"
+        android:layout_marginTop="-9dp"
+        android:background="@color/colorPrimary" />
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/activity_main_swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gridview_viewline"
+        android:layout_margin="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <GridView
+                android:id="@+id/gallery_gridview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="10dp"
+                android:columnWidth="100dp"
+                android:gravity="center"
+                android:horizontalSpacing="10dp"
+                android:numColumns="auto_fit"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="10dp" />
+
+            <TextView
+                android:id="@+id/txt_nodata_today"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="No Data"
+                android:textColor="@color/colorTabColor"
+                android:textSize="40sp"
+                android:textStyle="italic"
+                android:visibility="gone"
+                tools:ignore="HardcodedText" />
+        </RelativeLayout>
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</RelativeLayout>

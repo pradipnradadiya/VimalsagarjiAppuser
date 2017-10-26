@@ -1,0 +1,666 @@
+package com.vimalsagarji.vimalsagarjiapp.fragment.questionanswer_fragment;
+
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.kaopiz.kprogresshud.KProgressHUD;
+import com.vimalsagarji.vimalsagarjiapp.JSONParser;
+import com.vimalsagarji.vimalsagarjiapp.R;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
+import com.vimalsagarji.vimalsagarjiapp.model.JSONParser1;
+import com.vimalsagarji.vimalsagarjiapp.model.ThoughtToday;
+import com.vimalsagarji.vimalsagarjiapp.utils.AllQuestionDetail;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import ch.boye.httpclientandroidlib.NameValuePair;
+import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
+
+
+@SuppressWarnings("ALL")
+public class AllQuetionAnswerFragment extends Fragment {
+
+    public AllQuetionAnswerFragment() {
+
+    }
+
+    private Sharedpreferance sharedpreferance;
+    private static final String TAG = AllQuetionAnswerFragment.class.getSimpleName();
+    private ArrayList<String> listQuestion = new ArrayList<String>();
+    private final ArrayList<String> listAnswer = new ArrayList<String>();
+    private final ArrayList<String> listUserID = new ArrayList<String>();
+    private final ArrayList<String> listID = new ArrayList<String>();
+    private final ArrayList<String> listDate = new ArrayList<String>();
+    private final ArrayList<String> listIsApproved = new ArrayList<String>();
+    private final ArrayList<String> listName = new ArrayList<String>();
+    private final ArrayList<String> listview = new ArrayList<String>();
+    private Button btnAskQuestion;
+    private final String res = "";
+
+
+    private static final String URL = "http://www.grapes-solutions.com/vimalsagarji/questionanswer/viewallappquesyear/?page=1&psize=1000";
+    static final String PostURL = "http://www.grapes-solutions.com/vimalsagarji/questionanswer/askques/";
+    private ListView listView;
+    private Dialog dialog;
+
+    private CustomAdpter adpter;
+    private KProgressHUD loadingProgressDialog;
+    private TextView txt_nodata_today;
+    private EditText InputBox;
+    List<ThoughtToday> listfilterdata = new ArrayList<>();
+    private final String AllSearchQuestion = "http://www.grapes-solutions.com/vimalsagarji/questionanswer/searchallappques/?page=1&psize=1000";
+    private SwipeRefreshLayout activity_main_swipe_refresh_layout;
+    String approve = "";
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_all_question_answer, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        sharedpreferance = new Sharedpreferance(getActivity());
+        listView = (ListView) getActivity().findViewById(R.id.list);
+        txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
+
+        InputBox = (EditText) getActivity().findViewById(R.id.etText);
+        ImageView imsearch = (ImageView) getActivity().findViewById(R.id.imgSerch);
+        activity_main_swipe_refresh_layout = (SwipeRefreshLayout) getActivity().findViewById(R.id.activity_main_swipe_refresh_layout);
+        activity_main_swipe_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+
+            }
+        });
+        InputBox.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.setFocusable(true);
+                v.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
+        imsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (CommonMethod.isInternetConnected(getActivity())) {
+                    new SearchAllQuestion().execute();
+                } else {
+                    final Snackbar snackbar = Snackbar
+                            .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
+                    snackbar.setActionTextColor(Color.RED);
+                    snackbar.show();
+                    snackbar.setAction("Dismiss", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            snackbar.dismiss();
+                        }
+                    });
+                }
+            }
+        });
+        if (CommonMethod.isInternetConnected(getActivity())) {
+            JsonTask jsonTask = new JsonTask();
+            jsonTask.execute(URL);
+        } else {
+            final Snackbar snackbar = Snackbar
+                    .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
+            snackbar.setActionTextColor(Color.RED);
+            snackbar.show();
+            snackbar.setAction("Dismiss", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    snackbar.dismiss();
+                }
+            });
+        }
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), AllQuestionDetail.class);
+                Log.e("Question", listQuestion.get(position));
+                Log.e("Answer", listAnswer.get(position));
+                intent.putExtra("Question", listQuestion.get(position));
+                intent.putExtra("Answer", listAnswer.get(position));
+                intent.putExtra("view", listview.get(position));
+                intent.putExtra("qid", listID.get(position));
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+        btnAskQuestion = (Button) getActivity().findViewById(R.id.btnAskQuestion);
+
+        btnAskQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sharedpreferance.getId().equalsIgnoreCase("")){
+                    Snackbar.make(v, "Please register after ask question. ", Snackbar.LENGTH_SHORT).show();
+                }else {
+
+                    if (approve.equalsIgnoreCase("1")) {
+                        dialog = new Dialog(getActivity());
+//                Window window = dialog.getWindow();
+//                window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.setContentView(R.layout.custom_askquestion_dialog);
+                        final EditText etAskQuestion = (EditText) dialog.findViewById(R.id.etAskQuestion);
+                        Button btnPost = (Button) dialog.findViewById(R.id.btnPost);
+                        final String strUid = sharedpreferance.getId();
+                        final String strAskQuestion = etAskQuestion.getText().toString();
+                        dialog.show();
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        btnPost.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if (CommonMethod.isInternetConnected(getActivity())) {
+                                    String txtpost = etAskQuestion.getText().toString();
+                                    if (TextUtils.isEmpty(txtpost)) {
+                                        etAskQuestion.setError("Please enter ask question.");
+                                        etAskQuestion.requestFocus();
+                                    } else {
+                                        new postData().execute(etAskQuestion.getText().toString());
+                                        if (res != null) {
+                                            etAskQuestion.getText().clear();
+//                                    Toast.makeText(getActivity(), "Post Your Data Succesfully", Toast.LENGTH_SHORT).show();
+                                        } else {
+//                                    Toast.makeText(getActivity(), "Question some Occured", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                } else {
+                                    final Snackbar snackbar = Snackbar
+                                            .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
+                                    snackbar.setActionTextColor(Color.RED);
+                                    snackbar.show();
+                                    snackbar.setAction("Dismiss", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            snackbar.dismiss();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    } else {
+                        Toast.makeText(getActivity(), "You are not approved user.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+    }
+
+    private void loadData() {
+        adpter.clear();
+        new LoadJsonTask().execute(URL);
+    }
+
+    private class JsonTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loadingProgressDialog = KProgressHUD.create(getActivity())
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please Wait")
+                    .setCancellable(true);
+            loadingProgressDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String url = params[0];
+            Log.d(TAG, "URL Path :" + url);
+            try {
+                JSONObject jsonObject = JSONParser.getJsonFromUrl(url);
+                for (int i = 0; i < jsonObject.length(); i++) {
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    listQuestion = new ArrayList<>();
+                    for (int j = 0; j < jsonArray.length(); j++) {
+                        JSONObject object = jsonArray.getJSONObject(j);
+                        String id = object.getString("ID");
+                        listID.add(id);
+                        String strQuestion = object.getString("Question");
+                        String strAnswer = object.getString("Answer");
+                        String date = object.getString("Date");
+                        String view = object.getString("View");
+                        listview.add(view);
+
+                        String strIsApproved = object.getString("Is_Approved");
+                        String strUserID = object.getString("UserID");
+                        String name = object.getString("Name");
+                        Date dt = CommonMethod.convert_date(date);
+                        Log.e("Convert date is", "------------------" + dt);
+                        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
+                        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
+                        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
+                        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
+                        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
+
+                        Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
+                        Log.e("stringMonth", "-----------------" + stringMonth);
+                        Log.e("intMonth", "-----------------" + intMonth);
+                        Log.e("year", "-----------------" + year);
+                        Log.e("day", "-----------------" + day);
+
+                        String fulldate = day + "/" + intMonth + "/" + year;
+
+                        String[] time = date.split("\\s+");
+                        Log.e("time", "-----------------------" + time[1]);
+
+                        listQuestion.add(strQuestion);
+                        Log.d(TAG, "list Question data:" + listQuestion);
+                        listAnswer.add(strAnswer);
+                        Log.d(TAG, "list Answer data:" + listAnswer);
+                        listUserID.add(strUserID);
+                        Log.d(TAG, "list UserID data:" + listUserID);
+                        listIsApproved.add(strIsApproved);
+                        listDate.add(dayOfTheWeek + ", " + fulldate);
+                        Log.d(TAG, "list IsApproved data:" + listIsApproved);
+                        listName.add(name);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (loadingProgressDialog != null) {
+                loadingProgressDialog.dismiss();
+            }
+            if (listView != null) {
+                adpter = new CustomAdpter(getActivity(), listQuestion);
+                if (adpter.getCount() != 0) {
+                    listView.setVisibility(View.VISIBLE);
+                    txt_nodata_today.setVisibility(View.GONE);
+                    listView.setAdapter(adpter);
+                } else {
+                    listView.setVisibility(View.GONE);
+                    txt_nodata_today.setVisibility(View.VISIBLE);
+                }
+
+
+            }
+
+        }
+    }
+
+    private class LoadJsonTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String url = params[0];
+            Log.d(TAG, "URL Path :" + url);
+            try {
+                JSONObject jsonObject = JSONParser.getJsonFromUrl(url);
+                for (int i = 0; i < jsonObject.length(); i++) {
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    listQuestion = new ArrayList<>();
+
+                    for (int j = 0; j < jsonArray.length(); j++) {
+                        JSONObject object = jsonArray.getJSONObject(j);
+                        String id = object.getString("ID");
+                        listID.add(id);
+                        String strQuestion = object.getString("Question");
+                        String strAnswer = object.getString("Answer");
+                        String date = object.getString("Date");
+                        String strIsApproved = object.getString("Is_Approved");
+                        String strUserID = object.getString("UserID");
+                        String name = object.getString("Name");
+                        String view = object.getString("View");
+                        listview.add(view);
+
+
+                        Date dt = CommonMethod.convert_date(date);
+                        Log.e("Convert date is", "------------------" + dt);
+                        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
+                        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
+                        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
+                        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
+                        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
+
+                        Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
+                        Log.e("stringMonth", "-----------------" + stringMonth);
+                        Log.e("intMonth", "-----------------" + intMonth);
+                        Log.e("year", "-----------------" + year);
+                        Log.e("day", "-----------------" + day);
+
+                        String fulldate = day + "/" + intMonth + "/" + year;
+
+                        String[] time = date.split("\\s+");
+                        Log.e("time", "-----------------------" + time[1]);
+
+                        listQuestion.add(strQuestion);
+                        Log.d(TAG, "list Question data:" + listQuestion);
+                        listAnswer.add(strAnswer);
+                        Log.d(TAG, "list Answer data:" + listAnswer);
+                        listUserID.add(strUserID);
+                        Log.d(TAG, "list UserID data:" + listUserID);
+                        listIsApproved.add(strIsApproved);
+                        listDate.add(dayOfTheWeek + ", " + fulldate);
+                        Log.d(TAG, "list IsApproved data:" + listIsApproved);
+                        listName.add(name);
+
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (listView != null) {
+                adpter = new CustomAdpter(getActivity(), listQuestion);
+                if (adpter.getCount() != 0) {
+                    listView.setVisibility(View.VISIBLE);
+                    txt_nodata_today.setVisibility(View.GONE);
+                    listView.setAdapter(adpter);
+                    activity_main_swipe_refresh_layout.setRefreshing(false);
+                } else {
+                    listView.setVisibility(View.GONE);
+                    txt_nodata_today.setVisibility(View.VISIBLE);
+                }
+
+
+            }
+
+        }
+    }
+
+    @SuppressWarnings("NullableProblems")
+    public class CustomAdpter extends ArrayAdapter<String> {
+
+        final List<String> items;
+        final Context context;
+        final int resource;
+
+        public CustomAdpter(Context context, List<String> items) {
+            super(context, R.layout.question_answer_list_item, items);
+            this.context = context;
+            this.resource = R.layout.question_answer_list_item;
+            this.items = items;
+        }
+
+        @SuppressLint("SetTextI18n")
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(resource, null, false);
+
+                //holder.txt_ID = (TextView) convertView.findViewById(R.id.txtID);
+                holder.txt_views = (TextView) convertView.findViewById(R.id.txt_views);
+                holder.txtQuestion = (TextView) convertView.findViewById(R.id.txtQuestion);
+                holder.txtAnswer = (TextView) convertView.findViewById(R.id.txtAnswer);
+                holder.txt_date = (TextView) convertView.findViewById(R.id.txt_datess);
+                holder.txt_postby = (TextView) convertView.findViewById(R.id.txt_postby);
+                //makeTextViewResizable(holder.txtAnswer, 2,"Read More",true);
+                //  holder.btnReadMore=(Button)convertView.findViewById(R.id.btnReadMore);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            holder.txt_views.setText(listview.get(position));
+            holder.txtQuestion.setText(items.get(position));
+            holder.txtAnswer.setText(listAnswer.get(position));
+            holder.txt_date.setText(listDate.get(position));
+            holder.txt_postby.setText("Question By:" + listName.get(position));
+            return convertView;
+
+        }
+
+
+        private class ViewHolder {
+            TextView txtQuestion, txtAnswer, txt_date, txt_postby, txt_views;
+            //  Button btnReadMore;
+
+        }
+
+
+    }
+
+    private class postData extends AsyncTask<String, Void, String> {
+
+        String responseJSON = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loadingProgressDialog = KProgressHUD.create(getActivity())
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please Wait")
+                    .setCancellable(true);
+            loadingProgressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
+                nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
+                nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Question", params[0]));
+                responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/questionanswer/askques/", nameValuePairs, getActivity());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return responseJSON;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            loadingProgressDialog.dismiss();
+            Log.e("respone question ask", "---------------------------------" + s);
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                    Toast.makeText(getActivity(), "Question asked successfully.", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+
+    @SuppressWarnings("deprecation")
+    public class SearchAllQuestion extends AsyncTask<String, String, String> {
+
+        String status;
+        public LayoutInflater inflater = null;
+        private static final String TAG_SUCCESS = "success";
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @SuppressWarnings("ResourceType")
+        @Override
+        protected String doInBackground(String... param) {
+            try {
+                JSONParser1 jsonParser = new JSONParser1();
+                //    String count = param[0];
+
+                String searchitem = InputBox.getText().toString();
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
+                params.add(new BasicNameValuePair("searchterm", searchitem));
+                System.out.println("InputBox Value " + searchitem);
+                JSONObject json = jsonParser.makeHttpRequest(AllSearchQuestion, "POST", params);
+                // JSONObject json = JSONParser.getJsonFromUrl(url);
+                Log.d("Create Response", json.toString());
+                status = json.optString(TAG_SUCCESS);
+                for (int i = 0; i < json.length(); i++) {
+                    listQuestion = new ArrayList<>();
+                    JSONArray jsonArray = json.getJSONArray("data");
+                    System.out.println("JsonArray is" + jsonArray.length());
+                    for (int j = 0; j < jsonArray.length(); j++) {
+                        JSONObject object = jsonArray.getJSONObject(j);
+                        String id = object.getString("ID");
+                        listID.add(id);
+                        String Question = object.getString("Question");
+                        String Answer = object.getString("Answer");
+                        String Date = object.getString("Date");
+                        String uid = object.getString("UserID");
+                        String view = object.getString("View");
+                        listview.add(view);
+
+
+                        Date dt = CommonMethod.convert_date(Date);
+                        Log.e("Convert date is", "------------------" + dt);
+                        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
+                        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
+                        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
+                        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
+                        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
+
+                        Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
+                        Log.e("stringMonth", "-----------------" + stringMonth);
+                        Log.e("intMonth", "-----------------" + intMonth);
+                        Log.e("year", "-----------------" + year);
+                        Log.e("day", "-----------------" + day);
+
+                        String fulldate = day + "/" + intMonth + "/" + year;
+
+                        String[] time = Date.split("\\s+");
+                        Log.e("time", "-----------------------" + time[1]);
+
+                        listQuestion.add(Question);
+                        listDate.add(dayOfTheWeek + ", " + fulldate);
+                        listAnswer.add(Answer);
+                        listUserID.add(uid);
+
+
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return status;
+        }
+
+        protected void onPostExecute(String status) {
+            super.onPostExecute(status);
+
+            try {
+                if (listView != null) {
+                    adpter = new CustomAdpter(getActivity(), listQuestion);
+                    if (adpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search \n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                        //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    //Check user approve or not
+    private class CheckUserApprove extends AsyncTask<String, Void, String> {
+        String responseJSON = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return responseJSON;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response", "-------------------------" + s);
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                        approve = jsonObject1.getString("Is_Active");
+                    }
+
+                } else {
+//                    Toast.makeText(getActivity(), "" + jsonObject.get("message"), Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}

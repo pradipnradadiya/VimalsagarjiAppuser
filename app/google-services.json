@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "78066620448",
+    "firebase_url": "https://vimalsagarji-f1bf8.firebaseio.com",
+    "project_id": "vimalsagarji-f1bf8",
+    "storage_bucket": "vimalsagarji-f1bf8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:78066620448:android:5d755e8a4cea2a5e",
+        "android_client_info": {
+          "package_name": "com.vimalsagarji.vimalsagarjiapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "78066620448-2d5d1sn5h04r0qla822nrcovv3jsshap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vimalsagarji.vimalsagarjiapp",
+            "certificate_hash": "d3a76475fdd342697344d68e5ba1581bf5f69c95"
+          }
+        },
+        {
+          "client_id": "78066620448-8il1napq1vnm7du6krm507i2h3c626be.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDo786_da4GflY-QXCtmNDR5_IJZD2jS3M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "78066620448-8il1napq1vnm7du6krm507i2h3c626be.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

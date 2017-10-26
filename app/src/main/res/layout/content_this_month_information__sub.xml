@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_above="@+id/layout_likeComment"
+    android:background="@color/colorTabBackground"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context="com.vimalsagarji.vimalsagarjiapp.activity.InformationDetailActivity"
+    tools:ignore="Overdraw">
+
+    <include
+        android:id="@+id/toolbar_thisMonthSubActivity"
+        layout="@layout/toolbar_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f9f2d3"
+        android:ellipsize="end"
+        android:ems="7"
+        android:enabled="false"
+        android:focusable="true"
+        android:gravity="start"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:text=""
+        android:textColor="@color/colorPrimary"
+        tools:ignore="HardcodedText,TextFields" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/colorPrimary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Date"
+            android:textColor="#111"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:lines="1"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/txt_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="right"
+            android:text="Time"
+            android:textColor="#111"
+            android:lines="1"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/view" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/txtDescri"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:scrollbars="vertical"
+                android:text="Description"
+                android:textColor="#403f3f"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/view" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="right|center_vertical"
+        android:orientation="horizontal"
+
+        tools:ignore="RtlHardcoded">
+
+        <LinearLayout
+            android:id="@+id/lin_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/img_like"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/like"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/txt_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="0"
+                android:textColor="@color/red"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lin_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/img_comment"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/comment"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/txt_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="0"
+                android:textColor="@color/red"
+
+                tools:ignore="HardcodedText,RtlHardcoded" />
+            <!--<Button-->
+            <!--android:id="@+id/btnLike"-->
+            <!--style="?android:attr/borderlessButtonStyle"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:drawableLeft="@drawable/like"-->
+            <!--android:text="Like"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textColor="@color/colorTabColor"-->
+            <!--android:textSize="16sp" />-->
+
+            <!--<Button-->
+            <!--android:id="@+id/btnLikeClick"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:layout_below="@+id/txtDescri"-->
+            <!--android:layout_width="110dp"-->
+            <!--android:drawableLeft="@drawable/like_select"-->
+            <!--android:textSize="16sp"-->
+            <!--android:text=""-->
+            <!--android:visibility="gone"-->
+            <!--android:layout_marginLeft="100dp"-->
+            <!--android:textColor="@color/colorTabColor"-->
+            <!--android:padding="10dp"-->
+            <!--android:textAllCaps="false"-->
+            <!--style="?android:attr/borderlessButtonStyle"-->
+            <!--android:layout_height="wrap_content"/>-->
+
+
+            <!--<Button-->
+            <!--android:padding="10dp"-->
+            <!--android:id="@+id/btnComment"-->
+            <!--style="?android:attr/borderlessButtonStyle"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="0.1"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:drawableLeft="@drawable/comment"-->
+            <!--android:text="Comment"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textColor="@color/colorTabColor"-->
+            <!--android:textSize="16sp" />-->
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTabBackground">
+
+
+    <ImageView
+        android:id="@+id/imgVideo"
+        android:layout_margin="10dp"
+        android:layout_width="100dp"
+        android:src="@android:drawable/ic_menu_gallery"
+        android:background="@drawable/corner_event"
+        android:layout_height="110dp"
+        android:scaleType="fitXY"
+        android:padding="1dp"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/imgPlayVideo"
+        android:layout_width="wrap_content"
+        android:src="@drawable/play"
+        android:paddingTop="6dp"
+        android:layout_margin="40dp"
+        android:layout_height="wrap_content"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/imgPlayPush"
+        android:layout_width="wrap_content"
+        android:src="@drawable/audio_white_push"
+        android:visibility="gone"
+        android:paddingTop="15dp"
+        android:layout_margin="40dp"
+        android:layout_height="wrap_content"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/imgPlayVideo1"
+        android:layout_width="wrap_content"
+        android:src="@drawable/play"
+        android:paddingTop="15dp"
+        android:visibility="gone"
+        android:layout_margin="40dp"
+        android:layout_height="wrap_content"
+        tools:ignore="ContentDescription" />
+
+
+    <TextView
+        android:id="@+id/txtVideoName"
+        android:text="VideoName"
+        android:textSize="14sp"
+        android:textColor="@color/red"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/imgVideo"
+        android:maxLines="1"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="HardcodedText,RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/txtVideoDate"
+        android:layout_below="@+id/txtVideoName"
+        android:text="Date"
+        android:textColor="#111"
+        android:layout_toRightOf="@+id/imgVideo"
+        android:textSize="12sp"
+        android:padding="10dp"
+        android:lines="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="HardcodedText,RtlHardcoded" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/txtVideoDate"
+        android:layout_toRightOf="@+id/imgVideo"
+        android:paddingLeft="10sp"
+
+        >
+        <TextView
+            android:id="@+id/txt_views"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5sp"
+            android:gravity="right"
+            android:text="10120"
+            android:textSize="12sp"
+            android:lines="1"
+            tools:ignore="HardcodedText,RtlHardcoded"
+            android:textColor="@color/views"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5sp"
+            android:gravity="right"
+            android:text="Views"
+            android:textSize="12sp"
+            tools:ignore="HardcodedText,RtlHardcoded"
+            android:textColor="@color/views"
+            />
+    </LinearLayout>
+</RelativeLayout>

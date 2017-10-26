@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTabBackground"
+    tools:ignore="Overdraw">
+
+
+    <ImageView
+        android:id="@+id/imgAudio"
+        android:layout_width="100dp"
+        android:layout_height="110dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/corner_event"
+        android:padding="1dp"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/ic_menu_gallery"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imgAudio"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:text="Title"
+        android:textColor="@color/red"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:lines="1"
+        tools:ignore="HardcodedText,RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/txtPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTitle"
+        android:layout_toRightOf="@+id/imgAudio"
+        android:lines="2"
+        android:padding="5dp"
+        android:ellipsize="end"
+        android:text="Post"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        tools:ignore="HardcodedText,RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtPost"
+        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@+id/imgAudio"
+        android:gravity="right"
+        android:text="Date"
+        android:lines="1"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+
+        tools:ignore="HardcodedText,RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/txt_postby"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/txtDate"
+        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@+id/imgAudio"
+        android:gravity="right"
+        android:lines="1"
+        android:text="Post By:Pradip Radadiya"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
+        tools:ignore="HardcodedText,RtlHardcoded" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/txt_postby"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="2sp"
+
+        >
+        <TextView
+            android:id="@+id/txt_views"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5sp"
+            android:gravity="right"
+            android:text="10120"
+            android:lines="1"
+            android:textSize="12sp"
+            tools:ignore="HardcodedText,RtlHardcoded"
+            android:textColor="@color/views"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5sp"
+            android:gravity="right"
+            android:text="Views"
+            android:lines="1"
+            android:textSize="12sp"
+            tools:ignore="HardcodedText,RtlHardcoded"
+            android:textColor="@color/views"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

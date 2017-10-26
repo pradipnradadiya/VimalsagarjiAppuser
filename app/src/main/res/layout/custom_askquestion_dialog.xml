@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorTabBackground"
+    android:orientation="vertical"
+    tools:ignore="Overdraw">
+
+
+    <!--<EditText
+        android:id="@+id/etUId"
+        android:layout_width="match_parent"
+        android:background="@drawable/edittextshape"
+        android:padding="10dp"
+        android:inputType="number"
+        android:layout_margin="5dp"
+        android:hint="Enter UID"
+        android:textSize="12sp"
+        android:layout_height="wrap_content"/>-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/colorTabColor"
+        android:text="Ask Question"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:textColor="@color/cardview_dark_background"
+        android:layout_marginTop="10dp"
+        android:id="@+id/etAskQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ask Question here...."
+        android:inputType="textMultiLine"
+        android:padding="10dp"
+        android:textSize="14sp"
+        android:background="#ffffff"
+        tools:ignore="HardcodedText"
+        />
+
+
+    <Button
+        android:layout_gravity="right"
+        android:id="@+id/btnPost"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_margin="5dp"
+        android:textColor="@color/white"
+        android:background="@color/colorTabColor"
+        android:padding="10dp"
+        android:text="Post"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText,RtlHardcoded" />
+
+</LinearLayout>
