@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.vimalsagarji.vimalsagarjiapp.MainActivity;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 
@@ -19,11 +18,12 @@ import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 
 public class SettingActivity extends AppCompatActivity {
     Sharedpreferance sharedpreferance;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_setting);
-        sharedpreferance=new Sharedpreferance(SettingActivity.this);
+        sharedpreferance = new Sharedpreferance(SettingActivity.this);
         final ToggleButton pushonoff = (ToggleButton) findViewById(R.id.pushonoff);
         ImageView img_back = (ImageView) findViewById(R.id.img_back);
 
