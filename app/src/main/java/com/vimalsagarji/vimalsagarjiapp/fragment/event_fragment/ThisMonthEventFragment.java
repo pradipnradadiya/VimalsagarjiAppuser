@@ -255,8 +255,8 @@ public class ThisMonthEventFragment extends Fragment {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         EventAdpter eventAdpter = (EventAdpter) parent.getItemAtPosition(position);
                         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
-                        intent.putExtra("click_action","");
-                        intent.putExtra("listtitle",eventAdpter.getTitle());
+                        intent.putExtra("click_action", "");
+                        intent.putExtra("listtitle", eventAdpter.getTitle());
                         intent.putExtra("listDate", eventAdpter.getDate());
                         intent.putExtra("listAddress", eventAdpter.getAddress());
                         intent.putExtra("listID", eventAdpter.getID());
@@ -467,7 +467,7 @@ public class ThisMonthEventFragment extends Fragment {
         }
 
         private class ViewHolder {
-            TextView grid_txtTitle, grid_txtDate,txt_views;
+            TextView grid_txtTitle, grid_txtDate, txt_views;
 
 
         }

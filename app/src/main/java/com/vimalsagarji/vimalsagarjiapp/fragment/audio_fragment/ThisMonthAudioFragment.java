@@ -520,7 +520,7 @@ public class ThisMonthAudioFragment extends Fragment {
             holder.txt_views.setText(items.get(position).getView());
             holder.txtAudioName.setText(items.get(position).getAudioName());
             holder.txtAudioDate.setText(items.get(position).getDate());
-            Picasso.with(getActivity()).load(items.get(position).getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).error(R.drawable.no_image).into(holder.imgAudio);
+            Picasso.with(getActivity()).load(items.get(position).getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.no_image).into(holder.imgAudio);
 //            audioImagname.setText(items.get(position).getAudioName());
 
 

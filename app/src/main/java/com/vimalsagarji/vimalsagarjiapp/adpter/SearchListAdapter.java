@@ -19,6 +19,7 @@ import com.vimalsagarji.vimalsagarjiapp.activity.VideoDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.CompetitionActivity;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.Gallery_All_Category;
 import com.vimalsagarji.vimalsagarjiapp.model.SearchItem;
+import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.CompetitionList;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.GalleryCategory;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.OpinionPoll;
 
@@ -103,6 +104,11 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
             holder.txt_title.setText(searchItem.getTitle());
             holder.txt_date.setText(searchItem.getDate());
             holder.txt_content.setText(searchItem.getDescription());
+            if (searchItem.getDescription().equalsIgnoreCase("")){
+                holder.txt_content.setText("Yes & No Answer.");
+            }else {
+                holder.txt_content.setText(searchItem.getDescription());
+            }
         }
 
     }
@@ -180,9 +186,9 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
             } else if (itemArrayList.get(getAdapterPosition()).getTable().equalsIgnoreCase("CompetitionMain")) {
-                Intent intent = new Intent(v.getContext(), CompetitionActivity.class);
-                intent.putExtra("listID", itemArrayList.get(getAdapterPosition()).getId());
-                intent.putExtra("click_action", "");
+                Intent intent = new Intent(v.getContext(), CompetitionList.class);
+                intent.putExtra("categoryID", itemArrayList.get(getAdapterPosition()).getId());
+                intent.putExtra("listTitle", itemArrayList.get(getAdapterPosition()).getTitle());
                 v.getContext().startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 

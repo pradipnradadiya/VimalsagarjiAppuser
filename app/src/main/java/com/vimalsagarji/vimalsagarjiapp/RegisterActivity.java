@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,15 +62,22 @@ public class RegisterActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     String randno;
     EditText edit_otp;
+    CountDownTimer countDownTimer;          // built in android class CountDownTimer
+    long totalTimeCountInMilliseconds;      // total count down time in milliseconds
+    long timeBlinkInMilliseconds;
 
     @SuppressLint("HardwareIds")
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_register);
+        setContentView(R.layout.register_user);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        totalTimeCountInMilliseconds = 60 * 1000;      // time count for 3 minutes = 180 seconds
+        timeBlinkInMilliseconds = 30 * 1000;
+
         if (CommonMethod.isInternetConnected(RegisterActivity.this)) {
             mRegistrationBroadcastReceiver = new BroadcastReceiver() {
                 @Override
@@ -94,7 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }
             };
-        }else {
+        } else {
             Toast.makeText(RegisterActivity.this, R.string.internet, Toast.LENGTH_SHORT).show();
         }
 
@@ -183,16 +192,15 @@ public class RegisterActivity extends AppCompatActivity {
         } else if (etMobile.getText().toString().trim().length() < 10) {
             etMobile.setError("Please enter 10 digit number.");
             etMobile.requestFocus();
+        } else if (StringUtils.isBlank(strAddress)) {
+            etAddress.setError("Please enter location.");
+            etAddress.requestFocus();
         } else {
-
-
             if (CommonMethod.isInternetConnected(RegisterActivity.this)) {
                 new GenrateOTP().execute();
             } else {
                 Toast.makeText(RegisterActivity.this, R.string.internet, Toast.LENGTH_SHORT).show();
             }
-
-
         }
     }
 
@@ -367,7 +375,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("otp"));
         // register GCM registration complete receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Config.REGISTRATION_COMPLETE));
@@ -383,6 +391,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
     }
@@ -405,7 +414,7 @@ public class RegisterActivity extends AppCompatActivity {
             int min = 100000;
             randno = String.valueOf(Math.round(Math.random() * (max - min + 1) + min));
 //            int mobile=Integer.parseInt(etMobile.getText().toString());
-            responseString = CommonMethod.getStringResponse("https://control.msg91.com/api/sendotp.php?authkey=170539A1PovTWJpc0s5996ef0e&mobile=91" + etMobile.getText().toString() + "&message=Your%20otp%20is%20" + randno + "&sender=NayoSoch&otp=" + randno + "&otp_expiry=5&otp_length=6");
+            responseString = CommonMethod.getStringResponse("https://control.msg91.com/api/sendotp.php?authkey=170539A1PovTWJpc0s5996ef0e&mobile=91" + etMobile.getText().toString() + "&message=Your%20otp%20is%20" + randno + "&sender=VSNSND&otp=" + randno + "&otp_expiry=5&otp_length=6");
 //            responseString=CommonMethod.getStringResponse("https://control.msg91.com/api/sendotp.php?authkey=170539A1PovTWJpc0s5996ef0e&mobile=919725800283&message=Your%20otp%20is%20" + String.valueOf(randno) + "&sender=Nayi Soch&otp=" + String.valueOf(randno)+"&otp_length=6");
             return responseString;
 
@@ -423,11 +432,43 @@ public class RegisterActivity extends AppCompatActivity {
                     dialog = new Dialog(RegisterActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.dialog_getotp);
+                    dialog.setCancelable(false);
                     dialog.show();
 
                     edit_otp = (EditText) dialog.findViewById(R.id.edit_otp);
                     Button btn_submit = (Button) dialog.findViewById(R.id.button_submit);
-                    TextView resendotp= (TextView) dialog.findViewById(R.id.txtresendotp);
+                    TextView resendotp = (TextView) dialog.findViewById(R.id.txtresendotp);
+                    ImageView img_close = (ImageView) dialog.findViewById(R.id.img_close);
+                    final TextView text_timer = (TextView) dialog.findViewById(R.id.text_timer);
+
+                    img_close.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    countDownTimer = new CountDownTimer(totalTimeCountInMilliseconds, 500) {
+                        // 500 means, onTick function will be called at every 500 milliseconds
+
+                        @Override
+                        public void onTick(long leftTimeInMilliseconds) {
+                            long seconds = leftTimeInMilliseconds / 1000;
+
+
+                            text_timer.setText(String.format("%02d", seconds / 60) + ":" + String.format("%02d", seconds % 60));
+                            // format the textview to show the easily readable format
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            // this function will be called when the timecount is finished
+                            text_timer.setText("Time up!");
+                            text_timer.setVisibility(View.VISIBLE);
+                        }
+
+                    }.start();
+
 
                     resendotp.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -442,6 +483,8 @@ public class RegisterActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             if (CommonMethod.isInternetConnected(RegisterActivity.this)) {
                                 new VeryfyOTP().execute();
+
+
                             } else {
                                 Toast.makeText(RegisterActivity.this, R.string.internet, Toast.LENGTH_SHORT).show();
                             }
@@ -450,10 +493,11 @@ public class RegisterActivity extends AppCompatActivity {
                     });
 
                     WindowManager.LayoutParams attrs = getWindow().getAttributes();
-                    attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
+//                    attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
                     getWindow().setAttributes(attrs);
-                    dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                    dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 
                 } else {
                     progressDialog.dismiss();
@@ -520,5 +564,21 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equalsIgnoreCase("otp")) {
+                final String message = intent.getStringExtra("message");
+                Log.e("message", "-------------------" + message);
+                if (message.length() == 6) {
+                    edit_otp.setText(message);
+                    new VeryfyOTP().execute();
+                } else {
+                    edit_otp.setText(message);
+                }
+                //Do whatever you want with the code here
+            }
+        }
+    };
 
 }

@@ -148,6 +148,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
     private RecyclerView recycleview_slide;
     TextView txt_nodata;
+    int commentsize;
 
     @Override
     public void onBackPressed() {
@@ -521,6 +522,75 @@ public class EventDetailActivity extends AppCompatActivity {
         }
     }
 
+    private class CommentList2 extends AsyncTask<String, Void, String> {
+        String responseJSON = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loadingProgressDialog = KProgressHUD.create(EventDetailActivity.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please Wait")
+                    .setCancellable(true);
+            loadingProgressDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[0]));
+            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/getallcomments/?page=1&psize=1000", nameValuePairs, EventDetailActivity.this);
+            return responseJSON;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response", "----------------------------------" + s);
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                    listComments = new ArrayList<>();
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        String strID = object.getString("ID");
+                        String strInformationID = object.getString("EventID");
+                        String strComment = object.getString("Comment");
+                        String strIs_Approved = object.getString("Is_Approved");
+                        String strUserID = object.getString("UserID");
+                        String strDate = object.getString("Date");
+                        String name = object.getString("Name");
+
+                        EventComment eventComment = new EventComment();
+                        eventComment.setID(strID);
+                        eventComment.setEventID(strInformationID);
+                        eventComment.setComment(strComment);
+                        eventComment.setIs_Approved(strIs_Approved);
+                        eventComment.setUserID(strUserID);
+                        eventComment.setDate(strDate);
+                        listComments.add(eventComment);
+                        listname.add(name);
+
+
+                    }
+                    commentsize = listComments.size();
+                    txt_comment_event.setText(String.valueOf(commentsize));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            if (loadingProgressDialog != null) {
+                loadingProgressDialog.dismiss();
+            }
+
+        }
+    }
+
     @SuppressWarnings("NullableProblems")
     public class CustomAdpter extends ArrayAdapter<EventComment> {
 
@@ -615,7 +685,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
     }
 
-    private class EventDetail extends AsyncTask<String, Void, String> {
+    /*private class EventDetail extends AsyncTask<String, Void, String> {
 
         String responseJSON = "";
 
@@ -654,7 +724,7 @@ public class EventDetailActivity extends AppCompatActivity {
             }
             loadingProgressDialog.dismiss();
         }
-    }
+    }*/
 
     //Like
     private class LikeComment extends AsyncTask<String, Void, String> {
@@ -850,6 +920,7 @@ public class EventDetailActivity extends AppCompatActivity {
             super.onPostExecute(s);
             Log.e("response", "----------------" + s);
             setPhotos();
+            new CommentList2().execute(strEventId);
         }
 
     }
@@ -982,6 +1053,7 @@ public class EventDetailActivity extends AppCompatActivity {
                             Picasso.with(EventDetailActivity.this)
                                     .load(Photo)
                                     .placeholder(R.drawable.loader)
+                                    .resize(0, 200)
                                     .error(R.drawable.no_image)
                                     .into(imgEvent);
 

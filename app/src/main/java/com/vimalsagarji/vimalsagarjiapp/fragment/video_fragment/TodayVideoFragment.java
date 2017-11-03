@@ -494,7 +494,7 @@ public class TodayVideoFragment extends Fragment {
 
 //            Picasso.with(getActivity()).load(listIcon.get(position)).placeholder(R.drawable.loader).error(R.drawable.no_image).into(holder.imgVideo);
             if (listIcon != null) {
-                Picasso.with(getActivity()).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).error(R.drawable.no_image).into(holder.imgVideo);
+                Picasso.with(getActivity()).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.no_image).into(holder.imgVideo);
             } else {
                 Picasso.with(getActivity()).load(R.drawable.no_image);
             }

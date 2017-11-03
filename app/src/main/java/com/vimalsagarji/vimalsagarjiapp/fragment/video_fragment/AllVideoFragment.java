@@ -487,7 +487,7 @@ public class AllVideoFragment extends Fragment {
             holder.txtVideoName.setText(items.get(position));
             holder.txtVideoDate.setText(listDate.get(position));
             if (listIcon != null) {
-                Picasso.with(getActivity()).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).error(R.drawable.no_image).into(holder.imgVideo);
+                Picasso.with(getActivity()).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.no_image).into(holder.imgVideo);
             } else {
                 Picasso.with(getActivity()).load(R.drawable.no_image);
             }

@@ -167,12 +167,20 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
 //                window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog.setContentView(R.layout.custom_askquestion_dialog);
+                        dialog.setCancelable(false);
                         final EditText etAskQuestion = (EditText) dialog.findViewById(R.id.etAskQuestion);
                         Button btnPost = (Button) dialog.findViewById(R.id.btnPost);
                         final String strUid = sharedpreferance.getId();
                         strAskQuestion = etAskQuestion.getText().toString();
                         dialog.show();
                         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        final ImageView img_close = (ImageView) dialog.findViewById(R.id.img_close);
+                        img_close.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
                         btnPost.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -200,7 +208,7 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
                             }
                         });
                     } else {
-                        Toast.makeText(getActivity(), "You are not approved user.", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "You are not approved user.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

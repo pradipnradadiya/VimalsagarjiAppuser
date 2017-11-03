@@ -159,7 +159,7 @@
                 android:layout_below="@+id/etMobile"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="Location :"
+                android:text="Location* :"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/red"
                 android:textSize="20sp"
@@ -225,8 +225,6 @@
 
             </LinearLayout>
         </LinearLayout>
-
-
     </LinearLayout>
 
     <TextView

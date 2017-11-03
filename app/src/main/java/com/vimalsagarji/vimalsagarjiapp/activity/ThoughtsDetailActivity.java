@@ -94,6 +94,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
     private TextView txt_title;
     EditText etTitle;
     String click_action;
+    int commentsize;
 
     @Override
     public void onBackPressed() {
@@ -600,6 +601,75 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
             }
         }
     }
+    private class CommentList2 extends AsyncTask<String, Void, String> {
+        String responseJSON = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loadingProgressDialog = KProgressHUD.create(ThoughtsDetailActivity.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please Wait")
+                    .setCancellable(true);
+            loadingProgressDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("tid", params[0]));
+            responseJSON = CommonMethod.postStringResponse(URL, nameValuePairs, ThoughtsDetailActivity.this);
+            return responseJSON;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response", "----------------------------------" + s);
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    listUserID = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+
+                        String strID = object.getString("ID");
+                        String strThoughtID = object.getString("ThoughtID");
+                        String strComment = object.getString("Comment");
+                        String strIs_Approved = object.getString("Is_Approved");
+                        String strUserID = object.getString("UserID");
+                        String name = object.getString("Name");
+                        listID.add(strID);
+                        Log.d(TAG, "list Id data:" + listID);
+                        listThoughtID.add(strThoughtID);
+                        Log.d(TAG, "list Title data:" + listThoughtID);
+                        listComment.add(strComment);
+                        Log.d(TAG, "list Description data:" + listComment);
+                        listIs_Approved.add(strIs_Approved);
+                        Log.d(TAG, "list Address data:" + listIs_Approved);
+                        listUserID.add(strUserID);
+                        Log.d(TAG, "list Date data:" + listUserID);
+                        listUserName.add(name);
+                        commentsize=listComment.size();
+                        txt_comment.setText(String.valueOf(commentsize));
+
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            if (loadingProgressDialog != null) {
+                loadingProgressDialog.dismiss();
+            }
+
+        }
+    }
 
     //Check user approve or not
     private class CheckUserApprove extends AsyncTask<String, Void, String> {
@@ -666,6 +736,8 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("response", "----------------" + s);
+
+            new CommentList2().execute(tid);
         }
 
     }
@@ -699,7 +771,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
 
                     String commentcount = jsonObject.getString("commentcount");
                     Log.e("comment", "-----------------" + commentcount);
-                    txt_comment.setText(commentcount);
+//                    txt_comment.setText(commentcount);
 
                     String likecount = jsonObject.getString("likecount");
                     Log.e("like", "-----------------" + likecount);

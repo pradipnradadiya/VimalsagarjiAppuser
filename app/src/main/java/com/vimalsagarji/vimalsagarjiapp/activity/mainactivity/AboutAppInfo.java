@@ -18,7 +18,7 @@ public class AboutAppInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_info);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("About Us Guruji");
+        toolbar.setTitle("About Us");
         toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left);
 
 

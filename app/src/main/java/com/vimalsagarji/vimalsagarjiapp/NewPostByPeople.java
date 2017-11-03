@@ -292,15 +292,35 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
 //                        profile_image.setImageBitmap(bitmap);
                     img_disp.setVisibility(View.VISIBLE);
                     img_disp.setImageBitmap(bitmap);
+
                     picturePath = android.os.Environment
+                            .getExternalStorageDirectory() + "/VimalsagarjiImage"
+                            + File.separator;
+
+
+//                            + "Phoenix" + File.separator + "default";
+
+                    f.delete();
+                    OutputStream outFile = null;
+
+                    File root = android.os.Environment.getExternalStorageDirectory();
+                    File dir = new File(root.getAbsolutePath() + "/VimalsagarjiImage" + File.separator);
+                    dir.mkdirs();
+                    String pic = CommonMethod.getRandomString(30);
+                    File file = new File(dir, String.valueOf(pic + ".jpg"));
+
+
+
+
+                    /*picturePath = android.os.Environment
                             .getExternalStorageDirectory()
                             + File.separator;
 //                            + "Phoenix" + File.separator + "default";
 
                     f.delete();
                     OutputStream outFile = null;
-                    File file = new File(picturePath, String.valueOf(System.currentTimeMillis()) + ".jpg");
-                    picturePath = picturePath + String.valueOf(System.currentTimeMillis()) + ".jpg";
+                    File file = new File(picturePath, String.valueOf(System.currentTimeMillis()) + ".jpg");*/
+                    picturePath = picturePath + String.valueOf(pic) + ".jpg";
                     try {
                         outFile = new FileOutputStream(file);
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 40, outFile);

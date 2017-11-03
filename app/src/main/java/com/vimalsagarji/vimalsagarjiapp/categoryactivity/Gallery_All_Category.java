@@ -233,6 +233,8 @@ public class Gallery_All_Category extends AppCompatActivity {
             }
             // holder.txt_ID.setText(items.get(position));
             holder.grid_txtTitle.setText(items.get(position));
+
+
             Picasso.with(Gallery_All_Category.this).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).error(R.drawable.bypeople_error).into(holder.grid_img);
 
             holder.grid_img.setOnClickListener(new View.OnClickListener() {

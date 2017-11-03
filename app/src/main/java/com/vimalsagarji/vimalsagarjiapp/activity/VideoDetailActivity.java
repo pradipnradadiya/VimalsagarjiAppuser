@@ -75,6 +75,7 @@ public class VideoDetailActivity extends AppCompatActivity {
     String videoid;
     RelativeLayout rel_video;
     int flag = 0;
+    int commentsize;
 
     @Override
     public void onBackPressed() {
@@ -391,6 +392,76 @@ public class VideoDetailActivity extends AppCompatActivity {
 
 
             }
+        }
+    }
+
+    private class CommentList2 extends AsyncTask<String, Void, String> {
+        String responseJSON = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loadingProgressDialog = KProgressHUD.create(VideoDetailActivity.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please Wait")
+                    .setCancellable(true);
+            loadingProgressDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
+            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
+            return responseJSON;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response", "----------------------------------" + s);
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                    listComments = new ArrayList<>();
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        String strID = object.getString("ID");
+                        String strInformationID = object.getString("VideoID");
+                        String strComment = object.getString("Comment");
+                        Log.e("comment", "------------------" + strComment);
+                        String strIs_Approved = object.getString("Is_Approved");
+                        Log.e("is apprived", "---------------------------------" + strIs_Approved);
+                        String strUserID = object.getString("UserID");
+                        Log.e("UserID", "---------------------------------" + strUserID);
+                        String strDate = object.getString("Date");
+                        String name = object.getString("Name");
+
+                        ThisMonthVideo thisMonthVideo = new ThisMonthVideo();
+                        thisMonthVideo.setID(strID);
+                        thisMonthVideo.setVideoID(strInformationID);
+                        thisMonthVideo.setComment(strComment);
+                        thisMonthVideo.setIs_Approved(strIs_Approved);
+                        thisMonthVideo.setUserID(strUserID);
+                        thisMonthVideo.setDate(strDate);
+                        listComments.add(thisMonthVideo);
+                        listname.add(name);
+
+
+                    }
+                    commentsize = listComments.size();
+                    txt_comment.setText(String.valueOf(commentsize));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (loadingProgressDialog != null) {
+                loadingProgressDialog.dismiss();
+            }
+
         }
     }
 
@@ -724,6 +795,8 @@ public class VideoDetailActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("response", "----------------" + s);
+            new CommentList2().execute(vid);
+
         }
 
     }
@@ -760,7 +833,7 @@ public class VideoDetailActivity extends AppCompatActivity {
                     loadingProgressDialog.dismiss();
                     String commentcount = jsonObject.getString("commentcount");
                     Log.e("like", "-----------------" + commentcount);
-                    txt_comment.setText(commentcount);
+//                    txt_comment.setText(commentcount);
 
                     String likecount = jsonObject.getString("likecount");
                     Log.e("like", "-----------------" + likecount);

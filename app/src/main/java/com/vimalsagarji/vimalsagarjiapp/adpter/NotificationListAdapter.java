@@ -19,6 +19,7 @@ import com.vimalsagarji.vimalsagarjiapp.activity.ThoughtsDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.VideoDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.CompetitionActivity;
 import com.vimalsagarji.vimalsagarjiapp.model.NotificationItem;
+import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.CompetitionList;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.OpinionPoll;
 
 import java.util.ArrayList;
@@ -99,7 +100,13 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
             holder.notification_image.setImageResource(R.drawable.opinion_circle);
             holder.txt_title.setText(notificationItem.getTitle());
             holder.txt_date.setText(notificationItem.getDate());
-            holder.txt_content.setText(notificationItem.getDescription());
+
+            if (notificationItem.getDescription().equalsIgnoreCase("")) {
+                holder.txt_content.setText("Yes & No Answer.");
+            } else {
+                holder.txt_content.setText(notificationItem.getDescription());
+            }
+
         }
     }
 
@@ -176,7 +183,9 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
             } else if (itemArrayList.get(getAdapterPosition()).getTable().equalsIgnoreCase("CompetitionMain")) {
-                Intent intent = new Intent(v.getContext(), CompetitionActivity.class);
+                Intent intent = new Intent(v.getContext(), CompetitionList.class);
+                intent.putExtra("categoryID", itemArrayList.get(getAdapterPosition()).getId());
+                intent.putExtra("listTitle", itemArrayList.get(getAdapterPosition()).getTitle());
                 v.getContext().startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 

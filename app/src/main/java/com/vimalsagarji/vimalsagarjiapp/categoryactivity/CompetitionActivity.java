@@ -233,7 +233,7 @@ public class CompetitionActivity extends AppCompatActivity {
             }
             holder.grid_txtTitle.setText(items.get(position));
 
-            Picasso.with(CompetitionActivity.this).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).error(R.drawable.loader).into(holder.grid_img);
+            Picasso.with(CompetitionActivity.this).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.loader).into(holder.grid_img);
 
             return convertView;
 

@@ -84,6 +84,8 @@ public class InformationDetailActivity extends AppCompatActivity {
     private TextView txt_title;
     String click_action;
 
+    int commentsize;
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -303,10 +305,11 @@ public class InformationDetailActivity extends AppCompatActivity {
                         listname.add(name);
 
                     }
+                    commentsize=listComments.size();
                     Log.e("Comment size", "---------------------" + listComments.size());
                     count_comment = listComments.size();
                     String count = String.valueOf(count_comment);
-                    txt_comment.setText(count);
+                    txt_comment.setText(String.valueOf(commentsize));
 
                 }
             } catch (JSONException e) {
@@ -331,6 +334,80 @@ public class InformationDetailActivity extends AppCompatActivity {
                 }
 
             }
+        }
+    }
+
+    private class CommentList2 extends AsyncTask<String, Void, String> {
+        String responseJSON = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loadingProgressDialog = KProgressHUD.create(InformationDetailActivity.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please Wait")
+                    .setCancellable(true);
+            loadingProgressDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
+            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
+            return responseJSON;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response", "----------------------------------" + s);
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                    listComments = new ArrayList<>();
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        String strID = object.getString("ID");
+                        String strInformationID = object.getString("InformationID");
+                        String strComment = object.getString("Comment");
+                        String strIs_Approved = object.getString("Is_Approved");
+                        Log.e("is apprived", "---------------------------------" + strIs_Approved);
+                        String strUserID = object.getString("UserID");
+                        Log.e("UserID", "---------------------------------" + strUserID);
+                        String strDate = object.getString("Date");
+                        String name = object.getString("Name");
+
+                        ThisMonthComments thisMonthComments = new ThisMonthComments();
+                        thisMonthComments.setID(strID);
+                        thisMonthComments.setInformationID(strInformationID);
+                        thisMonthComments.setComment(strComment);
+                        thisMonthComments.setIs_Approved(strIs_Approved);
+                        thisMonthComments.setUserID(strUserID);
+                        thisMonthComments.setDate(strDate);
+                        listComments.add(thisMonthComments);
+                        listname.add(name);
+
+                    }
+                    commentsize=listComments.size();
+                    Log.e("Comment size", "---------------------" + listComments.size());
+                    count_comment = listComments.size();
+                    String count = String.valueOf(count_comment);
+                    txt_comment.setText(String.valueOf(commentsize));
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            if (loadingProgressDialog != null) {
+                loadingProgressDialog.dismiss();
+            }
+
         }
     }
 
@@ -675,6 +752,7 @@ public class InformationDetailActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("response", "----------------" + s);
+            new CommentList2().execute(strID);
         }
 
     }
@@ -706,7 +784,7 @@ public class InformationDetailActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(s);
                 String commentcount = jsonObject.getString("commentcount");
                 Log.e("commentcount", "-----------------" + commentcount);
-                txt_comment.setText(commentcount);
+//                txt_comment.setText(commentcount);
 
                 String likecount = jsonObject.getString("likecount");
                 Log.e("like", "-----------------" + likecount);

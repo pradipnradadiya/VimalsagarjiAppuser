@@ -392,7 +392,13 @@ public class GalleryCategory extends AppCompatActivity {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            Picasso.with(GalleryCategory.this).load(items.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).error(R.drawable.no_image).into(holder.grid_img);
+            Picasso.with(GalleryCategory.this)
+                    .load(items.get(position)
+                            .replaceAll(" ", "%20"))
+                    .placeholder(R.drawable.loader)
+                    .resize(0,200)
+                    .error(R.drawable.no_image)
+                    .into(holder.grid_img);
 
 
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

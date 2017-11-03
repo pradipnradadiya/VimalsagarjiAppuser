@@ -401,7 +401,7 @@ public class TodaybyPeopleFragment extends Fragment {
                 holder = (ViewHolder) convertView.getTag();
             }
             AllByPeople allByPeople = items.get(position);
-            Picasso.with(getActivity()).load(IMAGEURL + allByPeople.getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).error(R.drawable.bypeople_error).into(holder.imgAudio);
+            Picasso.with(getActivity()).load(IMAGEURL + allByPeople.getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.bypeople_error).into(holder.imgAudio);
 
 
             holder.txt_views.setText(allByPeople.getView());

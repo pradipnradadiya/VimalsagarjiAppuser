@@ -106,7 +106,9 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
     RelativeLayout rel_video;
     TextView txt_nodata;
 
-    String p,a,vi;
+    String p, a, vi;
+    int commentsize;
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -150,7 +152,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
         if (CommonMethod.isInternetConnected(ByPeopleDetailActivity.this)) {
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
 //                new CheckLike().execute(sharedpreferance.getId(), pid);
-            }else{
+            } else {
                 new CheckLike().execute(sharedpreferance.getId(), pid);
             }
             new GetPostDetail().execute();
@@ -166,7 +168,6 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                 }
             });
         }
-
 
 
         lin_like.setOnClickListener(new View.OnClickListener() {
@@ -367,6 +368,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                         Picasso.with(ByPeopleDetailActivity.this)
                                 .load(image.replaceAll(" ", "%20"))
                                 .placeholder(R.drawable.loader)
+                                .resize(0, 200)
                                 .error(R.drawable.no_image)
                                 .into(img_bypeople);
 
@@ -595,7 +597,73 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
         }
     }
 
-    private class CountComment extends AsyncTask<String, Void, String> {
+    private class CommentList2 extends AsyncTask<String, Void, String> {
+        String responseJSON = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loadingProgressDialog = KProgressHUD.create(ByPeopleDetailActivity.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please Wait")
+                    .setCancellable(true);
+            loadingProgressDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
+            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
+            return responseJSON;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response", "----------------------------------" + s);
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                    listUserID = new ArrayList<>();
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        String strID = object.getString("ID");
+                        String strThoughtID = object.getString("PostID");
+                        String strComment = object.getString("Comment");
+                        String strIs_Approved = object.getString("Is_Approved");
+                        String strUserID = object.getString("UserID");
+                        String name = object.getString("Name");
+                        listID.add(strID);
+                        Log.d(TAG, "list Id data:" + listID);
+                        listThoughtID.add(strThoughtID);
+                        Log.d(TAG, "list Title data:" + listThoughtID);
+                        listComment.add(strComment);
+                        Log.d(TAG, "list Description data:" + listComment);
+                        listIs_Approved.add(strIs_Approved);
+                        Log.d(TAG, "list Address data:" + listIs_Approved);
+                        listUserID.add(strUserID);
+                        Log.d(TAG, "list Date data:" + listUserID);
+                        listname.add(name);
+
+                    }
+                    commentsize = listComment.size();
+                    txt_comment.setText(String.valueOf(commentsize));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (loadingProgressDialog != null) {
+                loadingProgressDialog.dismiss();
+            }
+
+        }
+    }
+
+    /*private class CountComment extends AsyncTask<String, Void, String> {
         String responseJSON = "";
 
         @Override
@@ -658,7 +726,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             }
 
         }
-    }
+    }*/
 
     //Comment Post
     private class CommentPost extends AsyncTask<String, Void, String> {
@@ -877,6 +945,8 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("response", "----------------" + s);
+            new CommentList2().execute(pid);
+
         }
 
     }
@@ -913,7 +983,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                     loadingProgressDialog.dismiss();
                     String commentcount = jsonObject.getString("commentcount");
                     Log.e("comment", "-----------------" + commentcount);
-                    txt_comment.setText(commentcount);
+//                    txt_comment.setText(commentcount);
 
                     String likecount = jsonObject.getString("likecount");
                     Log.e("like", "-----------------" + likecount);
@@ -1002,6 +1072,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                             Picasso.with(ByPeopleDetailActivity.this)
                                     .load(image.replaceAll(" ", "%20"))
                                     .placeholder(R.drawable.loader)
+                                    .resize(0, 200)
                                     .error(R.drawable.no_image)
                                     .into(img_bypeople);
 

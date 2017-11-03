@@ -67,6 +67,8 @@ public class CompetitionList extends AppCompatActivity {
         Intent getIntent = getIntent();
         c_cname=getIntent.getStringExtra("listTitle");
         c_cid=getIntent.getStringExtra("categoryID");
+        Log.e("cname","_---------------------"+c_cname);
+        Log.e("id","_---------------------"+c_cid);
         sharedpreferance=new Sharedpreferance(CompetitionList.this);
         comp_name.setText(c_cname);
         if (CommonMethod.isInternetConnected(CompetitionList.this)) {

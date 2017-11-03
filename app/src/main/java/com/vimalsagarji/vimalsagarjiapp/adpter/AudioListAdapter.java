@@ -18,9 +18,6 @@ import com.vimalsagarji.vimalsagarjiapp.util.CommonURL;
 
 import java.util.ArrayList;
 
-/**
- * Created by Grapes-Pradip on 04-Oct-17.
- */
 
 public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.ViewHolder> {
 
@@ -49,7 +46,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         Log.e("audio", "---------------" + CommonURL.AudioPath + CommonAPI_Name.eventaudio + photoAudioVideoItem.getUrl().replaceAll(" ", "%20"));
 
 //        Picasso.with(activity).load(CommonURL.AudioPath + CommonAPI_Name.eventaudio + photoAudioVideoItem.getUrl().replaceAll(" ", "%20")).error(R.drawable.noimageavailable).placeholder(R.drawable.loading_bar).into(holder.img_item);
-        holder.txt_audioname.setText(photoAudioVideoItem.getName());
+        holder.txt_audioname.setText(photoAudioVideoItem.getUrl());
         holder.img_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

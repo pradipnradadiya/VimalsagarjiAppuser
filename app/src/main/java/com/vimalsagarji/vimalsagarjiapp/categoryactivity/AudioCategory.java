@@ -245,7 +245,7 @@ public class AudioCategory extends AppCompatActivity {
             }
             // holder.txt_ID.setText(items.get(position));
             holder.grid_txtTitle.setText(items.get(position));
-            Picasso.with(AudioCategory.this).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).error(R.drawable.no_image).into(holder.grid_img);
+            Picasso.with(AudioCategory.this).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.no_image).into(holder.grid_img);
             return convertView;
 
         }

@@ -11,9 +11,7 @@
     <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
         android:id="@+id/grid_fullImage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        />
+        android:layout_height="match_parent" />
 
     <com.pnikosis.materialishprogress.ProgressWheel
         android:id="@+id/p_wheel"

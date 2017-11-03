@@ -166,9 +166,9 @@ public class AllQuetionAnswerFragment extends Fragment {
         btnAskQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sharedpreferance.getId().equalsIgnoreCase("")){
+                if (sharedpreferance.getId().equalsIgnoreCase("")) {
                     Snackbar.make(v, "Please register after ask question. ", Snackbar.LENGTH_SHORT).show();
-                }else {
+                } else {
 
                     if (approve.equalsIgnoreCase("1")) {
                         dialog = new Dialog(getActivity());
@@ -176,12 +176,20 @@ public class AllQuetionAnswerFragment extends Fragment {
 //                window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog.setContentView(R.layout.custom_askquestion_dialog);
+                        dialog.setCancelable(false);
                         final EditText etAskQuestion = (EditText) dialog.findViewById(R.id.etAskQuestion);
                         Button btnPost = (Button) dialog.findViewById(R.id.btnPost);
                         final String strUid = sharedpreferance.getId();
                         final String strAskQuestion = etAskQuestion.getText().toString();
                         dialog.show();
                         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        final ImageView img_close = (ImageView) dialog.findViewById(R.id.img_close);
+                        img_close.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
                         btnPost.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -216,7 +224,7 @@ public class AllQuetionAnswerFragment extends Fragment {
                             }
                         });
                     } else {
-                        Toast.makeText(getActivity(), "You are not approved user.", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "You are not approved user.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

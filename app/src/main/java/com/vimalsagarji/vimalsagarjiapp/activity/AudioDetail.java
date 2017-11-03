@@ -69,6 +69,7 @@ public class AudioDetail extends AppCompatActivity {
     private final String AudioPath = "http://www.grapes-solutions.com/vimalsagarji/static/audios/";
     TextView txtDate;
     String click_action;
+    int commentsize;
 
     private final ArrayList<String> listname = new ArrayList<>();
 
@@ -232,10 +233,10 @@ public class AudioDetail extends AppCompatActivity {
                 btnPost.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
                             Toast.makeText(AudioDetail.this, R.string.notregister, Toast.LENGTH_SHORT).show();
 
-                        }else {
+                        } else {
                             String strComment = etComment.getText().toString();
                             if (TextUtils.isEmpty(strComment)) {
                                 etComment.setError("Please enter your comment.");
@@ -274,11 +275,11 @@ public class AudioDetail extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-//            loadingProgressDialog = KProgressHUD.create(AudioDetail.this)
-//                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-//                    .setLabel("Please Wait")
-//                    .setCancellable(true);
-//            loadingProgressDialog.show();
+            loadingProgressDialog = KProgressHUD.create(AudioDetail.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please Wait")
+                    .setCancellable(true);
+            loadingProgressDialog.show();
 
         }
 
@@ -328,9 +329,9 @@ public class AudioDetail extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-//            if (loadingProgressDialog != null) {
-//                loadingProgressDialog.dismiss();
-//            }
+            if (loadingProgressDialog != null) {
+                loadingProgressDialog.dismiss();
+            }
             listView = (ListView) dialog.findViewById(R.id.listbyPeopleComment);
             TextView txt_nodata_today = (TextView) dialog.findViewById(R.id.txt_nocomment);
             if (listView != null) {
@@ -346,6 +347,75 @@ public class AudioDetail extends AppCompatActivity {
 
 
             }
+        }
+    }
+
+    private class CommentList2 extends AsyncTask<String, Void, String> {
+        String responseJSON = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loadingProgressDialog = KProgressHUD.create(AudioDetail.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please Wait")
+                    .setCancellable(true);
+            loadingProgressDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair("aid", params[0]));
+            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/audio/getallappcomments/?page=1&psize=1000", nameValuePairs, AudioDetail.this);
+            return responseJSON;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response", "----------------------------------" + s);
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                    listComments = new ArrayList<>();
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        loadingProgressDialog.dismiss();
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        String strID = object.getString("ID");
+                        String strInformationID = object.getString("AudioID");
+                        String strComment = object.getString("Comment");
+                        String strIs_Approved = object.getString("Is_Approved");
+                        Log.e("is apprived", "---------------------------------" + strIs_Approved);
+                        String strUserID = object.getString("UserID");
+                        Log.e("UserID", "---------------------------------" + strUserID);
+                        String strDate = object.getString("Date");
+                        String name = object.getString("Name");
+
+                        ThisMonthVideo thisMonthVideo = new ThisMonthVideo();
+                        thisMonthVideo.setID(strID);
+                        thisMonthVideo.setVideoID(strInformationID);
+                        thisMonthVideo.setComment(strComment);
+                        thisMonthVideo.setIs_Approved(strIs_Approved);
+                        thisMonthVideo.setUserID(strUserID);
+                        thisMonthVideo.setDate(strDate);
+                        listComments.add(thisMonthVideo);
+                        listname.add(name);
+
+                    }
+                    commentsize = listComments.size();
+                    txt_comment.setText(String.valueOf(commentsize));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (loadingProgressDialog != null) {
+                loadingProgressDialog.dismiss();
+            }
+
         }
     }
 
@@ -534,7 +604,7 @@ public class AudioDetail extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("response", "------------------------------" + s);
-            status="1";
+            status = "1";
 
             loadingProgressDialog.dismiss();
         }
@@ -572,7 +642,7 @@ public class AudioDetail extends AppCompatActivity {
                     txt_like.setText("0");
                 } else {
                     txt_like.setText(count);
-                    status="1";
+                    status = "1";
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -682,6 +752,7 @@ public class AudioDetail extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("response", "----------------" + s);
+            new CommentList2().execute(id);
         }
 
     }
@@ -719,7 +790,7 @@ public class AudioDetail extends AppCompatActivity {
 
                     String commentcount = jsonObject.getString("commentcount");
                     Log.e("like", "-----------------" + commentcount);
-                    txt_comment.setText(commentcount);
+//                    txt_comment.setText(commentcount);
 
                     String likecount = jsonObject.getString("likecount");
                     Log.e("like", "-----------------" + likecount);
