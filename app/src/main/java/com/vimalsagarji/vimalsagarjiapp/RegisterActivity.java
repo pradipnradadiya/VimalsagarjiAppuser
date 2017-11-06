@@ -544,7 +544,8 @@ public class RegisterActivity extends AppCompatActivity {
                 if (jsonObject.getString("type").equalsIgnoreCase("success")) {
                     progressDialog.dismiss();
                     dialog.dismiss();
-                    Toast.makeText(RegisterActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Verify OTP", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(RegisterActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     if (CommonMethod.isInternetConnected(RegisterActivity.this)) {
                         new PostRegisterData().execute(etName.getText().toString(), strDeviceid, etEmail.getText().toString(), etAddress.getText().toString(), etMobile.getText().toString(), strDevicetoken);
                     }

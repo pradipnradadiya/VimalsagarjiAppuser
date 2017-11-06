@@ -1,12 +1,17 @@
 package com.vimalsagarji.vimalsagarjiapp.activity.mainactivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -14,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
+import com.vimalsagarji.vimalsagarjiapp.MainActivity;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.adpter.NotificationListAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
@@ -30,10 +36,7 @@ import java.util.Date;
  * Created by Grapes-Pradip on 02-Oct-17.
  */
 
-public class NotificationActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageView imgarrorback;
-    private TextView txt_title;
-    private ImageView imgHome;
+public class NotificationActivity extends AppCompatActivity {
     private RecyclerView recycleview_notification;
     LinearLayoutManager linearLayoutManager;
     //    NotificationListAdapter notificationListAdapter;
@@ -56,6 +59,22 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Notifications");
+        toolbar.setTitleTextColor(0xFFFFFFFF);
+        toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left);
+
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
         notificationItems = new ArrayList<>();
         linearLayoutManager = new LinearLayoutManager(NotificationActivity.this);
         fndId();
@@ -106,35 +125,41 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
             }
 
         });
-        idClick();
     }
 
-    private void idClick() {
-        imgarrorback.setOnClickListener(this);
-        imgHome.setVisibility(View.GONE);
-        ImageView img_search = (ImageView) findViewById(R.id.img_search);
-        img_search.setVisibility(View.GONE);
-        txt_title.setText("Notification");
-    }
 
     private void fndId() {
         progressbar = (ProgressBar) findViewById(R.id.progressbar);
         recycleview_notification = (RecyclerView) findViewById(R.id.recycleview_notification);
         recycleview_notification.setLayoutManager(linearLayoutManager);
-        imgarrorback = (ImageView) findViewById(R.id.imgarrorback);
-        txt_title = (TextView) findViewById(R.id.txt_title);
-        imgHome = (ImageView) findViewById(R.id.imgHome);
         img_nodata = (ImageView) findViewById(R.id.img_nodata);
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.imgarrorback:
-                finish();
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-                break;
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.home_menu, menu);
+
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_home) {
+            finish();
+            overridePendingTransition(R.anim.slide_out_right, R.anim.slide_out_left);
+            return true;
         }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     private class GetNotificationList extends AsyncTask<String, Void, String> {
@@ -181,9 +206,9 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
                         String title = jsonObject1.getString("Title");
                         String description = jsonObject1.getString("Description");
                         String date = jsonObject1.getString("Date");
-                        if (description.equalsIgnoreCase("null")){
-                            description="Description not available";
-                        }else {
+                        if (description.equalsIgnoreCase("null")) {
+                            description = "Description not available";
+                        } else {
 
                         }
 

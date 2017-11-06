@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -39,11 +40,9 @@ import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
  * Created by Grapes-Pradip on 02-Oct-17.
  */
 
-public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
+public class SearchActivity extends AppCompatActivity {
 
-    private ImageView imgarrorback;
-    private TextView txt_title;
-    private ImageView imgHome, img_nosearch;
+    private ImageView img_nosearch;
     private RecyclerView recycleview_search;
     private EditText edittext_search;
     private KProgressHUD loadingProgressDialog;
@@ -57,6 +56,22 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Search");
+        toolbar.setTitleTextColor(0xFFFFFFFF);
+        toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left);
+
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         linearLayoutManager = new LinearLayoutManager(SearchActivity.this);
         fndId();
@@ -104,19 +119,12 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void idClick() {
-        imgarrorback.setOnClickListener(this);
-        imgHome.setVisibility(View.GONE);
-        ImageView img_search = (ImageView) findViewById(R.id.img_search);
+//        imgHome.setVisibility(View.GONE);
         img_close = (ImageView) findViewById(R.id.img_close);
-        img_search.setVisibility(View.GONE);
-        txt_title.setText("Search");
     }
 
     private void fndId() {
         progressbar = (ProgressBar) findViewById(R.id.progressbar);
-        imgarrorback = (ImageView) findViewById(R.id.imgarrorback);
-        txt_title = (TextView) findViewById(R.id.txt_title);
-        imgHome = (ImageView) findViewById(R.id.imgHome);
         img_datasearch = (ImageView) findViewById(R.id.img_datasearch);
         img_nosearch = (ImageView) findViewById(R.id.img_nosearch);
         recycleview_search = (RecyclerView) findViewById(R.id.recycleview_search);
@@ -126,13 +134,30 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.imgarrorback:
-                finish();
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-                break;
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.home_menu, menu);
+
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_home) {
+            finish();
+            overridePendingTransition(R.anim.slide_out_right, R.anim.slide_out_left);
+            return true;
         }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     private class Search extends AsyncTask<String, Void, String> {
@@ -142,6 +167,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         protected void onPreExecute() {
             super.onPreExecute();
             progressbar.setVisibility(View.VISIBLE);
+            recycleview_search.setVisibility(View.GONE);
 
         }
 
@@ -158,6 +184,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             super.onPostExecute(s);
             Log.e("response", "-------------" + s);
             progressbar.setVisibility(View.GONE);
+            recycleview_search.setVisibility(View.VISIBLE);
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {

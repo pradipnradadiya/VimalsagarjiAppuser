@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.vimalsagarji.vimalsagarjiapp.R;
@@ -21,6 +23,8 @@ public class AboutAppGuruji extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("About Us Guruji");
+        toolbar.setTitleTextColor(0xFFFFFFFF);
+
         toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left);
 
 
@@ -36,4 +40,32 @@ public class AboutAppGuruji extends AppCompatActivity {
         });
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.home_menu, menu);
+
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_home) {
+            finish();
+            overridePendingTransition(R.anim.slide_out_right, R.anim.slide_out_left);
+            return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

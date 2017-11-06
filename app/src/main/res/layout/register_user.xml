@@ -18,17 +18,20 @@
         android:textSize="26sp"
         android:textStyle="bold" />
 
-    <TextView
+    <com.vimalsagarji.vimalsagarjiapp.util.UnderlineTextView
         android:id="@+id/textview_skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginTop="5dp"
-        android:padding="10dp"
         android:text="Skip"
         android:textColor="@color/white"
         android:textSize="22sp"
-        android:textStyle="bold" />
+        android:background="?android:attr/selectableItemBackground"
+        android:textStyle="bold"
+        android:paddingTop="10dp"
+        android:layout_marginRight="10dp"
+        />
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -43,7 +46,6 @@
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/login_title"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="70dp"
@@ -126,8 +128,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:paddingTop="5dp"
-                        android:text="Registered user?" />
+                        android:padding="5dp"
+                        android:text="Registered user?"
+                        android:background="?android:attr/selectableItemBackground"
+                        />
 
 
                     <Button

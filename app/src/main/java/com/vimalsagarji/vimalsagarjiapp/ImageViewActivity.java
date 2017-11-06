@@ -45,14 +45,16 @@ public class ImageViewActivity extends AppCompatActivity {
         img_search.setVisibility(View.GONE);
         imgHome = (ImageView) findViewById(R.id.imgHome);
         txt_title = (TextView) findViewById(R.id.txt_title);
-        txt_title.setVisibility(View.GONE);
+//        txt_title.setVisibility(View.GONE);
         imgHome.setVisibility(View.GONE);
+        txt_title.setText("View Image");
         imgarrorback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
 
         imageView = (SubsamplingScaleImageView) findViewById(R.id.grid_fullImage);
         rel_full_img = (RelativeLayout) findViewById(R.id.rel_full_img);

@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_home" />
+    <include layout="@layout/toolbar_home"
+        android:id="@+id/toolbar"/>
 
     <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+        android:layout_below="@+id/toolbar"
         android:id="@+id/grid_fullImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -48,8 +48,8 @@ public class CompetitionList extends AppCompatActivity {
     private TextView partipants;
     private TextView txt_nodata_today;
     RecyclerView comp_que_list;
-    String c_cid,c_cname;
-    ArrayList<CompetitionQuestion> competitionQuestions=new ArrayList<>();
+    String c_cid, c_cname;
+    ArrayList<CompetitionQuestion> competitionQuestions = new ArrayList<>();
     KProgressHUD loadingProgressDialog;
     Sharedpreferance sharedpreferance;
     private LinearLayout lin_main;
@@ -57,19 +57,20 @@ public class CompetitionList extends AppCompatActivity {
     private String status = "";
     LinearLayoutManager linearLayoutManager;
     TextView txt_title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.competition_list);
         viewID();
-        linearLayoutManager=new LinearLayoutManager(CompetitionList.this);
+        linearLayoutManager = new LinearLayoutManager(CompetitionList.this);
         comp_que_list.setLayoutManager(linearLayoutManager);
         Intent getIntent = getIntent();
-        c_cname=getIntent.getStringExtra("listTitle");
-        c_cid=getIntent.getStringExtra("categoryID");
-        Log.e("cname","_---------------------"+c_cname);
-        Log.e("id","_---------------------"+c_cid);
-        sharedpreferance=new Sharedpreferance(CompetitionList.this);
+        c_cname = getIntent.getStringExtra("listTitle");
+        c_cid = getIntent.getStringExtra("categoryID");
+        Log.e("cname", "_---------------------" + c_cname);
+        Log.e("id", "_---------------------" + c_cid);
+        sharedpreferance = new Sharedpreferance(CompetitionList.this);
         comp_name.setText(c_cname);
         if (CommonMethod.isInternetConnected(CompetitionList.this)) {
             new CheckUserApprove().execute();
@@ -92,17 +93,17 @@ public class CompetitionList extends AppCompatActivity {
     }
 
     private void viewID() {
-        ImageView img_search= (ImageView) findViewById(R.id.img_search);
-        txt_title= (TextView) findViewById(R.id.txt_title);
+        ImageView img_search = (ImageView) findViewById(R.id.img_search);
+        txt_title = (TextView) findViewById(R.id.txt_title);
         txt_title.setText("Competition List");
         img_search.setVisibility(View.GONE);
         ImageView imgBack = (ImageView) findViewById(R.id.imgarrorback);
         ImageView imgHome = (ImageView) findViewById(R.id.imgHome);
         lin_main = (LinearLayout) findViewById(R.id.lin_main);
-        comp_name= (TextView) findViewById(R.id.comp_name);
-        partipants= (TextView) findViewById(R.id.partipants);
-        txt_nodata_today= (TextView) findViewById(R.id.txt_nodata_today);
-        comp_que_list= (RecyclerView) findViewById(R.id.comp_que_list);
+        comp_name = (TextView) findViewById(R.id.comp_name);
+        partipants = (TextView) findViewById(R.id.partipants);
+        txt_nodata_today = (TextView) findViewById(R.id.txt_nodata_today);
+        comp_que_list = (RecyclerView) findViewById(R.id.comp_que_list);
         imgHome.setVisibility(View.GONE);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +165,7 @@ public class CompetitionList extends AppCompatActivity {
             loadingProgressDialog.dismiss();
         }
     }
+
     private class CatrgoryQuestion extends AsyncTask<String, Void, String> {
         String responseJSON = "";
 
@@ -242,14 +244,14 @@ public class CompetitionList extends AppCompatActivity {
                 loadingProgressDialog.dismiss();
             }
             if (comp_que_list != null) {
-                RecyclerCompetitionAdapter recyclerCompetitionAdapter = new RecyclerCompetitionAdapter(CompetitionList.this,competitionQuestions);
+                RecyclerCompetitionAdapter recyclerCompetitionAdapter = new RecyclerCompetitionAdapter(CompetitionList.this, competitionQuestions);
                 if (recyclerCompetitionAdapter.getItemCount() != 0) {
-                    Log.e("if call","-------");
+                    Log.e("if call", "-------");
                     comp_que_list.setVisibility(View.VISIBLE);
                     txt_nodata_today.setVisibility(View.GONE);
                     comp_que_list.setAdapter(recyclerCompetitionAdapter);
                 } else {
-                    Log.e("if call","-------");
+                    Log.e("if call", "-------");
                     txt_nodata_today.setVisibility(View.VISIBLE);
                     comp_que_list.setVisibility(View.GONE);
                 }
@@ -372,7 +374,7 @@ public class CompetitionList extends AppCompatActivity {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
             View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.competition_item, viewGroup, false);
-            sharedpreferance=new Sharedpreferance(activity);
+            sharedpreferance = new Sharedpreferance(activity);
             return new ViewHolder(v);
         }
 
@@ -381,7 +383,7 @@ public class CompetitionList extends AppCompatActivity {
 
             holder.txtQuestion.setText(itemArrayList.get(i).getQuestion());
             String qtype = itemArrayList.get(i).getQType();
-            String flag=itemArrayList.get(i).getStatus();
+            String flag = itemArrayList.get(i).getStatus();
             if (qtype.equalsIgnoreCase("Radio")) {
                 holder.edit_answer.setVisibility(View.GONE);
                 holder.btnReply.setVisibility(View.GONE);
@@ -404,26 +406,90 @@ public class CompetitionList extends AppCompatActivity {
                         holder.radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                                if (CommonMethod.isInternetConnected(activity)) {
-                                    status = "";
+                                if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                                    Snackbar.make(lin_main, "Please first register after competition.", Snackbar.LENGTH_LONG).show();
+                                } else {
+                                    if (CommonMethod.isInternetConnected(activity)) {
+                                        status = "";
 //                                new checkReplay().execute(items.get(position).getID(), sharedpreferance.getId());
-                                    if (itemArrayList.get(i).getAnswer().equalsIgnoreCase("null")) {
-                                        if (approve.equalsIgnoreCase("1")) {
-                                            RadioButton rb = (RadioButton) findViewById(checkedId);
-                                            String rbtext = (String) rb.getText();
-                                            Log.e("checked id", "----------------" + checkedId);
-                                            Log.e("Question id", "-------------------" + itemArrayList.get(i).getID());
-                                            Log.e("User Id", "------------------------" + sharedpreferance.getId());
-                                            Log.e("Answer", "----------------" + rbtext);
-                                            Log.e("Category Id", "--------------------" + c_cid);
-                                            new PostData().execute(itemArrayList.get(i).getID(), sharedpreferance.getId(), rbtext, c_cid);
-                                            status = "";
+                                        if (itemArrayList.get(i).getAnswer().equalsIgnoreCase("null")) {
+                                            if (approve.equalsIgnoreCase("1")) {
+                                                RadioButton rb = (RadioButton) findViewById(checkedId);
+                                                String rbtext = (String) rb.getText();
+                                                Log.e("checked id", "----------------" + checkedId);
+                                                Log.e("Question id", "-------------------" + itemArrayList.get(i).getID());
+                                                Log.e("User Id", "------------------------" + sharedpreferance.getId());
+                                                Log.e("Answer", "----------------" + rbtext);
+                                                Log.e("Category Id", "--------------------" + c_cid);
+                                                new PostData().execute(itemArrayList.get(i).getID(), sharedpreferance.getId(), rbtext, c_cid);
+                                                status = "";
+                                            } else {
+//                                            Toast.makeText(activity, "You are not approved user.", Toast.LENGTH_SHORT).show();
+                                            }
                                         } else {
-                                            Toast.makeText(activity, "You are not approved user.", Toast.LENGTH_SHORT).show();
+                                            holder.radiogroup.setEnabled(false);
+                                            Toast.makeText(activity, "User has already replied.", Toast.LENGTH_SHORT).show();
                                         }
                                     } else {
-                                        holder.radiogroup.setEnabled(false);
-                                        Toast.makeText(activity, "User has already replied.", Toast.LENGTH_SHORT).show();
+                                        final Snackbar snackbar = Snackbar
+                                                .make(lin_main, "No internet connection!", Snackbar.LENGTH_INDEFINITE);
+                                        snackbar.setActionTextColor(Color.RED);
+                                        snackbar.show();
+                                        snackbar.setAction("Dismiss", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                snackbar.dismiss();
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        });
+
+                    }
+                }
+
+            } else {
+
+                if (flag.equalsIgnoreCase("1")) {
+                    holder.btnReply.setVisibility(View.GONE);
+                    final String qid = itemArrayList.get(i).getID();
+                    holder.edit_answer.setVisibility(View.VISIBLE);
+                    holder.edit_answer.setEnabled(false);
+
+                } else {
+                    holder.btnReply.setVisibility(View.VISIBLE);
+                    final String qid = itemArrayList.get(i).getID();
+                    holder.edit_answer.setVisibility(View.VISIBLE);
+                    holder.edit_answer.setEnabled(true);
+//                    holder.edit_answer.requestFocus();
+                    holder.btnReply.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                                Snackbar.make(lin_main, "Please first register after competition.", Snackbar.LENGTH_LONG).show();
+                            } else {
+
+                                if (CommonMethod.isInternetConnected(CompetitionList.this)) {
+                                    status = "";
+//                            new checkReplay().execute(qid,sharedpreferance.getId());
+                                    if (TextUtils.isEmpty(holder.edit_answer.getText().toString())) {
+                                        holder.edit_answer.setError("Give answer after reply");
+                                        holder.edit_answer.requestFocus();
+
+                                    } else {
+
+                                        if (itemArrayList.get(i).getAnswer().equalsIgnoreCase("null")) {
+                                            if (approve.equalsIgnoreCase("1")) {
+                                                new PostData().execute(qid, sharedpreferance.getId(), holder.edit_answer.getText().toString(), c_cid);
+                                            } else {
+                                                Toast.makeText(CompetitionList.this, "You are not approved user.", Toast.LENGTH_SHORT).show();
+                                            }
+                                        } else {
+                                            Toast.makeText(CompetitionList.this, "User has already replied.", Toast.LENGTH_SHORT).show();
+                                            holder.btnReply.setVisibility(View.GONE);
+                                        }
+
                                     }
                                 } else {
                                     final Snackbar snackbar = Snackbar
@@ -438,70 +504,12 @@ public class CompetitionList extends AppCompatActivity {
                                     });
                                 }
                             }
-                        });
-
-                    }
-                }
-
-            }
-            else {
-
-                if (flag.equalsIgnoreCase("1")) {
-                    holder.btnReply.setVisibility(View.GONE);
-                    final String qid = itemArrayList.get(i).getID();
-                    holder.edit_answer.setVisibility(View.VISIBLE);
-                    holder.edit_answer.setEnabled(false);
-
-                }else {
-                    holder.btnReply.setVisibility(View.VISIBLE);
-                    final String qid = itemArrayList.get(i).getID();
-                    holder.edit_answer.setVisibility(View.VISIBLE);
-                    holder.edit_answer.setEnabled(true);
-//                    holder.edit_answer.requestFocus();
-                    holder.btnReply.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (CommonMethod.isInternetConnected(CompetitionList.this)) {
-                                status = "";
-//                            new checkReplay().execute(qid,sharedpreferance.getId());
-                                if (TextUtils.isEmpty(holder.edit_answer.getText().toString())) {
-                                    holder.edit_answer.setError("Give answer after reply");
-                                    holder.edit_answer.requestFocus();
-
-                                } else {
-
-                                    if (itemArrayList.get(i).getAnswer().equalsIgnoreCase("null")) {
-                                        if (approve.equalsIgnoreCase("1")) {
-                                            new PostData().execute(qid, sharedpreferance.getId(), holder.edit_answer.getText().toString(), c_cid);
-                                        } else {
-                                            Toast.makeText(CompetitionList.this, "You are not approved user.", Toast.LENGTH_SHORT).show();
-                                        }
-                                    } else {
-                                        Toast.makeText(CompetitionList.this, "User has already replied.", Toast.LENGTH_SHORT).show();
-                                        holder.btnReply.setVisibility(View.GONE);
-                                    }
-
-                                }
-                            } else {
-                                final Snackbar snackbar = Snackbar
-                                        .make(lin_main, "No internet connection!", Snackbar.LENGTH_INDEFINITE);
-                                snackbar.setActionTextColor(Color.RED);
-                                snackbar.show();
-                                snackbar.setAction("Dismiss", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        snackbar.dismiss();
-                                    }
-                                });
-                            }
                         }
                     });
 
                 }
 
             }
-
 
 
         }
@@ -519,13 +527,14 @@ public class CompetitionList extends AppCompatActivity {
             Button btnReply;
             RadioGroup radiogroup;
             RadioButton radioButton;
+
             public ViewHolder(View itemView) {
                 super(itemView);
 
-                txtQuestion= (TextView) itemView.findViewById(R.id.txtQuestion);
-                edit_answer= (EditText) itemView.findViewById(R.id.edit_answer);
-                btnReply= (Button) itemView.findViewById(R.id.btnReply);
-                radiogroup= (RadioGroup) itemView.findViewById(R.id.radiogroup);
+                txtQuestion = (TextView) itemView.findViewById(R.id.txtQuestion);
+                edit_answer = (EditText) itemView.findViewById(R.id.edit_answer);
+                btnReply = (Button) itemView.findViewById(R.id.btnReply);
+                radiogroup = (RadioGroup) itemView.findViewById(R.id.radiogroup);
             }
 
             @Override
@@ -536,19 +545,21 @@ public class CompetitionList extends AppCompatActivity {
         }
 
 
-
     }
+
     @Override
     public void onResume() {
         super.onResume();
         // put your code here...
 
-        if (sharedpreferance.getId().equalsIgnoreCase("")){
-            Snackbar.make(lin_main, "Please first register after competition.", Snackbar.LENGTH_LONG).show();
-        }else {
-            if (CommonMethod.isInternetConnected(CompetitionList.this)) {
-                new CatrgoryQuestion().execute(c_cid, sharedpreferance.getId());
-            }
+        if (sharedpreferance.getId().equalsIgnoreCase("")) {
+            Snackbar.make(lin_main, "Please first register after competition.", Snackbar.LENGTH_INDEFINITE).show();
+        } else {
+        if (CommonMethod.isInternetConnected(CompetitionList.this)) {
+            new CatrgoryQuestion().execute(c_cid, sharedpreferance.getId());
+        } else {
+            Toast.makeText(this, R.string.internet, Toast.LENGTH_SHORT).show();
+        }
         }
     }
 }

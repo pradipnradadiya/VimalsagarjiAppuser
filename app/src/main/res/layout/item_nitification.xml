@@ -14,7 +14,8 @@
         android:layout_height="match_parent"
         card_view:cardUseCompatPadding="true"
         card_view:cardElevation="4dp"
-        card_view:cardCornerRadius="10dp">
+        card_view:cardCornerRadius="10dp"
+        >
         <!-- put whatever you want -->
 
         <LinearLayout

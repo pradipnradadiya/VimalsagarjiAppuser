@@ -175,9 +175,9 @@ public class CompetitionActivity extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             grid_txtTitle = (TextView) findViewById(R.id.grid_txtTitle);
                             String strCompetitionTitle = grid_txtTitle.getText().toString();
-                            if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                                Snackbar.make(view, R.string.notregister, Snackbar.LENGTH_SHORT).show();
-                            }else{
+//                            if (sharedpreferance.getId().equalsIgnoreCase("")) {
+//                                Snackbar.make(view, R.string.notregister, Snackbar.LENGTH_SHORT).show();
+//                            }else{
                                 Intent intent = new Intent(CompetitionActivity.this, CompetitionList.class);
                                 intent.putExtra("categoryID", listID.get(position));
                                 Log.e("category id", "--------------------" + listID.get(position));
@@ -186,7 +186,7 @@ public class CompetitionActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
-                            }
+//                            }
                         }
                     });
                 } else {
