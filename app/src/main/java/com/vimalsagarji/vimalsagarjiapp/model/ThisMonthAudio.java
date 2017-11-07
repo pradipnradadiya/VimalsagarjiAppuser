@@ -1,5 +1,7 @@
 package com.vimalsagarji.vimalsagarjiapp.model;
 
+import java.util.ArrayList;
+
 /**
  * Created by GrapesA1-PC on 11/14/2016.
  */
@@ -26,6 +28,8 @@ public class ThisMonthAudio {
         Date = date;
         this.view=view;
     }
+
+
 
     public String getID() {
         return ID;
@@ -90,4 +94,6 @@ public class ThisMonthAudio {
     public void setView(String view) {
         this.view = view;
     }
+
+
 }

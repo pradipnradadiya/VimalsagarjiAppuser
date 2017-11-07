@@ -26,7 +26,7 @@ public class EventsAllDisplay extends AppCompatActivity {
 
     RecyclerView recycleview;
     GridLayoutManager gridLayoutManager;
-    ImageView imgarrorback, imgHome,img_search;
+    ImageView imgarrorback, imgHome, img_search;
     TextView txt_title;
     ArrayList<PhotoAudioVideoItem> photoAudioVideoItems;
     AudioListAdapter audioListAdapter;
@@ -35,7 +35,7 @@ public class EventsAllDisplay extends AppCompatActivity {
     ArrayList<String> myList;
     ArrayList<String> videolist;
     ArrayList<String> photolist;
-
+    TextView textview;
     String status;
 
     @Override
@@ -45,6 +45,7 @@ public class EventsAllDisplay extends AppCompatActivity {
         myList = (ArrayList<String>) getIntent().getSerializableExtra("mylist");
         status = getIntent().getStringExtra("status");
         recycleview = (RecyclerView) findViewById(R.id.recycleview);
+        textview = (TextView) findViewById(R.id.textview);
         gridLayoutManager = new GridLayoutManager(EventsAllDisplay.this, 2);
         recycleview.setLayoutManager(gridLayoutManager);
         imgarrorback = (ImageView) findViewById(R.id.imgarrorback);
@@ -52,10 +53,10 @@ public class EventsAllDisplay extends AppCompatActivity {
         img_search.setVisibility(View.GONE);
         imgHome = (ImageView) findViewById(R.id.imgHome);
         txt_title = (TextView) findViewById(R.id.txt_title);
-        if (status.equalsIgnoreCase("a")){
+        if (status.equalsIgnoreCase("a")) {
             txt_title.setText("Event Audios");
         }
-        if (status.equalsIgnoreCase("v")){
+        if (status.equalsIgnoreCase("v")) {
             txt_title.setText("Event Videos");
         }
 
@@ -67,14 +68,35 @@ public class EventsAllDisplay extends AppCompatActivity {
             }
         });
 
-        Log.e("mylist","-------------"+myList);
+        Log.e("mylist", "-------------" + myList);
         if (status.equalsIgnoreCase("p")) {
-            setPhotos();
+            Log.e("mylist","------------"+myList);
+            if (myList.isEmpty()) {
+                textview.setVisibility(View.VISIBLE);
+                textview.setText("No Images Avalable.");
+            } else {
+                setPhotos();
+            }
         } else if (status.equalsIgnoreCase("a")) {
-            setAudios();
+            Log.e("mylistaudio","------------"+photoAudioVideoItems);
+
+
+            if (myList.isEmpty()) {
+                textview.setVisibility(View.VISIBLE);
+                textview.setText("No Audio Avalable.");
+            } else {
+                setAudios();
+            }
 
         } else if (status.equalsIgnoreCase("v")) {
-            setVideos();
+            Log.e("videomylist","------------"+photoAudioVideoItems);
+
+            if (myList.isEmpty()) {
+                textview.setVisibility(View.VISIBLE);
+                textview.setText("No Video Avalable.");
+            } else {
+                setVideos();
+            }
 
         }
 

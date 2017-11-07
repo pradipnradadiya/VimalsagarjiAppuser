@@ -171,8 +171,8 @@ public class AllVideoFragment extends Fragment {
         if (video_cat_id.equalsIgnoreCase("e_alliamgeid")) {
             Log.e("response", "---------------" + "evemnt");
             listVideoName.clear();
-            activity_main_swipe_refresh_layout.setRefreshing( false );
-            activity_main_swipe_refresh_layout.setEnabled( false );
+            activity_main_swipe_refresh_layout.setRefreshing(false);
+            activity_main_swipe_refresh_layout.setEnabled(false);
             if (CommonMethod.isInternetConnected(getActivity())) {
                 new AllEventVideo().execute();
             } else {
@@ -191,8 +191,8 @@ public class AllVideoFragment extends Fragment {
         } else if (video_cat_id.equalsIgnoreCase("bypeopleidid")) {
             Log.e("response", "---------------" + "bypeople");
             listVideoName.clear();
-            activity_main_swipe_refresh_layout.setRefreshing( false );
-            activity_main_swipe_refresh_layout.setEnabled( false );
+            activity_main_swipe_refresh_layout.setRefreshing(false);
+            activity_main_swipe_refresh_layout.setEnabled(false);
             if (CommonMethod.isInternetConnected(getActivity())) {
                 new AllByPeopleVideo().execute();
             } else {
@@ -487,611 +487,627 @@ public class AllVideoFragment extends Fragment {
             holder.txtVideoName.setText(items.get(position));
             holder.txtVideoDate.setText(listDate.get(position));
             if (listIcon != null) {
-                Picasso.with(getActivity()).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.no_image).into(holder.imgVideo);
+                Picasso.with(getActivity()).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0, 200).error(R.drawable.no_image).into(holder.imgVideo);
             } else {
                 Picasso.with(getActivity()).load(R.drawable.no_image);
             }
             holder.imgPlayVideo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listid.get(position).equalsIgnoreCase("eid")) {
+                    if (listid.get(position).equalsIgnoreCase(listid.get(position))) {
 
-                        Intent intent = new Intent(getActivity(), EventsAllDisplay.class);
-                        intent.putExtra("mylist", videolistarray);
-                        intent.putExtra("status", "v");
-                        startActivity(intent);
-                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        if (listVideo.get(position).equalsIgnoreCase("")) {
+                            videolistarray=new ArrayList<>();
+                            Intent intent = new Intent(getActivity(), EventsAllDisplay.class);
+                            intent.putExtra("mylist", videolistarray);
+                            intent.putExtra("status", "v");
+                            startActivity(intent);
+                            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
-                    } else {
-                        String strVideo = listVideo.get(position);
-                        Log.e("videofile", "------------------" + strVideo);
-                        String videoname = listVideoName.get(position);
-                        Log.e("videoname", "------------------" + videoname);
-                        String id = listid.get(position);
-                        Log.e("id", "------------------" + id);
-                        String catid = listcatid.get(position);
-                        Log.e("catid", "------------------" + catid);
-                        String photo = listIcon.get(position);
-                        Log.e("photo", "------------------" + photo);
-                        String date = listDate.get(position);
-                        Log.e("date", "------------------" + date);
+                        } else {
+                            videolistarray=new ArrayList<>();
+                            String[] vi = listVideo.get(position).split(",");
+                            for (int k = 0; k < vi.length; k++) {
+                                videolistarray.add(vi[k]);
+                            }
+                            Intent intent = new Intent(getActivity(), EventsAllDisplay.class);
+                            intent.putExtra("mylist", videolistarray);
+                            intent.putExtra("status", "v");
+                            startActivity(intent);
+                            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        }
 
-                        Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
-                        intent.putExtra("click_action", "");
-                        intent.putExtra("video", strVideo);
-                        intent.putExtra("videoname", videoname);
-                        intent.putExtra("id", id);
-                        intent.putExtra("catid", catid);
-                        intent.putExtra("photo", photo);
-                        intent.putExtra("date", date);
-                        intent.putExtra("view", listview.get(position));
 
-                        startActivity(intent);
-                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    }
+
+                } else
+
+                {
+                    String strVideo = listVideo.get(position);
+                    Log.e("videofile", "------------------" + strVideo);
+                    String videoname = listVideoName.get(position);
+                    Log.e("videoname", "------------------" + videoname);
+                    String id = listid.get(position);
+                    Log.e("id", "------------------" + id);
+                    String catid = listcatid.get(position);
+                    Log.e("catid", "------------------" + catid);
+                    String photo = listIcon.get(position);
+                    Log.e("photo", "------------------" + photo);
+                    String date = listDate.get(position);
+                    Log.e("date", "------------------" + date);
+
+                    Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
+                    intent.putExtra("click_action", "");
+                    intent.putExtra("video", strVideo);
+                    intent.putExtra("videoname", videoname);
+                    intent.putExtra("id", id);
+                    intent.putExtra("catid", catid);
+                    intent.putExtra("photo", photo);
+                    intent.putExtra("date", date);
+                    intent.putExtra("view", listview.get(position));
+
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
-            });
+            }
+        });
 
 
             return convertView;
 
-        }
-
-        private class ViewHolder {
-            TextView txtVideoName, txtVideoDate, txt_views;
-            ImageView imgVideo, imgPlayVideo, imgPlayPush, imgPlayVideo1;
-
-        }
     }
 
-    @SuppressWarnings("deprecation")
-    public class SearchAllVideo extends AsyncTask<String, String, String> {
+    private class ViewHolder {
+        TextView txtVideoName, txtVideoDate, txt_views;
+        ImageView imgVideo, imgPlayVideo, imgPlayPush, imgPlayVideo1;
 
-        String status;
-        public LayoutInflater inflater = null;
-        private static final String TAG_SUCCESS = "success";
+    }
+}
 
-        protected void onPreExecute() {
-            super.onPreExecute();
+@SuppressWarnings("deprecation")
+public class SearchAllVideo extends AsyncTask<String, String, String> {
+
+    String status;
+    public LayoutInflater inflater = null;
+    private static final String TAG_SUCCESS = "success";
+
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @SuppressWarnings("ResourceType")
+    @Override
+    protected String doInBackground(String... param) {
+        try {
+            JSONParser1 jsonParser = new JSONParser1();
+            //    String count = param[0];
+            videolistarray = new ArrayList<>();
+            String searchitem = InputBox.getText().toString();
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("cid", video_cat_id));
+            params.add(new BasicNameValuePair("searchterm", searchitem));
+            System.out.println("InputBox Value " + searchitem);
+            JSONObject json = jsonParser.makeHttpRequest(AllSearchVideo, "POST", params);
+            // JSONObject json = JSONParser.getJsonFromUrl(url);
+            Log.d("Create Response", json.toString());
+            status = json.optString(TAG_SUCCESS);
+            for (int i = 0; i < json.length(); i++) {
+                listVideoName = new ArrayList<>();
+                JSONArray jsonArray = json.getJSONArray("data");
+                System.out.println("JsonArray is" + jsonArray.length());
+                for (int j = 0; j < jsonArray.length(); j++) {
+                    JSONObject object = jsonArray.getJSONObject(j);
+                    String id = object.getString("ID");
+                    Log.e("id", "------------------------" + id);
+                    listid.add(id);
+                    String videoname = object.getString("VideoName");
+                    Log.e("videoname", "------------------------" + videoname);
+                    listVideoName.add(videoname);
+                    String catid = object.getString("CategoryID");
+                    listcatid.add(catid);
+                    String video = object.getString("Video");
+                    String[] vi = video.split(",");
+                    for (int k = 0; k < vi.length; k++) {
+                        videolistarray.add(vi[i]);
+                    }
+
+
+                    String vidio = VideoPath + video;
+                    Log.e("vidio", "------------------------" + vidio);
+                    listVideo.add(vidio.replaceAll(" ", "%20"));
+                    String photo = object.getString("Photo");
+                    String img = ImgURL + photo;
+                    Log.e("img", "------------------------" + img);
+                    listIcon.add(img.replaceAll(" ", "%20"));
+                    String date = object.getString("Date");
+                    String view = object.getString("View");
+                    listview.add(view);
+
+                    Date dt = CommonMethod.convert_date(date);
+                    Log.e("Convert date is", "------------------" + dt);
+                    String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
+                    String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
+                    String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
+                    String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
+                    String day = (String) android.text.format.DateFormat.format("dd", dt); //20
+
+                    Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
+                    Log.e("stringMonth", "-----------------" + stringMonth);
+                    Log.e("intMonth", "-----------------" + intMonth);
+                    Log.e("year", "-----------------" + year);
+                    Log.e("day", "-----------------" + day);
+
+                    String fulldate = day + "/" + intMonth + "/" + year;
+
+                    String[] time = date.split("\\s+");
+                    Log.e("time", "-----------------------" + time[1]);
+
+
+                    listDate.add(dayOfTheWeek + ", " + fulldate);
+                    String name = object.getString("Name");
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
+
+    protected void onPostExecute(String status) {
+        super.onPostExecute(status);
+        InformationCategory informationCategory = new InformationCategory();
+
+        if (listViewvideo != null) {
+            customAdpter = new CustomAdpter(getActivity(), listVideoName);
+            if (customAdpter.getCount() != 0) {
+                listViewvideo.setVisibility(View.VISIBLE);
+                txt_nodata_today.setVisibility(View.GONE);
+                listViewvideo.setAdapter(customAdpter);
+            } else {
+                listViewvideo.setVisibility(View.GONE);
+                txt_nodata_today.setText("No Search\n Found");
+                txt_nodata_today.setVisibility(View.VISIBLE);
+//                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+            }
         }
 
-        @SuppressWarnings("ResourceType")
-        @Override
-        protected String doInBackground(String... param) {
-            try {
-                JSONParser1 jsonParser = new JSONParser1();
-                //    String count = param[0];
+    }
+
+}
+
+private class AllEventVideo extends AsyncTask<String, Void, String> {
+    String responJSON = "";
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        loadingProgressDialog = KProgressHUD.create(getActivity())
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please Wait")
+                .setCancellable(true);
+        loadingProgressDialog.show();
+    }
+
+    @Override
+    protected String doInBackground(String... params) {
+
+        try {
+            responJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return responJSON;
+    }
+
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        Log.e("response", "--------------------------------" + s);
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                 videolistarray = new ArrayList<>();
-                String searchitem = InputBox.getText().toString();
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("cid", video_cat_id));
-                params.add(new BasicNameValuePair("searchterm", searchitem));
-                System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest(AllSearchVideo, "POST", params);
-                // JSONObject json = JSONParser.getJsonFromUrl(url);
-                Log.d("Create Response", json.toString());
-                status = json.optString(TAG_SUCCESS);
-                for (int i = 0; i < json.length(); i++) {
-                    listVideoName = new ArrayList<>();
-                    JSONArray jsonArray = json.getJSONArray("data");
-                    System.out.println("JsonArray is" + jsonArray.length());
-                    for (int j = 0; j < jsonArray.length(); j++) {
-                        JSONObject object = jsonArray.getJSONObject(j);
-                        String id = object.getString("ID");
-                        Log.e("id", "------------------------" + id);
-                        listid.add(id);
-                        String videoname = object.getString("VideoName");
-                        Log.e("videoname", "------------------------" + videoname);
-                        listVideoName.add(videoname);
-                        String catid = object.getString("CategoryID");
-                        listcatid.add(catid);
-                        String video = object.getString("Video");
-                        String[] vi = video.split(",");
-                        for (int k = 0; k < vi.length; k++) {
-                            videolistarray.add(vi[i]);
-                        }
+                JSONArray jsonArray = jsonObject.getJSONArray("data");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    String id = "eid" + String.valueOf(i);
+                    Log.e("id", "------------------------" + id);
+                    listid.add(id);
+                    String videoname = object.getString("Title");
+                    Log.e("videoname", "------------------------" + videoname);
+                    listVideoName.add(videoname);
+                    String catid = "cid";
+                    listcatid.add(catid);
+                    String video = object.getString("Video");
 
+                    String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/eventvideo/" + video;
+                    Log.e("vidio", "------------------------" + vidio);
+                    listVideo.add(video);
+                    String photo = object.getString("Photo");
+                    String[] parray = photo.split(",");
+                    String img = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/" + parray[0];
 
-                        String vidio = VideoPath + video;
-                        Log.e("vidio", "------------------------" + vidio);
-                        listVideo.add(vidio.replaceAll(" ", "%20"));
-                        String photo = object.getString("Photo");
-                        String img = ImgURL + photo;
-                        Log.e("img", "------------------------" + img);
-                        listIcon.add(img.replaceAll(" ", "%20"));
-                        String date = object.getString("Date");
-                        String view = object.getString("View");
-                        listview.add(view);
+                    Log.e("img", "------------------------" + img);
+                    listIcon.add(img.replaceAll(" ", "%20"));
+                    String date = object.getString("Date");
+                    String view = object.getString("View");
+                    listview.add(view);
+                    Date dt = CommonMethod.convert_date(date);
+                    Log.e("Convert date is", "------------------" + dt);
+                    String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
+                    String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
+                    String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
+                    String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
+                    String day = (String) android.text.format.DateFormat.format("dd", dt); //20
 
-                        Date dt = CommonMethod.convert_date(date);
-                        Log.e("Convert date is", "------------------" + dt);
-                        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
-                        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
-                        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
-                        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
-                        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
+                    Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
+                    Log.e("stringMonth", "-----------------" + stringMonth);
+                    Log.e("intMonth", "-----------------" + intMonth);
+                    Log.e("year", "-----------------" + year);
+                    Log.e("day", "-----------------" + day);
 
-                        Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
-                        Log.e("stringMonth", "-----------------" + stringMonth);
-                        Log.e("intMonth", "-----------------" + intMonth);
-                        Log.e("year", "-----------------" + year);
-                        Log.e("day", "-----------------" + day);
+                    String fulldate = day + "/" + intMonth + "/" + year;
 
-                        String fulldate = day + "/" + intMonth + "/" + year;
+                    String[] time = date.split("\\s+");
+                    Log.e("time", "-----------------------" + time[1]);
 
-                        String[] time = date.split("\\s+");
-                        Log.e("time", "-----------------------" + time[1]);
-
-
-                        listDate.add(dayOfTheWeek + ", " + fulldate);
-                        String name = object.getString("Name");
-                    }
+                    listDate.add(dayOfTheWeek + ", " + fulldate);
+//                        String name = object.getString("Name");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            } else {
+
             }
-            return status;
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
-        protected void onPostExecute(String status) {
-            super.onPostExecute(status);
-            InformationCategory informationCategory = new InformationCategory();
 
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+        if (loadingProgressDialog != null) {
+            loadingProgressDialog.dismiss();
+        }
+
+        if (listViewvideo != null) {
+            customAdpter = new CustomAdpter(getActivity(), listVideoName);
+            if (customAdpter.getCount() != 0) {
+                listViewvideo.setVisibility(View.VISIBLE);
+                txt_nodata_today.setVisibility(View.GONE);
+                listViewvideo.setAdapter(customAdpter);
+                customAdpter.notifyDataSetChanged();
+            } else {
+                listViewvideo.setVisibility(View.GONE);
+                txt_nodata_today.setVisibility(View.VISIBLE);
+
+            }
+
+
+        }
+
+    }
+
+}
+
+private class AllByPeopleVideo extends AsyncTask<String, Void, String> {
+    String responJSON = "";
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        loadingProgressDialog = KProgressHUD.create(getActivity())
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please Wait")
+                .setCancellable(true);
+        loadingProgressDialog.show();
+    }
+
+    @Override
+    protected String doInBackground(String... params) {
+
+        try {
+            responJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return responJSON;
+    }
+
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        Log.e("response", "--------------------------------" + s);
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                JSONArray jsonArray = jsonObject.getJSONArray("data");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    String id = "bid";
+                    Log.e("id", "------------------------" + id);
+                    listid.add(id);
+                    String videoname = object.getString("Title");
+                    Log.e("videoname", "------------------------" + videoname);
+                    listVideoName.add(videoname);
+                    String catid = "cid";
+                    listcatid.add(catid);
+                    String video = object.getString("Video");
+                    String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/bypeoplevideo/" + video;
+                    Log.e("vidio", "------------------------" + vidio);
+                    listVideo.add(vidio.replaceAll(" ", "%20"));
+                    String photo = object.getString("Photo");
+                    String img = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + photo;
+                    Log.e("img", "------------------------" + img);
+                    listIcon.add(img.replaceAll(" ", "%20"));
+                    String date = object.getString("Date");
+                    Date dt = CommonMethod.convert_date(date);
+                    Log.e("Convert date is", "------------------" + dt);
+                    String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
+                    String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
+                    String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
+                    String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
+                    String day = (String) android.text.format.DateFormat.format("dd", dt); //20
+
+                    Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
+                    Log.e("stringMonth", "-----------------" + stringMonth);
+                    Log.e("intMonth", "-----------------" + intMonth);
+                    Log.e("year", "-----------------" + year);
+                    Log.e("day", "-----------------" + day);
+
+                    String fulldate = day + "/" + intMonth + "/" + year;
+
+                    String[] time = date.split("\\s+");
+                    Log.e("time", "-----------------------" + time[1]);
+
+                    listDate.add(dayOfTheWeek + ", " + fulldate);
+                    String name = object.getString("Name");
+                    String view = object.getString("View");
+                    listview.add(view);
+                }
+            } else {
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        if (loadingProgressDialog != null) {
+            loadingProgressDialog.dismiss();
+        }
+
+        if (listViewvideo != null) {
+            customAdpter = new CustomAdpter(getActivity(), listVideoName);
+            if (customAdpter.getCount() != 0) {
+                listViewvideo.setVisibility(View.VISIBLE);
+                txt_nodata_today.setVisibility(View.GONE);
+                listViewvideo.setAdapter(customAdpter);
+                customAdpter.notifyDataSetChanged();
+            } else {
+                listViewvideo.setVisibility(View.GONE);
+                txt_nodata_today.setVisibility(View.VISIBLE);
+
+            }
+
+
+        }
+
+    }
+
+}
+
+@SuppressWarnings("deprecation")
+public class SearchAllTodayEventVideo extends AsyncTask<String, String, String> {
+
+    String status;
+    public LayoutInflater inflater = null;
+    private static final String TAG_SUCCESS = "success";
+
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @SuppressWarnings("ResourceType")
+    @Override
+    protected String doInBackground(String... param) {
+        try {
+            JSONParser1 jsonParser = new JSONParser1();
+            //    String count = param[0];
+
+            String searchitem = InputBox.getText().toString();
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+            params.add(new BasicNameValuePair("searchterm", searchitem));
+            System.out.println("InputBox Value " + searchitem);
+            JSONObject json = jsonParser.makeHttpRequest("http://www.grapes-solutions.com/vimalsagarji/event/searcheventsbycategoryyear/?searchterm=vimal&page=1&psize=100", "POST", params);
+            // JSONObject json = JSONParser.getJsonFromUrl(url);
+            Log.d("Create Response", json.toString());
+            status = json.optString(TAG_SUCCESS);
+            for (int i = 0; i < json.length(); i++) {
+                listVideoName = new ArrayList<>();
+                JSONArray jsonArray = json.getJSONArray("data");
+                System.out.println("JsonArray is" + jsonArray.length());
+                for (int j = 0; j < jsonArray.length(); j++) {
+                    JSONObject object = jsonArray.getJSONObject(j);
+                    String id = "eid";
+                    Log.e("id", "------------------------" + id);
+                    listid.add(id);
+                    String videoname = object.getString("Title");
+                    Log.e("videoname", "------------------------" + videoname);
+                    listVideoName.add(videoname);
+                    String catid = "cid";
+                    listcatid.add(catid);
+                    String video = object.getString("Video");
+                    String[] vi = video.split(",");
+                    for (int k = 0; k < vi.length; k++) {
+                        videolistarray.add(vi[k]);
+                    }
+                    String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/eventvideo/" + video;
+                    Log.e("vidio", "------------------------" + vidio);
+                    listVideo.add(vidio.replaceAll(" ", "%20"));
+                    String photo = object.getString("Photo");
+                    String[] parray = photo.split(",");
+                    String img = "http://www.grapes-solutions.com/vimalsagarji/static/eventaudio/" + parray[0];
+                    Log.e("img", "------------------------" + img);
+                    listIcon.add(img.replaceAll(" ", "%20"));
+                    String date = object.getString("Date");
+                    String view = object.getString("View");
+                    listview.add(view);
+                    Date dt = CommonMethod.convert_date(date);
+                    Log.e("Convert date is", "------------------" + dt);
+                    String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
+                    String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
+                    String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
+                    String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
+                    String day = (String) android.text.format.DateFormat.format("dd", dt); //20
+
+                    Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
+                    Log.e("stringMonth", "-----------------" + stringMonth);
+                    Log.e("intMonth", "-----------------" + intMonth);
+                    Log.e("year", "-----------------" + year);
+                    Log.e("day", "-----------------" + day);
+
+                    String fulldate = day + "/" + intMonth + "/" + year;
+
+                    String[] time = date.split("\\s+");
+                    Log.e("time", "-----------------------" + time[1]);
+
+
+                    listDate.add(dayOfTheWeek + ", " + fulldate);
+                    String name = object.getString("Name");
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
+
+    protected void onPostExecute(String status) {
+        super.onPostExecute(status);
+        InformationCategory informationCategory = new InformationCategory();
+
+        if (listViewvideo != null) {
+            customAdpter = new CustomAdpter(getActivity(), listVideoName);
+            if (customAdpter.getCount() != 0) {
+                listViewvideo.setVisibility(View.VISIBLE);
+                txt_nodata_today.setVisibility(View.GONE);
+                listViewvideo.setAdapter(customAdpter);
+            } else {
+                listViewvideo.setVisibility(View.GONE);
+                txt_nodata_today.setText("No Search\n Found");
+                txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
-                }
             }
-
         }
 
     }
 
-    private class AllEventVideo extends AsyncTask<String, Void, String> {
-        String responJSON = "";
+}
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
-                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                    .setLabel("Please Wait")
-                    .setCancellable(true);
-            loadingProgressDialog.show();
-        }
+@SuppressWarnings("deprecation")
+public class SearchAllTodayByPeople extends AsyncTask<String, String, String> {
 
-        @Override
-        protected String doInBackground(String... params) {
+    String status;
+    public LayoutInflater inflater = null;
+    private static final String TAG_SUCCESS = "success";
 
-            try {
-                responJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000");
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return responJSON;
-        }
-
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Log.e("response", "--------------------------------" + s);
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
-                    videolistarray = new ArrayList<>();
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        String id = "eid";
-                        Log.e("id", "------------------------" + id);
-                        listid.add(id);
-                        String videoname = object.getString("Title");
-                        Log.e("videoname", "------------------------" + videoname);
-                        listVideoName.add(videoname);
-                        String catid = "cid";
-                        listcatid.add(catid);
-                        String video = object.getString("Video");
-                        String[] vi = video.split(",");
-                        for (int k = 0; k < vi.length; k++) {
-                            videolistarray.add(vi[k]);
-                        }
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/eventvideo/" + video;
-                        Log.e("vidio", "------------------------" + vidio);
-                        listVideo.add(vidio.replaceAll(" ", "%20"));
-                        String photo = object.getString("Photo");
-                        String[] parray = photo.split(",");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/" + parray[0];
-
-                        Log.e("img", "------------------------" + img);
-                        listIcon.add(img.replaceAll(" ", "%20"));
-                        String date = object.getString("Date");
-                        String view = object.getString("View");
-                        listview.add(view);
-                        Date dt = CommonMethod.convert_date(date);
-                        Log.e("Convert date is", "------------------" + dt);
-                        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
-                        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
-                        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
-                        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
-                        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
-
-                        Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
-                        Log.e("stringMonth", "-----------------" + stringMonth);
-                        Log.e("intMonth", "-----------------" + intMonth);
-                        Log.e("year", "-----------------" + year);
-                        Log.e("day", "-----------------" + day);
-
-                        String fulldate = day + "/" + intMonth + "/" + year;
-
-                        String[] time = date.split("\\s+");
-                        Log.e("time", "-----------------------" + time[1]);
-
-                        listDate.add(dayOfTheWeek + ", " + fulldate);
-                        String name = object.getString("Name");
-                    }
-                } else {
-
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-            if (loadingProgressDialog != null) {
-                loadingProgressDialog.dismiss();
-            }
-
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                    customAdpter.notifyDataSetChanged();
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
-
-                }
-
-
-            }
-
-        }
-
+    protected void onPreExecute() {
+        super.onPreExecute();
     }
 
-    private class AllByPeopleVideo extends AsyncTask<String, Void, String> {
-        String responJSON = "";
+    @SuppressWarnings("ResourceType")
+    @Override
+    protected String doInBackground(String... param) {
+        try {
+            JSONParser1 jsonParser = new JSONParser1();
+            //    String count = param[0];
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
-                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                    .setLabel("Please Wait")
-                    .setCancellable(true);
-            loadingProgressDialog.show();
-        }
+            String searchitem = InputBox.getText().toString();
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("searchterm", searchitem));
+            System.out.println("InputBox Value " + searchitem);
+            JSONObject json = jsonParser.makeHttpRequest("http://www.grapes-solutions.com/vimalsagarji/bypeople/searchallposts/?page=1&psize=1000", "POST", params);
+            // JSONObject json = JSONParser.getJsonFromUrl(url);
+            Log.d("Create Response", json.toString());
+            status = json.optString(TAG_SUCCESS);
+            for (int i = 0; i < json.length(); i++) {
+                listVideoName = new ArrayList<>();
+                JSONArray jsonArray = json.getJSONArray("data");
+                System.out.println("JsonArray is" + jsonArray.length());
+                for (int j = 0; j < jsonArray.length(); j++) {
+                    JSONObject object = jsonArray.getJSONObject(j);
+                    String id = "bid";
+                    Log.e("id", "------------------------" + id);
+                    listid.add(id);
+                    String videoname = object.getString("Title");
+                    Log.e("videoname", "------------------------" + videoname);
+                    listVideoName.add(videoname);
+                    String catid = "cid";
+                    listcatid.add(catid);
+                    String video = object.getString("Video");
+                    String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/bypeoplevideo/" + video;
+                    Log.e("vidio", "------------------------" + vidio);
+                    listVideo.add(vidio.replaceAll(" ", "%20"));
+                    String photo = object.getString("Photo");
+                    String img = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + photo;
+                    Log.e("img", "------------------------" + img);
+                    listIcon.add(img.replaceAll(" ", "%20"));
+                    String date = object.getString("Date");
+                    String view = object.getString("View");
+                    listview.add(view);
+                    Date dt = CommonMethod.convert_date(date);
+                    Log.e("Convert date is", "------------------" + dt);
+                    String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
+                    String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
+                    String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
+                    String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
+                    String day = (String) android.text.format.DateFormat.format("dd", dt); //20
 
-        @Override
-        protected String doInBackground(String... params) {
+                    Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
+                    Log.e("stringMonth", "-----------------" + stringMonth);
+                    Log.e("intMonth", "-----------------" + intMonth);
+                    Log.e("year", "-----------------" + year);
+                    Log.e("day", "-----------------" + day);
 
-            try {
-                responJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000");
+                    String fulldate = day + "/" + intMonth + "/" + year;
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return responJSON;
-        }
+                    String[] time = date.split("\\s+");
+                    Log.e("time", "-----------------------" + time[1]);
 
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Log.e("response", "--------------------------------" + s);
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        String id = "bid";
-                        Log.e("id", "------------------------" + id);
-                        listid.add(id);
-                        String videoname = object.getString("Title");
-                        Log.e("videoname", "------------------------" + videoname);
-                        listVideoName.add(videoname);
-                        String catid = "cid";
-                        listcatid.add(catid);
-                        String video = object.getString("Video");
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/bypeoplevideo/" + video;
-                        Log.e("vidio", "------------------------" + vidio);
-                        listVideo.add(vidio.replaceAll(" ", "%20"));
-                        String photo = object.getString("Photo");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + photo;
-                        Log.e("img", "------------------------" + img);
-                        listIcon.add(img.replaceAll(" ", "%20"));
-                        String date = object.getString("Date");
-                        Date dt = CommonMethod.convert_date(date);
-                        Log.e("Convert date is", "------------------" + dt);
-                        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
-                        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
-                        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
-                        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
-                        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
-
-                        Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
-                        Log.e("stringMonth", "-----------------" + stringMonth);
-                        Log.e("intMonth", "-----------------" + intMonth);
-                        Log.e("year", "-----------------" + year);
-                        Log.e("day", "-----------------" + day);
-
-                        String fulldate = day + "/" + intMonth + "/" + year;
-
-                        String[] time = date.split("\\s+");
-                        Log.e("time", "-----------------------" + time[1]);
-
-                        listDate.add(dayOfTheWeek + ", " + fulldate);
-                        String name = object.getString("Name");
-                        String view = object.getString("View");
-                        listview.add(view);
-                    }
-                } else {
-
+                    listDate.add(dayOfTheWeek + ", " + fulldate);
+                    String name = object.getString("Name");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
 
-
-            if (loadingProgressDialog != null) {
-                loadingProgressDialog.dismiss();
-            }
-
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                    customAdpter.notifyDataSetChanged();
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
-
-                }
-
-
-            }
-
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
+        return status;
     }
 
-    @SuppressWarnings("deprecation")
-    public class SearchAllTodayEventVideo extends AsyncTask<String, String, String> {
+    protected void onPostExecute(String status) {
+        super.onPostExecute(status);
+        InformationCategory informationCategory = new InformationCategory();
 
-        String status;
-        public LayoutInflater inflater = null;
-        private static final String TAG_SUCCESS = "success";
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @SuppressWarnings("ResourceType")
-        @Override
-        protected String doInBackground(String... param) {
-            try {
-                JSONParser1 jsonParser = new JSONParser1();
-                //    String count = param[0];
-
-                String searchitem = InputBox.getText().toString();
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-
-                params.add(new BasicNameValuePair("searchterm", searchitem));
-                System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.grapes-solutions.com/vimalsagarji/event/searcheventsbycategoryyear/?searchterm=vimal&page=1&psize=100", "POST", params);
-                // JSONObject json = JSONParser.getJsonFromUrl(url);
-                Log.d("Create Response", json.toString());
-                status = json.optString(TAG_SUCCESS);
-                for (int i = 0; i < json.length(); i++) {
-                    listVideoName = new ArrayList<>();
-                    JSONArray jsonArray = json.getJSONArray("data");
-                    System.out.println("JsonArray is" + jsonArray.length());
-                    for (int j = 0; j < jsonArray.length(); j++) {
-                        JSONObject object = jsonArray.getJSONObject(j);
-                        String id = "eid";
-                        Log.e("id", "------------------------" + id);
-                        listid.add(id);
-                        String videoname = object.getString("Title");
-                        Log.e("videoname", "------------------------" + videoname);
-                        listVideoName.add(videoname);
-                        String catid = "cid";
-                        listcatid.add(catid);
-                        String video = object.getString("Video");
-                        String[] vi = video.split(",");
-                        for (int k = 0; k < vi.length; k++) {
-                            videolistarray.add(vi[k]);
-                        }
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/eventvideo/" + video;
-                        Log.e("vidio", "------------------------" + vidio);
-                        listVideo.add(vidio.replaceAll(" ", "%20"));
-                        String photo = object.getString("Photo");
-                        String[] parray = photo.split(",");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/eventaudio/" + parray[0];
-                        Log.e("img", "------------------------" + img);
-                        listIcon.add(img.replaceAll(" ", "%20"));
-                        String date = object.getString("Date");
-                        String view = object.getString("View");
-                        listview.add(view);
-                        Date dt = CommonMethod.convert_date(date);
-                        Log.e("Convert date is", "------------------" + dt);
-                        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
-                        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
-                        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
-                        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
-                        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
-
-                        Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
-                        Log.e("stringMonth", "-----------------" + stringMonth);
-                        Log.e("intMonth", "-----------------" + intMonth);
-                        Log.e("year", "-----------------" + year);
-                        Log.e("day", "-----------------" + day);
-
-                        String fulldate = day + "/" + intMonth + "/" + year;
-
-                        String[] time = date.split("\\s+");
-                        Log.e("time", "-----------------------" + time[1]);
-
-
-                        listDate.add(dayOfTheWeek + ", " + fulldate);
-                        String name = object.getString("Name");
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return status;
-        }
-
-        protected void onPostExecute(String status) {
-            super.onPostExecute(status);
-            InformationCategory informationCategory = new InformationCategory();
-
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+        if (listViewvideo != null) {
+            customAdpter = new CustomAdpter(getActivity(), listVideoName);
+            if (customAdpter.getCount() != 0) {
+                listViewvideo.setVisibility(View.VISIBLE);
+                txt_nodata_today.setVisibility(View.GONE);
+                listViewvideo.setAdapter(customAdpter);
+            } else {
+                listViewvideo.setVisibility(View.GONE);
+                txt_nodata_today.setText("No Search\n Found");
+                txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
-                }
             }
-
         }
 
     }
 
-    @SuppressWarnings("deprecation")
-    public class SearchAllTodayByPeople extends AsyncTask<String, String, String> {
-
-        String status;
-        public LayoutInflater inflater = null;
-        private static final String TAG_SUCCESS = "success";
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @SuppressWarnings("ResourceType")
-        @Override
-        protected String doInBackground(String... param) {
-            try {
-                JSONParser1 jsonParser = new JSONParser1();
-                //    String count = param[0];
-
-                String searchitem = InputBox.getText().toString();
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("searchterm", searchitem));
-                System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.grapes-solutions.com/vimalsagarji/bypeople/searchallposts/?page=1&psize=1000", "POST", params);
-                // JSONObject json = JSONParser.getJsonFromUrl(url);
-                Log.d("Create Response", json.toString());
-                status = json.optString(TAG_SUCCESS);
-                for (int i = 0; i < json.length(); i++) {
-                    listVideoName = new ArrayList<>();
-                    JSONArray jsonArray = json.getJSONArray("data");
-                    System.out.println("JsonArray is" + jsonArray.length());
-                    for (int j = 0; j < jsonArray.length(); j++) {
-                        JSONObject object = jsonArray.getJSONObject(j);
-                        String id = "bid";
-                        Log.e("id", "------------------------" + id);
-                        listid.add(id);
-                        String videoname = object.getString("Title");
-                        Log.e("videoname", "------------------------" + videoname);
-                        listVideoName.add(videoname);
-                        String catid = "cid";
-                        listcatid.add(catid);
-                        String video = object.getString("Video");
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/bypeoplevideo/" + video;
-                        Log.e("vidio", "------------------------" + vidio);
-                        listVideo.add(vidio.replaceAll(" ", "%20"));
-                        String photo = object.getString("Photo");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + photo;
-                        Log.e("img", "------------------------" + img);
-                        listIcon.add(img.replaceAll(" ", "%20"));
-                        String date = object.getString("Date");
-                        String view = object.getString("View");
-                        listview.add(view);
-                        Date dt = CommonMethod.convert_date(date);
-                        Log.e("Convert date is", "------------------" + dt);
-                        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
-                        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
-                        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
-                        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
-                        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
-
-                        Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
-                        Log.e("stringMonth", "-----------------" + stringMonth);
-                        Log.e("intMonth", "-----------------" + intMonth);
-                        Log.e("year", "-----------------" + year);
-                        Log.e("day", "-----------------" + day);
-
-                        String fulldate = day + "/" + intMonth + "/" + year;
-
-                        String[] time = date.split("\\s+");
-                        Log.e("time", "-----------------------" + time[1]);
-
-
-                        listDate.add(dayOfTheWeek + ", " + fulldate);
-                        String name = object.getString("Name");
-                    }
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return status;
-        }
-
-        protected void onPostExecute(String status) {
-            super.onPostExecute(status);
-            InformationCategory informationCategory = new InformationCategory();
-
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
-//                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
-                }
-            }
-
-        }
-
-    }
+}
 
 
 }

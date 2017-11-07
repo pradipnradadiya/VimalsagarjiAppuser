@@ -6,9 +6,23 @@
 
     <include layout="@layout/toolbar_home" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="No Video Avalable."
+            android:textSize="30dp" />
+    </RelativeLayout>
 
 </LinearLayout>

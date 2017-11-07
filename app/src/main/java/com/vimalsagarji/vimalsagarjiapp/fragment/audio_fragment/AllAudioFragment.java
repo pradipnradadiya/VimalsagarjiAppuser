@@ -63,8 +63,10 @@ public class AllAudioFragment extends Fragment {
     private ImageView imsearch;
     String MonthSearchAudio = "http://www.grapes-solutions.com/vimalsagarji/audio/searchallaudio/?page=1&psize=1000";
     ListView listView;
+//    ArrayList<ArrayList> audioarraylist=new ArrayList<>();
 
     ArrayList<String> audiolistarraylist = new ArrayList<>();
+    String[] aArray;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -302,20 +304,23 @@ public class AllAudioFragment extends Fragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String id = "eid";
+                        String id = "eid" + String.valueOf(i);
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.grapes-solutions.com/vimalsagarji/static/eventaudio/" + object.getString("Audio");
+                        String Audio = object.getString("Audio");
                         String Photo = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/" + object.getString("Photo");
                         Log.e("photo split", "--------------" + Photo);
                         String[] parray = Photo.split(",");
                         String audiolist = object.getString("Audio");
-                        String[] au = audiolist.split(",");
-                        for (int j = 0; i < au.length; i++) {
-                            audiolistarraylist.add(au[i]);
-                        }
-
-                        Log.e("photo", "----------------" + Photo);
+                        /*if (audiolist.equalsIgnoreCase("")) {
+                            audiolistarraylist.clear();
+                        } else {
+                            String[] au = audiolist.split(",");
+                            for (int j = 0; j < au.length; j++) {
+                                audiolistarraylist.add(au[j]);
+                            }
+                        }*/
+//                        Log.e("photo", "----------------" + Photo);
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");
@@ -501,12 +506,31 @@ public class AllAudioFragment extends Fragment {
                     public void onClick(View v) {
                         Log.e("play audio", "------------------");
 
-                        if (items.get(position).getID().equalsIgnoreCase("eid")) {
+                        if (items.get(position).getID().equalsIgnoreCase("eid" + String.valueOf(position))) {
                             Intent intent = new Intent(getActivity(), EventsAllDisplay.class);
-                            intent.putExtra("mylist", audiolistarraylist);
-                            intent.putExtra("status", "a");
-                            startActivity(intent);
-                            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            if (items.get(position).getAudio().equalsIgnoreCase("")) {
+                                Log.e("audio play lisy list", "-------------" + audiolistarraylist);
+
+                                audiolistarraylist = new ArrayList<>();
+                                intent.putExtra("mylist", audiolistarraylist);
+                                intent.putExtra("status", "a");
+                                startActivity(intent);
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                                audiolistarraylist.clear();
+                            } else {
+                                audiolistarraylist = new ArrayList<>();
+                                String[] au = items.get(position).getAudio().split(",");
+                                for (int j = 0; j < au.length; j++) {
+                                    audiolistarraylist.add(au[j]);
+                                }
+                                Log.e("audio play lisy list", "-------------" + audiolistarraylist);
+
+                                intent.putExtra("mylist", audiolistarraylist);
+                                intent.putExtra("status", "a");
+                                startActivity(intent);
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            }
+
                         } else {
                             Intent i = new Intent(getActivity(), AudioDetail.class);
                             i.putExtra("click_action", "");
@@ -533,7 +557,7 @@ public class AllAudioFragment extends Fragment {
             holder.txt_views.setText(items.get(position).getView());
             holder.txtAudioName.setText(items.get(position).getAudioName());
             holder.txtAudioDate.setText(items.get(position).getDate());
-            Picasso.with(getActivity()).load(items.get(position).getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.no_image).into(holder.imgAudio);
+            Picasso.with(getActivity()).load(items.get(position).getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0, 200).error(R.drawable.no_image).into(holder.imgAudio);
             Log.e("image path", "-----------------" + items.get(position).getPhoto().replaceAll(" ", "%20"));
             holder.imgAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
