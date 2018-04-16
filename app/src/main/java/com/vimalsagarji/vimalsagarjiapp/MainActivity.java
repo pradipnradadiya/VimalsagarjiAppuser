@@ -15,6 +15,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -38,6 +39,8 @@ import android.widget.ToggleButton;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.AboutAppGuruji;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.AboutAppInfo;
+import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.GurujiMissionActivity;
+import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.GurujiVisionActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.NotificationActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SettingActivity;
@@ -54,12 +57,15 @@ import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.OpinionPoll;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.QuestionAnswerActivity;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.ThoughtsActivity;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 @SuppressWarnings("ALL")
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private View headerLayout;
     private LinearLayout lin_alert;
     private LinearLayout lin_home;
     private LinearLayout lin_info;
+    private LinearLayout lin_about;
     private LinearLayout lin_event;
     private LinearLayout lin_audio;
     private LinearLayout lin_video;
@@ -71,9 +77,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout lin_bypeople;
     private LinearLayout lin_user;
     private LinearLayout lin_setting;
-    private TextView txt_aboutinfo, txt_aboutguruji;
+    private LinearLayout lin_show_hide;
+    private TextView txt_aboutinfo, txt_aboutguruji, txt_aboutmission, txt_appinfo;
     private Dialog dialog;
-    private ImageView img_youtube, img_facebook, img_gplus;
+    private CircleImageView img_youtube, img_facebook;
     private boolean doubleBackToExitPressedOnce = false;
     Intent intent;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
@@ -82,8 +89,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     static Button notifCount;
     static int mNotifCount = 0;
-    ImageView img_back;
-
+    private ImageView img_back;
+    private ImageView img_hide_show;
+    private int flag = 0;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -118,8 +126,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
 
         displayFirebaseRegId();
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_main2);
         setSupportActionBar(toolbar);
@@ -151,14 +157,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void findID() {
-
-        img_youtube = (ImageView) headerLayout.findViewById(R.id.img_youtube);
-        img_facebook = (ImageView) headerLayout.findViewById(R.id.img_facebook);
-        img_gplus = (ImageView) headerLayout.findViewById(R.id.img_gplus);
-
-
+        img_youtube = (CircleImageView) headerLayout.findViewById(R.id.img_youtube);
+        img_facebook = (CircleImageView) headerLayout.findViewById(R.id.img_facebook);
         lin_alert = (LinearLayout) headerLayout.findViewById(R.id.lin_alert);
         lin_info = (LinearLayout) headerLayout.findViewById(R.id.lin_info);
+        lin_about = (LinearLayout) headerLayout.findViewById(R.id.lin_about);
         lin_event = (LinearLayout) headerLayout.findViewById(R.id.lin_event);
         lin_audio = (LinearLayout) headerLayout.findViewById(R.id.lin_audio);
         lin_video = (LinearLayout) headerLayout.findViewById(R.id.lin_video);
@@ -169,13 +172,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lin_op = (LinearLayout) headerLayout.findViewById(R.id.lin_op);
         lin_bypeople = (LinearLayout) headerLayout.findViewById(R.id.lin_bypeople);
         lin_setting = (LinearLayout) headerLayout.findViewById(R.id.lin_setting);
+        lin_show_hide = (LinearLayout) headerLayout.findViewById(R.id.lin_show_hide);
         txt_aboutinfo = (TextView) headerLayout.findViewById(R.id.txt_aboutinfo);
         txt_aboutguruji = (TextView) headerLayout.findViewById(R.id.txt_aboutguruji);
+        txt_aboutmission = (TextView) headerLayout.findViewById(R.id.txt_aboutmission);
+        txt_appinfo = (TextView) headerLayout.findViewById(R.id.txt_appinfo);
+        img_hide_show= (ImageView) headerLayout.findViewById(R.id.img_adds);
+
     }
 
     private void idClick() {
         lin_alert.setOnClickListener(this);
         lin_info.setOnClickListener(this);
+        lin_about.setOnClickListener(this);
         lin_event.setOnClickListener(this);
         lin_audio.setOnClickListener(this);
         lin_video.setOnClickListener(this);
@@ -188,9 +197,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lin_setting.setOnClickListener(this);
         img_youtube.setOnClickListener(this);
         img_facebook.setOnClickListener(this);
-        img_gplus.setOnClickListener(this);
         txt_aboutinfo.setOnClickListener(this);
         txt_aboutguruji.setOnClickListener(this);
+        txt_aboutmission.setOnClickListener(this);
+        txt_appinfo.setOnClickListener(this);
+
     }
 
     @Override
@@ -235,6 +246,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
+                break;
+
+            case R.id.lin_about:
+                Log.e("lin_about", "------------------" + "click");
+                if (flag == 0) {
+                    flag = 1;
+                    img_hide_show.setImageResource(R.drawable.ic_remove_black_24dp);
+                    lin_show_hide.setVisibility(View.VISIBLE);
+
+                } else {
+                    flag = 0;
+                    img_hide_show.setImageResource(R.drawable.ic_add_black_24dp);
+                    lin_show_hide.setVisibility(View.GONE);
+                }
+
                 break;
             case R.id.lin_event:
                 Log.e("information", "------------------" + "click");
@@ -303,6 +329,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
+
                 /*onBackPressed();
                 dialog = new Dialog(MainActivity.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -347,43 +374,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             case R.id.txt_aboutinfo:
-                intent = new Intent(MainActivity.this, AboutAppInfo.class);
+                intent = new Intent(MainActivity.this, AboutAppGuruji.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
                 break;
 
             case R.id.txt_aboutguruji:
-                intent = new Intent(MainActivity.this, AboutAppGuruji.class);
+                intent = new Intent(MainActivity.this, GurujiVisionActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
                 break;
+
+            case R.id.txt_aboutmission:
+                intent = new Intent(MainActivity.this, GurujiMissionActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                onBackPressed();
+                break;
+
+            case R.id.txt_appinfo:
+                intent = new Intent(MainActivity.this, AboutAppInfo.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                onBackPressed();
+                break;
+
+
             case R.id.img_youtube:
                 try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/results?q=vimal+sagar+ji+maharaj"));
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/channel/UCBl49_j0js41gkXG6lhcUmQ"));
                     startActivity(intent);
                 } catch (Exception e) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/results?q=vimal+sagar+ji+maharaj"));
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/channel/UCBl49_j0js41gkXG6lhcUmQ"));
                 }
                 onBackPressed();
                 break;
 
             case R.id.img_facebook:
                 try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/search/posts/?q=vimalsagarsooriji"));
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/munivimalsagarji?ref=br_rs"));
                     startActivity(intent);
                 } catch (Exception e) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/search/posts/?q=vimalsagarsooriji"));
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/munivimalsagarji?ref=br_rs"));
                 }
 //                openFB("100006434383261");
                 onBackPressed();
                 break;
 
-            case R.id.img_gplus:
-                openGPlus("113611997707070999342");
-                onBackPressed();
-                break;
+
         }
     }
 

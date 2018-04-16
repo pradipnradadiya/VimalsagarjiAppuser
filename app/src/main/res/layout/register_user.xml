@@ -2,54 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#5fb0c9"
-    android:orientation="vertical"
+    android:background="@drawable/back_splash"
     android:scrollbarAlwaysDrawVerticalTrack="true">
 
-    <TextView
-        android:id="@+id/login_title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center_horizontal"
-        android:text="Registration"
-        android:textColor="#fff"
-        android:textSize="26sp"
-        android:textStyle="bold" />
-
-    <com.vimalsagarji.vimalsagarjiapp.util.UnderlineTextView
-        android:id="@+id/textview_skip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="5dp"
-        android:text="Skip"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        android:background="?android:attr/selectableItemBackground"
-        android:textStyle="bold"
-        android:paddingTop="10dp"
-        android:layout_marginRight="10dp"
-        />
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/login_title">
+
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
             <RelativeLayout
+                android:id="@+id/rel_box"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="70dp"
-                android:background="#fff"
+                android:layout_marginTop="36dp"
+                android:background="@drawable/round_rect"
                 android:elevation="4dp"
                 android:orientation="vertical"
                 android:padding="20dp">
@@ -58,7 +34,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingTop="30dp">
+                    android:paddingTop="10dp">
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -73,6 +49,7 @@
                             android:hint="Name"
                             android:inputType="textPersonName"
                             android:singleLine="true" />
+
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -83,7 +60,6 @@
                             android:id="@+id/etEmail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
                             android:drawableLeft="@drawable/ic_action_gmail_black"
                             android:drawableTint="#FF4081"
                             android:hint="Email"
@@ -99,11 +75,11 @@
                             android:id="@+id/etMobile"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
                             android:drawableLeft="@drawable/ic_action_phone_black"
                             android:drawableTint="#FF4081"
                             android:hint="Mobile"
                             android:inputType="number"
+                            android:maxLength="10"
                             android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -115,7 +91,6 @@
                             android:id="@+id/etAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
                             android:drawableLeft="@drawable/ic_action_location_black"
                             android:drawableTint="#FF4081"
                             android:hint="Location"
@@ -123,43 +98,88 @@
                             android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
 
-                    <TextView
+                    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                         android:id="@+id/txt_alreready"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:padding="5dp"
-                        android:text="Registered user?"
                         android:background="?android:attr/selectableItemBackground"
-                        />
+                        android:padding="5dp"
+                        android:text="Already Registered user?" />
 
 
                     <Button
                         android:id="@+id/btnRegister"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
                         android:layout_margin="22dp"
-                        android:background="#d67601"
-                        android:text="Sign in"
+                        android:background="@drawable/back_gradiant"
+                        android:text="Sign up"
                         android:textAllCaps="false"
                         android:textColor="#fff"
                         android:textSize="18sp" />
                 </LinearLayout>
             </RelativeLayout>
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/user_profile_photo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_below="@+id/login_title"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/user_profile_image_background"
                 android:elevation="4dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/user_profile" />
+                android:src="@drawable/users" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/rel_box"
+                android:layout_marginBottom="-12dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/diamond" />
+
+                <ImageView
+                    android:id="@+id/img_close"
+                    style="@style/relatibe_back"
+                    android:layout_width="62dp"
+                    android:layout_height="62dp"
+                    android:src="@drawable/close" />
+            </LinearLayout>
+
+
         </RelativeLayout>
 
+
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/round_rect_shapeone"
+        android:gravity="center">
+
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+            android:id="@+id/textview_skip"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="Skip"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:visibility="visible"
+
+            />
+    </LinearLayout>
 
 </RelativeLayout>

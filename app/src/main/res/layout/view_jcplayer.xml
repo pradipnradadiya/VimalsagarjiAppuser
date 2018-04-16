@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/player_height"
-        android:background="@color/header"
+        android:background="@color/homepage_back"
         tools:ignore="UselessParent">
 
         <LinearLayout

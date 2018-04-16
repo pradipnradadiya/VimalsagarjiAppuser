@@ -24,7 +24,7 @@
         android:fullBackupContent="@xml/backup_descriptor"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
-        android:label="Nayi Soch"
+        android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -35,54 +35,48 @@
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.splash.SecondSplashScreenActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-
-
-        </activity>
-        <activity
-            android:name=".activity.splash.SplashScreenActivity"
+            android:theme="@style/AppTheme"></activity>
+        <!--<activity
+            android:name=".activity.splash.ThirdSpalshScreenActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-
-        </activity>
+            android:theme="@style/AppTheme"></activity>-->
         <activity
             android:name=".activity.InformationDetailActivity"
             android:screenOrientation="portrait"
-
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="information_comment_click"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
-            </intent-filter>
+                <action android:name="information_comment_click" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".today_week_month_year.InformationCategory"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-
             <intent-filter>
-                <action android:name="information_click"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="information_click" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".today_week_month_year.EventActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-
             <intent-filter>
-                <action android:name="event_click"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
-            </intent-filter>
+                <action android:name="event_click" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".categoryactivity.AudioCategory"
@@ -97,8 +91,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="gallery_item_click"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="gallery_item_click" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -106,8 +101,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="audio_cat_click"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="audio_cat_click" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -115,8 +111,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="vidio_cat_click"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="vidio_cat_click" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -128,44 +125,40 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-
             <intent-filter>
-                <action android:name="video_comment_click"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
-            </intent-filter>
+                <action android:name="video_comment_click" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".today_week_month_year.QuestionAnswerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-
-
             <intent-filter>
-                <action android:name="question_click"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
-            </intent-filter>
+                <action android:name="question_click" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".today_week_month_year.ThoughtsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-
             <intent-filter>
-                <action android:name="thought_click"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
-            </intent-filter>
+                <action android:name="thought_click" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.ThoughtsDetailActivity"
             android:screenOrientation="portrait"
-
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="thought_comment_click"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="thought_comment_click" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -173,8 +166,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="competition_item_click"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="competition_item_click" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -185,7 +179,6 @@
             android:name=".NewPostByPeople"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".VideoFullActivity"
             android:configChanges="orientation|screenSize" />
@@ -194,8 +187,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="bypeople_click"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="bypeople_click" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -204,8 +198,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="bypeople_comment_click"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="bypeople_comment_click" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -213,8 +208,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="opinionPoll_click"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="opinionPoll_click" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -223,16 +219,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="event_comment_click"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
-            </intent-filter>
+                <action android:name="event_comment_click" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
             android:screenOrientation="portrait"
-
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.AudioDetail"
@@ -242,7 +237,6 @@
             android:name=".utils.AllQuestionDetail"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".categoryactivity.Gallery_All_Category"
             android:screenOrientation="portrait" />
@@ -252,6 +246,12 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ActivityHomeMain"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name=".Splash_Activity2"
             android:screenOrientation="portrait" />
@@ -264,16 +264,13 @@
         <activity
             android:name=".today_week_month_year.CompetitionList"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.mainactivity.SearchActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.mainactivity.NotificationActivity"
             android:hardwareAccelerated="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.commentlist.InformationCommentList"
             android:screenOrientation="portrait" />
@@ -286,32 +283,30 @@
         <activity
             android:name=".activity.commentlist.VideoCommentList"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.commentlist.ThoughtCommentList"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.commentlist.ByPeopleCommentList"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".activity.mainactivity.AboutAppInfo"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.mainactivity.AboutAppGuruji"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".activity.mainactivity.GurujiMissionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.mainactivity.GurujiVisionActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AudioPlayActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.EventsAllDisplay"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.mainactivity.SettingActivity"
             android:screenOrientation="portrait" />
@@ -322,7 +317,6 @@
             android:name=".jcplayer.JcPlayerNotificationReceiver"
             android:enabled="true"
             android:exported="false" />
-
         <receiver
             android:name=".ConnectivityReceiver"
             android:enabled="true">
@@ -342,7 +336,6 @@
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".utils.IncomingSms">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
@@ -355,24 +348,28 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <!-- ./Firebase Notifications -->
-        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
-             See README(https://goo.gl/l4GJaQ) for more. -->
+        <!--
+             Set custom default icon. This is used when no icon is set for incoming notification messages.
+             See README(https://goo.gl/l4GJaQ) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/push_notification_small" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <!--
+             Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/red" />
 
+        <activity android:name=".activity.mainactivity.PrivacyPolicyActivity"></activity>
     </application>
 
 </manifest>

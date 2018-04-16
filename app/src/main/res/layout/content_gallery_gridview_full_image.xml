@@ -4,7 +4,7 @@
     android:id="@+id/rel_gallry_grid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorTabBackground"
+    android:background="@color/homepage_back"
     android:orientation="vertical"
     tools:context="com.vimalsagarji.vimalsagarjiapp.Gallery_gridview_full_image"
     tools:ignore="Overdraw">

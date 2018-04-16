@@ -33,7 +33,7 @@ public class ImageViewActivity extends AppCompatActivity {
     private Bitmap myBitmap;
     private String image;
     private ProgressWheel p_wheel;
-    ImageView imgarrorback, imgHome,img_search;
+    ImageView imgarrorback, imgHome, img_search;
     TextView txt_title;
 
     @Override

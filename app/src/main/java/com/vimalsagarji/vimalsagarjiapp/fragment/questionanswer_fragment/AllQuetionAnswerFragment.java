@@ -23,12 +23,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.JSONParser;
 import com.vimalsagarji.vimalsagarjiapp.R;
+import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.JSONParser1;
@@ -68,19 +70,21 @@ public class AllQuetionAnswerFragment extends Fragment {
     private final String res = "";
 
 
-    private static final String URL = "http://www.grapes-solutions.com/vimalsagarji/questionanswer/viewallappquesyear/?page=1&psize=1000";
+    private static final String URL = "http://www.grapes-solutions.com/vimalsagarji/questionanswer/viewallappques/?page=1&psize=1000";
+//    private static final String URL = "http://www.grapes-solutions.com/vimalsagarji/questionanswer/viewallappquesyear/?page=1&psize=1000";
     static final String PostURL = "http://www.grapes-solutions.com/vimalsagarji/questionanswer/askques/";
     private ListView listView;
     private Dialog dialog;
 
     private CustomAdpter adpter;
-    private KProgressHUD loadingProgressDialog;
+    //    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
     private EditText InputBox;
     List<ThoughtToday> listfilterdata = new ArrayList<>();
     private final String AllSearchQuestion = "http://www.grapes-solutions.com/vimalsagarji/questionanswer/searchallappques/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     String approve = "";
+    private ProgressBar progressbar;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_all_question_answer, container, false);
@@ -93,6 +97,7 @@ public class AllQuetionAnswerFragment extends Fragment {
         listView = (ListView) getActivity().findViewById(R.id.list);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
 
+        progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         InputBox = (EditText) getActivity().findViewById(R.id.etText);
         ImageView imsearch = (ImageView) getActivity().findViewById(R.id.imgSerch);
         activity_main_swipe_refresh_layout = (SwipeRefreshLayout) getActivity().findViewById(R.id.activity_main_swipe_refresh_layout);
@@ -115,7 +120,7 @@ public class AllQuetionAnswerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (CommonMethod.isInternetConnected(getActivity())) {
-                    new SearchAllQuestion().execute();
+//                    new SearchAllQuestion().execute();
                 } else {
                     final Snackbar snackbar = Snackbar
                             .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
@@ -133,6 +138,7 @@ public class AllQuetionAnswerFragment extends Fragment {
         if (CommonMethod.isInternetConnected(getActivity())) {
             JsonTask jsonTask = new JsonTask();
             jsonTask.execute(URL);
+            new CheckUserApprove().execute();
         } else {
             final Snackbar snackbar = Snackbar
                     .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
@@ -167,10 +173,13 @@ public class AllQuetionAnswerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    Snackbar.make(v, "Please register after ask question. ", Snackbar.LENGTH_SHORT).show();
+                    showSnackbar(v);
+//                    Snackbar.make(v, "Please register after ask question. ", Snackbar.LENGTH_SHORT).show();
                 } else {
 
+                    Log.e("else call","-------------");
                     if (approve.equalsIgnoreCase("1")) {
+                        Log.e("approve call","-------------");
                         dialog = new Dialog(getActivity());
 //                Window window = dialog.getWindow();
 //                window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -224,6 +233,7 @@ public class AllQuetionAnswerFragment extends Fragment {
                             }
                         });
                     } else {
+                        Log.e("not approve call","-------------");
 //                        Toast.makeText(getActivity(), "You are not approved user.", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -237,17 +247,45 @@ public class AllQuetionAnswerFragment extends Fragment {
         new LoadJsonTask().execute(URL);
     }
 
+    //Method to show the snackbar
+    private void showSnackbar(View v) {
+        //Creating snackbar
+        Snackbar snackbar = Snackbar.make(v, "Please register after ask question.", Snackbar.LENGTH_LONG);
+
+        //Adding action to snackbar
+        snackbar.setAction("Register", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Displaying another snackbar when user click the action for first snackbar
+//                Snackbar s = Snackbar.make(v, "Register", Snackbar.LENGTH_LONG);
+//                s.show();
+                Intent intent = new Intent(getActivity(), RegisterActivity.class);
+                startActivity(intent);
+                getActivity().finishAffinity();
+            }
+        });
+        //Customizing colors
+        snackbar.setActionTextColor(Color.WHITE);
+        View view = snackbar.getView();
+        TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+
+        //Displaying snackbar
+        snackbar.show();
+    }
     private class JsonTask extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+
+            progressbar.setVisibility(View.VISIBLE);
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
             loadingProgressDialog.show();
-
+*/
         }
 
         @Override
@@ -313,21 +351,25 @@ public class AllQuetionAnswerFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
-            if (listView != null) {
-                adpter = new CustomAdpter(getActivity(), listQuestion);
-                if (adpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            }*/
+
+            progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    adpter = new CustomAdpter(getActivity(), listQuestion);
+                    if (adpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
+
+
                 }
-
-
             }
 
         }
@@ -407,19 +449,21 @@ public class AllQuetionAnswerFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (listView != null) {
-                adpter = new CustomAdpter(getActivity(), listQuestion);
-                if (adpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adpter);
-                    activity_main_swipe_refresh_layout.setRefreshing(false);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    adpter = new CustomAdpter(getActivity(), listQuestion);
+                    if (adpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adpter);
+                        activity_main_swipe_refresh_layout.setRefreshing(false);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
+
+
                 }
-
-
             }
 
         }
@@ -461,8 +505,8 @@ public class AllQuetionAnswerFragment extends Fragment {
                 holder = (ViewHolder) convertView.getTag();
             }
             holder.txt_views.setText(listview.get(position));
-            holder.txtQuestion.setText(items.get(position));
-            holder.txtAnswer.setText(listAnswer.get(position));
+            holder.txtQuestion.setText("Q: "+items.get(position));
+            holder.txtAnswer.setText("A: "+listAnswer.get(position));
             holder.txt_date.setText(listDate.get(position));
             holder.txt_postby.setText("Question By:" + listName.get(position));
             return convertView;
@@ -486,11 +530,12 @@ public class AllQuetionAnswerFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+            progressbar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -510,7 +555,8 @@ public class AllQuetionAnswerFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            loadingProgressDialog.dismiss();
+//            loadingProgressDialog.dismiss();
+            progressbar.setVisibility(View.GONE);
             Log.e("respone question ask", "---------------------------------" + s);
             try {
                 JSONObject jsonObject = new JSONObject(s);
@@ -528,7 +574,7 @@ public class AllQuetionAnswerFragment extends Fragment {
         }
     }
 
-
+/*
     @SuppressWarnings("deprecation")
     public class SearchAllQuestion extends AsyncTask<String, String, String> {
 
@@ -608,17 +654,19 @@ public class AllQuetionAnswerFragment extends Fragment {
             super.onPostExecute(status);
 
             try {
-                if (listView != null) {
-                    adpter = new CustomAdpter(getActivity(), listQuestion);
-                    if (adpter.getCount() != 0) {
-                        listView.setVisibility(View.VISIBLE);
-                        txt_nodata_today.setVisibility(View.GONE);
-                        listView.setAdapter(adpter);
-                    } else {
-                        listView.setVisibility(View.GONE);
-                        txt_nodata_today.setText("No Search \n Found");
-                        txt_nodata_today.setVisibility(View.VISIBLE);
-                        //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                if (getActivity() != null) {
+                    if (listView != null) {
+                        adpter = new CustomAdpter(getActivity(), listQuestion);
+                        if (adpter.getCount() != 0) {
+                            listView.setVisibility(View.VISIBLE);
+                            txt_nodata_today.setVisibility(View.GONE);
+                            listView.setAdapter(adpter);
+                        } else {
+                            listView.setVisibility(View.GONE);
+                            txt_nodata_today.setText("No Search \n Found");
+                            txt_nodata_today.setVisibility(View.VISIBLE);
+                            //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             } catch (Exception e) {
@@ -627,7 +675,7 @@ public class AllQuetionAnswerFragment extends Fragment {
 
         }
 
-    }
+    }*/
 
     //Check user approve or not
     private class CheckUserApprove extends AsyncTask<String, Void, String> {

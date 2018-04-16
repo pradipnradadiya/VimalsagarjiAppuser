@@ -8,19 +8,19 @@
     android:padding="5dp"
     tools:ignore="Overdraw">
 
-    <TextView
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
         android:id="@+id/txtCommentUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:text="Admin"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/black"
         android:textSize="14sp"
         android:padding="2dp"
         android:lines="1"
         tools:ignore="HardcodedText,RtlHardcoded" />
 
-    <TextView
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
         android:id="@+id/txtCommentDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="2dp"
         android:text="comment"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@android:color/black"
         android:textSize="14sp"
         android:padding="2dp"
         android:maxLines="2"

@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -51,11 +52,11 @@ public class TodayEventFragment extends Fragment {
 
     }
 
-    private KProgressHUD loadingProgressDialog;
+//    private KProgressHUD loadingProgressDialog;
     private static final String TAG = TodayEventFragment.class.getSimpleName();
     private static final String constantURL = Constant.GET_ALLYEAR_EVENT_DATA;
     private static final String strMonth = "geteventsbycategorytoday";
-    private static final String URL = constantURL.replace("geteventsbycategoryyear", strMonth);
+    private static final String URL = constantURL.replace("geteventsbycategor", strMonth);
     private final List<EventAdpter> listAllEvent = new ArrayList<>();
     private final String Photo = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/";
     private final String Audio = "http://www.grapes-solutions.com/vimalsagarji/static/eventaudio/";
@@ -68,6 +69,7 @@ public class TodayEventFragment extends Fragment {
     private GridView gridView;
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     public static String video_play_url;
+    private ProgressBar progressbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class TodayEventFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        progressbar= (ProgressBar) getActivity().findViewById(R.id.progressbar);
         gridView = (GridView) getActivity().findViewById(R.id.grid_today);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
         InputBox = (EditText) getActivity().findViewById(R.id.etText);
@@ -145,11 +148,13 @@ public class TodayEventFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -203,7 +208,7 @@ public class TodayEventFragment extends Fragment {
                         eventAdpter.setTitle(strTitle);
                         eventAdpter.setDescription(strDescription);
                         eventAdpter.setAddress(strAddress);
-                        eventAdpter.setDate(dayOfTheWeek + ", " + fulldate);
+                        eventAdpter.setDate(dayOfTheWeek + ",\n " + fulldate);
                         eventAdpter.setAudio(strAudio);
                         eventAdpter.setAudioImage(strAudioImage);
                         eventAdpter.setVideoLink(strVideoLink);
@@ -227,57 +232,62 @@ public class TodayEventFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (loadingProgressDialog != null) {
+
+            progressbar.setVisibility(View.GONE);
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
             }
+*/
+            if (getActivity() != null) {
 
-            if (gridView != null) {
-                adpter = new CustomAdpter(getActivity(), listAllEvent);
-                if (adpter.getCount() != 0) {
-                    gridView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    gridView.setAdapter(adpter);
-                } else {
+                if (gridView != null) {
+                    adpter = new CustomAdpter(getActivity(), listAllEvent);
+                    if (adpter.getCount() != 0) {
+                        gridView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        gridView.setAdapter(adpter);
+                    } else {
 
-                    txt_nodata_today.setVisibility(View.VISIBLE);
-                    gridView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                        gridView.setVisibility(View.GONE);
 //                    Toast.makeText(getActivity(), "No Today Event Found", Toast.LENGTH_SHORT).show();
+                    }
+
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            EventAdpter eventAdpter = (EventAdpter) parent.getItemAtPosition(position);
+                            Intent intent = new Intent(getActivity(), EventDetailActivity.class);
+                            intent.putExtra("click_action", "");
+                            intent.putExtra("listtitle", eventAdpter.getTitle());
+                            intent.putExtra("listDate", eventAdpter.getDate());
+                            intent.putExtra("listAddress", eventAdpter.getAddress());
+                            intent.putExtra("listID", eventAdpter.getID());
+                            intent.putExtra("discription", eventAdpter.getDescription());
+                            Log.e("discription", "-----------------------" + eventAdpter.getDescription());
+                            intent.putExtra("Audio", Audio + eventAdpter.getAudio());
+                            String audio = Audio + eventAdpter.getAudio();
+                            audio = audio.replace(" ", "%20");
+                            String video = Video + eventAdpter.getVideo();
+                            video = video.replace(" ", "%20");
+                            String photo = Photo + eventAdpter.getPhoto();
+                            photo = photo.replace(" ", "%20");
+                            Log.e("Audio", "-----------------------" + audio);
+                            intent.putExtra("Video", video);
+                            Log.e("Video", "-----------------------" + video);
+                            intent.putExtra("Photo", photo);
+                            Log.e("Photo", "-----------------------" + photo);
+                            intent.putExtra("view", eventAdpter.getView());
+                            startActivity(intent);
+                            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        }
+                    });
+
+                } else {
+//                Toast.makeText(getActivity(), "Gridview is null", Toast.LENGTH_SHORT).show();
                 }
 
-                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        EventAdpter eventAdpter = (EventAdpter) parent.getItemAtPosition(position);
-                        Intent intent = new Intent(getActivity(), EventDetailActivity.class);
-                        intent.putExtra("click_action", "");
-                        intent.putExtra("listtitle", eventAdpter.getTitle());
-                        intent.putExtra("listDate", eventAdpter.getDate());
-                        intent.putExtra("listAddress", eventAdpter.getAddress());
-                        intent.putExtra("listID", eventAdpter.getID());
-                        intent.putExtra("discription", eventAdpter.getDescription());
-                        Log.e("discription", "-----------------------" + eventAdpter.getDescription());
-                        intent.putExtra("Audio", Audio + eventAdpter.getAudio());
-                        String audio = Audio + eventAdpter.getAudio();
-                        audio = audio.replace(" ", "%20");
-                        String video = Video + eventAdpter.getVideo();
-                        video = video.replace(" ", "%20");
-                        String photo = Photo + eventAdpter.getPhoto();
-                        photo = photo.replace(" ", "%20");
-                        Log.e("Audio", "-----------------------" + audio);
-                        intent.putExtra("Video", video);
-                        Log.e("Video", "-----------------------" + video);
-                        intent.putExtra("Photo", photo);
-                        Log.e("Photo", "-----------------------" + photo);
-                        intent.putExtra("view", eventAdpter.getView());
-                        startActivity(intent);
-                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    }
-                });
-
-            } else {
-//                Toast.makeText(getActivity(), "Gridview is null", Toast.LENGTH_SHORT).show();
             }
-
         }
     }
 
@@ -337,7 +347,7 @@ public class TodayEventFragment extends Fragment {
                         eventAdpter.setTitle(strTitle);
                         eventAdpter.setDescription(strDescription);
                         eventAdpter.setAddress(strAddress);
-                        eventAdpter.setDate(dayOfTheWeek + ", " + fulldate);
+                        eventAdpter.setDate(dayOfTheWeek + ",\n " + fulldate);
                         eventAdpter.setAudio(strAudio);
                         eventAdpter.setAudioImage(strAudioImage);
                         eventAdpter.setVideoLink(strVideoLink);
@@ -359,53 +369,54 @@ public class TodayEventFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (getActivity() != null) {
+                if (gridView != null) {
+                    adpter = new CustomAdpter(getActivity(), listAllEvent);
+                    if (adpter.getCount() != 0) {
+                        gridView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        gridView.setAdapter(adpter);
+                        activity_main_swipe_refresh_layout.setRefreshing(false);
+                    } else {
 
-            if (gridView != null) {
-                adpter = new CustomAdpter(getActivity(), listAllEvent);
-                if (adpter.getCount() != 0) {
-                    gridView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    gridView.setAdapter(adpter);
-                    activity_main_swipe_refresh_layout.setRefreshing(false);
-                } else {
-
-                    txt_nodata_today.setVisibility(View.VISIBLE);
-                    gridView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                        gridView.setVisibility(View.GONE);
 //                    Toast.makeText(getActivity(), "No Today Event Found", Toast.LENGTH_SHORT).show();
+                    }
+
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            EventAdpter eventAdpter = (EventAdpter) parent.getItemAtPosition(position);
+                            Intent intent = new Intent(getActivity(), EventDetailActivity.class);
+                            intent.putExtra("listDate", eventAdpter.getDate());
+                            intent.putExtra("listAddress", eventAdpter.getAddress());
+                            intent.putExtra("listID", eventAdpter.getID());
+                            intent.putExtra("discription", eventAdpter.getDescription());
+                            Log.e("discription", "-----------------------" + eventAdpter.getDescription());
+                            intent.putExtra("Audio", Audio + eventAdpter.getAudio());
+                            String audio = Audio + eventAdpter.getAudio();
+                            audio = audio.replace(" ", "_");
+                            String video = Video + eventAdpter.getVideo();
+                            video = video.replace(" ", "_");
+                            String photo = Photo + eventAdpter.getPhoto();
+                            photo = photo.replace(" ", "-");
+                            Log.e("Audio", "-----------------------" + audio);
+                            intent.putExtra("Video", video);
+                            Log.e("Video", "-----------------------" + video);
+                            intent.putExtra("Photo", photo);
+                            Log.e("Photo", "-----------------------" + photo);
+                            intent.putExtra("view", eventAdpter.getView());
+                            startActivity(intent);
+                            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        }
+                    });
+
+                } else {
+//                Toast.makeText(getActivity(), "Gridview is null", Toast.LENGTH_SHORT).show();
                 }
 
-                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        EventAdpter eventAdpter = (EventAdpter) parent.getItemAtPosition(position);
-                        Intent intent = new Intent(getActivity(), EventDetailActivity.class);
-                        intent.putExtra("listDate", eventAdpter.getDate());
-                        intent.putExtra("listAddress", eventAdpter.getAddress());
-                        intent.putExtra("listID", eventAdpter.getID());
-                        intent.putExtra("discription", eventAdpter.getDescription());
-                        Log.e("discription", "-----------------------" + eventAdpter.getDescription());
-                        intent.putExtra("Audio", Audio + eventAdpter.getAudio());
-                        String audio = Audio + eventAdpter.getAudio();
-                        audio = audio.replace(" ", "_");
-                        String video = Video + eventAdpter.getVideo();
-                        video = video.replace(" ", "_");
-                        String photo = Photo + eventAdpter.getPhoto();
-                        photo = photo.replace(" ", "-");
-                        Log.e("Audio", "-----------------------" + audio);
-                        intent.putExtra("Video", video);
-                        Log.e("Video", "-----------------------" + video);
-                        intent.putExtra("Photo", photo);
-                        Log.e("Photo", "-----------------------" + photo);
-                        intent.putExtra("view", eventAdpter.getView());
-                        startActivity(intent);
-                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    }
-                });
-
-            } else {
-//                Toast.makeText(getActivity(), "Gridview is null", Toast.LENGTH_SHORT).show();
             }
-
         }
     }
 
@@ -528,7 +539,7 @@ public class TodayEventFragment extends Fragment {
                         eventAdpter.setTitle(strTitle);
                         eventAdpter.setDescription(strDescription);
                         eventAdpter.setAddress(strAddress);
-                        eventAdpter.setDate(dayOfTheWeek + ", " + fulldate);
+                        eventAdpter.setDate(dayOfTheWeek + ",\n " + fulldate);
                         eventAdpter.setAudio(strAudio);
                         eventAdpter.setAudioImage(strAudioImage);
                         eventAdpter.setVideoLink(strVideoLink);
@@ -549,17 +560,19 @@ public class TodayEventFragment extends Fragment {
             super.onPostExecute(status);
             InformationCategory informationCategory = new InformationCategory();
 
-            if (gridView != null) {
-                adpter = new CustomAdpter(getActivity(), listfilterdata);
-                if (adpter.getCount() != 0) {
-                    gridView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    gridView.setAdapter(adpter);
-                } else {
-                    txt_nodata_today.setText("No Search \n Found");
-                    gridView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (gridView != null) {
+                    adpter = new CustomAdpter(getActivity(), listfilterdata);
+                    if (adpter.getCount() != 0) {
+                        gridView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        gridView.setAdapter(adpter);
+                    } else {
+                        txt_nodata_today.setText("No Search \n Found");
+                        gridView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

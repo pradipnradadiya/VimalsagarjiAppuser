@@ -1,5 +1,6 @@
 package com.vimalsagarji.vimalsagarjiapp.activity.mainactivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -7,20 +8,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.vimalsagarji.vimalsagarjiapp.R;
 
-/**
- * Created by Grapes-Pradip on 02-Oct-17.
- */
 
-public class AboutAppInfo extends AppCompatActivity {
+
+public class AboutAppInfo extends AppCompatActivity implements View.OnClickListener{
+    private TextView txt_eng,txt_hnd,txt_guj,txt_description;
+    private LinearLayout lin_eng,lin_hnd,lin_guj;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_info);
+        setContentView(R.layout.activity_about_guruji);
+        bindId();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("About Us");
+        toolbar.setTitle("About App");
         toolbar.setTitleTextColor(0xFFFFFFFF);
         toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left);
         setSupportActionBar(toolbar);
@@ -32,6 +37,19 @@ public class AboutAppInfo extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
+    }
+    private void bindId() {
+        txt_eng= (TextView) findViewById(R.id.txt_eng);
+        txt_hnd= (TextView) findViewById(R.id.txt_hnd);
+        txt_guj= (TextView) findViewById(R.id.txt_guj);
+        txt_description= (TextView) findViewById(R.id.txt_description);
+
+        lin_eng= (LinearLayout) findViewById(R.id.lin_eng);
+        lin_hnd= (LinearLayout) findViewById(R.id.lin_hnd);
+        lin_guj= (LinearLayout) findViewById(R.id.lin_guj);
+        txt_eng.setOnClickListener(this);
+        txt_hnd.setOnClickListener(this);
+        txt_guj.setOnClickListener(this);
     }
 
     @Override
@@ -70,4 +88,40 @@ public class AboutAppInfo extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.txt_eng:
+                txt_description.setText(getResources().getString(R.string.about_app_eng));
+                txt_eng.setTextColor(Color.WHITE);
+                txt_hnd.setTextColor(Color.BLACK);
+                txt_guj.setTextColor(Color.BLACK);
+
+                txt_eng.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+                txt_hnd.setBackgroundResource(R.drawable.round_rect_shapeone);
+                txt_guj.setBackgroundResource(R.drawable.round_rect_shapeone);
+                break;
+            case R.id.txt_hnd:
+                txt_description.setText(getResources().getString(R.string.about_app_hnd));
+                txt_eng.setTextColor(Color.BLACK);
+                txt_hnd.setTextColor(Color.WHITE);
+                txt_guj.setTextColor(Color.BLACK);
+
+                txt_eng.setBackgroundResource(R.drawable.round_rect_shapeone);
+                txt_hnd.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+                txt_guj.setBackgroundResource(R.drawable.round_rect_shapeone);
+
+                break;
+            case R.id.txt_guj:
+                txt_description.setText(getResources().getString(R.string.about_app_guj));
+                txt_eng.setTextColor(Color.BLACK);
+                txt_hnd.setTextColor(Color.BLACK);
+                txt_guj.setTextColor(Color.WHITE);
+
+                txt_eng.setBackgroundResource(R.drawable.round_rect_shapeone);
+                txt_hnd.setBackgroundResource(R.drawable.round_rect_shapeone);
+                txt_guj.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+                break;
+        }
+    }
 }

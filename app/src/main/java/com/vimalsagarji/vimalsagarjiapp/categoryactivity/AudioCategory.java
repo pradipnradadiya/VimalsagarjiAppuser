@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +41,7 @@ public class AudioCategory extends AppCompatActivity {
     private Toolbar toolbar_home;
     private TextView grid_txtTitle;
     //ImageView imgarrorback,imghomeicon;
-    private KProgressHUD loadingProgressDialog;
+//    private KProgressHUD loadingProgressDialog;
     private static final String TAG = AudioCategory.class.getSimpleName();
     private static final String URL = Constant.GET_ALL_CATEGORY_AUDIO;
     private static final String ImgURL = Constant.GET_AUDIO_IMAGE_URL;
@@ -53,6 +54,7 @@ public class AudioCategory extends AppCompatActivity {
     private RelativeLayout rel_audio;
     private GridView gridView;
     private TextView txt_nodata_today;
+    private ProgressBar progressbar;
 
     @Override
     public void onBackPressed() {
@@ -79,6 +81,7 @@ public class AudioCategory extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+        progressbar= (ProgressBar) findViewById(R.id.progressbar);
         txt_nodata_today = (TextView) findViewById(R.id.txt_nodata_today);
         ImageView imgHome = (ImageView) toolbar_home.findViewById(R.id.imgHome);
         rel_audio = (RelativeLayout) findViewById(R.id.rel_audio);
@@ -123,11 +126,13 @@ public class AudioCategory extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(AudioCategory.this)
+
+            progressbar.setVisibility(View.VISIBLE);
+           /* loadingProgressDialog = KProgressHUD.create(AudioCategory.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(false);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -173,9 +178,10 @@ public class AudioCategory extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+           progressbar.setVisibility(View.GONE);
             gridView = (GridView) findViewById(R.id.grid_audio);
             if (gridView != null) {
                 CustomAdpter customAdpter = new CustomAdpter(AudioCategory.this, listName);

@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -53,13 +54,14 @@ public class TodayThoughtsFragment extends Fragment {
     private ListView listView;
     private CustomAdapter adapter;
     private List<ThoughtToday> list = new ArrayList<>();
-    private KProgressHUD loadingProgressDialog;
+    //    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
 
     private EditText InputBox;
     private List<ThoughtToday> listfilterdata = new ArrayList<>();
     private final String TodaySearchThought = "http://www.grapes-solutions.com/vimalsagarji/thought/searchallthoughtsbycidtoday/?page=1&psize=1000";
     private String url;
+    private ProgressBar progressbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,6 +86,7 @@ public class TodayThoughtsFragment extends Fragment {
                 }
             });
         }
+        progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         url = Constant.ALL_THOUGHTS_URL + "&psize=5";
         listView = (ListView) getActivity().findViewById(R.id.list);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
@@ -133,7 +136,7 @@ public class TodayThoughtsFragment extends Fragment {
 //                ThoughtToday ats = (AllThoughts) parent.getItemAtPosition(position);
                 ThoughtToday today = (ThoughtToday) parent.getItemAtPosition(position);
                 Intent intent = new Intent(getActivity(), ThoughtsDetailActivity.class);
-                intent.putExtra("click_action","");
+                intent.putExtra("click_action", "");
                 intent.putExtra("thoughtid", today.getId());
                 intent.putExtra("listTitle", today.getTitle());
                 intent.putExtra("listDescription", today.getDescription());
@@ -158,11 +161,12 @@ public class TodayThoughtsFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+          /*  loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -224,18 +228,20 @@ public class TodayThoughtsFragment extends Fragment {
                 e.printStackTrace();
             }
 
-
+/*
             if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
-            if (listView != null) {
-                adapter = new CustomAdapter(getActivity(), list);
-                if (adapter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adapter);
-                } else {
-                    listView.setVisibility(View.GONE);
+            }*/
+            progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    adapter = new CustomAdapter(getActivity(), list);
+                    if (adapter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adapter);
+                    } else {
+                        listView.setVisibility(View.GONE);
 //                    TEmptyView.init(TViewUtil.EmptyViewBuilder.getInstance(getActivity())
 //                            .setShowText(true)
 //                            .setEmptyText("No Data")
@@ -247,8 +253,9 @@ public class TodayThoughtsFragment extends Fragment {
 //                    );
 //                    TViewUtil.setEmptyView(listView);
 
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(), "No data found", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -323,21 +330,23 @@ public class TodayThoughtsFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (listView != null) {
-                adapter = new CustomAdapter(getActivity(), list);
-                if (adapter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adapter);
-                    activity_main_swipe_refresh_layout.setRefreshing(false);
-                } else {
-                    listView.setVisibility(View.GONE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    adapter = new CustomAdapter(getActivity(), list);
+                    if (adapter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adapter);
+                        activity_main_swipe_refresh_layout.setRefreshing(false);
+                    } else {
+                        listView.setVisibility(View.GONE);
 
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(), "No data found", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
+            }
 
         }
     }
@@ -383,7 +392,7 @@ public class TodayThoughtsFragment extends Fragment {
         }
 
         private class ViewHolder {
-            TextView txt_ID, txt_Title, txt_Description, txt_Date,txt_views;
+            TextView txt_ID, txt_Title, txt_Description, txt_Date, txt_views;
         }
 
 
@@ -466,18 +475,19 @@ public class TodayThoughtsFragment extends Fragment {
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
             InformationCategory informationCategory = new InformationCategory();
-
-            if (listView != null) {
-                adapter = new CustomAdapter(getActivity(), listfilterdata);
-                if (adapter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adapter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search \n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    adapter = new CustomAdapter(getActivity(), listfilterdata);
+                    if (adapter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adapter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search \n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

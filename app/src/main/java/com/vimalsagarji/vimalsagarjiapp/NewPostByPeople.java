@@ -428,7 +428,7 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
             super.onPreExecute();
             loadingProgressDialog = KProgressHUD.create(NewPostByPeople.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                    .setLabel("Please Wait")
+                    .setLabel("Please wait..uploading")
                     .setCancellable(false);
             loadingProgressDialog.show();
         }

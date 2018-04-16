@@ -13,26 +13,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/round_rect"
+        >
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
         android:id="@+id/txt_question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:padding="10dp"
+        android:padding="5dp"
+        android:layout_marginLeft="10dp"
         android:text="Question?"
-        android:textColor="@color/red"
+        android:textColor="@color/black"
         android:textSize="16sp"
-        android:textStyle="bold"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText"
+        android:background="@color/white"
+        />
 
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/view" />
 
-    <TextView
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -40,27 +50,32 @@
         android:padding="10dp"
         android:text="Answer:"
         android:textColor="@color/textColor"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="bold"
+        android:visibility="gone"
         tools:ignore="HardcodedText" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
             android:id="@+id/txt_answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="5dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:padding="10dp"
             android:scrollbars="vertical"
             android:text="Answer."
             android:textColor="@color/textColor"
-            android:textSize="14sp"
-            tools:ignore="HardcodedText" />
+            android:textSize="16sp"
+            android:background="@color/white"
+            tools:ignore="HardcodedText"
+            android:layout_marginBottom="5dp"
+            />
     </ScrollView>
+
+    </LinearLayout>
 
 
 </LinearLayout>

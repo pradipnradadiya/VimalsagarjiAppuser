@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -47,15 +48,13 @@ public class GalleryCategory extends AppCompatActivity {
     String strImageUrl = "";
     static Bitmap bitmap = null;
     private GridView gridView;
-    private KProgressHUD loadingProgressDialog;
+    //    private KProgressHUD loadingProgressDialog;
     private RelativeLayout rel_gallary;
-    private SwipeRefreshLayout activity_main_swipe_refresh_layout;
-    private String cid,catname;
+    private String cid, catname;
     private TextView txt_nodata_today;
-    public static  ArrayList<ImageItemSplash> itemSplashArrayList = new ArrayList<>();
+    public static ArrayList<ImageItemSplash> itemSplashArrayList = new ArrayList<>();
     private CustomImageAdapter customImageAdapter;
-
-
+    private ProgressBar progressbar;
 
     @Override
     public void onBackPressed() {
@@ -71,6 +70,7 @@ public class GalleryCategory extends AppCompatActivity {
         customImageAdapter = new CustomImageAdapter(GalleryCategory.this, itemSplashArrayList);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_gallery);
         setSupportActionBar(toolbar);
+        progressbar = (ProgressBar) findViewById(R.id.progressbar);
         gridView = (GridView) findViewById(R.id.gallery_gridview);
         txt_nodata_today = (TextView) findViewById(R.id.txt_nodata_today);
         rel_gallary = (RelativeLayout) findViewById(R.id.rel_gallary);
@@ -94,7 +94,7 @@ public class GalleryCategory extends AppCompatActivity {
         });
         ImageView img_search = (ImageView) toolbar.findViewById(R.id.img_search);
         img_search.setVisibility(View.GONE);
-        activity_main_swipe_refresh_layout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
+
         cid = getIntent().getStringExtra("cid");
         catname = getIntent().getStringExtra("catname");
         txt_title.setText(catname);
@@ -156,7 +156,6 @@ public class GalleryCategory extends AppCompatActivity {
         }
 
 
-
     }
 
     private class JsonTask extends AsyncTask<String, Void, String> {
@@ -166,11 +165,12 @@ public class GalleryCategory extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(GalleryCategory.this)
+            progressbar.setVisibility(View.VISIBLE);
+          /*  loadingProgressDialog = KProgressHUD.create(GalleryCategory.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -188,7 +188,7 @@ public class GalleryCategory extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    itemSplashArrayList=new ArrayList<>();
+                    itemSplashArrayList = new ArrayList<>();
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                         String id = jsonObject1.getString("ID");
@@ -196,16 +196,17 @@ public class GalleryCategory extends AppCompatActivity {
                         String photo = ImgURL + jsonObject1.getString("Photo");
                         String date = jsonObject1.getString("Date");
                         listIcon.add(photo);
-                        itemSplashArrayList.add(new ImageItemSplash(photo,photo));
+                        itemSplashArrayList.add(new ImageItemSplash(photo, photo));
 
                     }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (loadingProgressDialog != null) {
+          /*  if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+            progressbar.setVisibility(View.GONE);
 
 
             if (gridView != null) {
@@ -232,11 +233,12 @@ public class GalleryCategory extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(GalleryCategory.this)
+            progressbar.setVisibility(View.VISIBLE);
+           /* loadingProgressDialog = KProgressHUD.create(GalleryCategory.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -254,7 +256,7 @@ public class GalleryCategory extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    itemSplashArrayList=new ArrayList<>();
+                    itemSplashArrayList = new ArrayList<>();
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
@@ -263,7 +265,7 @@ public class GalleryCategory extends AppCompatActivity {
                         } else {
 
                             String photo = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + jsonObject1.getString("Photo");
-                            itemSplashArrayList.add(new ImageItemSplash(photo,photo));
+                            itemSplashArrayList.add(new ImageItemSplash(photo, photo));
                             listIcon.add(photo);
                         }
 
@@ -272,10 +274,11 @@ public class GalleryCategory extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (loadingProgressDialog != null) {
+            progressbar.setVisibility(View.GONE);
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
             }
-
+*/
 
             if (gridView != null) {
                 CustomAdpter customAdpter = new CustomAdpter(GalleryCategory.this, listIcon);
@@ -301,11 +304,12 @@ public class GalleryCategory extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(GalleryCategory.this)
+            progressbar.setVisibility(View.VISIBLE);
+          /*  loadingProgressDialog = KProgressHUD.create(GalleryCategory.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -322,9 +326,10 @@ public class GalleryCategory extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
-                    loadingProgressDialog.dismiss();
+//                    loadingProgressDialog.dismiss();
+                    progressbar.setVisibility(View.GONE);
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    itemSplashArrayList=new ArrayList<>();
+                    itemSplashArrayList = new ArrayList<>();
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
@@ -332,9 +337,9 @@ public class GalleryCategory extends AppCompatActivity {
 
                         } else {
                             String photo = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/" + jsonObject1.getString("Photo");
-                            String[] photoarray=photo.split(",");
-                            Log.e("photo array 0","--------------"+photoarray[0]);
-                            itemSplashArrayList.add(new ImageItemSplash(photoarray[0],photoarray[0]));
+                            String[] photoarray = photo.split(",");
+                            Log.e("photo array 0", "--------------" + photoarray[0]);
+                            itemSplashArrayList.add(new ImageItemSplash(photoarray[0], photoarray[0]));
                             listIcon.add(photoarray[0]);
                         }
                     }
@@ -342,10 +347,11 @@ public class GalleryCategory extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
 
+            progressbar.setVisibility(View.GONE);
 
             if (gridView != null) {
                 CustomAdpter customAdpter = new CustomAdpter(GalleryCategory.this, listIcon);
@@ -357,10 +363,8 @@ public class GalleryCategory extends AppCompatActivity {
                 } else {
                     gridView.setVisibility(View.GONE);
                     txt_nodata_today.setVisibility(View.VISIBLE);
-
                 }
             }
-
         }
     }
 
@@ -396,7 +400,7 @@ public class GalleryCategory extends AppCompatActivity {
                     .load(items.get(position)
                             .replaceAll(" ", "%20"))
                     .placeholder(R.drawable.loader)
-                    .resize(0,200)
+                    .resize(0, 200)
                     .error(R.drawable.no_image)
                     .into(holder.grid_img);
 
@@ -406,10 +410,10 @@ public class GalleryCategory extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(GalleryCategory.this, Splash_Activity2.class);
                     intent.putExtra("imagePath", listIcon.get(position));
-                    String pos=String.valueOf(position);
-                    intent.putExtra("position",pos);
-                    intent.putExtra("cid",cid);
-                    Log.e("position","------------"+position);
+                    String pos = String.valueOf(position);
+                    intent.putExtra("position", pos);
+                    intent.putExtra("cid", cid);
+                    Log.e("position", "------------" + position);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }

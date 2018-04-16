@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.R;
+import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.VideoFullActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
@@ -216,7 +217,8 @@ public class VideoDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_SHORT).show();
+                    showSnackbar(v);
+//                    Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_SHORT).show();
                 } else {
                     if (CommonMethod.isInternetConnected(VideoDetailActivity.this)) {
                         if (status.equalsIgnoreCase("0")) {
@@ -245,69 +247,78 @@ public class VideoDetailActivity extends AppCompatActivity {
         lin_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog = new Dialog(VideoDetailActivity.this);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
 
-                if (CommonMethod.isInternetConnected(VideoDetailActivity.this)) {
-                    new CommentList().execute(vid);
+
+                if (sharedpreferance.getId().equalsIgnoreCase("")) {
+
+                    showSnackbar(v);
+//                    Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_SHORT).show();
                 } else {
-                    final Snackbar snackbar = Snackbar
-                            .make(layout_allEventSubItem, "No internet connection!", Snackbar.LENGTH_INDEFINITE);
-                    snackbar.setActionTextColor(Color.RED);
-                    snackbar.show();
-                    snackbar.setAction("Dismiss", new View.OnClickListener() {
+
+                    dialog = new Dialog(VideoDetailActivity.this);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
+
+                    if (CommonMethod.isInternetConnected(VideoDetailActivity.this)) {
+                        new CommentList().execute(vid);
+                    } else {
+                        final Snackbar snackbar = Snackbar
+                                .make(layout_allEventSubItem, "No internet connection!", Snackbar.LENGTH_INDEFINITE);
+                        snackbar.setActionTextColor(Color.RED);
+                        snackbar.show();
+                        snackbar.setAction("Dismiss", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                snackbar.dismiss();
+                            }
+                        });
+                    }
+
+                    ImageView imgback1 = (ImageView) dialog.findViewById(R.id.imgback);
+                    imgback1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            snackbar.dismiss();
+                            dialog.dismiss();
                         }
                     });
-                }
+                    Button btnPost = (Button) dialog.findViewById(R.id.btnPost);
+                    final EditText etComment = (EditText) dialog.findViewById(R.id.etComment);
+                    RelativeLayout rl_layout = (RelativeLayout) dialog.findViewById(R.id.layout_byPeople);
 
-                ImageView imgback1 = (ImageView) dialog.findViewById(R.id.imgback);
-                imgback1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                Button btnPost = (Button) dialog.findViewById(R.id.btnPost);
-                final EditText etComment = (EditText) dialog.findViewById(R.id.etComment);
-                RelativeLayout rl_layout = (RelativeLayout) dialog.findViewById(R.id.layout_byPeople);
+                    dialog.show();
+                    dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    btnPost.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                                Toast.makeText(VideoDetailActivity.this, R.string.notregister, Toast.LENGTH_SHORT).show();
 
-                dialog.show();
-                dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                btnPost.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                            Toast.makeText(VideoDetailActivity.this, R.string.notregister, Toast.LENGTH_SHORT).show();
-
-                        } else {
-                            String strComment = etComment.getText().toString();
-                            if (TextUtils.isEmpty(strComment)) {
-                                etComment.setError("Please enter your comment.");
-                                etComment.requestFocus();
                             } else {
-                                if (approve.equalsIgnoreCase("1")) {
-                                    new CommentPost().execute(id, sharedpreferance.getId(), strComment);
-                                    etComment.setText("");
+                                String strComment = etComment.getText().toString();
+                                if (TextUtils.isEmpty(strComment)) {
+                                    etComment.setError("Please enter your comment.");
+                                    etComment.requestFocus();
                                 } else {
+                                    if (approve.equalsIgnoreCase("1")) {
+                                        new CommentPost().execute(id, sharedpreferance.getId(), strComment);
+                                        etComment.setText("");
+                                    } else {
 //                                    Toast.makeText(VideoDetailActivity.this, "You are not approved user.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
                         }
-                    }
-                });
+                    });
 
-                rl_layout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        InputMethodManager imm = (InputMethodManager) getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(etComment.getWindowToken(), 0);
-                    }
-                });
+                    rl_layout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            InputMethodManager imm = (InputMethodManager) getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(etComment.getWindowToken(), 0);
+                        }
+                    });
+                }
             }
         });
 
@@ -401,11 +412,11 @@ public class VideoDetailActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(VideoDetailActivity.this)
+           /* loadingProgressDialog = KProgressHUD.create(VideoDetailActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
 
         }
 
@@ -458,9 +469,9 @@ public class VideoDetailActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
 
         }
     }
@@ -795,10 +806,38 @@ public class VideoDetailActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("response", "----------------" + s);
-            new CommentList2().execute(vid);
+
 
         }
 
+    }
+
+    //Method to show the snackbar
+    private void showSnackbar(View v) {
+        //Creating snackbar
+        Snackbar snackbar = Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_LONG);
+
+        //Adding action to snackbar
+        snackbar.setAction("Register", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Displaying another snackbar when user click the action for first snackbar
+//                Snackbar s = Snackbar.make(v, "Register", Snackbar.LENGTH_LONG);
+//                s.show();
+                Intent intent = new Intent(VideoDetailActivity.this, RegisterActivity.class);
+                startActivity(intent);
+                finishAffinity();
+            }
+        });
+
+        //Customizing colors
+        snackbar.setActionTextColor(Color.WHITE);
+        View view = snackbar.getView();
+        TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+
+        //Displaying snackbar
+        snackbar.show();
     }
 
     private class VideoDetail extends AsyncTask<String, Void, String> {
@@ -869,7 +908,7 @@ public class VideoDetailActivity extends AppCompatActivity {
                         Log.e("year", "-----------------" + year);
                         Log.e("day", "-----------------" + day);
 
-                        String fulldate = dayOfTheWeek + ", " + day + "/" + intMonth + "/" + year + " " + string[1];
+                        String fulldate = dayOfTheWeek + ", " + day + "/" + intMonth + "/" + year + ", " + string[1];
                         String date = fulldate;
 
 
@@ -925,6 +964,7 @@ public class VideoDetailActivity extends AppCompatActivity {
                     new CheckLike().execute(sharedpreferance.getId(), vid);
                 }
                 new VideoDetail().execute();
+                new CommentList2().execute(vid);
 //                new CountComment().execute(id);
 
 

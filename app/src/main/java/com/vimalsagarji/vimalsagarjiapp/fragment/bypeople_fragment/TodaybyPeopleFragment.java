@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,8 +73,9 @@ public class TodaybyPeopleFragment extends Fragment {
     String strImageUrl = "";
 
     private final String strURL = "http://www.grapes-solutions.com/vimalsagarji/bypeople/getallapppoststoday/?page=1&psize=1000";
-    private KProgressHUD loadingProgressDialog;
+    //    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
+    private ProgressBar progressbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,6 +88,7 @@ public class TodaybyPeopleFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "Image Url Of By people" + IMAGEURL);
+        progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         listView = (ListView) getActivity().findViewById(R.id.byPeople_list);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
         activity_main_swipe_refresh_layout = (SwipeRefreshLayout) getActivity().findViewById(R.id.activity_main_swipe_refresh_layout);
@@ -101,7 +104,7 @@ public class TodaybyPeopleFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 AllByPeople allByPeople = (AllByPeople) parent.getItemAtPosition(position);
                 Intent intent = new Intent(getActivity(), ByPeopleDetailActivity.class);
-                intent.putExtra("click_action","");
+                intent.putExtra("click_action", "");
                 intent.putExtra("postId", allByPeople.getId());
                 intent.putExtra("listTitle", allByPeople.getTitle());
                 intent.putExtra("listPost", allByPeople.getPost());
@@ -144,11 +147,12 @@ public class TodaybyPeopleFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -217,7 +221,6 @@ public class TodaybyPeopleFragment extends Fragment {
                         abp.setView(view);
                         listAllByPeople.add(abp);
 
-
                     }
                 } else {
                     Toast.makeText(getActivity(), "Data not found.", Toast.LENGTH_SHORT).show();
@@ -233,21 +236,22 @@ public class TodaybyPeopleFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
-            if (listView != null) {
-                CustomAdapter adapter = new CustomAdapter(getActivity(), listAllByPeople);
-                if (adapter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adapter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            }*/
+            progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    CustomAdapter adapter = new CustomAdapter(getActivity(), listAllByPeople);
+                    if (adapter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adapter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
                 }
-
-
             }
         }
 
@@ -257,11 +261,12 @@ public class TodaybyPeopleFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+          /*  loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -345,22 +350,25 @@ public class TodaybyPeopleFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (loadingProgressDialog != null) {
+            progressbar.setVisibility(View.GONE);
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
-            if (listView != null) {
-                CustomAdapter adapter = new CustomAdapter(getActivity(), listAllByPeople);
-                if (adapter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adapter);
-                    activity_main_swipe_refresh_layout.setRefreshing(false);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            }*/
+            if (getActivity() != null) {
+                if (listView != null) {
+                    CustomAdapter adapter = new CustomAdapter(getActivity(), listAllByPeople);
+                    if (adapter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adapter);
+                        activity_main_swipe_refresh_layout.setRefreshing(false);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
+
+
                 }
-
-
             }
         }
 
@@ -401,7 +409,7 @@ public class TodaybyPeopleFragment extends Fragment {
                 holder = (ViewHolder) convertView.getTag();
             }
             AllByPeople allByPeople = items.get(position);
-            Picasso.with(getActivity()).load(IMAGEURL + allByPeople.getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.bypeople_error).into(holder.imgAudio);
+            Picasso.with(getActivity()).load(IMAGEURL + allByPeople.getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0, 200).error(R.drawable.bypeople_error).into(holder.imgAudio);
 
 
             holder.txt_views.setText(allByPeople.getView());

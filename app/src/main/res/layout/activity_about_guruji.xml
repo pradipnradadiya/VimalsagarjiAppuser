@@ -2,30 +2,103 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/homepage_back"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar1" />
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/lin_eng"
+            style="@style/tan_style"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_rect_shapeoneselect">
+
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+                android:id="@+id/txt_eng"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/english"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lin_hnd"
+            style="@style/tan_style"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_rect_shapeone">
+
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+                android:id="@+id/txt_hnd"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/hindi"
+                android:textColor="@color/textColor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lin_guj"
+            style="@style/tan_style"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_rect_shapeone">
+
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+                android:id="@+id/txt_guj"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/gujrati"
+                android:textColor="@color/textColor"
+
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:padding="5dp"
+            android:id="@+id/txt_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="जन्म ( Birth) : अश्विनी कृष्णा ७ सन १९१५ (Ashwin krisna 7 ,Year 1915)
-जन्म स्थान (Birth Place) : कोसमा उत्तरप्रदेश (Kosma Uttarpradesh)
-जन्म का नाम (Birth Name):	नेमिचंद्र जैन (Nemichandra Jain)
-माता का नाम (Mothers Name) : कटोरिदेवी जैन (Katoridevi Jain)
-पिता का नाम (Father’s Name) :	बिहारिलालजी जैन (Biharilal Jain)
-मुनि दीक्षा तिथि (Muni Diksha) :	फाल्गुन शुक्ला १३ सन १९५२ (Falgun Shukl 13 ,Year-1952)
-दीक्षा नाम (Diksha Name) :	विमलसागरजी महाराज (Vimal Sagar Ji Maharaj)
-दीक्षा गुरु (Diksha Guru):	आचार्य श्री १०८ महावीरकीर्तिजी महाराज (Aacharya Mahaveer Kirti Ji)
-आचार्य पद तिथि (Place of Aacharya Pad) : Tundla Uttarpradesh
-आचार्य पद प्रदाता(Acharya Pad Pradata):	आचार्य श्री १०८ महावीरकीर्तिजी महाराज(Aacharya Mahaveer Kirti Ji)
-समाधि स्थल (Samadhi Place):	सम्मेदशिखर सिद्धक्षेत्र(SammedShikharji Siddhakshetra)
-समाधि तिथि(Samadhi Tithi) :	पौष कृष्णा १२ सन १९९४(Poash Krishna 12 Year-1994)
-विशेषता (Importance):	विध्वान, निमित्तज्ञान शिरोमणि (Nimmit Gyani)" />
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="English"
+            android:textColor="@color/textColor"
+            android:textSize="16dp"
+
+            />
+
     </LinearLayout>
+
+
 </LinearLayout>

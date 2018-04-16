@@ -6,11 +6,29 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
+    android:background="@drawable/back_gradiant_reverce"
     app:popupTheme="@style/AppTheme.PopupOverlay"
     app:titleTextAppearance="@style/Toolbar.TitleText">
 
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="56dp"
+        android:src="@drawable/fly"
+        />
 
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+        android:id="@+id/txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="7"
+        android:gravity="center_vertical"
+        android:lines="1"
+        android:text="Notification"
+        android:layout_marginLeft="-20dp"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="normal"
+         />
 </android.support.v7.widget.Toolbar>
 
 

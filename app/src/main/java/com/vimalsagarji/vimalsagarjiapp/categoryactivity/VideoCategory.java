@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -50,9 +51,10 @@ public class VideoCategory extends AppCompatActivity {
     private static final String ImgURL = img.replace("audioimage", categoryName);
     private String strImageUrl = "";
     static Bitmap bitmap = null;
-    private KProgressHUD loadingProgressDialog;
+    //    private KProgressHUD loadingProgressDialog;
     private RelativeLayout rel;
     private TextView txt_nodata_today;
+    private ProgressBar progressbar;
 
     @Override
     public void onBackPressed() {
@@ -78,6 +80,7 @@ public class VideoCategory extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+        progressbar = (ProgressBar) findViewById(R.id.progressbar);
         rel = (RelativeLayout) findViewById(R.id.rel);
         txt_nodata_today = (TextView) findViewById(R.id.txt_nodata_today);
         TextView txt_title = (TextView) toolbar_video.findViewById(R.id.txt_title);
@@ -121,11 +124,12 @@ public class VideoCategory extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(VideoCategory.this)
+            progressbar.setVisibility(View.VISIBLE);
+            /*loadingProgressDialog = KProgressHUD.create(VideoCategory.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(false);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -177,9 +181,11 @@ public class VideoCategory extends AppCompatActivity {
             }
 
 
-            if (loadingProgressDialog != null) {
+          /*  if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+
+            progressbar.setVisibility(View.GONE);
             GridView gridView = (GridView) findViewById(R.id.grid_video);
             if (gridView != null) {
                 CustomAdpter customAdpter = new CustomAdpter(VideoCategory.this, listName);
@@ -243,7 +249,7 @@ public class VideoCategory extends AppCompatActivity {
             }
             holder.grid_txtTitle.setText(items.get(position));
 
-            Picasso.with(VideoCategory.this).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.no_image).into(holder.grid_img);
+            Picasso.with(VideoCategory.this).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0, 200).error(R.drawable.no_image).into(holder.grid_img);
             return convertView;
 
         }

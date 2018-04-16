@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:paddingBottom="20dp">
 
-        <TextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
             android:id="@+id/txtRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

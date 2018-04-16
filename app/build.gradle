@@ -23,6 +23,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/httpclientandroidlib-1.1.2.jar')
     //Video Player
@@ -42,10 +43,11 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:10.0.1'
     testCompile 'junit:junit:4.12'
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    //View pages
+    implementation 'com.mcxiaoke.viewpagerindicator:library:2.4.1@aar'
 }
 //android{
 //    useLibrary 'org.apache.http.legacy'
 //}
-
 
 apply plugin: 'com.google.gms.google-services'

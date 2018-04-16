@@ -51,27 +51,28 @@ public class SearchActivity extends AppCompatActivity {
     SearchListAdapter searchListAdapter;
     ArrayList<SearchItem> searchItems;
     private ImageView img_datasearch,img_close;
+    private TextView txt_title;
+    private ImageView imgarrorback,img_search;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Search");
-        toolbar.setTitleTextColor(0xFFFFFFFF);
-        toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left);
+        imgarrorback= (ImageView) findViewById(R.id.imgarrorback);
+        img_search= (ImageView) findViewById(R.id.img_search);
+        img_search.setVisibility(View.GONE);
 
+        txt_title= (TextView) findViewById(R.id.txt_title);
+        txt_title.setText("Search");
 
-        setSupportActionBar(toolbar);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        imgarrorback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         linearLayoutManager = new LinearLayoutManager(SearchActivity.this);
         fndId();
@@ -132,7 +133,7 @@ public class SearchActivity extends AppCompatActivity {
         edittext_search = (EditText) findViewById(R.id.edittext_search);
     }
 
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -159,7 +160,7 @@ public class SearchActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
     private class Search extends AsyncTask<String, Void, String> {
         String responseString = "";
 
@@ -222,7 +223,7 @@ public class SearchActivity extends AppCompatActivity {
                         String[] time = date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
 
-                        searchItems.add(new SearchItem(table, title, id, fulldate + " " + time[1], description));
+                        searchItems.add(new SearchItem(table, title, id, fulldate + ", " + time[1], description));
                     }
                 }
                 if (jsonObject.getString("status").equalsIgnoreCase("error")) {

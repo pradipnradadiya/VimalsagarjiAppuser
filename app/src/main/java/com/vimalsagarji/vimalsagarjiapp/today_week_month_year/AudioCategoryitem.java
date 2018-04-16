@@ -1,6 +1,7 @@
 package com.vimalsagarji.vimalsagarjiapp.today_week_month_year;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -37,6 +38,7 @@ public class AudioCategoryitem extends AppCompatActivity implements View.OnClick
     private String strAudioTitle;
     private String strCategoryID;
     private String audiostrid;
+    LinearLayout lin_today, lin_week, lin_month, lin_all;
 
 
     @Override
@@ -79,6 +81,11 @@ public class AudioCategoryitem extends AppCompatActivity implements View.OnClick
         strCategoryID = intent.getStringExtra("listCategoryId");
         Log.e("cid", "--------------------------------" + strCategoryID);
         etText.setHint("Search Audio");
+
+        lin_today = (LinearLayout) findViewById(R.id.lin_today);
+        lin_week = (LinearLayout) findViewById(R.id.lin_week);
+        lin_month = (LinearLayout) findViewById(R.id.lin_month);
+        lin_all = (LinearLayout) findViewById(R.id.lin_all);
 
         LinearLayout lin_main= (LinearLayout) findViewById(R.id.lin_main);
         if (strCategoryID.equalsIgnoreCase("e_alliamgeid")) {
@@ -139,10 +146,17 @@ public class AudioCategoryitem extends AppCompatActivity implements View.OnClick
     }
 
     private void openTodayInfromation() {
-        view_today.setVisibility(View.VISIBLE);
-        view_month.setVisibility(View.GONE);
-        view_week.setVisibility(View.GONE);
-        view_all.setVisibility(View.GONE);
+
+        txt_today.setTextColor(Color.WHITE);
+        txt_thisweek.setTextColor(Color.BLACK);
+        txt_thismonth.setTextColor(Color.BLACK);
+        txt_all.setTextColor(Color.BLACK);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
+
         Fragment fr = null;
         fr = new TodayAudioFragment();
         FragmentManager fm = getSupportFragmentManager();
@@ -153,10 +167,15 @@ public class AudioCategoryitem extends AppCompatActivity implements View.OnClick
     }
 
     private void openWeekInfromation() {
-        view_today.setVisibility(View.GONE);
-        view_month.setVisibility(View.GONE);
-        view_week.setVisibility(View.VISIBLE);
-        view_all.setVisibility(View.GONE);
+        txt_today.setTextColor(Color.BLACK);
+        txt_thisweek.setTextColor(Color.WHITE);
+        txt_thismonth.setTextColor(Color.BLACK);
+        txt_all.setTextColor(Color.BLACK);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
         Fragment fr = null;
         fr = new ThisWeekAudioFragment();
         FragmentManager fm = getSupportFragmentManager();
@@ -167,10 +186,15 @@ public class AudioCategoryitem extends AppCompatActivity implements View.OnClick
     }
 
     private void openMonthInfromation() {
-        view_today.setVisibility(View.GONE);
-        view_month.setVisibility(View.VISIBLE);
-        view_week.setVisibility(View.GONE);
-        view_all.setVisibility(View.GONE);
+        txt_today.setTextColor(Color.BLACK);
+        txt_thisweek.setTextColor(Color.BLACK);
+        txt_thismonth.setTextColor(Color.WHITE);
+        txt_all.setTextColor(Color.BLACK);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
         Fragment fr = null;
         fr = new ThisMonthAudioFragment();
         FragmentManager fm = getSupportFragmentManager();
@@ -181,10 +205,15 @@ public class AudioCategoryitem extends AppCompatActivity implements View.OnClick
     }
 
     private void openAllInfromation() {
-        view_today.setVisibility(View.GONE);
-        view_month.setVisibility(View.GONE);
-        view_week.setVisibility(View.GONE);
-        view_all.setVisibility(View.VISIBLE);
+        txt_today.setTextColor(Color.BLACK);
+        txt_thisweek.setTextColor(Color.BLACK);
+        txt_thismonth.setTextColor(Color.BLACK);
+        txt_all.setTextColor(Color.WHITE);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
         Fragment fr = null;
         fr = new AllAudioFragment();
         FragmentManager fm = getSupportFragmentManager();

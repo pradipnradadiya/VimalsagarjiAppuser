@@ -55,52 +55,52 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         SearchItem searchItem = itemArrayList.get(position);
 
         if (searchItem.getTable().equalsIgnoreCase("Information")) {
-            holder.search_image.setImageResource(R.drawable.information_circle);
+            holder.search_image.setImageResource(R.drawable.infromation);
             holder.txt_title.setText(searchItem.getTitle());
             holder.txt_date.setText(searchItem.getDate());
             holder.txt_content.setText(searchItem.getDescription());
         } else if (searchItem.getTable().equalsIgnoreCase("Events")) {
-            holder.search_image.setImageResource(R.drawable.event_circle);
+            holder.search_image.setImageResource(R.drawable.event);
             holder.txt_title.setText(searchItem.getTitle());
             holder.txt_date.setText(searchItem.getDate());
             holder.txt_content.setText(searchItem.getDescription());
         } else if (searchItem.getTable().equalsIgnoreCase("Audio")) {
-            holder.search_image.setImageResource(R.drawable.audio_circle);
+            holder.search_image.setImageResource(R.drawable.audio);
             holder.txt_title.setText(searchItem.getTitle());
             holder.txt_date.setText(searchItem.getDate());
             holder.txt_content.setText(searchItem.getDescription());
         } else if (searchItem.getTable().equalsIgnoreCase("Video")) {
-            holder.search_image.setImageResource(R.drawable.video_circle);
+            holder.search_image.setImageResource(R.drawable.video);
             holder.txt_title.setText(searchItem.getTitle());
             holder.txt_date.setText(searchItem.getDate());
             holder.txt_content.setText(searchItem.getDescription());
         } else if (searchItem.getTable().equalsIgnoreCase("Thoughts")) {
-            holder.search_image.setImageResource(R.drawable.thought_circle);
+            holder.search_image.setImageResource(R.drawable.thoughts);
             holder.txt_title.setText(searchItem.getTitle());
             holder.txt_date.setText(searchItem.getDate());
             holder.txt_content.setText(searchItem.getDescription());
         } else if (searchItem.getTable().equalsIgnoreCase("ByPeople")) {
-            holder.search_image.setImageResource(R.drawable.bypeople_circle);
+            holder.search_image.setImageResource(R.drawable.bypeople);
             holder.txt_title.setText(searchItem.getTitle());
             holder.txt_date.setText(searchItem.getDate());
             holder.txt_content.setText(searchItem.getDescription());
         } else if (searchItem.getTable().equalsIgnoreCase("Question")) {
-            holder.search_image.setImageResource(R.drawable.qa_circle);
+            holder.search_image.setImageResource(R.drawable.qa);
             holder.txt_title.setText(searchItem.getTitle());
             holder.txt_date.setText(searchItem.getDate());
             holder.txt_content.setText(searchItem.getDescription());
         } else if (searchItem.getTable().equalsIgnoreCase("CompetitionMain")) {
-            holder.search_image.setImageResource(R.drawable.compition_circle);
+            holder.search_image.setImageResource(R.drawable.competition);
             holder.txt_title.setText(searchItem.getTitle());
             holder.txt_date.setText(searchItem.getDate());
             holder.txt_content.setText(searchItem.getDescription());
         } else if (searchItem.getTable().equalsIgnoreCase("Gallery")) {
-            holder.search_image.setImageResource(R.drawable.gallery_circle);
+            holder.search_image.setImageResource(R.drawable.gallary);
             holder.txt_title.setText(searchItem.getTitle());
             holder.txt_date.setText(searchItem.getDate());
             holder.txt_content.setText(searchItem.getDescription());
         }else if (searchItem.getTable().equalsIgnoreCase("OpinionPollMain")) {
-            holder.search_image.setImageResource(R.drawable.opinion_circle);
+            holder.search_image.setImageResource(R.drawable.opinionpoll);
             holder.txt_title.setText(searchItem.getTitle());
             holder.txt_date.setText(searchItem.getDate());
             holder.txt_content.setText(searchItem.getDescription());

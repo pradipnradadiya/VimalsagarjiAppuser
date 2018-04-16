@@ -26,7 +26,7 @@ public class CustomTextView extends android.support.v7.widget.AppCompatTextView 
     }
 
     private void setFont() {
-        Typeface font = Typeface.createFromAsset(getContext().getAssets(), "fonts/OpenSans-Regular.ttf");
+        Typeface font = Typeface.createFromAsset(getContext().getAssets(), "fonts/calibri_regular.ttf");
         setTypeface(font, Typeface.NORMAL);
     }
 

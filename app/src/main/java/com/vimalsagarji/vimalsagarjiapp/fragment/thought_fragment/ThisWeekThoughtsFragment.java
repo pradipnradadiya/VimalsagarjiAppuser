@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -51,13 +52,14 @@ public class ThisWeekThoughtsFragment extends Fragment {
     private ListView listView1;
     private CustomAdapter adapter1;
     private List<ThoughtToday> list = new ArrayList<>();
-    private KProgressHUD loadingProgressDialog;
+//    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
 
     private EditText InputBox;
     private List<ThoughtToday> listfilterdata = new ArrayList<>();
     private final String WeekSearchThought = "http://www.grapes-solutions.com/vimalsagarji/thought/searchallthoughtsbycidweek/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
+    private ProgressBar progressbar;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_thisweek_thoughts, container, false);
@@ -66,6 +68,8 @@ public class ThisWeekThoughtsFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        progressbar= (ProgressBar) getActivity().findViewById(R.id.progressbar);
         listView1 = (ListView) getActivity().findViewById(R.id.list1);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
         if (CommonMethod.isInternetConnected(getActivity())) {
@@ -180,11 +184,12 @@ public class ThisWeekThoughtsFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -246,20 +251,24 @@ public class ThisWeekThoughtsFragment extends Fragment {
                 e.printStackTrace();
             }
 
-
+/*
             if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
-            if (listView1 != null) {
-                adapter1 = new CustomAdapter(getActivity(), list);
-                if (adapter1.getCount() != 0) {
-                    listView1.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView1.setAdapter(adapter1);
-                } else {
-                    listView1.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            }*/
+
+            progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
+                if (listView1 != null) {
+                    adapter1 = new CustomAdapter(getActivity(), list);
+                    if (adapter1.getCount() != 0) {
+                        listView1.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView1.setAdapter(adapter1);
+                    } else {
+                        listView1.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(), "No data found", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -334,17 +343,19 @@ public class ThisWeekThoughtsFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            if (listView1 != null) {
-                adapter1 = new CustomAdapter(getActivity(), list);
-                if (adapter1.getCount() != 0) {
-                    listView1.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView1.setAdapter(adapter1);
-                    activity_main_swipe_refresh_layout.setRefreshing(false);
-                } else {
-                    listView1.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listView1 != null) {
+                    adapter1 = new CustomAdapter(getActivity(), list);
+                    if (adapter1.getCount() != 0) {
+                        listView1.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView1.setAdapter(adapter1);
+                        activity_main_swipe_refresh_layout.setRefreshing(false);
+                    } else {
+                        listView1.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(), "No data found", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -472,21 +483,22 @@ public class ThisWeekThoughtsFragment extends Fragment {
 
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
-
-            if (listView1 != null) {
-                adapter1 = new CustomAdapter(getActivity(), listfilterdata);
-                if (adapter1.getCount() != 0) {
-                    listView1.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView1.setAdapter(adapter1);
-                } else {
-                    listView1.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search \n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listView1 != null) {
+                    adapter1 = new CustomAdapter(getActivity(), listfilterdata);
+                    if (adapter1.getCount() != 0) {
+                        listView1.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView1.setAdapter(adapter1);
+                    } else {
+                        listView1.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search \n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
+            }
         }
 
     }

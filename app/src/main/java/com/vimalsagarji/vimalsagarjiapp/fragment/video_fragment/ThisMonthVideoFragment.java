@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -69,13 +70,14 @@ public class ThisMonthVideoFragment extends Fragment {
     String strImageUrl = "";
     static Bitmap bitmap = null;
     private View view;
-    private KProgressHUD loadingProgressDialog;
+//    private KProgressHUD loadingProgressDialog;
 
 
     private CustomAdpter customAdpter;
     private TextView txt_nodata_today;
     private EditText InputBox;
     private final String MonthSearchVideo = "http://www.grapes-solutions.com/vimalsagarji/video/searchallvideosbycidthismonth/?page=1&psize=1000";
+    private ProgressBar progressbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,6 +94,7 @@ public class ThisMonthVideoFragment extends Fragment {
         URL = urls + video_cat_id;
         listViewvideo = (ListView) getActivity().findViewById(R.id.thismonth_video);
 
+        progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
 
         InputBox = (EditText) getActivity().findViewById(R.id.etText);
@@ -241,11 +244,12 @@ public class ThisMonthVideoFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -322,11 +326,12 @@ public class ThisMonthVideoFragment extends Fragment {
                 e.printStackTrace();
             }
 
-
+/*
             if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
-
+            }*/
+            progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
             if (listViewvideo != null) {
                 customAdpter = new CustomAdpter(getActivity(), listVideoName);
                 if (customAdpter.getCount() != 0) {
@@ -342,6 +347,7 @@ public class ThisMonthVideoFragment extends Fragment {
 
 
             }
+            }
 
         }
 
@@ -353,11 +359,12 @@ public class ThisMonthVideoFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+           /* loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -400,7 +407,7 @@ public class ThisMonthVideoFragment extends Fragment {
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");
-                        String view=object.getString("View");
+                        String view = object.getString("View");
                         listview.add(view);
                         Date dt = CommonMethod.convert_date(date);
                         Log.e("Convert date is", "------------------" + dt);
@@ -431,24 +438,27 @@ public class ThisMonthVideoFragment extends Fragment {
             }
 
 
-            if (loadingProgressDialog != null) {
+          /*  if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
 
-            }
-            listViewvideo = (ListView) getActivity().findViewById(R.id.thismonth_video);
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                    customAdpter.notifyDataSetChanged();
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            }*/
+            progressbar.setVisibility(View.GONE);
+//            listViewvideo = (ListView) getActivity().findViewById(R.id.thismonth_video);
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                        customAdpter.notifyDataSetChanged();
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
+
+
                 }
-
-
             }
 
         }
@@ -505,7 +515,7 @@ public class ThisMonthVideoFragment extends Fragment {
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");
-                        String view=object.getString("View");
+                        String view = object.getString("View");
                         listview.add(view);
                         Date dt = CommonMethod.convert_date(date);
                         Log.e("Convert date is", "------------------" + dt);
@@ -536,20 +546,22 @@ public class ThisMonthVideoFragment extends Fragment {
             }
 
             listViewvideo = (ListView) getActivity().findViewById(R.id.thismonth_video);
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                    customAdpter.notifyDataSetChanged();
-                    activity_main_swipe_refresh_layout.setRefreshing(false);
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                        customAdpter.notifyDataSetChanged();
+                        activity_main_swipe_refresh_layout.setRefreshing(false);
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
+
+
                 }
-
-
             }
 
         }
@@ -598,7 +610,7 @@ public class ThisMonthVideoFragment extends Fragment {
 
 
             if (listIcon != null) {
-                Picasso.with(getActivity()).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.no_image).into(holder.imgVideo);
+                Picasso.with(getActivity()).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0, 200).error(R.drawable.no_image).into(holder.imgVideo);
             } else {
                 Picasso.with(getActivity()).load(R.drawable.no_image);
             }
@@ -621,7 +633,7 @@ public class ThisMonthVideoFragment extends Fragment {
                     Log.e("date", "------------------" + date);
 
                     Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
-                    intent.putExtra("click_action","");
+                    intent.putExtra("click_action", "");
                     intent.putExtra("video", strVideo);
                     intent.putExtra("videoname", videoname);
                     intent.putExtra("id", id);
@@ -642,7 +654,7 @@ public class ThisMonthVideoFragment extends Fragment {
         }
 
         private class ViewHolder {
-            TextView txtVideoName, txtVideoDate,txt_views;
+            TextView txtVideoName, txtVideoDate, txt_views;
             ImageView imgVideo, imgPlayVideo, imgPlayPush, imgPlayVideo1;
 
         }
@@ -697,7 +709,7 @@ public class ThisMonthVideoFragment extends Fragment {
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");
-                        String view=object.getString("View");
+                        String view = object.getString("View");
                         listview.add(view);
                         Date dt = CommonMethod.convert_date(date);
                         Log.e("Convert date is", "------------------" + dt);
@@ -732,18 +744,19 @@ public class ThisMonthVideoFragment extends Fragment {
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
             InformationCategory informationCategory = new InformationCategory();
-
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -757,11 +770,12 @@ public class ThisMonthVideoFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+           /* loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -824,7 +838,7 @@ public class ThisMonthVideoFragment extends Fragment {
                         Log.e("time", "-----------------------" + time[1]);
 
                         listDate.add(dayOfTheWeek + ", " + fulldate);
-                        String view=object.getString("View");
+                        String view = object.getString("View");
                         listview.add(view);
                         String name = object.getString("Name");
                     }
@@ -835,11 +849,12 @@ public class ThisMonthVideoFragment extends Fragment {
                 e.printStackTrace();
             }
 
-
+/*
             if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
-
+            }*/
+            progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
             if (listViewvideo != null) {
                 customAdpter = new CustomAdpter(getActivity(), listVideoName);
                 if (customAdpter.getCount() != 0) {
@@ -855,6 +870,7 @@ public class ThisMonthVideoFragment extends Fragment {
 
 
             }
+            }
 
         }
 
@@ -866,11 +882,12 @@ public class ThisMonthVideoFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -912,7 +929,7 @@ public class ThisMonthVideoFragment extends Fragment {
                         String img = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
-                        String view=object.getString("View");
+                        String view = object.getString("View");
                         listview.add(view);
                         String date = object.getString("Date");
                         Date dt = CommonMethod.convert_date(date);
@@ -944,11 +961,14 @@ public class ThisMonthVideoFragment extends Fragment {
                 e.printStackTrace();
             }
 
+            progressbar.setVisibility(View.GONE);
+/*
 
             if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
             }
-
+*/
+            if (getActivity() != null) {
             if (listViewvideo != null) {
                 customAdpter = new CustomAdpter(getActivity(), listVideoName);
                 if (customAdpter.getCount() != 0) {
@@ -963,6 +983,7 @@ public class ThisMonthVideoFragment extends Fragment {
                 }
 
 
+            }
             }
 
         }
@@ -1018,7 +1039,7 @@ public class ThisMonthVideoFragment extends Fragment {
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");
-                        String view=object.getString("View");
+                        String view = object.getString("View");
                         listview.add(view);
 
                         Date dt = CommonMethod.convert_date(date);
@@ -1055,17 +1076,19 @@ public class ThisMonthVideoFragment extends Fragment {
             super.onPostExecute(status);
             InformationCategory informationCategory = new InformationCategory();
 
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -1120,7 +1143,7 @@ public class ThisMonthVideoFragment extends Fragment {
                         String img = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
-                        String view=object.getString("View");
+                        String view = object.getString("View");
                         listview.add(view);
                         String date = object.getString("Date");
 
@@ -1157,18 +1180,19 @@ public class ThisMonthVideoFragment extends Fragment {
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
             InformationCategory informationCategory = new InformationCategory();
-
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

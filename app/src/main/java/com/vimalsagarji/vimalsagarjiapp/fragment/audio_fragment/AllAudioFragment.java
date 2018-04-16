@@ -17,7 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.squareup.picasso.Picasso;
@@ -57,7 +59,7 @@ public class AllAudioFragment extends Fragment {
     private static String strCid = "";
     private View view;
     TextView audioImagname;
-    KProgressHUD loadingProgressDialog;
+//    KProgressHUD loadingProgressDialog;
     TextView txt_nodata_today;
     private EditText InputBox;
     private ImageView imsearch;
@@ -67,6 +69,7 @@ public class AllAudioFragment extends Fragment {
 
     ArrayList<String> audiolistarraylist = new ArrayList<>();
     String[] aArray;
+    private ProgressBar progressbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,6 +87,7 @@ public class AllAudioFragment extends Fragment {
         listView = (ListView) getActivity().findViewById(R.id.thismonth_audio);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
 
+        progressbar= (ProgressBar) getActivity().findViewById(R.id.progressbar);
         InputBox = (EditText) getActivity().findViewById(R.id.etText);
         imsearch = (ImageView) getActivity().findViewById(R.id.imgSerch);
         activity_main_swipe_refresh_layout = (SwipeRefreshLayout) getActivity().findViewById(R.id.activity_main_swipe_refresh_layout);
@@ -110,13 +114,13 @@ public class AllAudioFragment extends Fragment {
 
                 if (strCid.equalsIgnoreCase("e_alliamgeid")) {
                     if (CommonMethod.isInternetConnected(getActivity())) {
-                        new SearchMonthEventAudio().execute();
+//                        new SearchMonthEventAudio().execute();
                     } else {
                         Snackbar.make(getView(), R.string.internet, Snackbar.LENGTH_SHORT).show();
                     }
                 } else if (strCid.equalsIgnoreCase("bypeopleidid")) {
                     if (CommonMethod.isInternetConnected(getActivity())) {
-                        new SearchAllByPeople().execute();
+//                        new SearchAllByPeople().execute();
                     } else {
                         Snackbar.make(getView(), R.string.internet, Snackbar.LENGTH_SHORT).show();
                     }
@@ -124,7 +128,7 @@ public class AllAudioFragment extends Fragment {
                 } else {
 
                     if (CommonMethod.isInternetConnected(getActivity())) {
-                        new SearchMonthAudio().execute();
+//                        new SearchMonthAudio().execute();
                     } else {
                         Snackbar.make(getView(), R.string.internet, Snackbar.LENGTH_SHORT).show();
                     }
@@ -172,11 +176,12 @@ public class AllAudioFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+            progressbar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -240,25 +245,26 @@ public class AllAudioFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+           progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
 
-            if (listView != null) {
-                customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
+                    if (customAdpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(customAdpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setText("No Data");
 
-                if (customAdpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(customAdpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setText("No Data");
+                    }
 
                 }
-
-
             }
 
         }
@@ -272,11 +278,12 @@ public class AllAudioFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+           /* loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+           progressbar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -350,24 +357,27 @@ public class AllAudioFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (loadingProgressDialog != null) {
+            /*if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
-            if (listView != null) {
-                CustomAdpter customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
+            }*/
+            progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    CustomAdpter customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
 
-                if (customAdpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(customAdpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Data");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+                    if (customAdpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(customAdpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Data");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
+
+
                 }
-
-
             }
 
         }
@@ -445,21 +455,23 @@ public class AllAudioFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            if (listView != null) {
-                customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
 
-                if (customAdpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(customAdpter);
-                    activity_main_swipe_refresh_layout.setRefreshing(false);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Data");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+                    if (customAdpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(customAdpter);
+                        activity_main_swipe_refresh_layout.setRefreshing(false);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Data");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
+
+
                 }
-
-
             }
 
         }
@@ -531,6 +543,29 @@ public class AllAudioFragment extends Fragment {
                                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             }
 
+                        } else if (items.get(position).getID().equalsIgnoreCase("bid"+String.valueOf(position))) {
+
+                            if (items.get(position).getAudio().equalsIgnoreCase("")) {
+
+                                Toast.makeText(context, "This posts audio not avalable.", Toast.LENGTH_SHORT).show();
+                                
+                            } else {
+
+                                Intent i = new Intent(getActivity(), AudioDetail.class);
+                                i.putExtra("click_action", "");
+                                i.putExtra("id", items.get(position).getID());
+                                i.putExtra("AudioName", items.get(position).getAudioName());
+                                i.putExtra("CategoryID", items.get(position).getCategoryID());
+                                i.putExtra("Audio", "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleaudio/" + items.get(position).getAudio());
+                                i.putExtra("Photo", items.get(position).getPhoto());
+                                i.putExtra("Duration", items.get(position).getDuration());
+                                i.putExtra("Date", items.get(position).getDate());
+                                i.putExtra("view", items.get(position).getView());
+                                startActivity(i);
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                            }
+
                         } else {
                             Intent i = new Intent(getActivity(), AudioDetail.class);
                             i.putExtra("click_action", "");
@@ -577,7 +612,7 @@ public class AllAudioFragment extends Fragment {
         }
     }
 
-    public class SearchMonthAudio extends AsyncTask<String, String, String> {
+    /*public class SearchMonthAudio extends AsyncTask<String, String, String> {
 
         String status;
         public LayoutInflater inflater = null;
@@ -652,26 +687,27 @@ public class AllAudioFragment extends Fragment {
 
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
-
-            if (listView != null) {
-                customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
-                if (customAdpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(customAdpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
+                    if (customAdpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(customAdpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
+            }
         }
 
-    }
+    }*/
 
-    public class SearchMonthEventAudio extends AsyncTask<String, String, String> {
+   /* public class SearchMonthEventAudio extends AsyncTask<String, String, String> {
 
         String status;
         public LayoutInflater inflater = null;
@@ -752,24 +788,25 @@ public class AllAudioFragment extends Fragment {
 
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
-
-            if (listView != null) {
-                CustomAdpter customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
-                if (customAdpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(customAdpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    CustomAdpter customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
+                    if (customAdpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(customAdpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
+            }
         }
 
-    }
+    }*/
 
     private class GetAllByPeople extends AsyncTask<String, Void, String> {
         String responseJSON = "";
@@ -777,11 +814,12 @@ public class AllAudioFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -808,10 +846,10 @@ public class AllAudioFragment extends Fragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String id = "bid";
+                        String id = "bid"+String.valueOf(i);
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleaudio/" + object.getString("Audio");
+                        String Audio = object.getString("Audio");
                         String Photo = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
@@ -842,25 +880,27 @@ public class AllAudioFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+           progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    CustomAdpter customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
 
-            if (listView != null) {
-                CustomAdpter customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
-
-                if (customAdpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(customAdpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Data");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+                    if (customAdpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(customAdpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Data");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
+
+
                 }
-
-
             }
 
         }
@@ -868,7 +908,7 @@ public class AllAudioFragment extends Fragment {
 
     }
 
-    public class SearchAllByPeople extends AsyncTask<String, String, String> {
+    /*public class SearchAllByPeople extends AsyncTask<String, String, String> {
 
         String status;
         public LayoutInflater inflater = null;
@@ -942,21 +982,23 @@ public class AllAudioFragment extends Fragment {
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
 
-            if (listView != null) {
-                CustomAdpter customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
-                if (customAdpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(customAdpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    CustomAdpter customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
+                    if (customAdpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(customAdpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
+            }
         }
 
-    }
+    }*/
 }

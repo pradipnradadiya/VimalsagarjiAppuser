@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/notificationbackground"
+    android:background="@color/homepage_back"
     android:orientation="vertical">
 
     <!-- put whatever you want -->
@@ -37,7 +37,7 @@
                 android:layout_weight="8"
                 android:orientation="vertical">
 
-                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                     style="@style/itemtextview"
                     android:id="@+id/txt_title"
                     android:layout_width="match_parent"
@@ -69,17 +69,18 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="2"
-            android:text="What is the clickable mean? trigger search action or just make the edit area focused? If it is th"
+            android:text="No Description available."
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000" />
+
 
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000" />
 
 
 </LinearLayout>

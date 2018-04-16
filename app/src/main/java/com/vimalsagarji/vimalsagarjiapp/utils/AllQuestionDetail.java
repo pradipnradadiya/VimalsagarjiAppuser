@@ -160,8 +160,8 @@ public class AllQuestionDetail extends AppCompatActivity {
                         jsonObject1.getString("Is_Approved");
                         jsonObject1.getString("UserID");
                         jsonObject1.getString("View");
-                        txt_answer.setText(ans);
-                        txt_question.setText("Question. :" + que);
+                        txt_answer.setText("Answer: "+ans);
+                        txt_question.setText("Question: " + que);
                     }
                 }
             } catch (JSONException e) {

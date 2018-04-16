@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,11 +71,12 @@ public class AllbyPeopleFragment extends Fragment {
 
     private List<AllByPeople> listAllByPeople = new ArrayList<>();
     private ListView listView;
-    private KProgressHUD loadingProgressDialog;
+    //    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
     private String strImageUrl = "";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private String strURL;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -87,7 +89,7 @@ public class AllbyPeopleFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
+        progressBar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         Log.d(TAG, "Image Url Of By people" + IMAGEURL);
         strURL = Constant.ALL_BYPEOPLE_URL + "&psize=1000";
         listView = (ListView) getActivity().findViewById(R.id.byPeople_list);
@@ -105,7 +107,7 @@ public class AllbyPeopleFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 AllByPeople allByPeople = (AllByPeople) parent.getItemAtPosition(position);
                 Intent intent = new Intent(getActivity(), ByPeopleDetailActivity.class);
-                intent.putExtra("click_action","");
+                intent.putExtra("click_action", "");
                 intent.putExtra("postId", allByPeople.getId());
                 intent.putExtra("listTitle", allByPeople.getTitle());
                 intent.putExtra("listPost", allByPeople.getPost());
@@ -148,11 +150,13 @@ public class AllbyPeopleFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -238,21 +242,24 @@ public class AllbyPeopleFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (loadingProgressDialog != null) {
+            /*if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
-            if (listView != null) {
-                CustomAdapter adapter = new CustomAdapter(getActivity(), listAllByPeople);
-                if (adapter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adapter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            }*/
+            progressBar.setVisibility(View.GONE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    CustomAdapter adapter = new CustomAdapter(getActivity(), listAllByPeople);
+                    if (adapter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adapter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
+
+
                 }
-
-
             }
         }
 
@@ -293,7 +300,6 @@ public class AllbyPeopleFragment extends Fragment {
                         strImageUrl = ImageURL + strPhoto;
                         String name = object.getString("Name");
                         String view = object.getString("View");
-
 
 
                         Date dt = CommonMethod.convert_date(strDate);
@@ -349,6 +355,7 @@ public class AllbyPeopleFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (getActivity() != null) {
             if (listView != null) {
                 CustomAdapter adapter = new CustomAdapter(getActivity(), listAllByPeople);
                 if (adapter.getCount() != 0) {
@@ -361,6 +368,7 @@ public class AllbyPeopleFragment extends Fragment {
                     txt_nodata_today.setVisibility(View.VISIBLE);
                 }
 
+            }
 
             }
         }
@@ -403,7 +411,7 @@ public class AllbyPeopleFragment extends Fragment {
                 holder = (ViewHolder) convertView.getTag();
             }
             AllByPeople allByPeople = items.get(position);
-            Picasso.with(getActivity()).load(IMAGEURL + allByPeople.getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.bypeople_error).into(holder.imgAudio);
+            Picasso.with(getActivity()).load(IMAGEURL + allByPeople.getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0, 200).error(R.drawable.bypeople_error).into(holder.imgAudio);
 
 
             holder.txt_views.setText(allByPeople.getView());
@@ -417,7 +425,7 @@ public class AllbyPeopleFragment extends Fragment {
         }
 
         private class ViewHolder {
-            TextView txtTitle, txtPost, txtDate, txt_postby,txt_views;
+            TextView txtTitle, txtPost, txtDate, txt_postby, txt_views;
             ImageView imgAudio;
 
         }

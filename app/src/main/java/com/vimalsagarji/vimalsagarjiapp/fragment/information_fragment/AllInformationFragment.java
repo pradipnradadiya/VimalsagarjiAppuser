@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +50,7 @@ public class AllInformationFragment extends Fragment {
 
     }
 
-    private KProgressHUD loadingProgressDialog;
+    //    private KProgressHUD loadingProgressDialog;
     private static final String TAG = AllInformationFragment.class.getSimpleName();
     private List<InformationCategory> listAllInformationCategory = new ArrayList<>();
     private ListView listView;
@@ -64,6 +65,7 @@ public class AllInformationFragment extends Fragment {
     private List<InformationCategory> listallsearchdata = new ArrayList<>();
     private final String SearchAll = "http://www.grapes-solutions.com/vimalsagarji/info/searchallinfo/?page=1&psize=1000";
     private String URL;
+    private ProgressBar progressbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,6 +75,8 @@ public class AllInformationFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         InputBox = (EditText) getActivity().findViewById(R.id.etText);
         ImageView imsearch = (ImageView) getActivity().findViewById(R.id.imgSerch);
         activity_main_swipe_refresh_layout = (SwipeRefreshLayout) getActivity().findViewById(R.id.activity_main_swipe_refresh_layout);
@@ -88,7 +92,7 @@ public class AllInformationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (CommonMethod.isInternetConnected(getActivity())) {
-                    new SearchAllInformation().execute();
+//                    new SearchAllInformation().execute();
                 } else {
                     final Snackbar snackbar = Snackbar
                             .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
@@ -129,11 +133,12 @@ public class AllInformationFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -200,21 +205,24 @@ public class AllInformationFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (loadingProgressDialog != null) {
+            progressbar.setVisibility(View.GONE);
+
+          /*  if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+            if (getActivity() != null) {
+                if (listView != null) {
+                    adpter = new CustomAdpter(getActivity(), listAllInformationCategory);
+                    if (adpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
 
-            if (listView != null) {
-                adpter = new CustomAdpter(getActivity(), listAllInformationCategory);
-                if (adpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
                 }
-
             }
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -310,19 +318,20 @@ public class AllInformationFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    adpter = new CustomAdpter(getActivity(), listAllInformationCategory);
+                    if (adpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adpter);
+                        activity_main_swipe_refresh_layout.setRefreshing(false);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
 
-            if (listView != null) {
-                adpter = new CustomAdpter(getActivity(), listAllInformationCategory);
-                if (adpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adpter);
-                    activity_main_swipe_refresh_layout.setRefreshing(false);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
                 }
-
             }
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -389,7 +398,7 @@ public class AllInformationFragment extends Fragment {
             InformationCategory informationCategory = filterdata.get(position);
             holder.txt_Title.setText(informationCategory.getTitle());
             holder.txt_Description.setText(informationCategory.getDescription());
-            holder.txt_Date.setText(informationCategory.getDay() + "," + informationCategory.getDate());
+            holder.txt_Date.setText(informationCategory.getDay() + ", " + informationCategory.getDate());
             holder.txt_Address.setText(informationCategory.getAddress());
             holder.txt_views.setText(informationCategory.getView());
 
@@ -397,13 +406,13 @@ public class AllInformationFragment extends Fragment {
         }
 
         private class ViewHolder {
-            TextView txt_ID, txt_Title, txt_Description, txt_Address, txt_Date,txt_views;
+            TextView txt_ID, txt_Title, txt_Description, txt_Address, txt_Date, txt_views;
 
         }
 
     }
 
-
+/*
     @SuppressWarnings("deprecation")
     public class SearchAllInformation extends AsyncTask<String, String, String> {
 
@@ -485,24 +494,26 @@ public class AllInformationFragment extends Fragment {
             super.onPostExecute(status);
             InformationCategory informationCategory = new InformationCategory();
 
-            if (listView != null) {
-                adpter = new CustomAdpter(getActivity(), listallsearchdata);
-                if (adpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setText("No Search\n Found");
+            if (getActivity() != null) {
+                if (listView != null) {
+                    adpter = new CustomAdpter(getActivity(), listallsearchdata);
+                    if (adpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setText("No Search\n Found");
 //                    Toast.makeText(getActivity(), "No data found", Toast.LENGTH_SHORT).show();
-                }
+                    }
 
+                }
             }
 
         }
 
-    }
+    }*/
 
     private void loadData() {
         LoadJsonTask jsonTask = new LoadJsonTask();

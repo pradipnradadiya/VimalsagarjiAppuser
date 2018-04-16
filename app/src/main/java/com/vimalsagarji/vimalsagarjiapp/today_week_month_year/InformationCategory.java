@@ -3,6 +3,7 @@ package com.vimalsagarji.vimalsagarjiapp.today_week_month_year;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -45,6 +46,8 @@ public class InformationCategory extends AppCompatActivity implements View.OnCli
     private static Dialog csDialog = null;
     private static Context context = null;
 
+    LinearLayout lin_today, lin_week, lin_month, lin_all;
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -71,6 +74,8 @@ public class InformationCategory extends AppCompatActivity implements View.OnCli
         txt_thisweek = (TextView) findViewById(R.id.txt_thisweek);
         txt_thismonth = (TextView) findViewById(R.id.txt_thismonth);
         txt_all = (TextView) findViewById(R.id.txt_all);
+
+
         framecontent = (FrameLayout) findViewById(R.id.framecontent);
         view_today = findViewById(R.id.view_today);
         view_week = findViewById(R.id.view_week);
@@ -83,6 +88,14 @@ public class InformationCategory extends AppCompatActivity implements View.OnCli
         txt_thismonth.setOnClickListener(this);
         img_search.setOnClickListener(this);
         txt_all.setOnClickListener(this);
+
+
+        lin_today = (LinearLayout) findViewById(R.id.lin_today);
+        lin_week = (LinearLayout) findViewById(R.id.lin_week);
+        lin_month = (LinearLayout) findViewById(R.id.lin_month);
+        lin_all = (LinearLayout) findViewById(R.id.lin_all);
+
+
         etText.setHint("Search Information");
         openTodayInfromation();
 
@@ -91,6 +104,9 @@ public class InformationCategory extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+
+
             case R.id.img_search:
                 Intent intent = new Intent(InformationCategory.this, SearchActivity.class);
                 startActivity(intent);
@@ -122,10 +138,18 @@ public class InformationCategory extends AppCompatActivity implements View.OnCli
     }
 
     private void openTodayInfromation() {
-        view_today.setVisibility(View.VISIBLE);
-        view_month.setVisibility(View.GONE);
-        view_week.setVisibility(View.GONE);
-        view_all.setVisibility(View.GONE);
+
+        txt_today.setTextColor(Color.WHITE);
+        txt_thisweek.setTextColor(Color.BLACK);
+        txt_thismonth.setTextColor(Color.BLACK);
+        txt_all.setTextColor(Color.BLACK);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
+
+
         Fragment fr = null;
         fr = new TodayInformationFragment();
         FragmentManager fm = getSupportFragmentManager();
@@ -136,10 +160,18 @@ public class InformationCategory extends AppCompatActivity implements View.OnCli
     }
 
     private void openWeekInfromation() {
-        view_today.setVisibility(View.GONE);
-        view_month.setVisibility(View.GONE);
-        view_week.setVisibility(View.VISIBLE);
-        view_all.setVisibility(View.GONE);
+
+
+        txt_today.setTextColor(Color.BLACK);
+        txt_thisweek.setTextColor(Color.WHITE);
+        txt_thismonth.setTextColor(Color.BLACK);
+        txt_all.setTextColor(Color.BLACK);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
+
         Fragment fr = null;
         fr = new ThisWeekInformationFragment();
         FragmentManager fm = getSupportFragmentManager();
@@ -150,10 +182,18 @@ public class InformationCategory extends AppCompatActivity implements View.OnCli
     }
 
     private void openMonthInfromation() {
-        view_today.setVisibility(View.GONE);
-        view_month.setVisibility(View.VISIBLE);
-        view_week.setVisibility(View.GONE);
-        view_all.setVisibility(View.GONE);
+
+
+        txt_today.setTextColor(Color.BLACK);
+        txt_thisweek.setTextColor(Color.BLACK);
+        txt_thismonth.setTextColor(Color.WHITE);
+        txt_all.setTextColor(Color.BLACK);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
+
         Fragment fr = null;
         fr = new ThisMonthInformationFragment();
         FragmentManager fm = getSupportFragmentManager();
@@ -164,10 +204,18 @@ public class InformationCategory extends AppCompatActivity implements View.OnCli
     }
 
     private void openAllInfromation() {
-        view_today.setVisibility(View.GONE);
-        view_month.setVisibility(View.GONE);
-        view_week.setVisibility(View.GONE);
-        view_all.setVisibility(View.VISIBLE);
+
+
+        txt_today.setTextColor(Color.BLACK);
+        txt_thisweek.setTextColor(Color.BLACK);
+        txt_thismonth.setTextColor(Color.BLACK);
+        txt_all.setTextColor(Color.WHITE);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+
         Fragment fr = null;
         fr = new AllInformationFragment();
         FragmentManager fm = getSupportFragmentManager();

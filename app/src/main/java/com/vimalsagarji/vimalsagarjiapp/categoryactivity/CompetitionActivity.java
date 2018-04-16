@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +40,7 @@ import java.util.List;
 public class CompetitionActivity extends AppCompatActivity {
 
     private TextView grid_txtTitle;
-    private KProgressHUD loadingProgressDialog;
+//    private KProgressHUD loadingProgressDialog;
     private static final String TAG = CompetitionActivity.class.getSimpleName();
     private static final String URL = "http://www.grapes-solutions.com/vimalsagarji/competition/getallcategory/?page=1&psize=1000";
     private static final String ImgURL = "http://www.grapes-solutions.com/vimalsagarji/static/competitioncategory/";
@@ -53,6 +54,7 @@ public class CompetitionActivity extends AppCompatActivity {
     private RelativeLayout rel_compe;
     private TextView txt_nodata_today;
     Sharedpreferance sharedpreferance;
+    private ProgressBar progressbar;
 
     @Override
     public void onBackPressed() {
@@ -74,6 +76,7 @@ public class CompetitionActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_competition);
         setSupportActionBar(toolbar);
+        progressbar= (ProgressBar) findViewById(R.id.progressbar);
         ImageView imgarrorback = (ImageView) toolbar.findViewById(R.id.imgarrorback);
         ImageView imgHome = (ImageView) toolbar.findViewById(R.id.imgHome);
         ImageView img_search = (ImageView) toolbar.findViewById(R.id.img_search);
@@ -119,11 +122,12 @@ public class CompetitionActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(CompetitionActivity.this)
+            progressbar.setVisibility(View.VISIBLE);
+         /*   loadingProgressDialog = KProgressHUD.create(CompetitionActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(false);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -159,9 +163,10 @@ public class CompetitionActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+            progressbar.setVisibility(View.GONE);
             GridView gridView = (GridView) findViewById(R.id.grid_audio);
             if (gridView != null) {
 

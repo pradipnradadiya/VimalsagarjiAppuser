@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/round_rect_shape"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@drawable/corner_event"
         android:orientation="vertical"
 
         >
@@ -20,7 +21,7 @@
             android:padding="2dp"
             android:layout_gravity="center"
             android:src="@android:drawable/ic_menu_gallery"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             tools:ignore="ContentDescription" />
     </RelativeLayout>
 
@@ -29,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center">
 
-        <TextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
             android:id="@+id/grid_txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

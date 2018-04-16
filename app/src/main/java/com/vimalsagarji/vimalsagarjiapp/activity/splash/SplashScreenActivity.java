@@ -41,7 +41,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Intent intent = new Intent(SplashScreenActivity.this, SecondSplashScreenActivity.class);
+            Intent intent = new Intent(SplashScreenActivity.this, ThirdSpalshScreenActivity.class);
             startActivity(intent);
             finish();
 

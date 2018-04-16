@@ -128,7 +128,8 @@ public class AlreadyRegisterUser extends AppCompatActivity {
                     edit_mobile.requestFocus();
                 } else {
                     if (CommonMethod.isInternetConnected(AlreadyRegisterUser.this)) {
-                        new GenrateOTP().execute();
+                        new AllreadyRegisterUser().execute(edit_email.getText().toString(), edit_mobile.getText().toString(), strDevicetoken);
+//                        new GenrateOTP().execute();
                     } else {
                         Toast.makeText(AlreadyRegisterUser.this, R.string.internet, Toast.LENGTH_SHORT).show();
                     }
@@ -207,10 +208,8 @@ public class AlreadyRegisterUser extends AppCompatActivity {
                         Log.e("email", "---------------" + sharedpreferance.getEmail());
                         Log.e("uid", "---------------" + sharedpreferance.getId());
 
-                        Intent intent = new Intent(AlreadyRegisterUser.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                        new GenrateOTP().execute();
+
                     }
 
                 } else {
@@ -340,7 +339,11 @@ public class AlreadyRegisterUser extends AppCompatActivity {
                     dialog.dismiss();
                     Toast.makeText(AlreadyRegisterUser.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     if (CommonMethod.isInternetConnected(AlreadyRegisterUser.this)) {
-                        new AllreadyRegisterUser().execute(edit_email.getText().toString(), edit_mobile.getText().toString(), strDevicetoken);
+                        Intent intent = new Intent(AlreadyRegisterUser.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+//                        new AllreadyRegisterUser().execute(edit_email.getText().toString(), edit_mobile.getText().toString(), strDevicetoken);
                     }
                 } else {
                     progressDialog.dismiss();

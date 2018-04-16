@@ -37,6 +37,7 @@ import com.squareup.picasso.Picasso;
 import com.vimalsagarji.vimalsagarjiapp.ImageItemSplash;
 import com.vimalsagarji.vimalsagarjiapp.ImageViewActivity;
 import com.vimalsagarji.vimalsagarjiapp.R;
+import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.adpter.AudioListAdapter;
 import com.vimalsagarji.vimalsagarjiapp.adpter.PhotoAudioVideoAdapter;
 import com.vimalsagarji.vimalsagarjiapp.adpter.VideoListAdapter;
@@ -149,6 +150,10 @@ public class EventDetailActivity extends AppCompatActivity {
     private RecyclerView recycleview_slide;
     TextView txt_nodata;
     int commentsize;
+    private ImageView img_share;
+    String title;
+    String description;
+
 
     @Override
     public void onBackPressed() {
@@ -199,11 +204,33 @@ public class EventDetailActivity extends AppCompatActivity {
                 new CheckLike().execute(sharedpreferance.getId(), strEventId);
             }
             new GetEventDetail().execute();
+            new CommentList2().execute(strEventId);
+
         } else {
             Toast.makeText(getApplicationContext(), "Internet not connected.", Toast.LENGTH_SHORT).show();
         }
 
         //end
+
+        img_share = (ImageView) findViewById(R.id.img_share);
+
+        img_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                    String sAux = "\n Event \n" + title + "\n" + description + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
+                    sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
+                    intent.putExtra(Intent.EXTRA_TEXT, sAux);
+                    startActivity(Intent.createChooser(intent, "Choose One"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
         img_photo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,7 +269,8 @@ public class EventDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_SHORT).show();
+                    showSnackbar(v);
+//                    Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_SHORT).show();
                 } else {
                     if (CommonMethod.isInternetConnected(EventDetailActivity.this)) {
                         if (status.equalsIgnoreCase("0")) {
@@ -278,60 +306,68 @@ public class EventDetailActivity extends AppCompatActivity {
             @SuppressWarnings("ConstantConditions")
             @Override
             public void onClick(View v) {
-                dialog = new Dialog(EventDetailActivity.this);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
-                if (CommonMethod.isInternetConnected(EventDetailActivity.this)) {
-                    new CommentList().execute(strEventId);
+
+                if (sharedpreferance.getId().equalsIgnoreCase("")) {
+
+                    showSnackbar(v);
+//                    Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_SHORT).show();
                 } else {
-                    Snackbar.make(v, R.string.internet, Snackbar.LENGTH_SHORT).show();
-                }
-                ImageView imgback1 = (ImageView) dialog.findViewById(R.id.imgback);
-                imgback1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
+
+                    dialog = new Dialog(EventDetailActivity.this);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
+                    if (CommonMethod.isInternetConnected(EventDetailActivity.this)) {
+                        new CommentList().execute(strEventId);
+                    } else {
+                        Snackbar.make(v, R.string.internet, Snackbar.LENGTH_SHORT).show();
                     }
-                });
-                Button btnPost = (Button) dialog.findViewById(R.id.btnPost);
-                final EditText etComment = (EditText) dialog.findViewById(R.id.etComment);
-                RelativeLayout rl_layout = (RelativeLayout) dialog.findViewById(R.id.layout_byPeople);
+                    ImageView imgback1 = (ImageView) dialog.findViewById(R.id.imgback);
+                    imgback1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+                    Button btnPost = (Button) dialog.findViewById(R.id.btnPost);
+                    final EditText etComment = (EditText) dialog.findViewById(R.id.etComment);
+                    RelativeLayout rl_layout = (RelativeLayout) dialog.findViewById(R.id.layout_byPeople);
 
-                dialog.show();
-                dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                btnPost.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                            Toast.makeText(EventDetailActivity.this, R.string.notregister, Toast.LENGTH_SHORT).show();
+                    dialog.show();
+                    dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    btnPost.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                                Toast.makeText(EventDetailActivity.this, R.string.notregister, Toast.LENGTH_SHORT).show();
 
-                        } else {
-                            String strComment = etComment.getText().toString();
-                            if (TextUtils.isEmpty(strComment)) {
-                                etComment.setError("Please enter your comment.");
-                                etComment.requestFocus();
                             } else {
-                                if (approve.equalsIgnoreCase("1")) {
-                                    new CommentPost().execute(strComment);
-                                    etComment.setText("");
+                                String strComment = etComment.getText().toString();
+                                if (TextUtils.isEmpty(strComment)) {
+                                    etComment.setError("Please enter your comment.");
+                                    etComment.requestFocus();
                                 } else {
+                                    if (approve.equalsIgnoreCase("1")) {
+                                        new CommentPost().execute(strComment);
+                                        etComment.setText("");
+                                    } else {
 //                                    Toast.makeText(EventDetailActivity.this, "You are not approved user.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
+
+
                         }
+                    });
 
-
-                    }
-                });
-
-                rl_layout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        InputMethodManager imm = (InputMethodManager) getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(etComment.getWindowToken(), 0);
-                    }
-                });
+                    rl_layout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            InputMethodManager imm = (InputMethodManager) getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(etComment.getWindowToken(), 0);
+                        }
+                    });
+                }
             }
         });
 
@@ -528,11 +564,11 @@ public class EventDetailActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(EventDetailActivity.this)
+          /*  loadingProgressDialog = KProgressHUD.create(EventDetailActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
 
         }
 
@@ -583,10 +619,10 @@ public class EventDetailActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
+/*
             if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
 
         }
     }
@@ -920,9 +956,38 @@ public class EventDetailActivity extends AppCompatActivity {
             super.onPostExecute(s);
             Log.e("response", "----------------" + s);
             setPhotos();
-            new CommentList2().execute(strEventId);
+
         }
 
+    }
+
+    //Method to show the snackbar
+    private void showSnackbar(View v) {
+        //Creating snackbar
+        Snackbar snackbar = Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_LONG);
+
+        //Adding action to snackbar
+        snackbar.setAction("Register", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Displaying another snackbar when user click the action for first snackbar
+//                Snackbar s = Snackbar.make(v, "Register", Snackbar.LENGTH_LONG);
+//                s.show();
+                jcplayer.kill();
+                Intent intent = new Intent(EventDetailActivity.this, RegisterActivity.class);
+                startActivity(intent);
+                finishAffinity();
+            }
+        });
+
+        //Customizing colors
+        snackbar.setActionTextColor(Color.WHITE);
+        View view = snackbar.getView();
+        TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+
+        //Displaying snackbar
+        snackbar.show();
     }
 
     private class GetEventDetail extends AsyncTask<String, Void, String> {
@@ -956,7 +1021,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
                     String commentcounts = jsonObject.getString("commentcount").toString();
                     Log.e("comment", "-----------------" + commentcounts);
-                    txt_comment_event.setText(commentcounts);
+//                    txt_comment_event.setText(commentcounts);
 
                     String likecount = jsonObject.getString("likecount");
                     Log.e("like", "-----------------" + likecount);
@@ -966,8 +1031,8 @@ public class EventDetailActivity extends AppCompatActivity {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String title = object.getString("Title");
-                        String description = object.getString("Description");
+                        title = object.getString("Title");
+                        description = object.getString("Description");
                         String address = object.getString("Address");
                         String dates = object.getString("Date");
                         view = object.getString("View");
@@ -1009,7 +1074,7 @@ public class EventDetailActivity extends AppCompatActivity {
                         Log.e("intMonth", "-----------------" + intMonth);
                         Log.e("year", "-----------------" + year);
                         Log.e("day", "-----------------" + day);
-                        String date = dayOfTheWeek + ", " + day + "/" + intMonth + "/" + year + " " + string[1];
+                        String date = dayOfTheWeek + ", " + day + "/" + intMonth + "/" + year + ", " + string[1];
 
                         Audio = Audiopath + audio;
                         Log.e("Audio file", "-----------------------------" + Audio);

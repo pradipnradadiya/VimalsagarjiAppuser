@@ -14,24 +14,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <EditText
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomEditTextBold
         android:id="@+id/et_event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="false"
         android:focusable="false"
         android:hint="Events Details"
-        android:paddingLeft="10dp"
+        android:padding="10dp"
         android:textColor="@color/colorPrimary"
         android:textColorHint="@color/colorPrimary"
-
+        android:background="@null"
         tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="-9dp"
         android:background="@color/colorPrimary" />
 
 
@@ -63,16 +62,16 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <TextView
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="Date                   :"
-                android:textColor="@color/red"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 tools:ignore="HardcodedText" />
 
-            <TextView
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:id="@+id/txtDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -114,7 +113,7 @@
                 android:src="@drawable/like"
                 tools:ignore="ContentDescription" />
 
-            <TextView
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:id="@+id/txt_like_event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -143,7 +142,7 @@
                 android:src="@drawable/comment"
                 tools:ignore="ContentDescription" />
 
-            <TextView
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:id="@+id/txt_comment_event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

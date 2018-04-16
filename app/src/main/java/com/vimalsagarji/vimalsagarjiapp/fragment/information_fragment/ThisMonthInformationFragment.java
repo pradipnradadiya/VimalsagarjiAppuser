@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -48,7 +49,7 @@ public class ThisMonthInformationFragment extends Fragment {
     }
 
     private List<InformationCategory> listfilterdata = new ArrayList<>();
-    private KProgressHUD loadingProgressDialog;
+//    private KProgressHUD loadingProgressDialog;
     private static final String TAG = ThisMonthInformationFragment.class.getSimpleName();
     private List<InformationCategory> listThisMonthitem = new ArrayList<>();
     private static final String URL = Constant.GET_THISMONTH_INFORMATION_CATEGORY;
@@ -58,6 +59,7 @@ public class ThisMonthInformationFragment extends Fragment {
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
 
     private CustomAdpter adpter;
+    private ProgressBar progressbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,7 +69,7 @@ public class ThisMonthInformationFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        progressbar= (ProgressBar) getActivity().findViewById(R.id.progressbar);
         InputBox = (EditText) getActivity().findViewById(R.id.etText);
         ImageView imsearch = (ImageView) getActivity().findViewById(R.id.imgSerch);
         activity_main_swipe_refresh_layout = (SwipeRefreshLayout) getActivity().findViewById(R.id.activity_main_swipe_refresh_layout);
@@ -144,11 +146,12 @@ public class ThisMonthInformationFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+           /* loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -210,20 +213,23 @@ public class ThisMonthInformationFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (loadingProgressDialog != null) {
+            progressbar.setVisibility(View.GONE);
+            /*if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
-            if (listView != null) {
-                adpter = new CustomAdpter(getActivity(), listThisMonthitem);
-                if (adpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adpter);
-                    activity_main_swipe_refresh_layout.setRefreshing(false);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            }*/
+            if (getActivity() != null) {
+                if (listView != null) {
+                    adpter = new CustomAdpter(getActivity(), listThisMonthitem);
+                    if (adpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adpter);
+                        activity_main_swipe_refresh_layout.setRefreshing(false);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(), "No information found", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }
@@ -266,7 +272,7 @@ public class ThisMonthInformationFragment extends Fragment {
             holder.txt_Title.setMaxLines((int) 1.5);
             holder.txt_Title.setText(inCategory.getTitle());
             holder.txt_Description.setText(inCategory.getDescription());
-            holder.txt_Date.setText(inCategory.getDay() + "," + inCategory.getDate());
+            holder.txt_Date.setText(inCategory.getDay() + ", " + inCategory.getDate());
             holder.txt_Address.setText(inCategory.getAddress());
             holder.txt_views.setText(inCategory.getView());
 
@@ -368,16 +374,18 @@ public class ThisMonthInformationFragment extends Fragment {
             super.onPostExecute(status);
             InformationCategory informationCategory = new InformationCategory();
 //            Toast.makeText(getActivity(), "Response"+listfilterdata, Toast.LENGTH_SHORT).show();
-            if (listView != null) {
-                adpter = new CustomAdpter(getActivity(), listfilterdata);
-                if (adpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setText("No Search\n Found");
+            if (getActivity() != null) {
+                if (listView != null) {
+                    adpter = new CustomAdpter(getActivity(), listfilterdata);
+                    if (adpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setText("No Search\n Found");
+                    }
                 }
             }
         }
@@ -452,16 +460,18 @@ public class ThisMonthInformationFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (listView != null) {
-                adpter = new CustomAdpter(getActivity(), listThisMonthitem);
-                if (adpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adpter);
-                    activity_main_swipe_refresh_layout.setRefreshing(false);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    adpter = new CustomAdpter(getActivity(), listThisMonthitem);
+                    if (adpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adpter);
+                        activity_main_swipe_refresh_layout.setRefreshing(false);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }

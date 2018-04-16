@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.R;
+import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.ThisMonthVideo;
@@ -95,6 +96,9 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
     EditText etTitle;
     String click_action;
     int commentsize;
+    private ImageView img_share;
+    String title;
+    String description;
 
     @Override
     public void onBackPressed() {
@@ -140,6 +144,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         txtDate = (TextView) findViewById(R.id.txtDate);
         txtDescri = (TextView) findViewById(R.id.txtDescri);
 
+        img_share = (ImageView) findViewById(R.id.img_share);
         LinearLayout lin_like = (LinearLayout) findViewById(R.id.lin_like);
         LinearLayout lin_comment = (LinearLayout) findViewById(R.id.lin_comment);
         ImageView img_like = (ImageView) findViewById(R.id.img_like);
@@ -175,12 +180,29 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
 //            });
 //        }
 
+        img_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                    String sAux = "\n Thought \n" + title + "\n" + description + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
+                    sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
+                    intent.putExtra(Intent.EXTRA_TEXT, sAux);
+                    startActivity(Intent.createChooser(intent, "Choose One"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         lin_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sharedpreferance.getId().equalsIgnoreCase("")){
-                    Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_SHORT).show();
-                }else {
+                if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                    showSnackbar(v);
+//                    Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_SHORT).show();
+                } else {
                     if (CommonMethod.isInternetConnected(ThoughtsDetailActivity.this)) {
                         try {
                             if (status.equalsIgnoreCase("0")) {
@@ -212,69 +234,77 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         lin_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog = new Dialog(ThoughtsDetailActivity.this);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
 
-                if (CommonMethod.isInternetConnected(ThoughtsDetailActivity.this)) {
-                    new CommentList().execute(tid);
+                if (sharedpreferance.getId().equalsIgnoreCase("")) {
+
+                    showSnackbar(v);
+//                    Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_SHORT).show();
                 } else {
-                    final Snackbar snackbar = Snackbar
-                            .make(rl_layout, "No internet connection!", Snackbar.LENGTH_INDEFINITE);
-                    snackbar.setActionTextColor(Color.RED);
-                    snackbar.show();
-                    snackbar.setAction("Dismiss", new View.OnClickListener() {
+
+                    dialog = new Dialog(ThoughtsDetailActivity.this);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
+
+                    if (CommonMethod.isInternetConnected(ThoughtsDetailActivity.this)) {
+                        new CommentList().execute(tid);
+                    } else {
+                        final Snackbar snackbar = Snackbar
+                                .make(rl_layout, "No internet connection!", Snackbar.LENGTH_INDEFINITE);
+                        snackbar.setActionTextColor(Color.RED);
+                        snackbar.show();
+                        snackbar.setAction("Dismiss", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                snackbar.dismiss();
+                            }
+                        });
+                    }
+
+                    ImageView imgback1 = (ImageView) dialog.findViewById(R.id.imgback);
+                    imgback1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            snackbar.dismiss();
+                            dialog.dismiss();
                         }
                     });
-                }
+                    Button btnPost = (Button) dialog.findViewById(R.id.btnPost);
+                    final EditText etComment = (EditText) dialog.findViewById(R.id.etComment);
+                    txt_nodata_today = (TextView) dialog.findViewById(R.id.txt_nodata_today);
+                    RelativeLayout rl_layout = (RelativeLayout) dialog.findViewById(R.id.layout_byPeople);
+                    dialog.show();
+                    dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    btnPost.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                                Toast.makeText(ThoughtsDetailActivity.this, R.string.notregister, Toast.LENGTH_SHORT).show();
 
-                ImageView imgback1 = (ImageView) dialog.findViewById(R.id.imgback);
-                imgback1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                Button btnPost = (Button) dialog.findViewById(R.id.btnPost);
-                final EditText etComment = (EditText) dialog.findViewById(R.id.etComment);
-                txt_nodata_today = (TextView) dialog.findViewById(R.id.txt_nodata_today);
-                RelativeLayout rl_layout = (RelativeLayout) dialog.findViewById(R.id.layout_byPeople);
-                dialog.show();
-                dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                btnPost.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
-                            Toast.makeText(ThoughtsDetailActivity.this, R.string.notregister, Toast.LENGTH_SHORT).show();
-
-                        }else {
-                            String strComment = etComment.getText().toString();
-                            if (TextUtils.isEmpty(strComment)) {
-                                etComment.setError("Please enter your comment.");
-                                etComment.requestFocus();
                             } else {
-                                if (approve.equalsIgnoreCase("1")) {
-                                    new CommentPost().execute(strComment);
-                                    etComment.setText("");
+                                String strComment = etComment.getText().toString();
+                                if (TextUtils.isEmpty(strComment)) {
+                                    etComment.setError("Please enter your comment.");
+                                    etComment.requestFocus();
                                 } else {
+                                    if (approve.equalsIgnoreCase("1")) {
+                                        new CommentPost().execute(strComment);
+                                        etComment.setText("");
+                                    } else {
 //                                    Toast.makeText(ThoughtsDetailActivity.this, "You are not approved user.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
                         }
-                    }
-                });
+                    });
 
-                rl_layout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        InputMethodManager imm = (InputMethodManager) getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(etComment.getWindowToken(), 0);
-                    }
-                });
+                    rl_layout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            InputMethodManager imm = (InputMethodManager) getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(etComment.getWindowToken(), 0);
+                        }
+                    });
+                }
             }
         });
 
@@ -513,7 +543,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("response", "------------------------------" + s);
-            status="1";
+            status = "1";
             loadingProgressDialog.dismiss();
         }
     }
@@ -601,17 +631,18 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
             }
         }
     }
+
     private class CommentList2 extends AsyncTask<String, Void, String> {
         String responseJSON = "";
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(ThoughtsDetailActivity.this)
+          /*  loadingProgressDialog = KProgressHUD.create(ThoughtsDetailActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
 
         }
 
@@ -654,7 +685,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                         listUserID.add(strUserID);
                         Log.d(TAG, "list Date data:" + listUserID);
                         listUserName.add(name);
-                        commentsize=listComment.size();
+                        commentsize = listComment.size();
                         txt_comment.setText(String.valueOf(commentsize));
 
                     }
@@ -664,9 +695,9 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
             }
 
 
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
 
         }
     }
@@ -737,9 +768,37 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
             super.onPostExecute(s);
             Log.e("response", "----------------" + s);
 
-            new CommentList2().execute(tid);
+//            new CommentList2().execute(tid);
         }
 
+    }
+
+    //Method to show the snackbar
+    private void showSnackbar(View v) {
+        //Creating snackbar
+        Snackbar snackbar = Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_LONG);
+
+        //Adding action to snackbar
+        snackbar.setAction("Register", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Displaying another snackbar when user click the action for first snackbar
+//                Snackbar s = Snackbar.make(v, "Register", Snackbar.LENGTH_LONG);
+//                s.show();
+                Intent intent = new Intent(ThoughtsDetailActivity.this, RegisterActivity.class);
+                startActivity(intent);
+                finishAffinity();
+            }
+        });
+
+        //Customizing colors
+        snackbar.setActionTextColor(Color.WHITE);
+        View view = snackbar.getView();
+        TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+
+        //Displaying snackbar
+        snackbar.show();
     }
 
     private class GetThoughtDetail extends AsyncTask<String, Void, String> {
@@ -769,19 +828,19 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     loadingProgressDialog.dismiss();
 
-                    String commentcount = jsonObject.getString("commentcount");
-                    Log.e("comment", "-----------------" + commentcount);
-//                    txt_comment.setText(commentcount);
+                    int commentcount = jsonObject.getInt("commentcount");
+                    Log.e("comment detail", "-----------------" + commentcount);
+//                    txt_comment.setText(String.valueOf(commentcount));
 
-                    String likecount = jsonObject.getString("likecount");
-                    Log.e("like", "-----------------" + likecount);
-                    txt_like.setText(likecount);
+                    int likecount = jsonObject.getInt("likecount");
+                    Log.e("like detail", "-----------------" + likecount);
+                    txt_like.setText(String.valueOf(likecount));
 
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String title = object.getString("Title");
-                        String description = object.getString("Description");
+                        title = object.getString("Title");
+                        description = object.getString("Description");
                         String dates = object.getString("Date");
                         view = object.getString("View");
 
@@ -802,7 +861,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                         Log.e("intMonth", "-----------------" + intMonth);
                         Log.e("year", "-----------------" + year);
                         Log.e("day", "-----------------" + day);
-                        String date = dayOfTheWeek + ", " + day + "/" + intMonth + "/" + year + " " + string[1];
+                        String date = dayOfTheWeek + ", " + day + "/" + intMonth + "/" + year + ", " + string[1];
 
 
                         etTitle.setText(title);
@@ -832,8 +891,9 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         // put your code here...
         if (CommonMethod.isInternetConnected(ThoughtsDetailActivity.this)) {
             new GetThoughtDetail().execute();
-            if (sharedpreferance.getId().equalsIgnoreCase("")){
-            }else {
+            new CommentList2().execute(tid);
+            if (sharedpreferance.getId().equalsIgnoreCase("")) {
+            } else {
                 new CheckUserApprove().execute();
                 CheckLikedUser checkLikedUser = new CheckLikedUser();
                 checkLikedUser.execute();

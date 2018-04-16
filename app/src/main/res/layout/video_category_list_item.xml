@@ -1,111 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorTabBackground">
+    android:layout_height="wrap_content"
+    android:background="@drawable/round_rect_shape"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    >
 
 
-    <ImageView
-        android:id="@+id/imgVideo"
-        android:layout_margin="10dp"
-        android:layout_width="100dp"
-        android:src="@android:drawable/ic_menu_gallery"
-        android:background="@drawable/corner_event"
-        android:layout_height="110dp"
-        android:scaleType="fitXY"
-        android:padding="1dp"
-        tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:id="@+id/imgPlayVideo"
-        android:layout_width="wrap_content"
-        android:src="@drawable/play"
-        android:paddingTop="6dp"
-        android:layout_margin="40dp"
+    <RelativeLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:ignore="ContentDescription" />
+        android:layout_weight="1">
 
-    <ImageView
-        android:id="@+id/imgPlayPush"
-        android:layout_width="wrap_content"
-        android:src="@drawable/audio_white_push"
-        android:visibility="gone"
-        android:paddingTop="15dp"
-        android:layout_margin="40dp"
-        android:layout_height="wrap_content"
-        tools:ignore="ContentDescription" />
+        <ImageView
+            android:id="@+id/imgVideo"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:padding="1dp"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_gallery"
+            tools:ignore="ContentDescription" />
 
-    <ImageView
-        android:id="@+id/imgPlayVideo1"
-        android:layout_width="wrap_content"
-        android:src="@drawable/play"
-        android:paddingTop="15dp"
-        android:visibility="gone"
-        android:layout_margin="40dp"
-        android:layout_height="wrap_content"
-        tools:ignore="ContentDescription" />
+        <ImageView
+            android:id="@+id/imgPlayVideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/play"
+            tools:ignore="ContentDescription" />
 
+        <ImageView
+            android:id="@+id/imgPlayPush"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:paddingTop="15dp"
+            android:src="@drawable/audio_white_push"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/txtVideoName"
-        android:text="VideoName"
-        android:textSize="14sp"
-        android:textColor="@color/red"
-        android:padding="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_toRightOf="@+id/imgVideo"
-        android:maxLines="1"
-        android:lines="1"
-        android:ellipsize="end"
-        android:textStyle="bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="HardcodedText,RtlHardcoded" />
+        <ImageView
+            android:id="@+id/imgPlayVideo1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:paddingTop="15dp"
+            android:src="@drawable/play"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/txtVideoDate"
-        android:layout_below="@+id/txtVideoName"
-        android:text="Date"
-        android:textColor="#111"
-        android:layout_toRightOf="@+id/imgVideo"
-        android:textSize="12sp"
-        android:padding="10dp"
-        android:lines="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="HardcodedText,RtlHardcoded" />
+    </RelativeLayout>
+
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/txtVideoDate"
-        android:layout_toRightOf="@+id/imgVideo"
-        android:paddingLeft="10sp"
-
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="10dp"
         >
-        <TextView
-            android:id="@+id/txt_views"
-            android:layout_width="wrap_content"
+
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+            android:id="@+id/txtVideoName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5sp"
-            android:gravity="right"
-            android:text="10120"
-            android:textSize="12sp"
+            android:layout_toRightOf="@+id/imgVideo"
+            android:ellipsize="end"
             android:lines="1"
-            tools:ignore="HardcodedText,RtlHardcoded"
-            android:textColor="@color/views"
-            />
-        <TextView
+            android:maxLines="1"
+            android:text="VideoName"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textAllCaps="true"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+            android:layout_marginTop="7dp"
+            android:id="@+id/txtVideoDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtVideoName"
+            android:layout_toRightOf="@+id/imgVideo"
+            android:lines="1"
+            android:text="Date"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5sp"
-            android:gravity="right"
-            android:text="Views"
-            android:textSize="12sp"
-            tools:ignore="HardcodedText,RtlHardcoded"
-            android:textColor="@color/views"
-            />
+            android:layout_below="@+id/txtVideoDate"
+            android:layout_toRightOf="@+id/imgVideo"
+            android:orientation="horizontal"
+            android:layout_marginTop="7dp"
+            >
+
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                android:id="@+id/txt_views"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5sp"
+                android:gravity="right"
+                android:lines="1"
+                android:text="0"
+                android:textColor="@color/views"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5sp"
+                android:gravity="right"
+                android:text="Views"
+                android:textColor="@color/views"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+        </LinearLayout>
     </LinearLayout>
-</RelativeLayout>
+
+
+</LinearLayout>

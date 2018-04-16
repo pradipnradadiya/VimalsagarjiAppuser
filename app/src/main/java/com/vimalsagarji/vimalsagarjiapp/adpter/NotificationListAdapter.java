@@ -55,49 +55,49 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
 
         Log.e("table", "------------" + notificationItem.getTable());
         if (notificationItem.getTable().equalsIgnoreCase("Information")) {
-            holder.notification_image.setImageResource(R.drawable.information_circle);
+            holder.notification_image.setImageResource(R.drawable.infromation);
             holder.txt_title.setText(notificationItem.getTitle());
             holder.txt_date.setText(notificationItem.getDate());
             holder.txt_content.setText(notificationItem.getDescription());
 
 
         } else if (notificationItem.getTable().equalsIgnoreCase("Events")) {
-            holder.notification_image.setImageResource(R.drawable.event_circle);
+            holder.notification_image.setImageResource(R.drawable.event);
             holder.txt_title.setText(notificationItem.getTitle());
             holder.txt_date.setText(notificationItem.getDate());
             holder.txt_content.setText(notificationItem.getDescription());
         } else if (notificationItem.getTable().equalsIgnoreCase("Audio")) {
-            holder.notification_image.setImageResource(R.drawable.audio_circle);
+            holder.notification_image.setImageResource(R.drawable.audio);
             holder.txt_title.setText(notificationItem.getTitle());
             holder.txt_date.setText(notificationItem.getDate());
             holder.txt_content.setText(notificationItem.getDescription());
         } else if (notificationItem.getTable().equalsIgnoreCase("Video")) {
-            holder.notification_image.setImageResource(R.drawable.video_circle);
+            holder.notification_image.setImageResource(R.drawable.video);
             holder.txt_title.setText(notificationItem.getTitle());
             holder.txt_date.setText(notificationItem.getDate());
             holder.txt_content.setText(notificationItem.getDescription());
         } else if (notificationItem.getTable().equalsIgnoreCase("Thoughts")) {
-            holder.notification_image.setImageResource(R.drawable.thought_circle);
+            holder.notification_image.setImageResource(R.drawable.thoughts);
             holder.txt_title.setText(notificationItem.getTitle());
             holder.txt_date.setText(notificationItem.getDate());
             holder.txt_content.setText(notificationItem.getDescription());
         } else if (notificationItem.getTable().equalsIgnoreCase("ByPeople")) {
-            holder.notification_image.setImageResource(R.drawable.bypeople_circle);
+            holder.notification_image.setImageResource(R.drawable.bypeople);
             holder.txt_title.setText(notificationItem.getTitle());
             holder.txt_date.setText(notificationItem.getDate());
             holder.txt_content.setText(notificationItem.getDescription());
         } else if (notificationItem.getTable().equalsIgnoreCase("Question")) {
-            holder.notification_image.setImageResource(R.drawable.qa_circle);
+            holder.notification_image.setImageResource(R.drawable.qa);
             holder.txt_title.setText(notificationItem.getTitle());
             holder.txt_date.setText(notificationItem.getDate());
             holder.txt_content.setText(notificationItem.getDescription());
         } else if (notificationItem.getTable().equalsIgnoreCase("CompetitionMain")) {
-            holder.notification_image.setImageResource(R.drawable.compition_circle);
+            holder.notification_image.setImageResource(R.drawable.competition);
             holder.txt_title.setText(notificationItem.getTitle());
             holder.txt_date.setText(notificationItem.getDate());
             holder.txt_content.setText(notificationItem.getDescription());
         } else if (notificationItem.getTable().equalsIgnoreCase("OpinionPollMain")) {
-            holder.notification_image.setImageResource(R.drawable.opinion_circle);
+            holder.notification_image.setImageResource(R.drawable.opinionpoll);
             holder.txt_title.setText(notificationItem.getTitle());
             holder.txt_date.setText(notificationItem.getDate());
 

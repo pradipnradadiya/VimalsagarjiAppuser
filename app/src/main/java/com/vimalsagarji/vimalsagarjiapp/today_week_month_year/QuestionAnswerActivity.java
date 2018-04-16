@@ -1,5 +1,6 @@
 package com.vimalsagarji.vimalsagarjiapp.today_week_month_year;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vimalsagarji.vimalsagarjiapp.R;
@@ -30,6 +32,8 @@ public class QuestionAnswerActivity extends AppCompatActivity implements View.On
     private View view_week;
     private View view_month;
     private View view_all;
+
+    LinearLayout lin_today, lin_week, lin_month, lin_all;
 
     @Override
     public void onBackPressed() {
@@ -67,6 +71,11 @@ public class QuestionAnswerActivity extends AppCompatActivity implements View.On
         txt_thismonth.setOnClickListener(this);
         txt_all.setOnClickListener(this);
         etText.setHint("Search Q & A");
+
+        lin_today = (LinearLayout) findViewById(R.id.lin_today);
+        lin_week = (LinearLayout) findViewById(R.id.lin_week);
+        lin_month = (LinearLayout) findViewById(R.id.lin_month);
+        lin_all = (LinearLayout) findViewById(R.id.lin_all);
         openTodayInfromation();
     }
 
@@ -100,10 +109,16 @@ public class QuestionAnswerActivity extends AppCompatActivity implements View.On
     }
 
     private void openTodayInfromation() {
-        view_today.setVisibility(View.VISIBLE);
-        view_month.setVisibility(View.GONE);
-        view_week.setVisibility(View.GONE);
-        view_all.setVisibility(View.GONE);
+        txt_today.setTextColor(Color.WHITE);
+        txt_thisweek.setTextColor(Color.BLACK);
+        txt_thismonth.setTextColor(Color.BLACK);
+        txt_all.setTextColor(Color.BLACK);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
+
         Fragment fr = null;
         fr = new TodayQuetionAnswerFragment();
         FragmentManager fm = getSupportFragmentManager();
@@ -114,10 +129,16 @@ public class QuestionAnswerActivity extends AppCompatActivity implements View.On
     }
 
     private void openWeekInfromation() {
-        view_today.setVisibility(View.GONE);
-        view_month.setVisibility(View.GONE);
-        view_week.setVisibility(View.VISIBLE);
-        view_all.setVisibility(View.GONE);
+        txt_today.setTextColor(Color.BLACK);
+        txt_thisweek.setTextColor(Color.WHITE);
+        txt_thismonth.setTextColor(Color.BLACK);
+        txt_all.setTextColor(Color.BLACK);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
+
         Fragment fr = null;
         fr = new ThisWeekQuetionAnswerFragment();
         FragmentManager fm = getSupportFragmentManager();
@@ -128,10 +149,16 @@ public class QuestionAnswerActivity extends AppCompatActivity implements View.On
     }
 
     private void openMonthInfromation() {
-        view_today.setVisibility(View.GONE);
-        view_month.setVisibility(View.VISIBLE);
-        view_week.setVisibility(View.GONE);
-        view_all.setVisibility(View.GONE);
+        txt_today.setTextColor(Color.BLACK);
+        txt_thisweek.setTextColor(Color.BLACK);
+        txt_thismonth.setTextColor(Color.WHITE);
+        txt_all.setTextColor(Color.BLACK);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
+
         Fragment fr = null;
         fr = new ThisMonthQuetionAnswerFragment();
         FragmentManager fm = getSupportFragmentManager();
@@ -142,10 +169,15 @@ public class QuestionAnswerActivity extends AppCompatActivity implements View.On
     }
 
     private void openAllInfromation() {
-        view_today.setVisibility(View.GONE);
-        view_month.setVisibility(View.GONE);
-        view_week.setVisibility(View.GONE);
-        view_all.setVisibility(View.VISIBLE);
+        txt_today.setTextColor(Color.BLACK);
+        txt_thisweek.setTextColor(Color.BLACK);
+        txt_thismonth.setTextColor(Color.BLACK);
+        txt_all.setTextColor(Color.WHITE);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
         Fragment fr = null;
         fr = new AllQuetionAnswerFragment();
         FragmentManager fm = getSupportFragmentManager();

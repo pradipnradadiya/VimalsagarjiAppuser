@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -59,11 +60,12 @@ public class ThisWeekAudioFragment extends Fragment {
     private static String strCid = "";
     private View view;
     private TextView audioImagname;
-    private KProgressHUD loadingProgressDialog;
+    //    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
     private EditText InputBox;
     private final String MonthSearchAudio = "http://www.grapes-solutions.com/vimalsagarji/audio/searchallaudioweek/?page=1&psize=1000";
     private ListView listView;
+    private ProgressBar progressbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,6 +84,7 @@ public class ThisWeekAudioFragment extends Fragment {
         listView = (ListView) getActivity().findViewById(R.id.thismonth_audio);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
 
+        progressbar= (ProgressBar) getActivity().findViewById(R.id.progressbar);
         InputBox = (EditText) getActivity().findViewById(R.id.etText);
         ImageView imsearch = (ImageView) getActivity().findViewById(R.id.imgSerch);
         activity_main_swipe_refresh_layout = (SwipeRefreshLayout) getActivity().findViewById(R.id.activity_main_swipe_refresh_layout);
@@ -167,11 +170,12 @@ public class ThisWeekAudioFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -228,17 +232,18 @@ public class ThisWeekAudioFragment extends Fragment {
                         Log.e("time", "-----------------------" + time[1]);
 
 
-                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate,view));
+                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate, view));
 
                     }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (loadingProgressDialog != null) {
+            /*if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
-
+            }*/
+            progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
             if (listView != null) {
                 CustomAdpter customAdpter = new CustomAdpter(getActivity(), arrayList);
 
@@ -253,6 +258,7 @@ public class ThisWeekAudioFragment extends Fragment {
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
                 }
 
+            }
 
             }
 
@@ -267,11 +273,13 @@ public class ThisWeekAudioFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+
+            progressbar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -326,17 +334,19 @@ public class ThisWeekAudioFragment extends Fragment {
                         String[] time = Date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
 
-                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate,view));
+                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate, view));
 
                     }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (loadingProgressDialog != null) {
+            /*if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
 
+            progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
             if (listView != null) {
                 CustomAdpter customAdpter = new CustomAdpter(getActivity(), arrayList);
 
@@ -350,7 +360,7 @@ public class ThisWeekAudioFragment extends Fragment {
                     txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
                 }
-
+            }
 
             }
 
@@ -421,7 +431,7 @@ public class ThisWeekAudioFragment extends Fragment {
                         Log.e("time", "-----------------------" + time[1]);
 
 
-                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate,view));
+                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate, view));
 
                     }
                 }
@@ -429,6 +439,7 @@ public class ThisWeekAudioFragment extends Fragment {
                 e.printStackTrace();
             }
 
+            if (getActivity() != null) {
             if (listView != null) {
                 CustomAdpter customAdpter = new CustomAdpter(getActivity(), arrayList);
 
@@ -444,6 +455,7 @@ public class ThisWeekAudioFragment extends Fragment {
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
                 }
 
+            }
 
             }
 
@@ -490,7 +502,7 @@ public class ThisWeekAudioFragment extends Fragment {
                     public void onClick(View v) {
                         Log.e("play audio", "------------------");
                         Intent i = new Intent(getActivity(), AudioDetail.class);
-                        i.putExtra("click_action","");
+                        i.putExtra("click_action", "");
                         i.putExtra("id", items.get(position).getID());
                         i.putExtra("AudioName", items.get(position).getAudioName());
                         i.putExtra("CategoryID", items.get(position).getCategoryID());
@@ -513,7 +525,7 @@ public class ThisWeekAudioFragment extends Fragment {
             holder.txt_views.setText(items.get(position).getView());
             holder.txtAudioName.setText(items.get(position).getAudioName());
             holder.txtAudioDate.setText(items.get(position).getDate());
-            Picasso.with(getActivity()).load(items.get(position).getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.no_image).into(holder.imgAudio);
+            Picasso.with(getActivity()).load(items.get(position).getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0, 200).error(R.drawable.no_image).into(holder.imgAudio);
 //            audioImagname.setText(items.get(position).getAudioName());
 
 
@@ -528,7 +540,7 @@ public class ThisWeekAudioFragment extends Fragment {
 
 
         private class ViewHolder {
-            TextView txtAudioName, txtAudioDate, txtDuration,txt_views;
+            TextView txtAudioName, txtAudioDate, txtDuration, txt_views;
             Button btnLike, btnComment, btnLikeClick;
             ImageView imgAudio, imgPlayAudio, imgPlayPush, imgPlayAudio1;
 
@@ -598,7 +610,7 @@ public class ThisWeekAudioFragment extends Fragment {
                         Log.e("time", "-----------------------" + time[1]);
 
 
-                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate,view));
+                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate, view));
 
                     }
                 }
@@ -610,18 +622,19 @@ public class ThisWeekAudioFragment extends Fragment {
 
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
-
-            if (listView != null) {
-                CustomAdpter customAdpter = new CustomAdpter(getActivity(), arrayList);
-                if (customAdpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(customAdpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    CustomAdpter customAdpter = new CustomAdpter(getActivity(), arrayList);
+                    if (customAdpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(customAdpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -691,7 +704,7 @@ public class ThisWeekAudioFragment extends Fragment {
                         Log.e("time", "-----------------------" + time[1]);
 
 
-                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate,view));
+                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate, view));
 
                     }
                 }
@@ -703,18 +716,19 @@ public class ThisWeekAudioFragment extends Fragment {
 
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
-
-            if (listView != null) {
-                CustomAdpter customAdpter = new CustomAdpter(getActivity(), arrayList);
-                if (customAdpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(customAdpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    CustomAdpter customAdpter = new CustomAdpter(getActivity(), arrayList);
+                    if (customAdpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(customAdpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -729,11 +743,12 @@ public class ThisWeekAudioFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+           /* loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+            progressbar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -788,17 +803,18 @@ public class ThisWeekAudioFragment extends Fragment {
                         String[] time = Date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
 
-                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate,view));
+                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate, view));
 
                     }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
-
+            }*/
+            progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
             if (listView != null) {
                 CustomAdpter customAdpter = new CustomAdpter(getActivity(), arrayList);
 
@@ -813,6 +829,7 @@ public class ThisWeekAudioFragment extends Fragment {
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
                 }
 
+            }
 
             }
 
@@ -883,7 +900,7 @@ public class ThisWeekAudioFragment extends Fragment {
                         Log.e("time", "-----------------------" + time[1]);
 
 
-                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate,view));
+                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate, view));
 
                     }
                 }
@@ -895,18 +912,19 @@ public class ThisWeekAudioFragment extends Fragment {
 
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
-
-            if (listView != null) {
-                CustomAdpter customAdpter = new CustomAdpter(getActivity(), arrayList);
-                if (customAdpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(customAdpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    CustomAdpter customAdpter = new CustomAdpter(getActivity(), arrayList);
+                    if (customAdpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(customAdpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

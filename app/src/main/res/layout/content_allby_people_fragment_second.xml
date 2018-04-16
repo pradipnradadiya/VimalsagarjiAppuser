@@ -23,11 +23,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <EditText
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomEditTextBold
             android:id="@+id/etTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#f9f2d3"
+            android:background="@color/homepage_back"
             android:ellipsize="end"
             android:ems="7"
             android:enabled="false"
@@ -36,7 +36,7 @@
             android:maxLines="1"
             android:padding="10dp"
             android:text="Text"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/black"
             tools:ignore="HardcodedText,TextFields" />
 
 
@@ -44,20 +44,33 @@
             android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="2dp"
             android:background="@color/colorPrimary" />
 
-        <TextView
-            android:id="@+id/txtDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:padding="8sp"
-            android:text="Date"
-            android:textColor="#111"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText,RtlHardcoded" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:text="Date"
+                android:textColor="#111"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+            <ImageView
+                android:id="@+id/img_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_share_black_24dp"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                />
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -135,17 +148,16 @@
                         tools:ignore="UselessParent">
 
                         <ImageView
-                            android:visibility="gone"
                             android:id="@+id/img_bypeople"
                             android:layout_width="175sp"
                             android:layout_height="175dp"
                             android:layout_centerHorizontal="true"
                             android:scaleType="fitXY"
                             android:src="@drawable/no_image"
+                            android:visibility="gone"
                             tools:ignore="ContentDescription" />
 
-                        <TextView
-                            android:visibility="gone"
+                        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                             android:id="@+id/txt_nodata"
                             android:layout_width="match_parent"
                             android:layout_height="175dp"
@@ -153,6 +165,7 @@
                             android:gravity="center_horizontal|center_vertical"
                             android:text="Image Not\nAvalable"
                             android:textSize="30dp"
+                            android:visibility="gone"
 
                             />
 
@@ -209,7 +222,7 @@
                                     android:src="@drawable/audio"
                                     tools:ignore="ContentDescription" />
 
-                                <TextView
+                                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                                     android:id="@+id/audioImagname"
                                     android:layout_width="100dp"
                                     android:layout_height="wrap_content"
@@ -278,7 +291,7 @@
                                     </LinearLayout>
 
 
-                                    <TextView
+                                    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginBottom="5dp"
@@ -290,7 +303,7 @@
                                         android:visibility="gone"
                                         tools:ignore="HardcodedText,RtlHardcoded" />
 
-                                    <TextView
+                                    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginBottom="5dp"
@@ -311,29 +324,30 @@
                     </RelativeLayout>
 
                 </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1sp"
                     android:background="@color/red" />
 
-                <TextView
+                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10sp"
                     android:layout_marginTop="15sp"
                     android:text="Description:"
-                    android:textColor="@color/red"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
 
 
-                <TextView
+                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                     android:id="@+id/txtDescri"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:text="Description"
-                    android:textColor="#403f3f"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     tools:ignore="HardcodedText" />
 
@@ -428,7 +442,7 @@
                         android:src="@drawable/like"
                         tools:ignore="ContentDescription" />
 
-                    <TextView
+                    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                         android:id="@+id/txt_like_event"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -458,7 +472,7 @@
                         android:src="@drawable/comment"
                         tools:ignore="ContentDescription" />
 
-                    <TextView
+                    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                         android:id="@+id/txt_comment_event"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -16,10 +16,12 @@
         <ListView
             android:id="@+id/listview_today"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@color/homepage_back"
+            />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <TextView
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
         android:id="@+id/txt_nodata_today"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,10 +39,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/back_gradiant"
         android:text="Ask Question"
         android:textColor="@color/white"
         android:textAllCaps="false"
         tools:ignore="HardcodedText" />
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+
+        />
 
 </RelativeLayout>

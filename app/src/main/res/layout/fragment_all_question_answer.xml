@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorTabBackground"
+    android:background="@color/homepage_back"
     android:orientation="vertical"
     tools:ignore="Overdraw">
 
@@ -18,12 +18,12 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_above="@+id/btnAskQuestion"
-            android:background="#f9f2d3">
+            android:background="@color/homepage_back">
 
         </ListView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <TextView
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
         android:id="@+id/txt_nodata_today"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,6 +35,12 @@
         android:visibility="gone"
         tools:ignore="HardcodedText" />
 
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
     <Button
         android:id="@+id/btnAskQuestion"
         android:layout_width="match_parent"
@@ -42,9 +48,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/back_gradiant"
         android:text="Ask Question"
-        android:textColor="@color/white"
         android:textAllCaps="false"
+        android:textColor="@color/white"
         tools:ignore="HardcodedText" />
+
 </RelativeLayout>

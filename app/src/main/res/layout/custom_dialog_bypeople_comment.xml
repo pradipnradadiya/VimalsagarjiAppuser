@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
             android:id="@+id/txtComments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:divider="@color/cardview_dark_background"
             android:dividerHeight="1dp" />
 
-        <TextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
             android:id="@+id/txt_nocomment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -78,7 +78,7 @@
 
     </RelativeLayout>
 
-    <EditText
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomEditText
         android:textColor="@color/cardview_dark_background"
         android:id="@+id/etComment"
         android:layout_width="match_parent"
@@ -99,7 +99,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:background="@color/colorTabColor"
+        android:background="@drawable/back_gradiant"
         android:text="Post"
         android:textColor="@color/textColorPrimary"
         android:textSize="14sp"

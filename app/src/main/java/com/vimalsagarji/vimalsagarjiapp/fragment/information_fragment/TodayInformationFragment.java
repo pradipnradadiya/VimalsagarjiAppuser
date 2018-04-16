@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -48,7 +49,7 @@ public class TodayInformationFragment extends Fragment {
 
     }
 
-    private KProgressHUD loadingProgressDialog;
+    //    private KProgressHUD loadingProgressDialog;
     private boolean isLoading = true;
     private int pageCount = 5;
     private static final String TAG = TodayInformationFragment.class.getSimpleName();
@@ -63,6 +64,7 @@ public class TodayInformationFragment extends Fragment {
     private List<InformationCategory> listfilterdata = new ArrayList<>();
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private Intent intent;
+    private ProgressBar progressbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +76,7 @@ public class TodayInformationFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         listView = (ListView) getActivity().findViewById(R.id.list_today);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
         InputBox = (EditText) getActivity().findViewById(R.id.etText);
@@ -95,6 +98,7 @@ public class TodayInformationFragment extends Fragment {
                 return false;
             }
         });
+
         imsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,11 +181,13 @@ public class TodayInformationFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
-                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                    .setLabel("Please Wait")
-                    .setCancellable(true);
-            loadingProgressDialog.show();
+            progressbar.setVisibility(View.VISIBLE);
+
+//            loadingProgressDialog = KProgressHUD.create(getActivity())
+//                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+//                    .setLabel("Please Wait")
+//                    .setCancellable(true);
+//            loadingProgressDialog.show();
         }
 
         @Override
@@ -245,19 +251,22 @@ public class TodayInformationFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            progressbar.setVisibility(View.GONE);
 
-            if (loadingProgressDialog != null) {
-                loadingProgressDialog.dismiss();
-            }
-            if (listView != null) {
-                CustomAdpter adpter = new CustomAdpter(getActivity(), listTodayInformationlist);
-                if (adpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+//            if (loadingProgressDialog != null) {
+//                loadingProgressDialog.dismiss();
+//            }
+            if (getActivity() != null) {
+                if (listView != null) {
+                    CustomAdpter adpter = new CustomAdpter(getActivity(), listTodayInformationlist);
+                    if (adpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }
@@ -332,16 +341,18 @@ public class TodayInformationFragment extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            if (listView != null) {
-                CustomAdpter adpter = new CustomAdpter(getActivity(), listTodayInformationlist);
-                if (adpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adpter);
-                    activity_main_swipe_refresh_layout.setRefreshing(false);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    CustomAdpter adpter = new CustomAdpter(getActivity(), listTodayInformationlist);
+                    if (adpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adpter);
+                        activity_main_swipe_refresh_layout.setRefreshing(false);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }
@@ -384,7 +395,7 @@ public class TodayInformationFragment extends Fragment {
             holder.txt_Title.setMaxLines((int) 1.5);
             holder.txt_Title.setText(inCategory.getTitle());
             holder.txt_Description.setText(inCategory.getDescription());
-            holder.txt_Date.setText(inCategory.getDay() + "," + inCategory.getDate());
+            holder.txt_Date.setText(inCategory.getDay() + ", " + inCategory.getDate());
             holder.txt_Address.setText(inCategory.getAddress());
             holder.txt_views.setText(inCategory.getView());
 
@@ -395,7 +406,6 @@ public class TodayInformationFragment extends Fragment {
             holder.txt_Date.setText(inCategory.getDay() + "," + inCategory.getDate());
             holder.txt_Address.setText(inCategory.getAddress());
             holder.txt_views.setText(inCategory.getView());
-
             return convertView;
         }
 
@@ -547,20 +557,22 @@ public class TodayInformationFragment extends Fragment {
             super.onPostExecute(status);
             InformationCategory informationCategory = new InformationCategory();
 
-            if (listView != null) {
-                adpter = new CustomAdpter(getActivity(), listfilterdata);
-                if (adpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setText("No Search\n Found");
+            if (getActivity() != null) {
+                if (listView != null) {
+                    adpter = new CustomAdpter(getActivity(), listfilterdata);
+                    if (adpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setText("No Search\n Found");
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
+            }
         }
 
     }

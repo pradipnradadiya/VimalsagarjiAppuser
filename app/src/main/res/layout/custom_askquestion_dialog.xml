@@ -21,12 +21,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorTabColor">
+        android:background="@drawable/back_gradiant"
+        >
 
-        <TextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorTabColor"
+            android:background="@drawable/back_gradiant"
             android:padding="10dp"
             android:text="Ask Question"
             android:textColor="@color/white"
@@ -47,7 +48,7 @@
 
     </RelativeLayout>
 
-    <EditText
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomEditText
         android:id="@+id/etAskQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,7 +70,7 @@
         android:layout_height="35dp"
         android:layout_gravity="right"
         android:layout_margin="5dp"
-        android:background="@color/colorTabColor"
+        android:background="@drawable/back_gradiant"
         android:padding="10dp"
         android:text="Post"
         android:textColor="@color/white"

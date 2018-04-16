@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
         android:id="@+id/txtQues"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,7 +13,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="Ques"
-        android:textColor="@color/red"
+        android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold"
         tools:ignore="HardcodedText" />
@@ -36,7 +36,7 @@
             android:progress="0"
             android:progressDrawable="@drawable/custom_progressbar" />
 
-        <TextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
             android:id="@+id/txtYes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             android:progress="0"
             android:progressDrawable="@drawable/custom_progressbar_no" />
 
-        <TextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
             android:id="@+id/txtNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
         android:paddingBottom="5dp"
         tools:ignore="RtlHardcoded">
 
-        <TextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
             android:id="@+id/txt_yes"
             android:layout_width="50dp"
             android:layout_height="20dp"
@@ -98,7 +98,7 @@
             android:textSize="12sp"
             tools:ignore="HardcodedText,RtlHardcoded" />
 
-        <TextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
             android:id="@+id/txt_no"
             android:layout_width="50dp"
             android:layout_height="20dp"

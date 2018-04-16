@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,9 +73,10 @@ public class ThisMonthbyPeopleFragment extends Fragment {
     private String strImageUrl = "";
 
     private final String strURL = "http://www.grapes-solutions.com/vimalsagarji/bypeople/getallapppostsmonth/?page=1&psize=1000";
-    private KProgressHUD loadingProgressDialog;
+//    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
+    private ProgressBar progressbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,6 +90,7 @@ public class ThisMonthbyPeopleFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "Image Url Of By people" + IMAGEURL);
         listView = (ListView) getActivity().findViewById(R.id.byPeople_list);
+        progressbar= (ProgressBar) getActivity().findViewById(R.id.progressbar);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
         activity_main_swipe_refresh_layout = (SwipeRefreshLayout) getActivity().findViewById(R.id.activity_main_swipe_refresh_layout);
         activity_main_swipe_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -146,11 +149,12 @@ public class ThisMonthbyPeopleFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+          /*  loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+          progressbar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -236,9 +240,11 @@ public class ThisMonthbyPeopleFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (loadingProgressDialog != null) {
+            /*if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+            progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
             if (listView != null) {
                 CustomAdapter adapter = new CustomAdapter(getActivity(), listAllByPeople);
                 if (adapter.getCount() != 0) {
@@ -251,6 +257,7 @@ public class ThisMonthbyPeopleFragment extends Fragment {
                 }
 
 
+            }
             }
         }
 
@@ -345,6 +352,7 @@ public class ThisMonthbyPeopleFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (getActivity() != null) {
             if (listView != null) {
                 CustomAdapter adapter = new CustomAdapter(getActivity(), listAllByPeople);
                 if (adapter.getCount() != 0) {
@@ -357,6 +365,7 @@ public class ThisMonthbyPeopleFragment extends Fragment {
                     txt_nodata_today.setVisibility(View.VISIBLE);
                 }
 
+            }
 
             }
         }

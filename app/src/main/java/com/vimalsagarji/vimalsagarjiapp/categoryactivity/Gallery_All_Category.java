@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +43,7 @@ public class Gallery_All_Category extends AppCompatActivity {
     private Toolbar toolbar_home;
     TextView grid_txtTitle;
     //ImageView imgarrorback,imghomeicon;
-    private KProgressHUD loadingProgressDialog;
+//    private KProgressHUD loadingProgressDialog;
     static final String TAG = Gallery_All_Category.class.getSimpleName();
     static String URL = Constant.GET_ALL_CATEGORY_AUDIO;
     static String ImgURL = Constant.GET_AUDIO_IMAGE_URL;
@@ -56,6 +57,7 @@ public class Gallery_All_Category extends AppCompatActivity {
     private GridView gridView;
     private TextView txt_nodata_today;
     private EditText etAudioCategory;
+    private ProgressBar progressbar;
 
     @Override
     public void onBackPressed() {
@@ -71,6 +73,7 @@ public class Gallery_All_Category extends AppCompatActivity {
         setContentView(R.layout.content_audio_category);
         toolbar_home = (Toolbar) findViewById(R.id.toolbar_audio);
         setSupportActionBar(toolbar_home);
+        progressbar= (ProgressBar) findViewById(R.id.progressbar);
         TextView txt_title = (TextView) toolbar_home.findViewById(R.id.txt_title);
         txt_title.setText("Gallery");
         ImageView imgarrorback = (ImageView) toolbar_home.findViewById(R.id.imgarrorback);
@@ -81,7 +84,7 @@ public class Gallery_All_Category extends AppCompatActivity {
         rel_audio = (RelativeLayout) findViewById(R.id.rel_audio);
         etAudioCategory = (EditText) findViewById(R.id.etAudioCategory);
         etAudioCategory.setText("Gallery Category");
-        etAudioCategory.setTextColor(getResources().getColor(R.color.colorPrimary));
+        etAudioCategory.setTextColor(getResources().getColor(R.color.black));
         img_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,11 +135,12 @@ public class Gallery_All_Category extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(Gallery_All_Category.this)
+            progressbar.setVisibility(View.VISIBLE);
+           /* loadingProgressDialog = KProgressHUD.create(Gallery_All_Category.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(false);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -177,9 +181,10 @@ public class Gallery_All_Category extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+           progressbar.setVisibility(View.GONE);
             gridView = (GridView) findViewById(R.id.grid_audio);
             if (gridView != null) {
                 CustomAdpter customAdpter = new CustomAdpter(Gallery_All_Category.this, listName);

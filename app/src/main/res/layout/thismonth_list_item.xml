@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:background="@drawable/round_rect_shape"
+    android:orientation="vertical"
+    android:padding="10dp"
 
+    >
 
-    <TextView
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
         android:id="@+id/txtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
-        android:text="Title"
-        android:textColor="@color/red"
-        android:textSize="16sp"
-        android:textStyle="bold"
         android:lines="1"
+        android:text="Title"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="15sp"
         tools:ignore="HardcodedText,RtlHardcoded" />
 
-    <TextView
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
         android:id="@+id/txtDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,76 +31,83 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:maxLines="3"
-        android:text="Description"
         android:ellipsize="end"
-        android:textColor="#4d4d4d"
+        android:maxLines="3"
+        android:text="sdfsdfsd"
+        android:textColor="@color/black"
+        android:textSize="15dp"
 
-        tools:ignore="HardcodedText" />
+        />
 
-    <TextView
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
         android:id="@+id/txt_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtDescription"
+        android:layout_gravity="right"
+        android:layout_marginRight="10dp"
+        android:lines="1"
+        android:maxLength="25"
         android:text="Ahmedabad"
         android:textColor="@color/colorPrimary"
-        android:layout_below="@+id/txtDescription"
-        android:layout_alignParentRight="true"
-        android:maxLength="25"
-        android:layout_marginRight="10dp"
-        android:lines="1"
-
-        tools:ignore="HardcodedText,RtlHardcoded" />
-
-    <TextView
-        android:id="@+id/txtDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/txtDescription"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
-        android:text="11/08/1994"
-        android:textColor="#111"
-        android:textSize="12sp"
-        android:lines="1"
         tools:ignore="HardcodedText,RtlHardcoded" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:orientation="horizontal"
-        android:layout_below="@+id/txtDate"
-        android:layout_alignParentRight="true"
+        android:paddingBottom="5dp"
+        android:layout_marginTop="10dp"
         >
-        <TextView
-            android:id="@+id/txt_views"
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5sp"
-            android:gravity="right"
-            android:text="10120"
-            android:textSize="12sp"
-            android:lines="1"
-            tools:ignore="HardcodedText,RtlHardcoded"
-            android:textColor="@color/views"
-            />
-        <TextView
-            android:layout_width="wrap_content"
+            android:layout_below="@+id/txtDate"
+            android:orientation="horizontal">
+
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                android:id="@+id/txt_views"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5sp"
+                android:gravity="right"
+                android:lines="1"
+                android:text="10120"
+                android:textColor="@color/views"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10sp"
+                android:gravity="right"
+                android:lines="1"
+                android:text="Views"
+                android:textColor="@color/views"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+        </LinearLayout>
+
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+            android:id="@+id/txtDate"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10sp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/txtDescription"
+            android:layout_gravity="right"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:gravity="right"
-            android:text="Views"
-            android:textSize="12sp"
             android:lines="1"
-            tools:ignore="HardcodedText,RtlHardcoded"
-            android:textColor="@color/views"
-            />
+            android:text="11/08/1994"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            tools:ignore="HardcodedText,RtlHardcoded" />
     </LinearLayout>
 
 
-
-
-</RelativeLayout>
+</LinearLayout>

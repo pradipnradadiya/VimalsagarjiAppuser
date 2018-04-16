@@ -1,6 +1,7 @@
 package com.vimalsagarji.vimalsagarjiapp.today_week_month_year;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.R;
+import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
+import com.vimalsagarji.vimalsagarjiapp.activity.VideoDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.OpinionPollAdpter;
@@ -44,7 +47,7 @@ import static com.vimalsagarji.vimalsagarjiapp.R.id.frameLayout_progressbar_no;
 @SuppressWarnings("ALL")
 public class OpinionPoll extends AppCompatActivity {
 
-    private KProgressHUD loadingProgressDialog;
+//    private KProgressHUD loadingProgressDialog;
     //Index of Question
     private static int index_question = 0;
     //URL of Get all Question
@@ -61,6 +64,7 @@ public class OpinionPoll extends AppCompatActivity {
     private String approve = "";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private TextView txt_nodata_today;
+    private ProgressBar progressbar;
 
     @Override
     public void onBackPressed() {
@@ -80,6 +84,7 @@ public class OpinionPoll extends AppCompatActivity {
         ImageView imgHome = (ImageView) toolbar.findViewById(R.id.imgHome);
         TextView txt_title = (TextView) toolbar.findViewById(R.id.txt_title);
         txt_title.setText("Opinion Poll");
+        progressbar= (ProgressBar) findViewById(R.id.progressbar);
         listView = (ListView) findViewById(R.id.listOpinionPoll);
         txt_nodata_today = (TextView) findViewById(R.id.txt_nodata_today);
         rel_opinion = (RelativeLayout) findViewById(R.id.rel_opninion);
@@ -130,6 +135,36 @@ public class OpinionPoll extends AppCompatActivity {
 
     }
 
+
+    //Method to show the snackbar
+    private void showSnackbar(View v) {
+        //Creating snackbar
+        Snackbar snackbar = Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_LONG);
+
+        //Adding action to snackbar
+        snackbar.setAction("Register", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Displaying another snackbar when user click the action for first snackbar
+//                Snackbar s = Snackbar.make(v, "Register", Snackbar.LENGTH_LONG);
+//                s.show();
+                Intent intent = new Intent(OpinionPoll.this, RegisterActivity.class);
+                startActivity(intent);
+                finishAffinity();
+            }
+        });
+
+        //Customizing colors
+        snackbar.setActionTextColor(Color.WHITE);
+        View view = snackbar.getView();
+        TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+
+        //Displaying snackbar
+        snackbar.show();
+    }
+
+
     private void loadData() {
         new LoadGetAllOpinionPoll().execute();
     }
@@ -140,12 +175,13 @@ public class OpinionPoll extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(OpinionPoll.this)
+           /* loadingProgressDialog = KProgressHUD.create(OpinionPoll.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(false);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
 
+           progressbar.setVisibility(View.VISIBLE);
 
         }
 
@@ -201,9 +237,10 @@ public class OpinionPoll extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            if (loadingProgressDialog != null) {
+         /*   if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+         progressbar.setVisibility(View.GONE);
             if (listView != null) {
                 CustomAdpterOpinionPoll customAdpter = new CustomAdpterOpinionPoll(OpinionPoll.this, listOpinionPollAdpter);
                 if (customAdpter.getCount() != 0) {
@@ -351,11 +388,12 @@ public class OpinionPoll extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(OpinionPoll.this)
+           /* loadingProgressDialog = KProgressHUD.create(OpinionPoll.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+           progressbar.setVisibility(View.VISIBLE);
 
         }
 
@@ -383,7 +421,8 @@ public class OpinionPoll extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            loadingProgressDialog.dismiss();
+//            loadingProgressDialog.dismiss();
+            progressbar.setVisibility(View.GONE);
             new GetAllOpinionPoll().execute();
         }
     }
@@ -496,7 +535,8 @@ public class OpinionPoll extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                        Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_SHORT).show();
+//                        Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_SHORT).show();
+                        showSnackbar(v);
                     } else {
                         if (CommonMethod.isInternetConnected(OpinionPoll.this)) {
                             Log.e("yes", "----------------------");
@@ -527,7 +567,8 @@ public class OpinionPoll extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                        Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_SHORT).show();
+                        showSnackbar(v);
+//                        Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_SHORT).show();
                     } else {
                         if (CommonMethod.isInternetConnected(OpinionPoll.this)) {
 

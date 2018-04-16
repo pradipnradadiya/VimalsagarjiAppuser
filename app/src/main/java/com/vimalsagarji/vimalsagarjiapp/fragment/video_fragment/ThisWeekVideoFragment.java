@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -69,11 +70,12 @@ public class ThisWeekVideoFragment extends Fragment {
     String strImageUrl = "";
     static Bitmap bitmap = null;
     private View view;
-    private KProgressHUD loadingProgressDialog;
+    //    private KProgressHUD loadingProgressDialog;
     private CustomAdpter customAdpter;
     private TextView txt_nodata_today;
     private EditText InputBox;
     private final String WeekSearchVideo = "http://www.grapes-solutions.com/vimalsagarji/video/searchallvideosbycidthisweek/?page=1&psize=1000";
+    private ProgressBar progressbar;
 
 
     @Override
@@ -91,7 +93,7 @@ public class ThisWeekVideoFragment extends Fragment {
         URL = urls + video_cat_id;
         listViewvideo = (ListView) getActivity().findViewById(R.id.thismonth_video);
 
-
+        progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
 
         InputBox = (EditText) getActivity().findViewById(R.id.etText);
@@ -243,11 +245,12 @@ public class ThisWeekVideoFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -321,25 +324,27 @@ public class ThisWeekVideoFragment extends Fragment {
                 e.printStackTrace();
             }
 
+            progressbar.setVisibility(View.GONE);
 
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
 
-            }
+            }*/
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                        customAdpter.notifyDataSetChanged();
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
 
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                    customAdpter.notifyDataSetChanged();
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+
                 }
-
-
             }
 
         }
@@ -425,20 +430,21 @@ public class ThisWeekVideoFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                        customAdpter.notifyDataSetChanged();
+                        activity_main_swipe_refresh_layout.setRefreshing(false);
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
 
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                    customAdpter.notifyDataSetChanged();
-                    activity_main_swipe_refresh_layout.setRefreshing(false);
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
                 }
-
             }
 
         }
@@ -484,7 +490,7 @@ public class ThisWeekVideoFragment extends Fragment {
             holder.txtVideoDate.setText(listDate.get(position));
 //            Picasso.with(getActivity()).load(listIcon.get(position)).placeholder(R.drawable.loader).error(R.drawable.no_image).into(holder.imgVideo);
             if (listIcon != null) {
-                Picasso.with(getActivity()).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.no_image).into(holder.imgVideo);
+                Picasso.with(getActivity()).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0, 200).error(R.drawable.no_image).into(holder.imgVideo);
             } else {
                 Picasso.with(getActivity()).load(R.drawable.no_image);
             }
@@ -618,18 +624,19 @@ public class ThisWeekVideoFragment extends Fragment {
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
             InformationCategory informationCategory = new InformationCategory();
-
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -643,11 +650,12 @@ public class ThisWeekVideoFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+           /* loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -722,23 +730,25 @@ public class ThisWeekVideoFragment extends Fragment {
             }
 
 
-            if (loadingProgressDialog != null) {
+            /*if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
             }
+*/
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                        customAdpter.notifyDataSetChanged();
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                    customAdpter.notifyDataSetChanged();
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
 
                 }
-
 
             }
 
@@ -752,11 +762,12 @@ public class ThisWeekVideoFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+          /*  loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -831,23 +842,25 @@ public class ThisWeekVideoFragment extends Fragment {
             }
 
 
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+            progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                        customAdpter.notifyDataSetChanged();
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                    customAdpter.notifyDataSetChanged();
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
 
                 }
-
 
             }
 
@@ -941,18 +954,19 @@ public class ThisWeekVideoFragment extends Fragment {
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
             InformationCategory informationCategory = new InformationCategory();
-
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -1045,18 +1059,19 @@ public class ThisWeekVideoFragment extends Fragment {
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
             InformationCategory informationCategory = new InformationCategory();
-
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

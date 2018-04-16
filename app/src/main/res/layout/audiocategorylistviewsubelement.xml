@@ -2,23 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorTabBackground"
+    android:layout_height="wrap_content"
+    android:background="@drawable/round_rect_shape"
     android:orientation="horizontal"
-    tools:ignore="Overdraw">
+    tools:ignore="Overdraw"
+    android:padding="10dp"
+    >
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imgAudio"
-            android:layout_width="100dp"
+            android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_margin="10dp"
             android:background="@drawable/corner_event"
-            android:scaleType="fitXY"
-            android:padding="2dp"
+            android:scaleType="centerCrop"
             android:src="@android:drawable/ic_menu_gallery"
             tools:ignore="ContentDescription" />
 
@@ -27,9 +28,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="40dp"
-            android:paddingTop="15dp"
             android:src="@drawable/play"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            android:layout_centerHorizontal="true"
+            />
 
         <ImageView
             android:id="@+id/imgPlayPush"
@@ -55,64 +57,66 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
 
-        <TextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
             android:id="@+id/txtAudioName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:padding="10dp"
             android:text="AudioName"
+            android:textAllCaps="true"
             android:lines="1"
-            android:textColor="@color/red"
-            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
             android:textStyle="bold"
             tools:ignore="HardcodedText,RtlHardcoded" />
 
-        <TextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+            android:layout_marginTop="7dp"
             android:id="@+id/txtAudioDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:text="Date"
-            android:textColor="#111"
-            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             android:lines="1"
             tools:ignore="HardcodedText,RtlHardcoded" />
 
         <LinearLayout
+            android:layout_marginTop="7dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@+id/txtDate"
             android:layout_alignParentRight="true"
-            android:padding="10sp"
             >
-            <TextView
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:id="@+id/txt_views"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5sp"
                 android:gravity="right"
                 android:lines="1"
-                android:text="10120"
-                android:textSize="12sp"
+                android:text="0"
+                android:textSize="14sp"
                 tools:ignore="HardcodedText,RtlHardcoded"
                 android:textColor="@color/views"
                 />
-            <TextView
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5sp"
                 android:gravity="right"
                 android:text="Views"
                 android:lines="1"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 tools:ignore="HardcodedText,RtlHardcoded"
                 android:textColor="@color/views"
                 />
@@ -232,7 +236,6 @@
         android:visibility="gone"
         tools:ignore="RtlHardcoded" />
 
-
     <Button
         android:id="@+id/btnComment"
         style="?android:attr/borderlessButtonStyle"
@@ -249,4 +252,5 @@
         android:textSize="16sp"
         android:visibility="gone"
         tools:ignore="HardcodedText,RtlHardcoded" />
+
 </LinearLayout>

@@ -22,26 +22,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <EditText
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomEditTextBold
             android:id="@+id/etCompetitionCategory"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar_competition"
-            android:background="@color/header"
+            android:background="@color/homepage_back"
             android:focusable="false"
             android:hint="Competition Category"
             android:padding="10dp"
             android:lines="1"
-            android:textColorHint="@color/colorPrimary"
+            android:textSize="20dp"
+            android:textColorHint="@color/black"
             tools:ignore="HardcodedText" />
 
 
         <View
+            android:visibility="gone"
             android:id="@+id/viewline"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/etCompetitionCategory"
-            android:layout_marginTop="-9dp"
             android:background="@color/colorPrimary" />
 
         <RelativeLayout
@@ -58,11 +59,11 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:horizontalSpacing="5dp"
-                android:numColumns="3"
+                android:numColumns="2"
                 android:stretchMode="columnWidth"
                 android:verticalSpacing="5dp" />
 
-            <TextView
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                 android:id="@+id/txt_nodata_today"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -73,6 +74,13 @@
                 android:textStyle="italic"
                 android:visibility="gone"
                 tools:ignore="HardcodedText" />
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                />
         </RelativeLayout>
     </RelativeLayout>
 

@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Sharedpreferance sharedpreferance;
     private String strDeviceid;
     private String strDevicetoken;
-    private KProgressHUD loadingProgressDialog;
+    //    private KProgressHUD loadingProgressDialog;
     TextView txt_alreready;
     Dialog dialog;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
@@ -65,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;          // built in android class CountDownTimer
     long totalTimeCountInMilliseconds;      // total count down time in milliseconds
     long timeBlinkInMilliseconds;
+    ImageView img_close;
 
     @SuppressLint("HardwareIds")
     @Override
@@ -72,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_user);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -119,6 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
         Log.e(TAG, "Device id:" + strDeviceid);
         Log.e(TAG, "Device token:" + strDevicetoken);
 
+        img_close = (ImageView) findViewById(R.id.img_close);
         etName = (EditText) findViewById(R.id.etName);
         etEmail = (EditText) findViewById(R.id.etEmail);
         etMobile = (EditText) findViewById(R.id.etMobile);
@@ -128,6 +131,18 @@ public class RegisterActivity extends AppCompatActivity {
         TextView textview_skip = (TextView) findViewById(R.id.textview_skip);
 
         textview_skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharedpreferance.saveId("");
+                sharedpreferance.saveEmail("");
+                sharedpreferance.saveMobile("");
+                sharedpreferance.savePushNotification("pushon");
+                sharedpreferance.saveToken(strDevicetoken);
+                moveAhead();
+            }
+        });
+
+        img_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sharedpreferance.saveId("");
@@ -205,7 +220,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void moveAhead() {
-        Intent intentSuceess = new Intent(RegisterActivity.this, MainActivity.class);
+        Intent intentSuceess = new Intent(RegisterActivity.this, ActivityHomeMain.class);
         startActivity(intentSuceess);
         finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
@@ -217,11 +232,14 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(RegisterActivity.this)
+           /* loadingProgressDialog = KProgressHUD.create(RegisterActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(false);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+            progressDialog = new ProgressDialog(RegisterActivity.this);
+            progressDialog.setMessage("Please wait..");
+            progressDialog.show();
         }
 
         @Override
@@ -277,7 +295,7 @@ public class RegisterActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            loadingProgressDialog.dismiss();
+            progressDialog.dismiss();
         }
     }
 
@@ -287,11 +305,15 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(RegisterActivity.this)
+          /*  loadingProgressDialog = KProgressHUD.create(RegisterActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(false);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+
+            progressDialog = new ProgressDialog(RegisterActivity.this);
+            progressDialog.setMessage("Please wait..");
+            progressDialog.show();
 
         }
 
@@ -313,7 +335,7 @@ public class RegisterActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.e("reponse", "-----------------" + s);
-            loadingProgressDialog.dismiss();
+            progressDialog.dismiss();
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
@@ -544,7 +566,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (jsonObject.getString("type").equalsIgnoreCase("success")) {
                     progressDialog.dismiss();
                     dialog.dismiss();
-                    Toast.makeText(RegisterActivity.this, "Verify OTP", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(RegisterActivity.this, "Verify OTP", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(RegisterActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     if (CommonMethod.isInternetConnected(RegisterActivity.this)) {
                         new PostRegisterData().execute(etName.getText().toString(), strDeviceid, etEmail.getText().toString(), etAddress.getText().toString(), etMobile.getText().toString(), strDevicetoken);
@@ -557,9 +579,7 @@ public class RegisterActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (progressDialog != null) {
-                progressDialog.dismiss();
-            }
+
         }
 
 

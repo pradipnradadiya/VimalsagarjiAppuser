@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.R;
+import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.CompetitionQuestion;
@@ -51,13 +53,14 @@ public class CompetitionList extends AppCompatActivity {
     RecyclerView comp_que_list;
     String c_cid, c_cname;
     ArrayList<CompetitionQuestion> competitionQuestions = new ArrayList<>();
-    KProgressHUD loadingProgressDialog;
+    //    KProgressHUD loadingProgressDialog;
     Sharedpreferance sharedpreferance;
     private LinearLayout lin_main;
     private String approve = "";
     private String status = "";
     LinearLayoutManager linearLayoutManager;
     TextView txt_title;
+    private ProgressBar progressbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +98,7 @@ public class CompetitionList extends AppCompatActivity {
     }
 
     private void viewID() {
+        progressbar = (ProgressBar) findViewById(R.id.progressbar);
         ImageView img_search = (ImageView) findViewById(R.id.img_search);
         txt_title = (TextView) findViewById(R.id.txt_title);
         txt_title.setText("Competition List");
@@ -122,11 +126,12 @@ public class CompetitionList extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(CompetitionList.this)
+            /*loadingProgressDialog = KProgressHUD.create(CompetitionList.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+            progressbar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -155,7 +160,8 @@ public class CompetitionList extends AppCompatActivity {
                 String msg = jsonObject.getString("message");
                 jsonObject.getString("Answer");
                 Toast.makeText(CompetitionList.this, "" + msg, Toast.LENGTH_SHORT).show();
-                loadingProgressDialog.dismiss();
+//                loadingProgressDialog.dismiss();
+                progressbar.setVisibility(View.GONE);
                 new CheckParticipants().execute("56", c_cid);
                 Log.e("user id", "------------------------------" + sharedpreferance.getId());
                 new CatrgoryQuestion().execute(c_cid, sharedpreferance.getId());
@@ -164,7 +170,8 @@ public class CompetitionList extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            loadingProgressDialog.dismiss();
+            progressbar.setVisibility(View.GONE);
+//            loadingProgressDialog.dismiss();
         }
     }
 
@@ -174,11 +181,12 @@ public class CompetitionList extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(CompetitionList.this)
+            /*loadingProgressDialog = KProgressHUD.create(CompetitionList.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+            progressbar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -242,9 +250,10 @@ public class CompetitionList extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+            progressbar.setVisibility(View.GONE);
             if (comp_que_list != null) {
                 RecyclerCompetitionAdapter recyclerCompetitionAdapter = new RecyclerCompetitionAdapter(CompetitionList.this, competitionQuestions);
                 if (recyclerCompetitionAdapter.getItemCount() != 0) {
@@ -409,7 +418,9 @@ public class CompetitionList extends AppCompatActivity {
                             @Override
                             public void onCheckedChanged(RadioGroup group, int checkedId) {
                                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                                    Snackbar.make(lin_main, "Please first register after competition.", Snackbar.LENGTH_LONG).show();
+                                    progressbar.setVisibility(View.GONE);
+                                    showSnackbar();
+//                                    Snackbar.make(lin_main, "Please first register after competition.", Snackbar.LENGTH_LONG).show();
                                 } else {
                                     if (CommonMethod.isInternetConnected(activity)) {
                                         status = "";
@@ -469,7 +480,8 @@ public class CompetitionList extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                                Snackbar.make(lin_main, "Please first register after competition.", Snackbar.LENGTH_LONG).show();
+                                showSnackbar();
+//                                Snackbar.make(lin_main, "Please first register after competition.", Snackbar.LENGTH_LONG).show();
                             } else {
 
                                 if (CommonMethod.isInternetConnected(CompetitionList.this)) {
@@ -549,19 +561,41 @@ public class CompetitionList extends AppCompatActivity {
 
     }
 
+
+    //Method to show the snackbar
+    private void showSnackbar() {
+        //Creating snackbar
+        Snackbar snackbar = Snackbar.make(lin_main, "Please first register after competition.", Snackbar.LENGTH_INDEFINITE);
+
+        //Adding action to snackbar
+        snackbar.setAction("Register", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Displaying another snackbar when user click the action for first snackbar
+//                Snackbar s = Snackbar.make(v, "Register", Snackbar.LENGTH_LONG);
+//                s.show();
+                Intent intent = new Intent(CompetitionList.this, RegisterActivity.class);
+                startActivity(intent);
+                finishAffinity();
+            }
+        });
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         // put your code here...
 
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
-            Snackbar.make(lin_main, "Please first register after competition.", Snackbar.LENGTH_INDEFINITE).show();
+            progressbar.setVisibility(View.GONE);
+//            Snackbar.make(lin_main, "Please first register after competition.", Snackbar.LENGTH_INDEFINITE).show();
+            showSnackbar();
         } else {
-        if (CommonMethod.isInternetConnected(CompetitionList.this)) {
-            new CatrgoryQuestion().execute(c_cid, sharedpreferance.getId());
-        } else {
-            Toast.makeText(this, R.string.internet, Toast.LENGTH_SHORT).show();
-        }
+            if (CommonMethod.isInternetConnected(CompetitionList.this)) {
+                new CatrgoryQuestion().execute(c_cid, sharedpreferance.getId());
+            } else {
+                Toast.makeText(this, R.string.internet, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

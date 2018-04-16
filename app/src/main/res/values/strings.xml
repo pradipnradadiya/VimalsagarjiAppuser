@@ -1,19 +1,20 @@
 <resources>
-    <string name="app_name">Nayi Soch</string>
+    <string name="app_name">Nayi Soch, Sahi Disha</string>
     <string name="text_test">Playing</string>
     <string name="internet">Internet not connected.</string>
     <string name="notregister">Please first register.</string>
 
     <string name="authkey">170539A1PovTWJpc0s5996ef0e</string>
-    <string name="title_activity_main2">Nayi Soch Nayi Disha</string>
+    <string name="title_activity_main2">Nayi Soch, Sahi Disha</string>
     <!--<string name="title_activity_main2">Aacharya Vimalsagarsooriji</string>-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="title_name">Nayi Soch</string>
+    <string name="title_name">Nayi Soch,Sahi Disha</string>
     <!--<string name="title_name">Aacharya Vimalsagarsooriji</string>-->
     <string name="title_activity_register" />
 
+    <string name="guruji">By : Aacharya Vimalsagarsuriji</string>
 
     <string name="buy">Buy</string>
     <string name="alert">Latest posts</string>
@@ -22,12 +23,38 @@
     <string name="event">Event</string>
     <string name="audio">Audio</string>
     <string name="video">Video</string>
-    <string name="thought">Thought</string>
+    <string name="thought">Thoughts</string>
     <string name="gallaery">Gallery</string>
     <string name="question">Q &amp; A</string>
     <string name="competition">Competition</string>
     <string name="Opinionpoll">Opinion Poll</string>
     <string name="bypeople">By People</string>
     <string name="setting">Setting</string>
+    <string name="english">English</string>
+    <string name="hindi">Hindi</string>
+    <string name="gujrati">Gujrati</string>
+
+
+    <!--About-->
+    <string name="about_guruji_eng">English</string>
+    <string name="about_guruji_hnd">हिंदी</string>
+    <string name="about_guruji_guj">ગુજરાતી</string>
+
+    <string name="about_guruji_vision_eng">English</string>
+    <string name="about_guruji_vision_hnd">हिंदी</string>
+    <string name="about_guruji_vision_guj">ગુજરાતી</string>
+
+    <string name="about_guruji_mission_eng">English</string>
+    <string name="about_guruji_mission_hnd">हिंदी</string>
+    <string name="about_guruji_mission_guj">ગુજરાતી</string>
+
+    <string name="about_app_eng">English</string>
+    <string name="about_app_hnd">हिंदी</string>
+    <string name="about_app_guj">ગુજરાતી</string>
+
+    <string name="privacy_policy">Privacy Policy</string>
+
+    <string name="p_p_content">A Privacy Policy agreement is the agreement where you specify if you collect personal data, what kind of personal data you collect from users and what you do with that data.</string>
+
 
 </resources>

@@ -1,6 +1,7 @@
 package com.vimalsagarji.vimalsagarjiapp.today_week_month_year;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vimalsagarji.vimalsagarjiapp.R;
@@ -33,6 +35,7 @@ public class ThoughtsActivity extends AppCompatActivity implements View.OnClickL
     private View view_week;
     private View view_month;
     private View view_all;
+    LinearLayout lin_today, lin_week, lin_month, lin_all;
 
     @Override
     public void onBackPressed() {
@@ -52,7 +55,7 @@ public class ThoughtsActivity extends AppCompatActivity implements View.OnClickL
         ImageView imgHome = (ImageView) toolbar.findViewById(R.id.imgHome);
         ImageView img_search = (ImageView) toolbar.findViewById(R.id.img_search);
         TextView txt_title = (TextView) toolbar.findViewById(R.id.txt_title);
-        txt_title.setText("Thought");
+        txt_title.setText("Thoughts");
         EditText etText = (EditText) findViewById(R.id.etText);
         txt_today = (TextView) findViewById(R.id.txt_today);
         txt_thisweek = (TextView) findViewById(R.id.txt_thisweek);
@@ -71,6 +74,10 @@ public class ThoughtsActivity extends AppCompatActivity implements View.OnClickL
         txt_all.setOnClickListener(this);
         img_search.setOnClickListener(this);
         etText.setHint("Search Thought");
+        lin_today = (LinearLayout) findViewById(R.id.lin_today);
+        lin_week = (LinearLayout) findViewById(R.id.lin_week);
+        lin_month = (LinearLayout) findViewById(R.id.lin_month);
+        lin_all = (LinearLayout) findViewById(R.id.lin_all);
         openTodayInfromation();
 
     }
@@ -111,10 +118,16 @@ public class ThoughtsActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void openTodayInfromation() {
-        view_today.setVisibility(View.VISIBLE);
-        view_month.setVisibility(View.GONE);
-        view_week.setVisibility(View.GONE);
-        view_all.setVisibility(View.GONE);
+        txt_today.setTextColor(Color.WHITE);
+        txt_thisweek.setTextColor(Color.BLACK);
+        txt_thismonth.setTextColor(Color.BLACK);
+        txt_all.setTextColor(Color.BLACK);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
+
         Fragment fr = null;
         fr = new TodayThoughtsFragment();
         FragmentManager fm = getSupportFragmentManager();
@@ -125,10 +138,16 @@ public class ThoughtsActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void openWeekInfromation() {
-        view_today.setVisibility(View.GONE);
-        view_month.setVisibility(View.GONE);
-        view_week.setVisibility(View.VISIBLE);
-        view_all.setVisibility(View.GONE);
+        txt_today.setTextColor(Color.BLACK);
+        txt_thisweek.setTextColor(Color.WHITE);
+        txt_thismonth.setTextColor(Color.BLACK);
+        txt_all.setTextColor(Color.BLACK);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
+
         Fragment fr = null;
         fr = new ThisWeekThoughtsFragment();
         FragmentManager fm = getSupportFragmentManager();
@@ -139,10 +158,15 @@ public class ThoughtsActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void openMonthInfromation() {
-        view_today.setVisibility(View.GONE);
-        view_month.setVisibility(View.VISIBLE);
-        view_week.setVisibility(View.GONE);
-        view_all.setVisibility(View.GONE);
+        txt_today.setTextColor(Color.BLACK);
+        txt_thisweek.setTextColor(Color.BLACK);
+        txt_thismonth.setTextColor(Color.WHITE);
+        txt_all.setTextColor(Color.BLACK);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
         Fragment fr = null;
         fr = new ThisMonthThoughtsFragment();
         FragmentManager fm = getSupportFragmentManager();
@@ -153,10 +177,15 @@ public class ThoughtsActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void openAllInfromation() {
-        view_today.setVisibility(View.GONE);
-        view_month.setVisibility(View.GONE);
-        view_week.setVisibility(View.GONE);
-        view_all.setVisibility(View.VISIBLE);
+        txt_today.setTextColor(Color.BLACK);
+        txt_thisweek.setTextColor(Color.BLACK);
+        txt_thismonth.setTextColor(Color.BLACK);
+        txt_all.setTextColor(Color.WHITE);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
         Fragment fr = null;
         fr = new AllThoughtsFragment();
         FragmentManager fm = getSupportFragmentManager();

@@ -320,21 +320,23 @@ public class TodayAllVideoFragment extends Fragment {
                 loadingProgressDialog.dismiss();
 
             }
-            listViewvideo = (ListView) getActivity().findViewById(R.id.thismonth_video);
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                Log.e("videoname", "-------------" + listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+//            listViewvideo = (ListView) getActivity().findViewById(R.id.thismonth_video);
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    Log.e("videoname", "-------------" + listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+
+                    }
+
 
                 }
-
-
             }
 
         }
@@ -421,7 +423,8 @@ public class TodayAllVideoFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            listViewvideo = (ListView) getActivity().findViewById(R.id.thismonth_video);
+//            listViewvideo = (ListView) getActivity().findViewById(R.id.thismonth_video);
+            if (getActivity() != null) {
             if (listViewvideo != null) {
                 customAdpter = new CustomAdpter(getActivity(), listVideoName);
                 if (customAdpter.getCount() != 0) {
@@ -437,6 +440,7 @@ public class TodayAllVideoFragment extends Fragment {
                 }
 
 
+            }
             }
 
         }
@@ -631,18 +635,19 @@ public class TodayAllVideoFragment extends Fragment {
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
             InformationCategory informationCategory = new InformationCategory();
-
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -745,21 +750,22 @@ public class TodayAllVideoFragment extends Fragment {
             if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
             }
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                        customAdpter.notifyDataSetChanged();
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                    customAdpter.notifyDataSetChanged();
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
+
 
                 }
-
-
             }
 
         }
@@ -855,20 +861,22 @@ public class TodayAllVideoFragment extends Fragment {
                 loadingProgressDialog.dismiss();
             }
 
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                    customAdpter.notifyDataSetChanged();
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                        customAdpter.notifyDataSetChanged();
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+
+                    }
+
 
                 }
-
-
             }
 
         }
@@ -966,17 +974,19 @@ public class TodayAllVideoFragment extends Fragment {
             super.onPostExecute(status);
             InformationCategory informationCategory = new InformationCategory();
 
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -1069,18 +1079,19 @@ public class TodayAllVideoFragment extends Fragment {
         protected void onPostExecute(String status) {
             super.onPostExecute(status);
             InformationCategory informationCategory = new InformationCategory();
-
-            if (listViewvideo != null) {
-                customAdpter = new CustomAdpter(getActivity(), listVideoName);
-                if (customAdpter.getCount() != 0) {
-                    listViewvideo.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listViewvideo.setAdapter(customAdpter);
-                } else {
-                    listViewvideo.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Search\n Found");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                if (listViewvideo != null) {
+                    customAdpter = new CustomAdpter(getActivity(), listVideoName);
+                    if (customAdpter.getCount() != 0) {
+                        listViewvideo.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listViewvideo.setAdapter(customAdpter);
+                    } else {
+                        listViewvideo.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

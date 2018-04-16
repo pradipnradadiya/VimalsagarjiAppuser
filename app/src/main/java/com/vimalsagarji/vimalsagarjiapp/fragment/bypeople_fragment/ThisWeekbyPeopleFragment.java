@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,8 +73,9 @@ public class ThisWeekbyPeopleFragment extends Fragment {
     String strImageUrl = "";
 
     private final String strURL = "http://www.grapes-solutions.com/vimalsagarji/bypeople/getallapppostsweek/?page=1&psize=1000";
-    private KProgressHUD loadingProgressDialog;
+//    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
+    private ProgressBar progressbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,6 +88,7 @@ public class ThisWeekbyPeopleFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "Image Url Of By people" + IMAGEURL);
+        progressbar= (ProgressBar) getActivity().findViewById(R.id.progressbar);
         listView = (ListView) getActivity().findViewById(R.id.byPeople_list);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
         activity_main_swipe_refresh_layout = (SwipeRefreshLayout) getActivity().findViewById(R.id.activity_main_swipe_refresh_layout);
@@ -144,11 +147,12 @@ public class ThisWeekbyPeopleFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+          /*  loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -233,21 +237,24 @@ public class ThisWeekbyPeopleFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
-            if (listView != null) {
-                CustomAdapter adapter = new CustomAdapter(getActivity(), listAllByPeople);
-                if (adapter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adapter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+            }*/
+           progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
+                if (listView != null) {
+                    CustomAdapter adapter = new CustomAdapter(getActivity(), listAllByPeople);
+                    if (adapter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adapter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
+
+
                 }
-
-
             }
         }
 
@@ -342,6 +349,7 @@ public class ThisWeekbyPeopleFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (getActivity() != null) {
             if (listView != null) {
                 CustomAdapter adapter = new CustomAdapter(getActivity(), listAllByPeople);
                 if (adapter.getCount() != 0) {
@@ -354,7 +362,7 @@ public class ThisWeekbyPeopleFragment extends Fragment {
                     txt_nodata_today.setVisibility(View.VISIBLE);
                 }
 
-
+            }
             }
         }
 

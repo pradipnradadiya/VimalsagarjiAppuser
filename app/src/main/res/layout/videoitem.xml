@@ -4,6 +4,8 @@
     android:layout_height="150dp"
     android:padding="5dp"
     android:gravity="center"
+    android:layout_gravity="center_horizontal"
+
     >
 
     <ImageView
@@ -22,7 +24,7 @@
         android:layout_centerVertical="true"
         android:src="@drawable/play" />
 
-    <TextView
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
         android:id="@+id/txt_videoname"
         android:layout_width="120dp"
         android:layout_height="wrap_content"

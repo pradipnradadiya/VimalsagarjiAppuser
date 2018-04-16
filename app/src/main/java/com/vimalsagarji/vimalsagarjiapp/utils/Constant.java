@@ -5,9 +5,11 @@ package com.vimalsagarji.vimalsagarjiapp.utils;
  */
 @SuppressWarnings("ALL")
 public class Constant {
-    public static final String ALL_THOUGHTS_URL = "http://www.grapes-solutions.com/vimalsagarji/thought/getallthoughtsbycidyear/?page=1";
+//    public static final String ALL_THOUGHTS_URL = "http://www.grapes-solutions.com/vimalsagarji/thought/getallthoughtsbycidyear/?page=1";
+    public static final String ALL_THOUGHTS_URL = "http://www.grapes-solutions.com/vimalsagarji/thought/getallthoughts/?page=1";
 
-    public static final String ALL_BYPEOPLE_URL = "http://www.grapes-solutions.com/vimalsagarji/bypeople/getallapppostsyear/?page=1";
+    public static final String ALL_BYPEOPLE_URL = "http://www.grapes-solutions.com/vimalsagarji/bypeople/getallappposts/?page=1";
+//    public static final String ALL_BYPEOPLE_URL = "http://www.grapes-solutions.com/vimalsagarji/bypeople/getallapppostsyear/?page=1";
 
     public static final String ALL_Audio_URL = "http://www.grapes-solutions.com/vimalsagarji/audio/getaudiobycategoryyear/?page=1&psize=1000";
 
@@ -33,7 +35,8 @@ public class Constant {
 
     public static final String GET_ALL_VIDEO_CATEGORY = "http://www.grapes-solutions.com/vimalsagarji/video/getallcategory";
 
-    public static final String GET_ALLYEAR_EVENT_DATA = "http://www.grapes-solutions.com/vimalsagarji/event/geteventsbycategoryyear/?cid=1&page=1&psize=1000";
+    public static final String GET_ALLYEAR_EVENT_DATA = "http://www.grapes-solutions.com/vimalsagarji/event/geteventsbycategor/?cid=1&page=1&psize=1000";
+//    public static final String GET_ALLYEAR_EVENT_DATA = "http://www.grapes-solutions.com/vimalsagarji/event/geteventsbycategoryyear/?cid=1&page=1&psize=1000";
 
     public static final String POST_REGISTER_DATA = "http://www.grapes-solutions.com/vimalsagarji/userregistration/adduser/";
 

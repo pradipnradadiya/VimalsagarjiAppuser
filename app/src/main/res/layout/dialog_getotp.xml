@@ -30,15 +30,15 @@
         </RelativeLayout>
 
 
-        <TextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Verify OTP"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/black" />
 
-        <EditText
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomEditText
             android:id="@+id/edit_otp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,14 +50,14 @@
 
             />
 
-        <TextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
             android:id="@+id/txtresendotp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:padding="5dp"
             android:text="Resend OTP?"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/text_timer"
@@ -67,11 +67,12 @@
 
         <Button
             android:id="@+id/button_submit"
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/back_gradiant"
             android:text="Submit"
+            android:layout_gravity="center"
             android:textColor="@color/white" />
     </LinearLayout>
 

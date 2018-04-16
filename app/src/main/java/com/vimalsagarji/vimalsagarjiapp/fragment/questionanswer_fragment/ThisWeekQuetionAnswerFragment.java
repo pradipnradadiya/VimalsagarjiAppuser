@@ -23,11 +23,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.R;
+import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.JSONParser1;
@@ -65,7 +67,7 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
     private String strAskQuestion;
 
     private CustomAdpter adpter;
-    private KProgressHUD loadingProgressDialog;
+    //    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
     private EditText InputBox;
     List<ThoughtToday> listfilterdata = new ArrayList<>();
@@ -73,6 +75,7 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private Dialog dialog;
     String approve = "";
+    private ProgressBar progressbar;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_thisweek_question_answer, container, false);
@@ -84,6 +87,7 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
         listView = (ListView) getActivity().findViewById(R.id.listview_week);
 
 
+        progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
 
         InputBox = (EditText) getActivity().findViewById(R.id.etText);
@@ -158,9 +162,10 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
         btn_askQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sharedpreferance.getId().equalsIgnoreCase("")){
-                    Snackbar.make(v, "Please register after ask question. ", Snackbar.LENGTH_SHORT).show();
-                }else {
+                if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                    showSnackbar(v);
+//                    Snackbar.make(v, "Please register after ask question. ", Snackbar.LENGTH_SHORT).show();
+                } else {
                     if (approve.equalsIgnoreCase("1")) {
                         dialog = new Dialog(getActivity());
 //                Window window = dialog.getWindow();
@@ -227,11 +232,12 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            progressbar.setVisibility(View.VISIBLE);
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -294,10 +300,12 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
+/*
             if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+            progressbar.setVisibility(View.GONE);
+            if (getActivity() != null) {
             if (listView != null) {
                 adpter = new CustomAdpter(getActivity(), listQuestion);
                 if (adpter.getCount() != 0) {
@@ -310,6 +318,7 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
                 }
 
 
+            }
             }
 
         }
@@ -383,6 +392,7 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            if (getActivity() != null) {
             if (listView != null) {
                 adpter = new CustomAdpter(getActivity(), listQuestion);
                 if (adpter.getCount() != 0) {
@@ -395,10 +405,38 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
                     txt_nodata_today.setVisibility(View.VISIBLE);
                 }
 
-
+            }
             }
 
         }
+    }
+
+    //Method to show the snackbar
+    private void showSnackbar(View v) {
+        //Creating snackbar
+        Snackbar snackbar = Snackbar.make(v, "Please register after ask question.", Snackbar.LENGTH_LONG);
+
+        //Adding action to snackbar
+        snackbar.setAction("Register", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Displaying another snackbar when user click the action for first snackbar
+//                Snackbar s = Snackbar.make(v, "Register", Snackbar.LENGTH_LONG);
+//                s.show();
+                Intent intent = new Intent(getActivity(), RegisterActivity.class);
+                startActivity(intent);
+                getActivity().finishAffinity();
+            }
+        });
+
+        //Customizing colors
+        snackbar.setActionTextColor(Color.WHITE);
+        View view = snackbar.getView();
+        TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+
+        //Displaying snackbar
+        snackbar.show();
     }
 
     @SuppressWarnings("NullableProblems")
@@ -437,8 +475,8 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
                 holder = (ViewHolder) convertView.getTag();
             }
             holder.txt_views.setText(listview.get(position));
-            holder.txtQuestion.setText(items.get(position));
-            holder.txtAnswer.setText(listAnswer.get(position));
+            holder.txtQuestion.setText("Q: "+items.get(position));
+            holder.txtAnswer.setText("A:"+listAnswer.get(position));
             holder.txt_date.setText(listDate.get(position));
             holder.txt_postby.setText("Question By:" + listName.get(position));
             return convertView;
@@ -462,11 +500,12 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(getActivity())
+            /*loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+//            progressbar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -486,7 +525,8 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            loadingProgressDialog.dismiss();
+            progressbar.setVisibility(View.GONE);
+//            loadingProgressDialog.dismiss();
             Log.e("respone question ask", "---------------------------------" + s);
             try {
                 JSONObject jsonObject = new JSONObject(s);
@@ -582,22 +622,25 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
             super.onPostExecute(status);
 
             try {
-                if (listView != null) {
-                    adpter = new CustomAdpter(getActivity(), listQuestion);
-                    if (adpter.getCount() != 0) {
-                        listView.setVisibility(View.VISIBLE);
-                        txt_nodata_today.setVisibility(View.GONE);
-                        listView.setAdapter(adpter);
-                    } else {
-                        listView.setVisibility(View.GONE);
-                        txt_nodata_today.setText("No Search \n Found");
-                        txt_nodata_today.setVisibility(View.VISIBLE);
-                        //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                if (getActivity() != null) {
+                    if (listView != null) {
+                        adpter = new CustomAdpter(getActivity(), listQuestion);
+                        if (adpter.getCount() != 0) {
+                            listView.setVisibility(View.VISIBLE);
+                            txt_nodata_today.setVisibility(View.GONE);
+                            listView.setAdapter(adpter);
+                        } else {
+                            listView.setVisibility(View.GONE);
+                            txt_nodata_today.setText("No Search \n Found");
+                            txt_nodata_today.setVisibility(View.VISIBLE);
+                            //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
 
         }
 

@@ -1,6 +1,7 @@
 package com.vimalsagarji.vimalsagarjiapp.today_week_month_year;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -39,6 +40,8 @@ public class VideoCategoryItem extends AppCompatActivity implements View.OnClick
     private View view_all;
     public static String video_cat_id;
 
+    LinearLayout lin_today, lin_week, lin_month, lin_all;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +79,10 @@ public class VideoCategoryItem extends AppCompatActivity implements View.OnClick
         img_search.setOnClickListener(this);
         img_search.setVisibility(View.GONE);
         etText.setHint("Search Video");
+        lin_today = (LinearLayout) findViewById(R.id.lin_today);
+        lin_week = (LinearLayout) findViewById(R.id.lin_week);
+        lin_month = (LinearLayout) findViewById(R.id.lin_month);
+        lin_all = (LinearLayout) findViewById(R.id.lin_all);
 
         LinearLayout lin_main = (LinearLayout) findViewById(R.id.lin_main);
         if (video_cat_id.equalsIgnoreCase("e_alliamgeid")) {
@@ -133,10 +140,15 @@ public class VideoCategoryItem extends AppCompatActivity implements View.OnClick
     }
 
     private void openTodayInfromation() {
-        view_today.setVisibility(View.VISIBLE);
-        view_month.setVisibility(View.GONE);
-        view_week.setVisibility(View.GONE);
-        view_all.setVisibility(View.GONE);
+        txt_today.setTextColor(Color.WHITE);
+        txt_thisweek.setTextColor(Color.BLACK);
+        txt_thismonth.setTextColor(Color.BLACK);
+        txt_all.setTextColor(Color.BLACK);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
 
         Fragment fr = null;
         fr = new TodayVideoFragment();
@@ -148,10 +160,15 @@ public class VideoCategoryItem extends AppCompatActivity implements View.OnClick
     }
 
     private void openWeekInfromation() {
-        view_today.setVisibility(View.GONE);
-        view_month.setVisibility(View.GONE);
-        view_week.setVisibility(View.VISIBLE);
-        view_all.setVisibility(View.GONE);
+        txt_today.setTextColor(Color.BLACK);
+        txt_thisweek.setTextColor(Color.WHITE);
+        txt_thismonth.setTextColor(Color.BLACK);
+        txt_all.setTextColor(Color.BLACK);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
         Fragment fr = null;
         fr = new ThisWeekVideoFragment();
         FragmentManager fm = getSupportFragmentManager();
@@ -162,10 +179,15 @@ public class VideoCategoryItem extends AppCompatActivity implements View.OnClick
     }
 
     private void openMonthInfromation() {
-        view_today.setVisibility(View.GONE);
-        view_month.setVisibility(View.VISIBLE);
-        view_week.setVisibility(View.GONE);
-        view_all.setVisibility(View.GONE);
+        txt_today.setTextColor(Color.BLACK);
+        txt_thisweek.setTextColor(Color.BLACK);
+        txt_thismonth.setTextColor(Color.WHITE);
+        txt_all.setTextColor(Color.BLACK);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
         Fragment fr = null;
         fr = new ThisMonthVideoFragment();
         FragmentManager fm = getSupportFragmentManager();
@@ -176,10 +198,16 @@ public class VideoCategoryItem extends AppCompatActivity implements View.OnClick
     }
 
     private void openAllInfromation() {
-        view_today.setVisibility(View.GONE);
-        view_month.setVisibility(View.GONE);
-        view_week.setVisibility(View.GONE);
-        view_all.setVisibility(View.VISIBLE);
+        txt_today.setTextColor(Color.BLACK);
+        txt_thisweek.setTextColor(Color.BLACK);
+        txt_thismonth.setTextColor(Color.BLACK);
+        txt_all.setTextColor(Color.WHITE);
+
+        lin_today.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
+        lin_all.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+
         Fragment fr = null;
         fr = new AllVideoFragment();
         FragmentManager fm = getSupportFragmentManager();

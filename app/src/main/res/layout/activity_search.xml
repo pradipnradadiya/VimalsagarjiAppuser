@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/notificationbackground"
+    android:background="@color/homepage_back"
     android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar1" />
+        layout="@layout/toolbar_home" />
 
 
     <LinearLayout
@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomEditText
                 android:id="@+id/edittext_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -40,7 +40,7 @@ public class NotificationActivity extends AppCompatActivity {
     private RecyclerView recycleview_notification;
     LinearLayoutManager linearLayoutManager;
     //    NotificationListAdapter notificationListAdapter;
-    private KProgressHUD loadingProgressDialog;
+//    private KProgressHUD loadingProgressDialog;
     private ImageView img_nodata;
     private ProgressBar progressbar;
     private int page_count = 1;
@@ -54,27 +54,29 @@ public class NotificationActivity extends AppCompatActivity {
     private int totalItemCount;
     NotificationListAdapter notificationListAdapter;
     ArrayList<NotificationItem> notificationItems;
+    private TextView txt_title;
+    private ImageView imgarrorback,img_search;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Notifications");
-        toolbar.setTitleTextColor(0xFFFFFFFF);
-        toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left);
 
+        imgarrorback= (ImageView) findViewById(R.id.imgarrorback);
+        img_search= (ImageView) findViewById(R.id.img_search);
+        img_search.setVisibility(View.GONE);
 
-        setSupportActionBar(toolbar);
+        txt_title= (TextView) findViewById(R.id.txt_title);
+        txt_title.setText("Notification");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        imgarrorback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
+
         notificationItems = new ArrayList<>();
         linearLayoutManager = new LinearLayoutManager(NotificationActivity.this);
         fndId();
@@ -134,7 +136,7 @@ public class NotificationActivity extends AppCompatActivity {
         recycleview_notification.setLayoutManager(linearLayoutManager);
         img_nodata = (ImageView) findViewById(R.id.img_nodata);
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -161,7 +163,7 @@ public class NotificationActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
     private class GetNotificationList extends AsyncTask<String, Void, String> {
 
         String responseString = "";
@@ -169,11 +171,12 @@ public class NotificationActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(NotificationActivity.this)
+            progressbar.setVisibility(View.VISIBLE);
+          /*  loadingProgressDialog = KProgressHUD.create(NotificationActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait..")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
         }
 
         @Override
@@ -212,7 +215,7 @@ public class NotificationActivity extends AppCompatActivity {
 
                         }
 
-                       /* Date dt = CommonMethod.convert_date(date);
+                        Date dt = CommonMethod.convert_date(date);
                         Log.e("Convert date is", "------------------" + dt);
                         String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
                         String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
@@ -230,8 +233,8 @@ public class NotificationActivity extends AppCompatActivity {
 
                         String[] time = date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
-*/
-                        notificationItems.add(new NotificationItem(table, id, title, description, date));
+
+                        notificationItems.add(new NotificationItem(table, id, title, description, fulldate + ", " + time[1]));
                     }
                 } else {
 
@@ -240,10 +243,11 @@ public class NotificationActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            if (loadingProgressDialog != null) {
+            progressbar.setVisibility(View.GONE);
+        /*    if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
             }
-
+*/
             if (recycleview_notification != null) {
                 notificationListAdapter = new NotificationListAdapter(NotificationActivity.this, notificationItems);
                 if (notificationListAdapter.getItemCount() != 0) {

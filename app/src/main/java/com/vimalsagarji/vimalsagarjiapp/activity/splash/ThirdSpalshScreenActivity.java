@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
 import com.vimalsagarji.vimalsagarjiapp.MainActivity;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
@@ -130,7 +131,7 @@ public class ThirdSpalshScreenActivity extends AppCompatActivity {
                         Log.e("email", "---------------" + sharedpreferance.getEmail());
                         Log.e("uid", "---------------" + sharedpreferance.getId());
 
-                        Intent intent = new Intent(ThirdSpalshScreenActivity.this, MainActivity.class);
+                        Intent intent = new Intent(ThirdSpalshScreenActivity.this, ActivityHomeMain.class);
                         startActivity(intent);
                         finish();
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
