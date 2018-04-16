@@ -127,8 +127,9 @@ public class ByPeople extends AppCompatActivity implements View.OnClickListener 
         //Customizing colors
         snackbar.setActionTextColor(Color.WHITE);
         View view = snackbar.getView();
+        view.setBackground(getDrawable(R.drawable.back_gradiant));
         TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
+        textView.setTextColor(Color.WHITE);
 
         //Displaying snackbar
         snackbar.show();

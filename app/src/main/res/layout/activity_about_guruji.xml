@@ -5,7 +5,7 @@
     android:background="@color/homepage_back"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar1" />
+    <include layout="@layout/toolbar_home" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -78,6 +78,7 @@
 
 
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/black" />

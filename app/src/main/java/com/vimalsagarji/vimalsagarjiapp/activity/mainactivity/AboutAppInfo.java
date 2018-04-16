@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,27 +19,32 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 public class AboutAppInfo extends AppCompatActivity implements View.OnClickListener{
     private TextView txt_eng,txt_hnd,txt_guj,txt_description;
     private LinearLayout lin_eng,lin_hnd,lin_guj;
+    private TextView txt_title;
+    private ImageView imgarrorback,img_search;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_guruji);
         bindId();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("About App");
-        toolbar.setTitleTextColor(0xFFFFFFFF);
-        toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left);
-        setSupportActionBar(toolbar);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        txt_title.setText("About App");
+        img_search.setVisibility(View.GONE);
+        imgarrorback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
+
+
     }
     private void bindId() {
+
+        txt_title = (TextView) findViewById(R.id.txt_title);
+        img_search = (ImageView) findViewById(R.id.img_search);
+        imgarrorback = (ImageView) findViewById(R.id.imgarrorback);
         txt_eng= (TextView) findViewById(R.id.txt_eng);
         txt_hnd= (TextView) findViewById(R.id.txt_hnd);
         txt_guj= (TextView) findViewById(R.id.txt_guj);

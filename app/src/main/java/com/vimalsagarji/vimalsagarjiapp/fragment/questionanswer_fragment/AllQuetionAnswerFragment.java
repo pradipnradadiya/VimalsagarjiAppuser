@@ -77,7 +77,7 @@ public class AllQuetionAnswerFragment extends Fragment {
     private Dialog dialog;
 
     private CustomAdpter adpter;
-    //    private KProgressHUD loadingProgressDialog;
+        private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
     private EditText InputBox;
     List<ThoughtToday> listfilterdata = new ArrayList<>();
@@ -264,11 +264,14 @@ public class AllQuetionAnswerFragment extends Fragment {
                 getActivity().finishAffinity();
             }
         });
+
         //Customizing colors
         snackbar.setActionTextColor(Color.WHITE);
         View view = snackbar.getView();
+        view.setBackground(getActivity().getDrawable(R.drawable.back_gradiant));
         TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
+        textView.setTextColor(Color.WHITE);
+
 
         //Displaying snackbar
         snackbar.show();
@@ -530,12 +533,12 @@ public class AllQuetionAnswerFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*loadingProgressDialog = KProgressHUD.create(getActivity())
+            loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();*/
-            progressbar.setVisibility(View.VISIBLE);
+            loadingProgressDialog.show();
+            progressbar.setVisibility(View.GONE);
         }
 
         @Override
@@ -561,12 +564,15 @@ public class AllQuetionAnswerFragment extends Fragment {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                    loadingProgressDialog.dismiss();
                     Toast.makeText(getActivity(), "Question asked successfully.", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(getActivity(), "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 } else {
+                    loadingProgressDialog.dismiss();
                     Toast.makeText(getActivity(), "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 }
                 dialog.dismiss();
+                loadingProgressDialog.dismiss();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -4,7 +4,7 @@
 
     <stroke android:color="@android:color/black" />
     <gradient
-        android:centerColor="#DA1624"
-        android:endColor="#DA1624"
-        android:startColor="#DA1624" />
+        android:centerColor="@color/o_p_no"
+        android:endColor="@color/o_p_no"
+        android:startColor="@color/o_p_no" />
 </shape>

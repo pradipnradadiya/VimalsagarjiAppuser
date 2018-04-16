@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,7 +17,10 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 
 public class GurujiMissionActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView txt_eng, txt_hnd, txt_guj, txt_description;
-    private LinearLayout lin_eng,lin_hnd,lin_guj;
+    private LinearLayout lin_eng, lin_hnd, lin_guj;
+
+    private TextView txt_title;
+    private ImageView imgarrorback, img_search;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,13 +28,10 @@ public class GurujiMissionActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_about_guruji);
 
         bindId();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Guruji Mission");
-        toolbar.setTitleTextColor(0xFFFFFFFF);
-        toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left);
-        setSupportActionBar(toolbar);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        txt_title.setText("Guruji's Mission");
+        img_search.setVisibility(View.GONE);
+        imgarrorback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -38,17 +39,23 @@ public class GurujiMissionActivity extends AppCompatActivity implements View.OnC
             }
         });
 
+
     }
 
     private void bindId() {
+
+        txt_title = (TextView) findViewById(R.id.txt_title);
+        img_search = (ImageView) findViewById(R.id.img_search);
+        imgarrorback = (ImageView) findViewById(R.id.imgarrorback);
+
         txt_eng = (TextView) findViewById(R.id.txt_eng);
         txt_hnd = (TextView) findViewById(R.id.txt_hnd);
         txt_guj = (TextView) findViewById(R.id.txt_guj);
         txt_description = (TextView) findViewById(R.id.txt_description);
 
-        lin_eng= (LinearLayout) findViewById(R.id.lin_eng);
-        lin_hnd= (LinearLayout) findViewById(R.id.lin_hnd);
-        lin_guj= (LinearLayout) findViewById(R.id.lin_guj);
+        lin_eng = (LinearLayout) findViewById(R.id.lin_eng);
+        lin_hnd = (LinearLayout) findViewById(R.id.lin_hnd);
+        lin_guj = (LinearLayout) findViewById(R.id.lin_guj);
         txt_eng.setOnClickListener(this);
         txt_hnd.setOnClickListener(this);
         txt_guj.setOnClickListener(this);

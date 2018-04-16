@@ -32,13 +32,14 @@ public class ThirdSpalshScreenActivity extends AppCompatActivity {
     Intent intent;
     private Sharedpreferance sharedpreferance;
     private ProgressBar progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.content_third_spalsh_screen);
         sharedpreferance = new Sharedpreferance(ThirdSpalshScreenActivity.this);
-        progress= (ProgressBar) findViewById(R.id.progress);
+        progress = (ProgressBar) findViewById(R.id.progress);
     }
 
     @Override
@@ -59,6 +60,7 @@ public class ThirdSpalshScreenActivity extends AppCompatActivity {
         public void onTick(long millisUntilFinished) {
 
         }
+
         @Override
         public void onFinish() {
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
@@ -67,7 +69,7 @@ public class ThirdSpalshScreenActivity extends AppCompatActivity {
                 finish();
             } else {
                 if (CommonMethod.isInternetConnected(ThirdSpalshScreenActivity.this)) {
-                    new AllreadyRegisterUser().execute(sharedpreferance.getEmail(), sharedpreferance.getMobile(),sharedpreferance.getToken());
+                    new AllreadyRegisterUser().execute(sharedpreferance.getEmail(), sharedpreferance.getMobile(), sharedpreferance.getToken());
                 } else {
                     Toast.makeText(ThirdSpalshScreenActivity.this, R.string.internet, Toast.LENGTH_SHORT).show();
 //                    try {

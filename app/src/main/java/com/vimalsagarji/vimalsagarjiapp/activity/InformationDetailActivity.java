@@ -2,6 +2,7 @@ package com.vimalsagarji.vimalsagarjiapp.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -88,9 +89,9 @@ public class InformationDetailActivity extends AppCompatActivity {
     String view;
     private TextView txt_title;
     String click_action;
-
     int commentsize;
     private ImageView img_share;
+    ProgressDialog progressDialog;
 
     @Override
     public void onBackPressed() {
@@ -107,8 +108,8 @@ public class InformationDetailActivity extends AppCompatActivity {
         setContentView(R.layout.content_this_month_information__sub);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         sharedpreferance = new Sharedpreferance(InformationDetailActivity.this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_thisMonthSubActivity);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_thisMonthSubActivity);
+//        setSupportActionBar(toolbar);
         rl_layout = (LinearLayout) findViewById(R.id.rl_layout);
 
         Intent intent1 = getIntent();
@@ -132,10 +133,10 @@ public class InformationDetailActivity extends AppCompatActivity {
 //        } else {
 //            Snackbar.make(rl_layout, R.string.internet, Snackbar.LENGTH_SHORT).show();
 //        }
-        ImageView imgHomeBack = (ImageView) toolbar.findViewById(R.id.imgarrorback);
-        ImageView imgHome = (ImageView) toolbar.findViewById(R.id.imgHome);
+        ImageView imgHomeBack = (ImageView) findViewById(R.id.imgarrorback);
+        ImageView imgHome = (ImageView) findViewById(R.id.imgHome);
         imgHome.setVisibility(View.GONE);
-        ImageView img_search = (ImageView) toolbar.findViewById(R.id.img_search);
+        ImageView img_search = (ImageView) findViewById(R.id.img_search);
         img_search.setVisibility(View.GONE);
         imgHomeBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,7 +214,7 @@ public class InformationDetailActivity extends AppCompatActivity {
                             }
 
                         }
-                    }else {
+                    } else {
                         Snackbar.make(v, R.string.internet, Snackbar.LENGTH_SHORT).show();
                     }
                 }
@@ -239,7 +240,6 @@ public class InformationDetailActivity extends AppCompatActivity {
                     } else {
                         Snackbar.make(v, R.string.internet, Snackbar.LENGTH_SHORT).show();
                     }
-
                     ImageView imgback1 = (ImageView) dialog.findViewById(R.id.imgback);
                     imgback1.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -583,6 +583,11 @@ public class InformationDetailActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            loadingProgressDialog = KProgressHUD.create(InformationDetailActivity.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please Wait")
+                    .setCancellable(true);
+            loadingProgressDialog.show();
         }
 
 
@@ -609,9 +614,11 @@ public class InformationDetailActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                    loadingProgressDialog.dismiss();
                     Toast.makeText(InformationDetailActivity.this, "Comment added successfully.", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 } else {
+                    loadingProgressDialog.dismiss();
                     Toast.makeText(InformationDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
@@ -821,8 +828,9 @@ public class InformationDetailActivity extends AppCompatActivity {
         //Customizing colors
         snackbar.setActionTextColor(Color.WHITE);
         View view = snackbar.getView();
+        view.setBackground(getDrawable(R.drawable.back_gradiant));
         TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
+        textView.setTextColor(Color.WHITE);
 
         //Displaying snackbar
         snackbar.show();

@@ -38,14 +38,15 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        >
 
                         <EditText
                             android:id="@+id/etName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:backgroundTint="@color/black"
                             android:drawableLeft="@drawable/ic_action_user_black"
-                            android:drawableTint="#FF4081"
                             android:hint="Name"
                             android:inputType="textPersonName"
                             android:singleLine="true" />
@@ -54,14 +55,15 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        >
 
                         <EditText
                             android:id="@+id/etEmail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:backgroundTint="@color/black"
                             android:drawableLeft="@drawable/ic_action_gmail_black"
-                            android:drawableTint="#FF4081"
                             android:hint="Email"
                             android:inputType="textEmailAddress"
                             android:singleLine="true" />
@@ -69,14 +71,15 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        >
 
                         <EditText
                             android:id="@+id/etMobile"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:backgroundTint="@color/black"
                             android:drawableLeft="@drawable/ic_action_phone_black"
-                            android:drawableTint="#FF4081"
                             android:hint="Mobile"
                             android:inputType="number"
                             android:maxLength="10"
@@ -85,14 +88,15 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        >
 
                         <EditText
                             android:id="@+id/etAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:backgroundTint="@color/black"
                             android:drawableLeft="@drawable/ic_action_location_black"
-                            android:drawableTint="#FF4081"
                             android:hint="Location"
                             android:inputType="textPostalAddress"
                             android:singleLine="true" />
@@ -107,18 +111,18 @@
                         android:padding="5dp"
                         android:text="Already Registered user?" />
 
-
                     <Button
                         android:id="@+id/btnRegister"
                         android:layout_width="150dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_margin="22dp"
-                        android:background="@drawable/back_gradiant"
+                        android:background="@drawable/round_rect_shapeoneselect"
                         android:text="Sign up"
                         android:textAllCaps="false"
                         android:textColor="#fff"
                         android:textSize="18sp" />
+
                 </LinearLayout>
             </RelativeLayout>
 
@@ -156,7 +160,6 @@
 
         </RelativeLayout>
 
-
     </ScrollView>
 
     <LinearLayout
@@ -166,7 +169,8 @@
         android:layout_alignParentRight="true"
         android:layout_margin="5dp"
         android:background="@drawable/round_rect_shapeone"
-        android:gravity="center">
+        android:gravity="center"
+        android:visibility="gone">
 
         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
             android:id="@+id/textview_skip"
@@ -177,7 +181,7 @@
             android:text="Skip"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:visibility="visible"
+            android:visibility="gone"
 
             />
     </LinearLayout>

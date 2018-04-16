@@ -73,7 +73,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         linearLayoutManager = new LinearLayoutManager(SearchActivity.this);
         fndId();
         idClick();

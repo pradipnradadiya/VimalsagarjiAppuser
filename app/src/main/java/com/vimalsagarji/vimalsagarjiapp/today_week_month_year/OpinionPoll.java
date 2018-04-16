@@ -1,5 +1,6 @@
 package com.vimalsagarji.vimalsagarjiapp.today_week_month_year;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -47,7 +48,7 @@ import static com.vimalsagarji.vimalsagarjiapp.R.id.frameLayout_progressbar_no;
 @SuppressWarnings("ALL")
 public class OpinionPoll extends AppCompatActivity {
 
-//    private KProgressHUD loadingProgressDialog;
+    private KProgressHUD loadingProgressDialog;
     //Index of Question
     private static int index_question = 0;
     //URL of Get all Question
@@ -65,6 +66,7 @@ public class OpinionPoll extends AppCompatActivity {
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private TextView txt_nodata_today;
     private ProgressBar progressbar;
+    ProgressDialog progressDialog;
 
     @Override
     public void onBackPressed() {
@@ -157,8 +159,9 @@ public class OpinionPoll extends AppCompatActivity {
         //Customizing colors
         snackbar.setActionTextColor(Color.WHITE);
         View view = snackbar.getView();
+        view.setBackground(getDrawable(R.drawable.back_gradiant));
         TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
+        textView.setTextColor(Color.WHITE);
 
         //Displaying snackbar
         snackbar.show();
@@ -180,6 +183,8 @@ public class OpinionPoll extends AppCompatActivity {
                     .setLabel("Please Wait")
                     .setCancellable(false);
             loadingProgressDialog.show();*/
+
+
 
            progressbar.setVisibility(View.VISIBLE);
 
@@ -388,12 +393,13 @@ public class OpinionPoll extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* loadingProgressDialog = KProgressHUD.create(OpinionPoll.this)
+
+           loadingProgressDialog = KProgressHUD.create(OpinionPoll.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();*/
-           progressbar.setVisibility(View.VISIBLE);
+            loadingProgressDialog.show();
+           progressbar.setVisibility(View.GONE);
 
         }
 
@@ -421,7 +427,7 @@ public class OpinionPoll extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-//            loadingProgressDialog.dismiss();
+            loadingProgressDialog.dismiss();
             progressbar.setVisibility(View.GONE);
             new GetAllOpinionPoll().execute();
         }
@@ -461,7 +467,9 @@ public class OpinionPoll extends AppCompatActivity {
                 holder.frameLayout_progressbar_no = (FrameLayout) convertView.findViewById(frameLayout_progressbar_no);
 
                 convertView.setTag(holder);
+
             } else {
+
                 holder = (ViewHolder) convertView.getTag();
             }
             Log.e("status", "-------------------" + status);
@@ -500,9 +508,9 @@ public class OpinionPoll extends AppCompatActivity {
                     holder.progres_no.setProgress(no);
 
                     String strYes = "Yes";
-                    holder.txtYes.setText(yesper + "%" + strYes);
+                    holder.txtYes.setText(yesper + "% " + strYes);
                     String strNo = "No";
-                    holder.txtNo.setText(noper + "%" + strNo);
+                    holder.txtNo.setText(noper + "% " + strNo);
                 } catch (Exception e) {
                     Log.e("exception error", "-----------------" + e.toString());
                 }
@@ -522,9 +530,9 @@ public class OpinionPoll extends AppCompatActivity {
                     holder.progres_no.setProgress(no);
 
                     String strYes = "Yes";
-                    holder.txtYes.setText(yesper + "%" + strYes);
+                    holder.txtYes.setText(yesper + "% " + strYes);
                     String strNo = "No";
-                    holder.txtNo.setText(noper + "%" + strNo);
+                    holder.txtNo.setText(noper + "% " + strNo);
                 } catch (Exception e) {
                     Log.e("exception error", "-----------------" + e.toString());
                 }

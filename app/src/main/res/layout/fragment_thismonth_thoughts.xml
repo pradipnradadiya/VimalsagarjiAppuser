@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     android:background="@color/colorTabBackground"
     android:orientation="vertical"
-    tools:ignore="Overdraw">
+    tools:ignore="Overdraw"
+    android:layout_margin="5dp"
+    >
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/activity_main_swipe_refresh_layout"

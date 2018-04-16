@@ -4,9 +4,8 @@
     android:id="@+id/rel_opninion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorTabBackground"
+    android:background="@color/homepage_back"
     tools:ignore="Overdraw">
-
 
     <include
         android:id="@+id/toolbar_opinionPoll"
@@ -25,10 +24,12 @@
         android:hint="Opinion Poll"
         android:lines="1"
         android:padding="10dp"
-        android:textColorHint="@color/colorPrimary"
+        android:textColorHint="@color/black"
+        android:textSize="20dp"
         tools:ignore="HardcodedText" />
 
     <View
+        android:visibility="gone"
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -38,7 +39,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/line">
+        android:layout_below="@+id/et_opinionPoll">
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/activity_main_swipe_refresh_layout"
@@ -50,8 +51,6 @@
                 android:id="@+id/listOpinionPoll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@color/colorPrimary"
-                android:dividerHeight="1dp"
 
                 />
         </android.support.v4.widget.SwipeRefreshLayout>

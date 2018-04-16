@@ -9,7 +9,7 @@
     <LinearLayout
 
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -51,16 +51,32 @@
                 tools:ignore="HardcodedText" />
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                android:id="@+id/grid_txtday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:lines="1"
+                android:text=""
+                android:textColor="@color/textColor"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText"
+                />
+
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:id="@+id/grid_txtDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:lines="2"
+                android:lines="1"
                 android:text="Monday,10/02/2017"
                 android:textColor="@color/textColor"
                 android:textSize="14sp"
-                tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText"
+
+                android:layout_marginTop="2dp"/>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

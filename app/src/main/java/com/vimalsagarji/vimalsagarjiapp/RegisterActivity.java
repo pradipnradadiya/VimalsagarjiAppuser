@@ -195,19 +195,19 @@ public class RegisterActivity extends AppCompatActivity {
         String strMobile = etMobile.getText().toString();
         String strAddress = etAddress.getText().toString();
 
-        if (StringUtils.isBlank(strName)) {
+        if (TextUtils.isEmpty(strName)) {
             etName.setError("Please enter name.");
             etName.requestFocus();
-        } else if (StringUtils.isBlank(strEmail) || !ValidationUtils.checkEmail(strEmail)) {
+        } else if (TextUtils.isEmpty(strEmail) || !ValidationUtils.checkEmail(strEmail)) {
             etEmail.setError("Please enter valid email.");
             etEmail.requestFocus();
-        } else if (StringUtils.isBlank(strMobile)) {
+        } else if (TextUtils.isEmpty(strMobile)) {
             etMobile.setError("Please enter mobile.");
             etMobile.requestFocus();
         } else if (etMobile.getText().toString().trim().length() < 10) {
             etMobile.setError("Please enter 10 digit number.");
             etMobile.requestFocus();
-        } else if (StringUtils.isBlank(strAddress)) {
+        } else if (TextUtils.isEmpty(strAddress)) {
             etAddress.setError("Please enter location.");
             etAddress.requestFocus();
         } else {

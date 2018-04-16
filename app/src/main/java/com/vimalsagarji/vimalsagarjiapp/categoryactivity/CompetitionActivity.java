@@ -23,8 +23,10 @@ import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.squareup.picasso.Picasso;
+import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
 import com.vimalsagarji.vimalsagarjiapp.JSONParser;
 import com.vimalsagarji.vimalsagarjiapp.R;
+import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.CompetitionList;
@@ -40,7 +42,7 @@ import java.util.List;
 public class CompetitionActivity extends AppCompatActivity {
 
     private TextView grid_txtTitle;
-//    private KProgressHUD loadingProgressDialog;
+    //    private KProgressHUD loadingProgressDialog;
     private static final String TAG = CompetitionActivity.class.getSimpleName();
     private static final String URL = "http://www.grapes-solutions.com/vimalsagarji/competition/getallcategory/?page=1&psize=1000";
     private static final String ImgURL = "http://www.grapes-solutions.com/vimalsagarji/static/competitioncategory/";
@@ -66,7 +68,7 @@ public class CompetitionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedpreferance=new Sharedpreferance(CompetitionActivity.this);
+        sharedpreferance = new Sharedpreferance(CompetitionActivity.this);
         if (savedInstanceState == null) {
             setContentView(R.layout.content_competition);
         } else if (savedInstanceState != null) {
@@ -76,11 +78,12 @@ public class CompetitionActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_competition);
         setSupportActionBar(toolbar);
-        progressbar= (ProgressBar) findViewById(R.id.progressbar);
+        progressbar = (ProgressBar) findViewById(R.id.progressbar);
         ImageView imgarrorback = (ImageView) toolbar.findViewById(R.id.imgarrorback);
         ImageView imgHome = (ImageView) toolbar.findViewById(R.id.imgHome);
         ImageView img_search = (ImageView) toolbar.findViewById(R.id.img_search);
-        img_search.setVisibility(View.GONE);
+        img_search.setVisibility(View.VISIBLE);
+
         TextView txt_title = (TextView) toolbar.findViewById(R.id.txt_title);
         txt_title.setText("Competition");
         rel_compe = (RelativeLayout) findViewById(R.id.rel_compe);
@@ -97,6 +100,15 @@ public class CompetitionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
+
+        img_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CompetitionActivity.this, SearchActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -183,13 +195,13 @@ public class CompetitionActivity extends AppCompatActivity {
 //                            if (sharedpreferance.getId().equalsIgnoreCase("")) {
 //                                Snackbar.make(view, R.string.notregister, Snackbar.LENGTH_SHORT).show();
 //                            }else{
-                                Intent intent = new Intent(CompetitionActivity.this, CompetitionList.class);
-                                intent.putExtra("categoryID", listID.get(position));
-                                Log.e("category id", "--------------------" + listID.get(position));
-                                intent.putExtra("listTitle", listName.get(position));
-                                Log.e("Title", "----------------------" + strCompetitionTitle);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            Intent intent = new Intent(CompetitionActivity.this, CompetitionList.class);
+                            intent.putExtra("categoryID", listID.get(position));
+                            Log.e("category id", "--------------------" + listID.get(position));
+                            intent.putExtra("listTitle", listName.get(position));
+                            Log.e("Title", "----------------------" + strCompetitionTitle);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
 //                            }
                         }
@@ -238,7 +250,7 @@ public class CompetitionActivity extends AppCompatActivity {
             }
             holder.grid_txtTitle.setText(items.get(position));
 
-            Picasso.with(CompetitionActivity.this).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.loader).into(holder.grid_img);
+            Picasso.with(CompetitionActivity.this).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0, 200).error(R.drawable.loader).into(holder.grid_img);
 
             return convertView;
 

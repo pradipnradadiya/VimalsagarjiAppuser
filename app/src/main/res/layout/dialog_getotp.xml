@@ -59,7 +59,7 @@
             android:text="Resend OTP?"
             android:textColor="@color/black" />
 
-        <TextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
             android:id="@+id/text_timer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,9 +68,9 @@
         <Button
             android:id="@+id/button_submit"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/back_gradiant"
+            android:background="@drawable/round_rect_shapeoneselect"
             android:text="Submit"
             android:layout_gravity="center"
             android:textColor="@color/white" />

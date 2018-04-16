@@ -766,6 +766,11 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            loadingProgressDialog = KProgressHUD.create(ByPeopleDetailActivity.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please Wait")
+                    .setCancellable(true);
+            loadingProgressDialog.show();
         }
 
         @Override
@@ -789,14 +794,17 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                    loadingProgressDialog.dismiss();
                     Toast.makeText(ByPeopleDetailActivity.this, "Comment added successfully.", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
 //                    Toast.makeText(ByPeopleDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 } else {
+                    loadingProgressDialog.dismiss();
                     Toast.makeText(ByPeopleDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
+                loadingProgressDialog.dismiss();
             }
         }
     }
@@ -1004,8 +1012,9 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
         //Customizing colors
         snackbar.setActionTextColor(Color.WHITE);
         View view = snackbar.getView();
+        view.setBackground(getDrawable(R.drawable.back_gradiant));
         TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
+        textView.setTextColor(Color.WHITE);
 
         //Displaying snackbar
         snackbar.show();

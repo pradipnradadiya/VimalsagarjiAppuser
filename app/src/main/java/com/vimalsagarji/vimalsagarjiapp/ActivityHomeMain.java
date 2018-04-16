@@ -304,8 +304,6 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
-
             case R.id.rel_info:
                 intent = new Intent(ActivityHomeMain.this, InformationCategory.class);
                 startActivity(intent);
@@ -651,7 +649,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                         handler.post(runnable);
                     }
 
-                }, 2000, 2000);
+                }, 5000, 5000);
             }
         }
 

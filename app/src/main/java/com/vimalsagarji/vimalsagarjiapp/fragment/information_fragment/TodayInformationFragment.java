@@ -48,7 +48,6 @@ public class TodayInformationFragment extends Fragment {
     public TodayInformationFragment() {
 
     }
-
     //    private KProgressHUD loadingProgressDialog;
     private boolean isLoading = true;
     private int pageCount = 5;
@@ -403,7 +402,7 @@ public class TodayInformationFragment extends Fragment {
             holder.txt_Title.setMaxLines((int) 1.5);
             holder.txt_Title.setText(nCategory.getTitle());
             holder.txt_Description.setText(nCategory.getDescription());
-            holder.txt_Date.setText(inCategory.getDay() + "," + inCategory.getDate());
+            holder.txt_Date.setText(inCategory.getDay() + ", " + inCategory.getDate());
             holder.txt_Address.setText(inCategory.getAddress());
             holder.txt_views.setText(inCategory.getView());
             return convertView;

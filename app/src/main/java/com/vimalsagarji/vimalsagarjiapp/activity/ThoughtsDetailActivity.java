@@ -365,6 +365,11 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            loadingProgressDialog = KProgressHUD.create(ThoughtsDetailActivity.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please Wait")
+                    .setCancellable(true);
+            loadingProgressDialog.show();
         }
 
 
@@ -390,9 +395,11 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                    loadingProgressDialog.dismiss();
                     Toast.makeText(ThoughtsDetailActivity.this, "" + "Comment added successfully.", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 } else {
+                    loadingProgressDialog.dismiss();
                     Toast.makeText(ThoughtsDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
@@ -794,8 +801,9 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         //Customizing colors
         snackbar.setActionTextColor(Color.WHITE);
         View view = snackbar.getView();
+        view.setBackground(getDrawable(R.drawable.back_gradiant));
         TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
+        textView.setTextColor(Color.WHITE);
 
         //Displaying snackbar
         snackbar.show();

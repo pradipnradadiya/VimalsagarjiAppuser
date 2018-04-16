@@ -68,7 +68,7 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
 
 
     private CustomAdpter adpter;
-//    private KProgressHUD loadingProgressDialog;
+    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
     private EditText InputBox;
     List<ThoughtToday> listfilterdata = new ArrayList<>();
@@ -487,11 +487,11 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             progressbar.setVisibility(View.VISIBLE);
-           /* loadingProgressDialog = KProgressHUD.create(getActivity())
+            loadingProgressDialog = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();*/
+            loadingProgressDialog.show();
         }
 
         @Override
@@ -518,10 +518,12 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     dialog.dismiss();
+                    loadingProgressDialog.dismiss();
                     Toast.makeText(getActivity(), "Question asked successfully.", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(getActivity(), "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 } else {
                     dialog.dismiss();
+                    loadingProgressDialog.dismiss();
                     Toast.makeText(getActivity(), "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 }
 
@@ -656,8 +658,9 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
         //Customizing colors
         snackbar.setActionTextColor(Color.WHITE);
         View view = snackbar.getView();
+        view.setBackground(getActivity().getDrawable(R.drawable.back_gradiant));
         TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
+        textView.setTextColor(Color.WHITE);
 
         //Displaying snackbar
         snackbar.show();

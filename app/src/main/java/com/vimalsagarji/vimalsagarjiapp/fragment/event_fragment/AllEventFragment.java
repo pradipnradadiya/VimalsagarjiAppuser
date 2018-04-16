@@ -80,6 +80,7 @@ public class AllEventFragment extends Fragment {
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
 
     private ProgressBar progressbar;
+    ArrayList<String> timelist=new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -180,6 +181,7 @@ public class AllEventFragment extends Fragment {
                 JSONObject jsonObject = JSONParser.getJsonFromUrl(strUrl);
                 // for (int i=0; i<jsonObject.length()  ;i++){
                 JSONArray array = jsonObject.getJSONArray("data");
+                timelist=new ArrayList<>();
                 if (array != null) {
                     for (int j = 0; j < array.length(); j++) {
                         JSONObject object = array.getJSONObject(j);
@@ -220,7 +222,7 @@ public class AllEventFragment extends Fragment {
                         eventAdpter.setTitle(strTitle);
                         eventAdpter.setDescription(strDescription);
                         eventAdpter.setAddress(strAddress);
-                        eventAdpter.setDate(dayOfTheWeek + ",\n " + fulldate);
+                        eventAdpter.setDate(fulldate);
                         eventAdpter.setAudio(strAudio);
                         eventAdpter.setAudioImage(strAudioImage);
                         eventAdpter.setVideoLink(strVideoLink);
@@ -229,6 +231,7 @@ public class AllEventFragment extends Fragment {
                         eventAdpter.setPhoto(strPhoto);
                         eventAdpter.setView(view);
                         listAllEvent.add(eventAdpter);
+                        timelist.add(dayOfTheWeek);
                     }
                 }
             } catch (Exception e) {
@@ -313,6 +316,7 @@ public class AllEventFragment extends Fragment {
                 JSONObject jsonObject = JSONParser.getJsonFromUrl(strUrl);
                 // for (int i=0; i<jsonObject.length()  ;i++){
                 JSONArray array = jsonObject.getJSONArray("data");
+                timelist=new ArrayList<>();
                 if (array != null) {
                     for (int j = 0; j < array.length(); j++) {
                         JSONObject object = array.getJSONObject(j);
@@ -355,7 +359,7 @@ public class AllEventFragment extends Fragment {
                         eventAdpter.setTitle(strTitle);
                         eventAdpter.setDescription(strDescription);
                         eventAdpter.setAddress(strAddress);
-                        eventAdpter.setDate(dayOfTheWeek + ",\n " + fulldate);
+                        eventAdpter.setDate(fulldate);
                         eventAdpter.setAudio(strAudio);
                         eventAdpter.setAudioImage(strAudioImage);
                         eventAdpter.setVideoLink(strVideoLink);
@@ -364,6 +368,7 @@ public class AllEventFragment extends Fragment {
                         eventAdpter.setPhoto(strPhoto);
                         eventAdpter.setView(view);
                         listAllEvent.add(eventAdpter);
+                        timelist.add(dayOfTheWeek);
                     }
                 }
             } catch (Exception e) {
@@ -451,6 +456,7 @@ public class AllEventFragment extends Fragment {
                 holder.txt_views = (TextView) convertView.findViewById(R.id.txt_views);
                 holder.grid_txtTitle = (TextView) convertView.findViewById(R.id.grid_txtTitle);
                 holder.grid_txtDate = (TextView) convertView.findViewById(R.id.grid_txtDate);
+                holder.grid_txtday = (TextView) convertView.findViewById(R.id.grid_txtday);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -460,6 +466,7 @@ public class AllEventFragment extends Fragment {
             holder.txt_views.setText(eventAdpterHolder.getView());
             holder.grid_txtTitle.setText(eventAdpterHolder.getTitle());
             holder.grid_txtDate.setText(eventAdpterHolder.getDate());
+            holder.grid_txtday.setText(String.valueOf(timelist.get(position)));
             String strPhoto = eventAdpterHolder.getPhoto();
 
             return convertView;
@@ -467,7 +474,7 @@ public class AllEventFragment extends Fragment {
         }
 
         private class ViewHolder {
-            TextView grid_txtTitle, grid_txtDate, txt_views;
+            TextView grid_txtTitle, grid_txtDate, txt_views,grid_txtday;
 
 
         }

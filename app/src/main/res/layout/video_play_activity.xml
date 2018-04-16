@@ -18,13 +18,14 @@
         android:id="@+id/et_event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@null"
         android:enabled="false"
         android:focusable="false"
         android:hint="Events Details"
         android:padding="10dp"
-        android:textColor="@color/colorPrimary"
-        android:textColorHint="@color/colorPrimary"
-        android:background="@null"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="20dp"
         tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
     <View
@@ -59,27 +60,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Date                   :"
+                android:text="Date :"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 tools:ignore="HardcodedText" />
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:id="@+id/txtDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:padding="10dp"
+                android:layout_marginLeft="5dp"
                 android:text="Date"
                 android:textColor="@color/textColor"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 tools:ignore="HardcodedText,RtlHardcoded" />
 
         </LinearLayout>
@@ -156,6 +155,14 @@
         </LinearLayout>
 
     </LinearLayout>
+
+
+    <!-- <tcking.github.com.giraffeplayer2.VideoView
+         android:id="@+id/video_view"
+         android:layout_width="match_parent"
+         android:layout_height="180dp"
+         android:layout_margin="8dp"
+         />-->
 
 
 </LinearLayout>

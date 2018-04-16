@@ -61,13 +61,13 @@ public class InformationCategory extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_information_category1);
         InformationCategory.context = InformationCategory.this;
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_information);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_information);
+//        setSupportActionBar(toolbar);
 
-        ImageView imgBack = (ImageView) toolbar.findViewById(R.id.imgarrorback);
-        ImageView imgHome = (ImageView) toolbar.findViewById(R.id.imgHome);
-        ImageView img_search = (ImageView) toolbar.findViewById(R.id.img_search);
-        TextView txt_title = (TextView) toolbar.findViewById(R.id.txt_title);
+        ImageView imgBack = (ImageView) findViewById(R.id.imgarrorback);
+        ImageView imgHome = (ImageView) findViewById(R.id.imgHome);
+        ImageView img_search = (ImageView) findViewById(R.id.img_search);
+        TextView txt_title = (TextView) findViewById(R.id.txt_title);
         txt_title.setText("Information");
         EditText etText = (EditText) findViewById(R.id.etText);
         txt_today = (TextView) findViewById(R.id.txt_today);

@@ -8,7 +8,8 @@
     <color name="red">#FF292929</color>
     <color name="textColorPrimary">#FFF</color>
 
-    <color name="colorAccent">#3F51B5</color>
+    <color name="colorAccent">#000000</color>
+    <!--<color name="colorAccent">#3F51B5</color>-->
     <!--<color name="colorAccent">#FF4081</color>-->
     <color name="colorTabBackground">#E6E7E9</color>
     <!--<color name="colorTabBackground">#f9f2d3</color>-->
@@ -33,5 +34,9 @@
 
 
     <color name="text_new_post">#FF7F7F80</color>
+    <color name="orange">#F36D21</color>
+
+    <color name="o_p_no">#303030</color>
+
 
 </resources>

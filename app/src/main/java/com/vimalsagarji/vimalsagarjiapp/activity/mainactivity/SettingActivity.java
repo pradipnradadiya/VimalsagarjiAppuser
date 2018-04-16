@@ -8,9 +8,11 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
 import com.vimalsagarji.vimalsagarjiapp.MainActivity;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
@@ -22,21 +24,40 @@ import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.ByPeople;
 
 public class SettingActivity extends AppCompatActivity {
     Sharedpreferance sharedpreferance;
+    private ImageView imgarrorback;
+    private TextView txt_title;
+    private ImageView img_search;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_setting);
         sharedpreferance = new Sharedpreferance(SettingActivity.this);
-        final ToggleButton pushonoff = (ToggleButton) findViewById(R.id.pushonoff);
-        ImageView img_back = (ImageView) findViewById(R.id.img_back);
 
-        img_back.setOnClickListener(new View.OnClickListener() {
+
+        txt_title = (TextView) findViewById(R.id.txt_title);
+        txt_title.setText("Setting");
+
+        final ToggleButton pushonoff = (ToggleButton) findViewById(R.id.pushonoff);
+        imgarrorback = (ImageView) findViewById(R.id.imgarrorback);
+        img_search = (ImageView) findViewById(R.id.img_search);
+
+        imgarrorback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        img_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingActivity.this, NotificationActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+
         if (sharedpreferance.getPushNotification().equalsIgnoreCase("pushon")) {
             pushonoff.setChecked(true);
         } else {
@@ -61,7 +82,7 @@ public class SettingActivity extends AppCompatActivity {
 
 
         LinearLayout lin_privacy_policy;
-        lin_privacy_policy= (LinearLayout) findViewById(R.id.lin_privacy_policy);
+        lin_privacy_policy = (LinearLayout) findViewById(R.id.lin_privacy_policy);
         lin_privacy_policy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

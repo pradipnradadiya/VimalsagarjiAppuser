@@ -285,7 +285,6 @@ public class AudioDetail extends AppCompatActivity {
     private void showSnackbar(View v) {
         //Creating snackbar
         Snackbar snackbar = Snackbar.make(v, "Simple Snackbar", Snackbar.LENGTH_LONG);
-
         //Adding action to snackbar
         snackbar.setAction("Register", new View.OnClickListener() {
             @Override
@@ -303,8 +302,9 @@ public class AudioDetail extends AppCompatActivity {
         //Customizing colors
         snackbar.setActionTextColor(Color.WHITE);
         View view = snackbar.getView();
+        view.setBackground(getDrawable(R.drawable.back_gradiant));
         TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
+        textView.setTextColor(Color.WHITE);
 
         //Displaying snackbar
         snackbar.show();
@@ -582,9 +582,16 @@ public class AudioDetail extends AppCompatActivity {
     private class CommentPost extends AsyncTask<String, Void, String> {
         String responseJSON = "";
 
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            loadingProgressDialog = KProgressHUD.create(AudioDetail.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please Wait")
+                    .setCancellable(true);
+            loadingProgressDialog.show();
         }
 
         @Override
@@ -609,11 +616,14 @@ public class AudioDetail extends AppCompatActivity {
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     Toast.makeText(AudioDetail.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
+                    loadingProgressDialog.dismiss();
                 } else {
+                    loadingProgressDialog.dismiss();
                     Toast.makeText(AudioDetail.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
+                loadingProgressDialog.dismiss();
             }
 
         }
@@ -886,7 +896,6 @@ public class AudioDetail extends AppCompatActivity {
                         }
                         txtDate.setText(dates);
                         new countView().execute();
-
 
 //                        txt_title.setText(audioname);
 //                        txt_date.setText(fulldate);

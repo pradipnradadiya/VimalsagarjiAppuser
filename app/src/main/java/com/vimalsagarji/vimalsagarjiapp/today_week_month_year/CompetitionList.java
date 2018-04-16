@@ -26,8 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
+import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
+import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.CompetitionQuestion;
@@ -53,7 +55,7 @@ public class CompetitionList extends AppCompatActivity {
     RecyclerView comp_que_list;
     String c_cid, c_cname;
     ArrayList<CompetitionQuestion> competitionQuestions = new ArrayList<>();
-    //    KProgressHUD loadingProgressDialog;
+    KProgressHUD loadingProgressDialog;
     Sharedpreferance sharedpreferance;
     private LinearLayout lin_main;
     private String approve = "";
@@ -102,7 +104,7 @@ public class CompetitionList extends AppCompatActivity {
         ImageView img_search = (ImageView) findViewById(R.id.img_search);
         txt_title = (TextView) findViewById(R.id.txt_title);
         txt_title.setText("Competition List");
-        img_search.setVisibility(View.GONE);
+        img_search.setVisibility(View.VISIBLE);
         ImageView imgBack = (ImageView) findViewById(R.id.imgarrorback);
         ImageView imgHome = (ImageView) findViewById(R.id.imgHome);
         lin_main = (LinearLayout) findViewById(R.id.lin_main);
@@ -118,6 +120,15 @@ public class CompetitionList extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
+
+        img_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CompetitionList.this, SearchActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
     }
 
     private class PostData extends AsyncTask<String, Void, String> {
@@ -126,12 +137,12 @@ public class CompetitionList extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*loadingProgressDialog = KProgressHUD.create(CompetitionList.this)
+            loadingProgressDialog = KProgressHUD.create(CompetitionList.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();*/
-            progressbar.setVisibility(View.VISIBLE);
+            loadingProgressDialog.show();
+            progressbar.setVisibility(View.GONE);
         }
 
         @Override
@@ -160,8 +171,8 @@ public class CompetitionList extends AppCompatActivity {
                 String msg = jsonObject.getString("message");
                 jsonObject.getString("Answer");
                 Toast.makeText(CompetitionList.this, "" + msg, Toast.LENGTH_SHORT).show();
-//                loadingProgressDialog.dismiss();
-                progressbar.setVisibility(View.GONE);
+                loadingProgressDialog.dismiss();
+//                progressbar.setVisibility(View.GONE);
                 new CheckParticipants().execute("56", c_cid);
                 Log.e("user id", "------------------------------" + sharedpreferance.getId());
                 new CatrgoryQuestion().execute(c_cid, sharedpreferance.getId());
@@ -170,8 +181,8 @@ public class CompetitionList extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            progressbar.setVisibility(View.GONE);
-//            loadingProgressDialog.dismiss();
+//            progressbar.setVisibility(View.GONE);
+            loadingProgressDialog.dismiss();
         }
     }
 
@@ -579,12 +590,20 @@ public class CompetitionList extends AppCompatActivity {
                 finishAffinity();
             }
         });
+
+        //Customizing colors
+        snackbar.setActionTextColor(Color.WHITE);
+        View view = snackbar.getView();
+        view.setBackground(getDrawable(R.drawable.back_gradiant));
+        TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         // put your code here...
+
 
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
             progressbar.setVisibility(View.GONE);

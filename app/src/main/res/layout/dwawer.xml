@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEEEEE"
+    android:background="@color/homepage_back"
     android:orientation="vertical"
     tools:ignore="Overdraw">
 
@@ -18,8 +18,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -68,6 +67,7 @@
                         android:src="@drawable/ic_action_info"
                         tools:ignore="ContentDescription" />
 
+
                     <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                         style="@style/TextviewStyle"
                         android:layout_width="0dp"
@@ -110,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
                         android:padding="8dp"
-                        android:text="- Guruji Vision" />
+                        android:text="- Guruji's Vision" />
 
                     <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                         android:id="@+id/txt_aboutmission"
@@ -119,7 +119,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
                         android:padding="8dp"
-                        android:text="- Guruji Mission" />
+                        android:text="- Guruji's Mission" />
 
                     <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                         android:id="@+id/txt_appinfo"
@@ -194,6 +194,35 @@
                     tools:ignore="SmallSp" />
 
                 <LinearLayout
+                    android:id="@+id/lin_thought"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10sp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_action_edit"
+                        tools:ignore="ContentDescription" />
+
+                    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                        style="@style/TextviewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/thought"
+
+                        />
+                </LinearLayout>
+
+                <View
+                    style="@style/ViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    tools:ignore="SmallSp" />
+
+                <LinearLayout
                     android:id="@+id/lin_audio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -244,36 +273,6 @@
 
                         />
                 </LinearLayout>
-
-                <View
-                    style="@style/ViewStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="1sp"
-                    tools:ignore="SmallSp" />
-
-                <LinearLayout
-                    android:id="@+id/lin_thought"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="10sp">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_action_edit"
-                        tools:ignore="ContentDescription" />
-
-                    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-                        style="@style/TextviewStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/thought"
-
-                        />
-                </LinearLayout>
-
 
                 <View
                     style="@style/ViewStyle"
@@ -369,35 +368,6 @@
                     tools:ignore="SmallSp" />
 
                 <LinearLayout
-                    android:id="@+id/lin_op"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="10sp">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_action_opinion"
-                        tools:ignore="ContentDescription" />
-
-                    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-                        style="@style/TextviewStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/Opinionpoll"
-
-                        />
-                </LinearLayout>
-
-                <View
-                    style="@style/ViewStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="1sp"
-                    tools:ignore="SmallSp" />
-
-                <LinearLayout
                     android:id="@+id/lin_bypeople"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -416,6 +386,35 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="@string/bypeople"
+
+                        />
+                </LinearLayout>
+
+                <View
+                    style="@style/ViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    tools:ignore="SmallSp" />
+
+                <LinearLayout
+                    android:id="@+id/lin_op"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10sp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_action_opinion"
+                        tools:ignore="ContentDescription" />
+
+                    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                        style="@style/TextviewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/Opinionpoll"
 
                         />
                 </LinearLayout>
@@ -459,27 +458,33 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center"
+                    android:orientation="horizontal"
                     android:padding="10sp">
 
                     <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Social links:" />
-                    
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/img_youtube"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_youtube"
-                        tools:ignore="ContentDescription" />
+                        android:text="Social links:"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+
+                        />
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/img_facebook"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:src="@drawable/ic_facebook"
+                        tools:ignore="ContentDescription" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_youtube"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/ic_youtube"
                         tools:ignore="ContentDescription" />
 
 

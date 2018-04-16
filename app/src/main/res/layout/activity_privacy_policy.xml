@@ -8,7 +8,7 @@
     tools:context=".activity.mainactivity.PrivacyPolicyActivity">
 
 
-    <include layout="@layout/toolbar1" />
+    <include layout="@layout/toolbar_home" />
 
     <TextView
         android:id="@+id/txt_privacy_policy"

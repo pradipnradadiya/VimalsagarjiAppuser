@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#EEEEEE"
+        android:background="@color/homepage_back"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/dwawer">
 
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="#EEEEEE"
+            android:background="@color/homepage_back"
             android:clickable="true"
             android:orientation="vertical">
 
@@ -33,7 +33,7 @@
                 android:padding="10dp"
                 android:text="@string/guruji"
                 android:textColor="@color/white"
-                android:textSize="16dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
         </LinearLayout>

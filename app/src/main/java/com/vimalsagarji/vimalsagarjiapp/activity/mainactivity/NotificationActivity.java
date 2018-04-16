@@ -67,7 +67,7 @@ public class NotificationActivity extends AppCompatActivity {
         img_search.setVisibility(View.GONE);
 
         txt_title= (TextView) findViewById(R.id.txt_title);
-        txt_title.setText("Notification");
+        txt_title.setText("Latest Posts");
 
         imgarrorback.setOnClickListener(new View.OnClickListener() {
             @Override

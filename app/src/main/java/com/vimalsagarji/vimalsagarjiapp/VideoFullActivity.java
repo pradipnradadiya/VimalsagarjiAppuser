@@ -28,7 +28,7 @@ public class VideoFullActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.videoplay);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         videoView = (VideoView) findViewById(R.id.videoView);
         progressbar = (ProgressBar) findViewById(R.id.progressbar);
 

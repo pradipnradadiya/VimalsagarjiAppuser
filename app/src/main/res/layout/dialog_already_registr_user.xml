@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/back"
+    android:background="@color/homepage_back"
     android:orientation="vertical"
 
     >
@@ -89,7 +89,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20sp"
-        android:background="@drawable/back_gradiant"
+        android:background="@drawable/round_rect_shapeoneselect"
         android:inputType="number"
         android:lines="1"
         android:text="Submit"

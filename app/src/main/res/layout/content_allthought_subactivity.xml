@@ -39,7 +39,8 @@
             android:maxLines="1"
             android:padding="10dp"
             android:text=""
-            android:textColor="@color/colorPrimary"
+            android:textSize="20dp"
+            android:textColor="@color/black"
             tools:ignore="HardcodedText,TextFields" />
 
 
@@ -47,7 +48,7 @@
             android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorPrimary" />
+            android:background="@color/view" />
 
 
         <LinearLayout

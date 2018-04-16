@@ -77,6 +77,7 @@ public class VideoDetailActivity extends AppCompatActivity {
     RelativeLayout rel_video;
     int flag = 0;
     int commentsize;
+//    VideoView video_view;
 
     @Override
     public void onBackPressed() {
@@ -321,6 +322,18 @@ public class VideoDetailActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+/*
+        video_view= (VideoView) findViewById(R.id.video_view);
+        String testUrl = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
+        video_view.setVideoPath(testUrl);*/
+
+//
+//        JZVideoPlayerStandard jzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.videoplayer);
+//        jzVideoPlayerStandard.setUp("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+//                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子闭眼睛");
+//        jzVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 
     }
 
@@ -599,6 +612,11 @@ public class VideoDetailActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            loadingProgressDialog = KProgressHUD.create(VideoDetailActivity.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please Wait")
+                    .setCancellable(true);
+            loadingProgressDialog.show();
         }
 
         @Override
@@ -619,9 +637,11 @@ public class VideoDetailActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                    loadingProgressDialog.dismiss();
                     Toast.makeText(VideoDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 } else {
+                    loadingProgressDialog.dismiss();
                     Toast.makeText(VideoDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
@@ -833,8 +853,9 @@ public class VideoDetailActivity extends AppCompatActivity {
         //Customizing colors
         snackbar.setActionTextColor(Color.WHITE);
         View view = snackbar.getView();
+        view.setBackground(getDrawable(R.drawable.back_gradiant));
         TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
+        textView.setTextColor(Color.WHITE);
 
         //Displaying snackbar
         snackbar.show();

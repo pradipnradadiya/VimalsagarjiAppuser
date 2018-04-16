@@ -71,6 +71,8 @@ public class TodayEventFragment extends Fragment {
     public static String video_play_url;
     private ProgressBar progressbar;
 
+    ArrayList<String> timelist=new ArrayList<>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_today, container, false);
@@ -106,7 +108,7 @@ public class TodayEventFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (CommonMethod.isInternetConnected(getActivity())) {
-                    new SearchMonthEvent().execute();
+//                    new SearchMonthEvent().execute();
                 } else {
                     final Snackbar snackbar = Snackbar
                             .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
@@ -165,7 +167,9 @@ public class TodayEventFragment extends Fragment {
                 JSONObject jsonObject = JSONParser.getJsonFromUrl(strUrl);
                 // for (int i=0; i<jsonObject.length()  ;i++){
                 JSONArray array = jsonObject.getJSONArray("data");
+                timelist=new ArrayList<>();
                 if (array != null) {
+
                     for (int j = 0; j < array.length(); j++) {
                         JSONObject object = array.getJSONObject(j);
                         String strID = object.getString("ID");
@@ -208,7 +212,7 @@ public class TodayEventFragment extends Fragment {
                         eventAdpter.setTitle(strTitle);
                         eventAdpter.setDescription(strDescription);
                         eventAdpter.setAddress(strAddress);
-                        eventAdpter.setDate(dayOfTheWeek + ",\n " + fulldate);
+                        eventAdpter.setDate(fulldate);
                         eventAdpter.setAudio(strAudio);
                         eventAdpter.setAudioImage(strAudioImage);
                         eventAdpter.setVideoLink(strVideoLink);
@@ -217,6 +221,7 @@ public class TodayEventFragment extends Fragment {
                         eventAdpter.setPhoto(strPhoto);
                         eventAdpter.setView(view);
                         listAllEvent.add(eventAdpter);
+                        timelist.add(dayOfTheWeek);
 
 
                     }
@@ -305,6 +310,7 @@ public class TodayEventFragment extends Fragment {
                 JSONObject jsonObject = JSONParser.getJsonFromUrl(strUrl);
                 // for (int i=0; i<jsonObject.length()  ;i++){
                 JSONArray array = jsonObject.getJSONArray("data");
+                timelist=new ArrayList<>();
                 if (array != null) {
                     for (int j = 0; j < array.length(); j++) {
                         JSONObject object = array.getJSONObject(j);
@@ -347,7 +353,7 @@ public class TodayEventFragment extends Fragment {
                         eventAdpter.setTitle(strTitle);
                         eventAdpter.setDescription(strDescription);
                         eventAdpter.setAddress(strAddress);
-                        eventAdpter.setDate(dayOfTheWeek + ",\n " + fulldate);
+                        eventAdpter.setDate(fulldate);
                         eventAdpter.setAudio(strAudio);
                         eventAdpter.setAudioImage(strAudioImage);
                         eventAdpter.setVideoLink(strVideoLink);
@@ -356,6 +362,7 @@ public class TodayEventFragment extends Fragment {
                         eventAdpter.setPhoto(strPhoto);
                         eventAdpter.setView(view);
                         listAllEvent.add(eventAdpter);
+                        timelist.add(dayOfTheWeek);
                     }
                 } else {
 //                    Toast.makeText(getActivity(), "No event found", Toast.LENGTH_SHORT).show();
@@ -446,6 +453,7 @@ public class TodayEventFragment extends Fragment {
                 holder.txt_views = (TextView) convertView.findViewById(R.id.txt_views);
                 holder.grid_txtTitle = (TextView) convertView.findViewById(R.id.grid_txtTitle);
                 holder.grid_txtDate = (TextView) convertView.findViewById(R.id.grid_txtDate);
+                holder.grid_txtday = (TextView) convertView.findViewById(R.id.grid_txtday);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -455,6 +463,7 @@ public class TodayEventFragment extends Fragment {
             holder.txt_views.setText(eventAdpterHolder.getView());
             holder.grid_txtTitle.setText(eventAdpterHolder.getTitle());
             holder.grid_txtDate.setText(eventAdpterHolder.getDate());
+            holder.grid_txtday.setText(String.valueOf(timelist.get(position)));
             String strPhoto = eventAdpterHolder.getPhoto();
 
             return convertView;
@@ -462,123 +471,13 @@ public class TodayEventFragment extends Fragment {
         }
 
         private class ViewHolder {
-            TextView grid_txtTitle, grid_txtDate, txt_views;
+            TextView grid_txtTitle, grid_txtDate, txt_views,grid_txtday;
 
 
         }
     }
 
-    @SuppressWarnings("deprecation")
-    public class SearchMonthEvent extends AsyncTask<String, String, String> {
 
-        String status;
-        public LayoutInflater inflater = null;
-        private static final String TAG_SUCCESS = "success";
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @SuppressWarnings("ResourceType")
-        @Override
-        protected String doInBackground(String... param) {
-            try {
-                JSONParser1 jsonParser = new JSONParser1();
-                //    String count = param[0];
-
-                String searchitem = InputBox.getText().toString();
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("searchterm", searchitem));
-                System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest(TodaySearch, "POST", params);
-                // JSONObject json = JSONParser.getJsonFromUrl(url);
-                Log.d("Create Response", json.toString());
-                status = json.optString(TAG_SUCCESS);
-                for (int i = 0; i < json.length(); i++) {
-                    listfilterdata = new ArrayList<>();
-                    JSONArray jsonArray = json.getJSONArray("data");
-                    System.out.println("JsonArray is" + jsonArray.length());
-                    for (int j = 0; j < jsonArray.length(); j++) {
-                        JSONObject object = jsonArray.getJSONObject(j);
-                        String strID = object.getString("ID");
-                        String strTitle = object.getString("Title");
-                        String strDescription = object.getString("Description");
-                        String strAddress = object.getString("Address");
-                        String strDate = object.getString("Date");
-                        String strAudio = object.getString("Audio");
-                        String strAudioImage = object.getString("AudioImage");
-                        String strVideoLink = object.getString("VideoLink");
-                        String strVideo = object.getString("Video");
-                        String strVideoImage = object.getString("VideoImage");
-                        String strPhoto = object.getString("Photo");
-                        String view = object.getString("View");
-
-
-                        Date dt = CommonMethod.convert_date(strDate);
-                        Log.e("Convert date is", "------------------" + dt);
-                        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
-                        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
-                        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
-                        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
-                        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
-
-                        Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
-                        Log.e("stringMonth", "-----------------" + stringMonth);
-                        Log.e("intMonth", "-----------------" + intMonth);
-                        Log.e("year", "-----------------" + year);
-                        Log.e("day", "-----------------" + day);
-
-                        String fulldate = day + "/" + intMonth + "/" + year;
-
-                        String[] time = strDate.split("\\s+");
-                        Log.e("time", "-----------------------" + time[1]);
-
-
-                        EventAdpter eventAdpter = new EventAdpter();
-                        eventAdpter.setID(strID);
-                        eventAdpter.setTitle(strTitle);
-                        eventAdpter.setDescription(strDescription);
-                        eventAdpter.setAddress(strAddress);
-                        eventAdpter.setDate(dayOfTheWeek + ",\n " + fulldate);
-                        eventAdpter.setAudio(strAudio);
-                        eventAdpter.setAudioImage(strAudioImage);
-                        eventAdpter.setVideoLink(strVideoLink);
-                        eventAdpter.setVideo(strVideo);
-                        eventAdpter.setVideoImage(strVideoImage);
-                        eventAdpter.setPhoto(strPhoto);
-                        eventAdpter.setView(view);
-                        listfilterdata.add(eventAdpter);
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return status;
-        }
-
-        protected void onPostExecute(String status) {
-            super.onPostExecute(status);
-            InformationCategory informationCategory = new InformationCategory();
-
-            if (getActivity() != null) {
-                if (gridView != null) {
-                    adpter = new CustomAdpter(getActivity(), listfilterdata);
-                    if (adpter.getCount() != 0) {
-                        gridView.setVisibility(View.VISIBLE);
-                        txt_nodata_today.setVisibility(View.GONE);
-                        gridView.setAdapter(adpter);
-                    } else {
-                        txt_nodata_today.setText("No Search \n Found");
-                        gridView.setVisibility(View.GONE);
-                        txt_nodata_today.setVisibility(View.VISIBLE);
-//                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-        }
-
-    }
 
     @Override
     public void onResume() {

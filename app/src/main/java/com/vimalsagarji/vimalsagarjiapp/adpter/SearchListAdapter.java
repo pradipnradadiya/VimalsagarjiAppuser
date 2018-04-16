@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vimalsagarji.vimalsagarjiapp.MainActivity;
@@ -120,12 +121,12 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-        CircleImageView search_image;
+        ImageView search_image;
         TextView txt_title, txt_date, txt_content;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            search_image = (CircleImageView) itemView.findViewById(R.id.search_image);
+            search_image = (ImageView) itemView.findViewById(R.id.search_image);
             txt_title = (TextView) itemView.findViewById(R.id.txt_title);
             txt_date = (TextView) itemView.findViewById(R.id.txt_date);
             txt_content = (TextView) itemView.findViewById(R.id.txt_content);

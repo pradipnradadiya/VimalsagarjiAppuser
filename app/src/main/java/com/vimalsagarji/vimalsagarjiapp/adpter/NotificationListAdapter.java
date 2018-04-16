@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vimalsagarji.vimalsagarjiapp.MainActivity;
@@ -118,7 +119,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         TextView txt_title, txt_content, txt_date;
-        CircleImageView notification_image;
+        ImageView notification_image;
 
 
         public ViewHolder(View itemView) {
@@ -126,7 +127,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
             txt_title = (TextView) itemView.findViewById(R.id.txt_title);
             txt_content = (TextView) itemView.findViewById(R.id.txt_content);
             txt_date = (TextView) itemView.findViewById(R.id.txt_date);
-            notification_image = (CircleImageView) itemView.findViewById(R.id.notification_image);
+            notification_image = (ImageView) itemView.findViewById(R.id.notification_image);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
