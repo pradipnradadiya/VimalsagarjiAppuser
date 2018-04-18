@@ -70,9 +70,9 @@ public class AllQuetionAnswerFragment extends Fragment {
     private final String res = "";
 
 
-    private static final String URL = "http://www.grapes-solutions.com/vimalsagarji/questionanswer/viewallappques/?page=1&psize=1000";
-//    private static final String URL = "http://www.grapes-solutions.com/vimalsagarji/questionanswer/viewallappquesyear/?page=1&psize=1000";
-    static final String PostURL = "http://www.grapes-solutions.com/vimalsagarji/questionanswer/askques/";
+    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappques/?page=1&psize=1000";
+//    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesyear/?page=1&psize=1000";
+    static final String PostURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/";
     private ListView listView;
     private Dialog dialog;
 
@@ -81,7 +81,7 @@ public class AllQuetionAnswerFragment extends Fragment {
     private TextView txt_nodata_today;
     private EditText InputBox;
     List<ThoughtToday> listfilterdata = new ArrayList<>();
-    private final String AllSearchQuestion = "http://www.grapes-solutions.com/vimalsagarji/questionanswer/searchallappques/?page=1&psize=1000";
+    private final String AllSearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/searchallappques/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     String approve = "";
     private ProgressBar progressbar;
@@ -206,7 +206,7 @@ public class AllQuetionAnswerFragment extends Fragment {
                                 if (CommonMethod.isInternetConnected(getActivity())) {
                                     String txtpost = etAskQuestion.getText().toString();
                                     if (TextUtils.isEmpty(txtpost)) {
-                                        etAskQuestion.setError("Please enter ask question.");
+                                        etAskQuestion.setError("Please enter your question!");
                                         etAskQuestion.requestFocus();
                                     } else {
                                         new postData().execute(etAskQuestion.getText().toString());
@@ -250,7 +250,7 @@ public class AllQuetionAnswerFragment extends Fragment {
     //Method to show the snackbar
     private void showSnackbar(View v) {
         //Creating snackbar
-        Snackbar snackbar = Snackbar.make(v, "Please register after ask question.", Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_LONG);
 
         //Adding action to snackbar
         snackbar.setAction("Register", new View.OnClickListener() {
@@ -547,7 +547,7 @@ public class AllQuetionAnswerFragment extends Fragment {
                 ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Question", params[0]));
-                responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/questionanswer/askques/", nameValuePairs, getActivity());
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/", nameValuePairs, getActivity());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -565,7 +565,7 @@ public class AllQuetionAnswerFragment extends Fragment {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     loadingProgressDialog.dismiss();
-                    Toast.makeText(getActivity(), "Question asked successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Thank you! You will be responded shortly.", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(getActivity(), "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 } else {
                     loadingProgressDialog.dismiss();
@@ -696,7 +696,7 @@ public class AllQuetionAnswerFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }

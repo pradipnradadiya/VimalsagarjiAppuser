@@ -85,23 +85,27 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onReceive(Context context, Intent intent) {
 
-                    // checking for type intent filter
-                    if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
-                        // gcm successfully registered
-                        // now subscribe to `global` topic to receive app wide notifications
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-                        if (CommonMethod.isInternetConnected(RegisterActivity.this)) {
-                            displayFirebaseRegId();
+                    try {
+                        // checking for type intent filter
+                        if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
+                            // gcm successfully registered
+                            // now subscribe to `global` topic to receive app wide notifications
+                            FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                            if (CommonMethod.isInternetConnected(RegisterActivity.this)) {
+                                displayFirebaseRegId();
+                            }
+
+                        } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
+                            // new push notification is received
+
+                            String message = intent.getStringExtra("message");
+
+                            Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_SHORT).show();
+
+                            Log.e("message", "---------------" + message);
                         }
-
-                    } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
-                        // new push notification is received
-
-                        String message = intent.getStringExtra("message");
-
-                        Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_SHORT).show();
-
-                        Log.e("message", "---------------" + message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             };
@@ -174,20 +178,23 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void displayFirebaseRegId() {
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
-        String regId = pref.getString("regId", null);
+        try {
+            SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+            String regId = pref.getString("regId", null);
 
-        Log.e("Firebase token id: ", regId);
-
-        if (!TextUtils.isEmpty(regId)) {
-//            txtRegId.setText("Firebase Reg Id: " + regId);
             Log.e("Firebase token id: ", regId);
-            strDevicetoken = regId;
-        } else {
-            Log.e("Firebase Reg Id is not received yet!", "");
+
+            if (!TextUtils.isEmpty(regId)) {
+    //            txtRegId.setText("Firebase Reg Id: " + regId);
+                Log.e("Firebase token id: ", regId);
+                strDevicetoken = regId;
+            } else {
+                Log.e("Firebase Reg Id is not received yet!", "");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
 
     private void submitProfile() {
         String strName = etName.getText().toString();
@@ -196,19 +203,20 @@ public class RegisterActivity extends AppCompatActivity {
         String strAddress = etAddress.getText().toString();
 
         if (TextUtils.isEmpty(strName)) {
-            etName.setError("Please enter name.");
+            etName.setError("Please enter your name.");
             etName.requestFocus();
         } else if (TextUtils.isEmpty(strEmail) || !ValidationUtils.checkEmail(strEmail)) {
+            etEmail.setText(strName);
             etEmail.setError("Please enter valid email.");
             etEmail.requestFocus();
         } else if (TextUtils.isEmpty(strMobile)) {
-            etMobile.setError("Please enter mobile.");
+            etMobile.setError("Please enter mobile number.");
             etMobile.requestFocus();
         } else if (etMobile.getText().toString().trim().length() < 10) {
             etMobile.setError("Please enter 10 digit number.");
             etMobile.requestFocus();
         } else if (TextUtils.isEmpty(strAddress)) {
-            etAddress.setError("Please enter location.");
+            etAddress.setError("Please enter your location.");
             etAddress.requestFocus();
         } else {
             if (CommonMethod.isInternetConnected(RegisterActivity.this)) {
@@ -222,7 +230,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void moveAhead() {
         Intent intentSuceess = new Intent(RegisterActivity.this, ActivityHomeMain.class);
         startActivity(intentSuceess);
-        finish();
+        finishAffinity();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
@@ -252,7 +260,7 @@ public class RegisterActivity extends AppCompatActivity {
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Address", params[3]));
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Phone", params[4]));
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("DeviceToken", params[5]));
-                responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/userregistration/adduser/", nameValuePairs, RegisterActivity.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/adduser/", nameValuePairs, RegisterActivity.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -281,7 +289,7 @@ public class RegisterActivity extends AppCompatActivity {
                     sharedpreferance.saveMobile(mobile);
                     sharedpreferance.savePushNotification("pushon");
                     sharedpreferance.saveToken(strDevicetoken);
-                    Toast.makeText(RegisterActivity.this, "Registerd successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Congratulations! You are successfully registered!", Toast.LENGTH_SHORT).show();
                     moveAhead();
                 } else if (jsonObject.getString("status").equalsIgnoreCase("2")) {
                     Toast.makeText(RegisterActivity.this, "Already registerd user.", Toast.LENGTH_SHORT).show();
@@ -324,7 +332,7 @@ public class RegisterActivity extends AppCompatActivity {
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new BasicNameValuePair("EmailID", params[0]));
                 nameValuePairs.add(new BasicNameValuePair("Phone", params[1]));
-                responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/aluser/checkuser", nameValuePairs, RegisterActivity.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/aluser/checkuser", nameValuePairs, RegisterActivity.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -436,7 +444,7 @@ public class RegisterActivity extends AppCompatActivity {
             int min = 100000;
             randno = String.valueOf(Math.round(Math.random() * (max - min + 1) + min));
 //            int mobile=Integer.parseInt(etMobile.getText().toString());
-            responseString = CommonMethod.getStringResponse("https://control.msg91.com/api/sendotp.php?authkey=170539A1PovTWJpc0s5996ef0e&mobile=91" + etMobile.getText().toString() + "&message=Your%20otp%20is%20" + randno + "&sender=VSNSND&otp=" + randno + "&otp_expiry=5&otp_length=6");
+            responseString = CommonMethod.getStringResponse("https://control.msg91.com/api/sendotp.php?authkey=210431AROU1gUWMy5ad5aa00&mobile=91" + etMobile.getText().toString() + "&message=Your%20OTP%20is%20" + randno + "&sender=VSNSND&otp=" + randno + "&otp_expiry=5&otp_length=6");
 //            responseString=CommonMethod.getStringResponse("https://control.msg91.com/api/sendotp.php?authkey=170539A1PovTWJpc0s5996ef0e&mobile=919725800283&message=Your%20otp%20is%20" + String.valueOf(randno) + "&sender=Nayi Soch&otp=" + String.valueOf(randno)+"&otp_length=6");
             return responseString;
 
@@ -553,7 +561,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            responseString = CommonMethod.getStringResponse("https://control.msg91.com/api/verifyRequestOTP.php?authkey=170539A1PovTWJpc0s5996ef0e&mobile=91" + etMobile.getText().toString() + "&otp=" + edit_otp.getText().toString());
+            responseString = CommonMethod.getStringResponse("https://control.msg91.com/api/verifyRequestOTP.php?authkey=210431AROU1gUWMy5ad5aa00&mobile=91" + etMobile.getText().toString() + "&otp=" + edit_otp.getText().toString());
             return responseString;
         }
 
@@ -581,8 +589,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
         }
-
-
     }
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {

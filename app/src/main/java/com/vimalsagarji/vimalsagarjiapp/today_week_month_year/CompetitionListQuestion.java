@@ -126,7 +126,7 @@ public class CompetitionListQuestion extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -178,7 +178,7 @@ public class CompetitionListQuestion extends AppCompatActivity {
                 nameValuePairs.add(new BasicNameValuePair("uid", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("Answer", params[2]));
                 nameValuePairs.add(new BasicNameValuePair("cid", params[3]));
-                responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/competition/answer/", nameValuePairs, CompetitionListQuestion.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/competition/answer/", nameValuePairs, CompetitionListQuestion.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -227,7 +227,7 @@ public class CompetitionListQuestion extends AppCompatActivity {
                 ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("cid", params[0]));
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", params[1]));
-                responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/competition/getallquestionsbycid/?page=1&psize=1000", nameValuePairs, CompetitionListQuestion.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/competition/getallquestionsbycid/?page=1&psize=1000", nameValuePairs, CompetitionListQuestion.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -320,7 +320,7 @@ public class CompetitionListQuestion extends AppCompatActivity {
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new BasicNameValuePair("qid", params[0]));
                 nameValuePairs.add(new BasicNameValuePair("cid", params[1]));
-                responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/competition/checkparticipants/", nameValuePairs, CompetitionListQuestion.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/competition/checkparticipants/", nameValuePairs, CompetitionListQuestion.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }

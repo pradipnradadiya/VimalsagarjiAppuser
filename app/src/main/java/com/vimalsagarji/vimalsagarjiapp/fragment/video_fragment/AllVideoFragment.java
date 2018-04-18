@@ -55,10 +55,10 @@ public class AllVideoFragment extends Fragment {
     }
 
     final static String TAG = AllVideoFragment.class.getSimpleName();
-    private final String urls = "http://www.grapes-solutions.com/vimalsagarji/video/getvideobycategoryid/?page=1&psize=1000&cid=";
+    private final String urls = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategoryid/?page=1&psize=1000&cid=";
     private static String URL = "";
-    private static final String ImgURL = "http://www.grapes-solutions.com/vimalsagarji/static/videoimage/";
-    private static final String VideoPath = "http://www.grapes-solutions.com/vimalsagarji/static/videos/";
+    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videoimage/";
+    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videos/";
     private final ArrayList<String> listid = new ArrayList<>();
     private final ArrayList<String> listcatid = new ArrayList<>();
     private ArrayList<String> listVideoName = new ArrayList<String>();
@@ -71,7 +71,7 @@ public class AllVideoFragment extends Fragment {
     private CustomAdpter customAdpter;
     private TextView txt_nodata_today;
     private EditText InputBox;
-    private final String AllSearchVideo = "http://www.grapes-solutions.com/vimalsagarji/video/searchvideobycategory/?page=1&psize=1000";
+    private final String AllSearchVideo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/searchvideobycategory/?page=1&psize=1000";
 
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
 
@@ -548,10 +548,10 @@ public class AllVideoFragment extends Fragment {
                             String date = listDate.get(position);
                             Log.e("date", "------------------" + date);
 
-                            video_play_url = "http://www.grapes-solutions.com/vimalsagarji/static/bypeoplevideo/" + strVideo;
+                            video_play_url = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + strVideo;
                             Intent intent = new Intent(getActivity(), VideoFullActivity.class);
 //                            intent.putExtra("click_action", "");
-//                            intent.putExtra("video", "http://www.grapes-solutions.com/vimalsagarji/static/bypeoplevideo/" + strVideo);
+//                            intent.putExtra("video", "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + strVideo);
 //                            intent.putExtra("videoname", videoname);
 //                            intent.putExtra("id", id);
 //                            intent.putExtra("catid", catid);
@@ -736,7 +736,7 @@ public class AllVideoFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000");
+                responJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000");
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -766,12 +766,12 @@ public class AllVideoFragment extends Fragment {
                         listcatid.add(catid);
                         String video = object.getString("Video");
 
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/eventvideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(video);
                         String photo = object.getString("Photo");
                         String[] parray = photo.split(",");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/" + parray[0];
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + parray[0];
 
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
@@ -853,7 +853,7 @@ public class AllVideoFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000");
+                responJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000");
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -881,11 +881,11 @@ public class AllVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/bypeoplevideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(video);
                         String photo = object.getString("Photo");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");
@@ -971,7 +971,7 @@ public class AllVideoFragment extends Fragment {
 
                 params.add(new BasicNameValuePair("searchterm", searchitem));
                 System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.grapes-solutions.com/vimalsagarji/event/searcheventsbycategoryyear/?searchterm=vimal&page=1&psize=100", "POST", params);
+                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/searcheventsbycategoryyear/?searchterm=vimal&page=1&psize=100", "POST", params);
                 // JSONObject json = JSONParser.getJsonFromUrl(url);
                 Log.d("Create Response", json.toString());
                 status = json.optString(TAG_SUCCESS);
@@ -994,12 +994,12 @@ public class AllVideoFragment extends Fragment {
                         for (int k = 0; k < vi.length; k++) {
                             videolistarray.add(vi[k]);
                         }
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/eventvideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
                         String[] parray = photo.split(",");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/eventaudio/" + parray[0];
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/" + parray[0];
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");
@@ -1080,7 +1080,7 @@ public class AllVideoFragment extends Fragment {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("searchterm", searchitem));
                 System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.grapes-solutions.com/vimalsagarji/bypeople/searchallposts/?page=1&psize=1000", "POST", params);
+                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/searchallposts/?page=1&psize=1000", "POST", params);
                 // JSONObject json = JSONParser.getJsonFromUrl(url);
                 Log.d("Create Response", json.toString());
                 status = json.optString(TAG_SUCCESS);
@@ -1099,11 +1099,11 @@ public class AllVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/bypeoplevideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");

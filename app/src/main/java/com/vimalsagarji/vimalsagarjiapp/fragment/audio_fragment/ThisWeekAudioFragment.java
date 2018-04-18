@@ -53,9 +53,9 @@ public class ThisWeekAudioFragment extends Fragment {
     }
 
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
-    private final static String URL = "http://www.grapes-solutions.com/vimalsagarji/audio/getaudiobycategoryweek/?page=1&psize=1000";
-    private final String ImgURL = "http://www.grapes-solutions.com/vimalsagarji/static/audioimage/";
-    private static final String AudioPath = "http://www.grapes-solutions.com/vimalsagarji/static/audios/";
+    private final static String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getaudiobycategoryweek/?page=1&psize=1000";
+    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audioimage/";
+    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audios/";
     private ArrayList<ThisMonthAudio> arrayList = new ArrayList<>();
     private static String strCid = "";
     private View view;
@@ -63,7 +63,7 @@ public class ThisWeekAudioFragment extends Fragment {
     //    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
     private EditText InputBox;
-    private final String MonthSearchAudio = "http://www.grapes-solutions.com/vimalsagarji/audio/searchallaudioweek/?page=1&psize=1000";
+    private final String MonthSearchAudio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/searchallaudioweek/?page=1&psize=1000";
     private ListView listView;
     private ProgressBar progressbar;
 
@@ -286,7 +286,7 @@ public class ThisWeekAudioFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/geteventsbycategoryweek/?page=1&psize=1000");
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryweek/?page=1&psize=1000");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -310,8 +310,8 @@ public class ThisWeekAudioFragment extends Fragment {
                         String id = "eid";
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.grapes-solutions.com/vimalsagarji/static/eventaudio/" + object.getString("Audio");
-                        String Photo = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/" + object.getString("Photo");
+                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/" + object.getString("Audio");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");
@@ -664,7 +664,7 @@ public class ThisWeekAudioFragment extends Fragment {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("searchterm", searchitem));
                 System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.grapes-solutions.com/vimalsagarji/event/searcheventsbycategoryweek/?page=1&psize=1000", "POST", params);
+                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/searcheventsbycategoryweek/?page=1&psize=1000", "POST", params);
                 // JSONObject json = JSONParser.getJsonFromUrl(url);
                 Log.d("Create Response", json.toString());
                 status = json.optString(TAG_SUCCESS);
@@ -678,8 +678,8 @@ public class ThisWeekAudioFragment extends Fragment {
                         String id = "eid";
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.grapes-solutions.com/vimalsagarji/static/eventaudio/" + object.getString("Audio");
-                        String Photo = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/" + object.getString("Photo");
+                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/" + object.getString("Audio");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");
@@ -755,7 +755,7 @@ public class ThisWeekAudioFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/getallapppostsweek/?page=1&psize=1000");
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsweek/?page=1&psize=1000");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -779,8 +779,8 @@ public class ThisWeekAudioFragment extends Fragment {
                         String id = "bid";
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleaudio/" + object.getString("Audio");
-                        String Photo = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + object.getString("Photo");
+                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/" + object.getString("Audio");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");
@@ -860,7 +860,7 @@ public class ThisWeekAudioFragment extends Fragment {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("searchterm", searchitem));
                 System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.grapes-solutions.com/vimalsagarji/bypeople/searchallpoststhisweek/?page=1&psize=1000", "POST", params);
+                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/searchallpoststhisweek/?page=1&psize=1000", "POST", params);
                 // JSONObject json = JSONParser.getJsonFromUrl(url);
                 Log.d("Create Response", json.toString());
                 status = json.optString(TAG_SUCCESS);
@@ -874,8 +874,8 @@ public class ThisWeekAudioFragment extends Fragment {
                         String id = "bid";
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleaudio/" + object.getString("Audio");
-                        String Photo = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + object.getString("Photo");
+                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/" + object.getString("Audio");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");

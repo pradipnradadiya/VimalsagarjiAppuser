@@ -138,10 +138,10 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
             public void onClick(View v) {
 
                 if (TextUtils.isEmpty(e_title.getText().toString())) {
-                    e_title.setError("Please enter title.");
+                    e_title.setError("Please enter valid title to your post!");
                     e_title.requestFocus();
                 } else if (TextUtils.isEmpty(e_description.getText().toString())) {
-                    e_description.setError("Please enter post description.");
+                    e_description.setError(" Please enter description!");
                     e_description.requestFocus();
                 } else {
                     if (CommonMethod.isInternetConnected(NewPostByPeople.this)) {
@@ -453,7 +453,7 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
 
             try {
                 HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost("http://www.grapes-solutions.com/vimalsagarji/bypeople/addpost/");
+                HttpPost httpPost = new HttpPost("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/addpost/");
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 
                 multipartEntity.addPart("uid", new StringBody(sharedpreferance.getId()));
@@ -510,7 +510,7 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
-                    Toast.makeText(NewPostByPeople.this, "Post added successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewPostByPeople.this, "Thank you! Your post will be live after approval of admin!.", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(NewPostByPeople.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     finish();
                     overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

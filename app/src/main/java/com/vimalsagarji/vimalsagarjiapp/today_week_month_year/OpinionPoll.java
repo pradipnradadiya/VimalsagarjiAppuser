@@ -358,7 +358,7 @@ public class OpinionPoll extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("qid", params[0]));
             nameValuePairs.add(new BasicNameValuePair("uid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/opinionpoll/checkuserpoll/", nameValuePairs, OpinionPoll.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/opinionpoll/checkuserpoll/", nameValuePairs, OpinionPoll.this);
             return responseJSON;
         }
 
@@ -411,7 +411,7 @@ public class OpinionPoll extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("uid", params[1]));
             nameValuePairs.add(new BasicNameValuePair("Poll", params[2]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/opinionpoll/registerpoll/", nameValuePairs, OpinionPoll.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/opinionpoll/registerpoll/", nameValuePairs, OpinionPoll.this);
             return responseJSON;
         }
 
@@ -427,6 +427,7 @@ public class OpinionPoll extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            Toast.makeText(OpinionPoll.this, "Thank you for your valuable opinion!", Toast.LENGTH_SHORT).show();
             loadingProgressDialog.dismiss();
             progressbar.setVisibility(View.GONE);
             new GetAllOpinionPoll().execute();
@@ -631,7 +632,7 @@ public class OpinionPoll extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }

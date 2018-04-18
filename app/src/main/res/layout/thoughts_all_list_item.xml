@@ -3,93 +3,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/round_rect_shape"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+
     >
 
-    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
-        android:id="@+id/txtTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:ellipsize="end"
-        android:lines="1"
-        android:maxLines="1"
-        android:text="Title"
-        android:textAllCaps="true"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        tools:ignore="HardcodedText,RtlHardcoded" />
-
-    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-        android:id="@+id/txtDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtTitle"
-        android:layout_marginLeft="10dp"
-        android:maxLines="3"
-        android:text="Description"
-        android:textColor="@color/black"
-        android:textSize="15dp"
-
-        tools:ignore="HardcodedText,RtlHardcoded" />
-
-
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:orientation="horizontal"
-        android:layout_below="@+id/txtDescription"
-        android:paddingBottom="5dp">
+        android:layout_marginTop="5dp"
+        android:background="@drawable/round_rect_shape"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/txtDate"
-            android:orientation="horizontal">
-
-            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-                android:id="@+id/txt_views"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5sp"
-                android:gravity="right"
-                android:text="0"
-                android:textColor="@color/views"
-                android:textSize="12sp"
-                tools:ignore="HardcodedText,RtlHardcoded" />
-
-            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10sp"
-                android:gravity="right"
-                android:text="Views"
-                android:textColor="@color/views"
-                android:textSize="12sp"
-                tools:ignore="HardcodedText,RtlHardcoded" />
-        </LinearLayout>
-
-        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-            android:id="@+id/txtDate"
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+            android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
             android:lines="1"
-            android:text="Date"
+            android:maxLines="1"
+            android:text="Title"
+            android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            tools:ignore="HardcodedText,RtlHardcoded"
-            android:gravity="right"
-            />
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+            android:id="@+id/txtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTitle"
+            android:layout_marginLeft="10dp"
+            android:maxLines="3"
+            android:text="Description"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtDescription"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/txtDate"
+                android:orientation="horizontal">
+
+                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                    android:id="@+id/txt_views"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5sp"
+                    android:gravity="right"
+                    android:text="0"
+                    android:textColor="@color/views"
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
+
+                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10sp"
+                    android:gravity="right"
+                    android:text="Views"
+                    android:textColor="@color/views"
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
+            </LinearLayout>
+
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                android:id="@+id/txtDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:lines="1"
+                android:text="Date"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

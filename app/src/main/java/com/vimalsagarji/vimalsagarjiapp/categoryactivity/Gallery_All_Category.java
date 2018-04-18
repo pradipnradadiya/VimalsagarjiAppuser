@@ -146,7 +146,7 @@ public class Gallery_All_Category extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/gallery/getallcategory");
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallcategory");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -168,7 +168,7 @@ public class Gallery_All_Category extends AppCompatActivity {
                         strName = object.getString("Name");
                         listName.add(strName);
                         String strCategoryIcon = object.getString("CategoryIcon");
-                        listIcon.add("http://www.grapes-solutions.com/vimalsagarji/static/gallerycategory/" + strCategoryIcon);
+                        listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/gallerycategory/" + strCategoryIcon);
                     }
                     listID.add("e_alliamgeid");
                     listName.add("Event");

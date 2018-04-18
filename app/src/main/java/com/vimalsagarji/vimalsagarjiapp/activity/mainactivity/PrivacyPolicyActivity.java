@@ -18,7 +18,7 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_privacy_policy);
         txt_header= (TextView) findViewById(R.id.txt_title);
-        txt_header.setText("Privacy policy");
+        txt_header.setText("Privacy Policy");
         imgarrorback= (ImageView) findViewById(R.id.imgarrorback);
         img_serach= (ImageView) findViewById(R.id.img_search);
         imgarrorback.setOnClickListener(new View.OnClickListener() {
@@ -27,5 +27,7 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        img_serach.setVisibility(View.GONE);
     }
 }

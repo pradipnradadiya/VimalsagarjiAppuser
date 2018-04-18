@@ -85,17 +85,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <TextView
             android:id="@+id/txt_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:padding="10dp"
-            android:text="English"
+            android:text="@string/about_guruji_eng"
             android:textColor="@color/textColor"
             android:textSize="16dp"
+
+
 
             />
 

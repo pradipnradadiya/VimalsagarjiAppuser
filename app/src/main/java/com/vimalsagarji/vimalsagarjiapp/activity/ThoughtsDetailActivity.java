@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,9 +71,9 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
     private final ArrayList<String> listIs_Approved = new ArrayList<String>();
     private ArrayList<String> listUserID = new ArrayList<String>();
     private final ArrayList<String> listUserName = new ArrayList<String>();
-    private static final String URL = "http://www.grapes-solutions.com/vimalsagarji/thought/getallappcomments/?page=1&psize=1000";
-    private static final String PostCommentURL = "http://www.grapes-solutions.com/vimalsagarji/thought/comment/";
-    private static final String strLikeURL = "http://www.grapes-solutions.com/vimalsagarji/thought/likethought/";
+    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallappcomments/?page=1&psize=1000";
+    private static final String PostCommentURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/comment/";
+    private static final String strLikeURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/likethought/";
     ProgressDialog pd;
     String strResult;
     int countLike = 1;
@@ -100,6 +101,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
     String title;
     String description;
 
+    private ProgressBar progressBar;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -211,7 +213,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                                 new CheckCountComment().execute();
                                 new CheckLikedUser().execute();
                             } else {
-                                Toast.makeText(getApplicationContext(), "Already liked this information.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), R.string.likealready, Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -244,6 +246,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                     dialog = new Dialog(ThoughtsDetailActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
+                    progressBar= (ProgressBar) dialog.findViewById(R.id.progressbar);
 
                     if (CommonMethod.isInternetConnected(ThoughtsDetailActivity.this)) {
                         new CommentList().execute(tid);
@@ -283,11 +286,11 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                             } else {
                                 String strComment = etComment.getText().toString();
                                 if (TextUtils.isEmpty(strComment)) {
-                                    etComment.setError("Please enter your comment.");
+                                    etComment.setError("Please enter your comments!");
                                     etComment.requestFocus();
                                 } else {
                                     if (approve.equalsIgnoreCase("1")) {
-                                        new CommentPost().execute(strComment);
+                                        new CommentPost().execute(CommonMethod.encodeEmoji(strComment));
                                         etComment.setText("");
                                     } else {
 //                                    Toast.makeText(ThoughtsDetailActivity.this, "You are not approved user.", Toast.LENGTH_SHORT).show();
@@ -396,7 +399,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     loadingProgressDialog.dismiss();
-                    Toast.makeText(ThoughtsDetailActivity.this, "" + "Comment added successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ThoughtsDetailActivity.this, R.string.commentsuccess, Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 } else {
                     loadingProgressDialog.dismiss();
@@ -423,7 +426,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("tid", tid));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/thought/checklike/", nameValuePairs, ThoughtsDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/checklike/", nameValuePairs, ThoughtsDetailActivity.this);
             return responseJSON;
         }
 
@@ -457,7 +460,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("tid", tid));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/thought/countlikes/", nameValuePairs, ThoughtsDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/countlikes/", nameValuePairs, ThoughtsDetailActivity.this);
             return responseJSON;
         }
 
@@ -497,7 +500,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("tid", tid));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/thought/countcomments/", nameValuePairs, ThoughtsDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/countcomments/", nameValuePairs, ThoughtsDetailActivity.this);
             return responseJSON;
         }
 
@@ -562,11 +565,12 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(ThoughtsDetailActivity.this)
+         /*   loadingProgressDialog = KProgressHUD.create(ThoughtsDetailActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+         progressBar.setVisibility(View.VISIBLE);
 
         }
 
@@ -617,9 +621,10 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
             }
 
 
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+           progressBar.setVisibility(View.GONE);
             listView = (ListView) dialog.findViewById(R.id.listbyPeopleComment);
             txt_nodata_today = (TextView) dialog.findViewById(R.id.txt_nocomment);
             if (listView != null) {
@@ -722,7 +727,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -763,7 +768,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/countviews/thought/?tid=" + tid + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/thought/?tid=" + tid + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -872,9 +877,9 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                         String date = dayOfTheWeek + ", " + day + "/" + intMonth + "/" + year + ", " + string[1];
 
 
-                        etTitle.setText(title);
-                        txtDate.setText(date);
-                        txtDescri.setText(description);
+                        etTitle.setText(CommonMethod.decodeEmoji(title));
+                        txtDate.setText(CommonMethod.decodeEmoji(date));
+                        txtDescri.setText(CommonMethod.decodeEmoji(description));
 
                         new countView().execute();
 

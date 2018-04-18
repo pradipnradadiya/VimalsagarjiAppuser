@@ -139,17 +139,21 @@ public class AlreadyRegisterUser extends AppCompatActivity {
     }
 
     private void displayFirebaseRegId() {
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
-        String regId = pref.getString("regId", null);
+        try {
+            SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+            String regId = pref.getString("regId", null);
 
-        Log.e("Firebase token id: ", regId);
-
-        if (!TextUtils.isEmpty(regId)) {
-//            txtRegId.setText("Firebase Reg Id: " + regId);
             Log.e("Firebase token id: ", regId);
-            strDevicetoken = regId;
-        } else {
-            Log.e("Firebase Reg Id ", "is not received yet!");
+
+            if (!TextUtils.isEmpty(regId)) {
+    //            txtRegId.setText("Firebase Reg Id: " + regId);
+                Log.e("Firebase token id: ", regId);
+                strDevicetoken = regId;
+            } else {
+                Log.e("Firebase Reg Id ", "is not received yet!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -175,7 +179,7 @@ public class AlreadyRegisterUser extends AppCompatActivity {
                 nameValuePairs.add(new BasicNameValuePair("EmailID", params[0]));
                 nameValuePairs.add(new BasicNameValuePair("Phone", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("DeviceID", params[2]));
-                responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/aluser/checkuser", nameValuePairs, AlreadyRegisterUser.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/aluser/checkuser", nameValuePairs, AlreadyRegisterUser.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -251,7 +255,7 @@ public class AlreadyRegisterUser extends AppCompatActivity {
             int min = 100000;
             randno = String.valueOf(Math.round(Math.random() * (max - min + 1) + min));
 //            int mobile=Integer.parseInt(etMobile.getText().toString());
-            responseString = CommonMethod.getStringResponse("https://control.msg91.com/api/sendotp.php?authkey=170539A1PovTWJpc0s5996ef0e&mobile=91" + edit_mobile.getText().toString() + "&message=Your%20otp%20is%20" + randno + "&sender=NayoSoch&otp=" + randno + "&otp_expiry=5&otp_length=6");
+            responseString = CommonMethod.getStringResponse("https://control.msg91.com/api/sendotp.php?authkey=210431AROU1gUWMy5ad5aa00&mobile=91" + edit_mobile.getText().toString() + "&message=Your%20otp%20is%20" + randno + "&sender=NayoSoch&otp=" + randno + "&otp_expiry=5&otp_length=6");
 //            responseString=CommonMethod.getStringResponse("https://control.msg91.com/api/sendotp.php?authkey=170539A1PovTWJpc0s5996ef0e&mobile=919725800283&message=Your%20otp%20is%20" + String.valueOf(randno) + "&sender=Nayi Soch&otp=" + String.valueOf(randno)+"&otp_length=6");
             return responseString;
 
@@ -324,7 +328,7 @@ public class AlreadyRegisterUser extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            responseString = CommonMethod.getStringResponse("https://control.msg91.com/api/verifyRequestOTP.php?authkey=170539A1PovTWJpc0s5996ef0e&mobile=91" + edit_mobile.getText().toString() + "&otp=" + edit_otp.getText().toString());
+            responseString = CommonMethod.getStringResponse("https://control.msg91.com/api/verifyRequestOTP.php?authkey=210431AROU1gUWMy5ad5aa00&mobile=91" + edit_mobile.getText().toString() + "&otp=" + edit_otp.getText().toString());
             return responseString;
         }
 
@@ -339,7 +343,7 @@ public class AlreadyRegisterUser extends AppCompatActivity {
                     dialog.dismiss();
                     Toast.makeText(AlreadyRegisterUser.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     if (CommonMethod.isInternetConnected(AlreadyRegisterUser.this)) {
-                        Intent intent = new Intent(AlreadyRegisterUser.this, MainActivity.class);
+                        Intent intent = new Intent(AlreadyRegisterUser.this, ActivityHomeMain.class);
                         startActivity(intent);
                         finish();
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

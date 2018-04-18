@@ -211,7 +211,7 @@ public class EventCommentList extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
 //            nameValuePairs.add(new BasicNameValuePair("eid", params[0]));
-            responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/getallcomments/?page=" + page_count + "&psize=30&eid=" + id);
+            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/getallcomments/?page=" + page_count + "&psize=30&eid=" + id);
             return responseJSON;
         }
 

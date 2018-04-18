@@ -30,35 +30,50 @@
                     android:background="@drawable/back_gradiant">
 
 
-                    <ImageView
-                        android:id="@+id/img_slide"
-                        android:layout_width="150dp"
-                        android:layout_height="140dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="5dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/banner"
-                        android:visibility="visible" />
-
-                    <android.support.v4.view.ViewPager
-                        android:id="@+id/viewPager"
-                        android:layout_width="match_parent"
-                        android:layout_height="140dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="5dp"
-                        android:src="@mipmap/ic_launcher"
-
-                        />
-
-                    <com.vimalsagarji.vimalsagarjiapp.utils.DashboardCirclePageIndicator
-                        android:id="@+id/indicator"
+                    <LinearLayout
+                        android:id="@+id/lin_image"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewPager"
-                        android:padding="2dp"
-                        app:gapWidth="10dp"
+                        android:orientation="vertical">
 
-                        />
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/viewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1.5"
+                            android:src="@mipmap/ic_launcher" />
+
+                        <com.vimalsagarji.vimalsagarjiapp.utils.DashboardCirclePageIndicator
+                            android:id="@+id/indicator"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewPager"
+                            android:layout_gravity="top"
+                            android:layout_marginBottom="115dp"
+                            android:padding="2dp"
+                            app:gapWidth="10dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_gravity="top"
+                            android:layout_weight="1"
+                            android:gravity="top">
+                            <!-- <com.vimalsagarji.vimalsagarjiapp.utils.DashboardCirclePageIndicator
+                                 android:id="@+id/indicator"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:layout_below="@+id/viewPager"
+                                 android:padding="2dp"
+                                 app:gapWidth="10dp"
+                                 android:layout_gravity="top"
+
+                                 />-->
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                     <ImageView
                         android:id="@+id/img_menu_drawer"
@@ -87,17 +102,33 @@
                         android:padding="8dp"
                         android:src="@drawable/ic_notifications" />
 
+                    <ImageView
+                        android:id="@+id/img_slide"
+                        android:layout_width="150dp"
+                        android:layout_height="140dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/banner"
+                        android:visibility="gone" />
+
 
                 </RelativeLayout>
-
 
                 <LinearLayout
                     android:id="@+id/lin"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_gravity="bottom"
+                        android:src="@drawable/main_img" />
 
                     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/profile_image"
@@ -106,8 +137,9 @@
                         android:layout_alignParentBottom="true"
                         android:layout_weight="1"
                         android:src="@drawable/icon_logo"
-                        app:civ_border_color="@color/white"
-                        app:civ_border_width="3dp" />
+                        android:visibility="gone"
+
+                        />
 
                     <LinearLayout
                         android:id="@+id/lins"
@@ -146,6 +178,8 @@
                             android:textSize="18dp" />
 
                     </LinearLayout>
+
+
                 </LinearLayout>
 
 
@@ -153,6 +187,7 @@
 
         </LinearLayout>
 
+        <!--Menu-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"

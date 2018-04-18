@@ -29,7 +29,7 @@
         android:layout_margin="10dp"
         android:layout_toLeftOf="@+id/btnReply"
         android:background="@drawable/competiti_edittext_shape"
-        android:hint="Reply your answer"
+        android:hint="Reply"
         android:padding="5dp"
         android:textColor="@color/cardview_dark_background"
         android:inputType="textMultiLine"

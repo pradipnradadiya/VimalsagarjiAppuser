@@ -270,19 +270,19 @@ public class ThisMonthInformationFragment extends Fragment {
             }
             InformationCategory inCategory = items.get(position);
             holder.txt_Title.setMaxLines((int) 1.5);
-            holder.txt_Title.setText(inCategory.getTitle());
-            holder.txt_Description.setText(inCategory.getDescription());
-            holder.txt_Date.setText(inCategory.getDay() + ", " + inCategory.getDate());
-            holder.txt_Address.setText(inCategory.getAddress());
-            holder.txt_views.setText(inCategory.getView());
+            holder.txt_Title.setText(CommonMethod.decodeEmoji(inCategory.getTitle()));
+            holder.txt_Description.setText(CommonMethod.decodeEmoji(inCategory.getDescription()));
+            holder.txt_Date.setText(CommonMethod.decodeEmoji(inCategory.getDay() + ", " + inCategory.getDate()));
+            holder.txt_Address.setText(CommonMethod.decodeEmoji(inCategory.getAddress()));
+            holder.txt_views.setText(CommonMethod.decodeEmoji(inCategory.getView()));
 
             InformationCategory icategory = filterdata.get(position);
             holder.txt_Title.setMaxLines((int) 1.5);
-            holder.txt_Title.setText(icategory.getTitle());
-            holder.txt_Description.setText(icategory.getDescription());
-            holder.txt_views.setText(icategory.getView());
-            holder.txt_Address.setText(icategory.getAddress());
-            holder.txt_Date.setText(icategory.getDay() + "," + icategory.getDate());
+            holder.txt_Title.setText(CommonMethod.decodeEmoji(icategory.getTitle()));
+            holder.txt_Description.setText(CommonMethod.decodeEmoji(icategory.getDescription()));
+            holder.txt_views.setText(CommonMethod.decodeEmoji(icategory.getView()));
+            holder.txt_Address.setText(CommonMethod.decodeEmoji(icategory.getAddress()));
+            holder.txt_Date.setText(CommonMethod.decodeEmoji(icategory.getDay() + "," + icategory.getDate()));
             return convertView;
         }
 

@@ -49,7 +49,7 @@ public class ThisWeekInformationFragment extends Fragment {
 
     }
 
-    private final String WeekSearch = "http://www.grapes-solutions.com/vimalsagarji/info/searchallinfobycidweek/?page=1&psize=1000";
+    private final String WeekSearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/searchallinfobycidweek/?page=1&psize=1000";
     private KProgressHUD loadingProgressDialog;
     private static final String TAG = ThisWeekInformationFragment.class.getSimpleName();
     private List<InformationCategory> listThisWeekitem = new ArrayList<>();
@@ -369,12 +369,12 @@ public class ThisWeekInformationFragment extends Fragment {
             }
             InformationCategory inCategory = items.get(position);
             holder.txt_Title.setMaxLines((int) 1.5);
-            holder.txt_Title.setText(inCategory.getTitle());
-            holder.txt_Description.setText(inCategory.getDescription());
-            holder.txt_Address.setText(inCategory.getAddress());
-            holder.txt_views.setText(inCategory.getView());
+            holder.txt_Title.setText(CommonMethod.decodeEmoji(inCategory.getTitle()));
+            holder.txt_Description.setText(CommonMethod.decodeEmoji(inCategory.getDescription()));
+            holder.txt_Address.setText(CommonMethod.decodeEmoji(inCategory.getAddress()));
+            holder.txt_views.setText(CommonMethod.decodeEmoji(inCategory.getView()));
             Log.e("day", "----------------" + inCategory.getDay() + "----------------------" + inCategory.getDate());
-            holder.txt_Date.setText(inCategory.getDay() + ", " + inCategory.getDate());
+            holder.txt_Date.setText(CommonMethod.decodeEmoji(inCategory.getDay() + ", " + inCategory.getDate()));
             return convertView;
         }
 

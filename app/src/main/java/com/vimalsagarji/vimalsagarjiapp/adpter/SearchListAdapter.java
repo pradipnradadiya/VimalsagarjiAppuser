@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.vimalsagarji.vimalsagarjiapp.MainActivity;
+import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.AudioDetail;
 import com.vimalsagarji.vimalsagarjiapp.activity.ByPeopleDetailActivity;
@@ -180,7 +180,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
             } else if (itemArrayList.get(getAdapterPosition()).getTable().equalsIgnoreCase("Question")) {
-                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                Intent intent = new Intent(v.getContext(), ActivityHomeMain.class);
                 intent.putExtra("listID", itemArrayList.get(getAdapterPosition()).getId());
                 intent.putExtra("click_action", "");
                 v.getContext().startActivity(intent);

@@ -49,8 +49,8 @@ public class AllbyPeopleFragment extends Fragment {
 
     private static final String TAG = AllbyPeopleFragment.class.getSimpleName();
 
-    private static final String AudioPath = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleaudio/";
-    private static final String VideoPath = "http://www.grapes-solutions.com/vimalsagarji/static/bypeoplevideo/";
+    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/";
+    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/";
     private static final String strImageUrlName = "bypeopleimage";
     private static final String ImgURL = Constant.ImgURL;
     private static final String IMAGEURL = ImgURL.replace("audioimage", strImageUrlName);

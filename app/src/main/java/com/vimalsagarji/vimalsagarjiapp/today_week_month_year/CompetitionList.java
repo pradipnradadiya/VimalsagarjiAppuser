@@ -1,5 +1,6 @@
 package com.vimalsagarji.vimalsagarjiapp.today_week_month_year;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -70,6 +71,14 @@ public class CompetitionList extends AppCompatActivity {
         setContentView(R.layout.competition_list);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         viewID();
+        sharedpreferance = new Sharedpreferance(CompetitionList.this);
+        if (sharedpreferance.getId().equalsIgnoreCase("")) {
+            progressbar.setVisibility(View.GONE);
+
+            Log.e("registed not","--------------");
+//            Snackbar.make(lin_main, "Please first register after competition.", Snackbar.LENGTH_INDEFINITE).show();
+            showSnackbar();
+        }
         linearLayoutManager = new LinearLayoutManager(CompetitionList.this);
         comp_que_list.setLayoutManager(linearLayoutManager);
         Intent getIntent = getIntent();
@@ -154,7 +163,7 @@ public class CompetitionList extends AppCompatActivity {
                 nameValuePairs.add(new BasicNameValuePair("uid", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("Answer", params[2]));
                 nameValuePairs.add(new BasicNameValuePair("cid", params[3]));
-                responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/competition/answer/", nameValuePairs, CompetitionList.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/competition/answer/", nameValuePairs, CompetitionList.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -170,7 +179,7 @@ public class CompetitionList extends AppCompatActivity {
                 jsonObject.getString("status");
                 String msg = jsonObject.getString("message");
                 jsonObject.getString("Answer");
-                Toast.makeText(CompetitionList.this, "" + msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(CompetitionList.this, "Thank you! Your answer submitted successfully!", Toast.LENGTH_SHORT).show();
                 loadingProgressDialog.dismiss();
 //                progressbar.setVisibility(View.GONE);
                 new CheckParticipants().execute("56", c_cid);
@@ -206,7 +215,7 @@ public class CompetitionList extends AppCompatActivity {
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new BasicNameValuePair("cid", params[0]));
                 nameValuePairs.add(new BasicNameValuePair("uid", params[1]));
-                responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/competition/getallquestionsbycid/?page=1&psize=1000", nameValuePairs, CompetitionList.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/competition/getallquestionsbycid/?page=1&psize=1000", nameValuePairs, CompetitionList.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -302,7 +311,7 @@ public class CompetitionList extends AppCompatActivity {
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new BasicNameValuePair("qid", params[0]));
                 nameValuePairs.add(new BasicNameValuePair("cid", params[1]));
-                responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/competition/checkparticipants/", nameValuePairs, CompetitionList.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/competition/checkparticipants/", nameValuePairs, CompetitionList.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -340,7 +349,7 @@ public class CompetitionList extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -480,6 +489,7 @@ public class CompetitionList extends AppCompatActivity {
                     final String qid = itemArrayList.get(i).getID();
                     holder.edit_answer.setVisibility(View.VISIBLE);
                     holder.edit_answer.setEnabled(false);
+                    holder.edit_answer.setText("Thank you! You have already reply it!");
 
                 } else {
                     holder.btnReply.setVisibility(View.VISIBLE);
@@ -499,7 +509,7 @@ public class CompetitionList extends AppCompatActivity {
                                     status = "";
 //                            new checkReplay().execute(qid,sharedpreferance.getId());
                                     if (TextUtils.isEmpty(holder.edit_answer.getText().toString())) {
-                                        holder.edit_answer.setError("Give answer after reply");
+                                        holder.edit_answer.setError("Please enter your answer!");
                                         holder.edit_answer.requestFocus();
 
                                     } else {
@@ -574,9 +584,11 @@ public class CompetitionList extends AppCompatActivity {
 
 
     //Method to show the snackbar
+    @SuppressLint("NewApi")
     private void showSnackbar() {
         //Creating snackbar
-        Snackbar snackbar = Snackbar.make(lin_main, "Please first register after competition.", Snackbar.LENGTH_INDEFINITE);
+        Snackbar snackbar = Snackbar.make(lin_main, "Please register to proceed!", Snackbar.LENGTH_INDEFINITE);
+        Toast.makeText(this, R.string.notregister, Toast.LENGTH_LONG).show();
 
         //Adding action to snackbar
         snackbar.setAction("Register", new View.OnClickListener() {
@@ -607,9 +619,13 @@ public class CompetitionList extends AppCompatActivity {
 
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
             progressbar.setVisibility(View.GONE);
+
+            Log.e("registed not","--------------");
 //            Snackbar.make(lin_main, "Please first register after competition.", Snackbar.LENGTH_INDEFINITE).show();
             showSnackbar();
-        } else {
+        }
+        else {
+            Log.e("registed","--------------");
             if (CommonMethod.isInternetConnected(CompetitionList.this)) {
                 new CatrgoryQuestion().execute(c_cid, sharedpreferance.getId());
             } else {

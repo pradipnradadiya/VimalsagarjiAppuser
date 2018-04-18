@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,6 +93,7 @@ public class InformationDetailActivity extends AppCompatActivity {
     int commentsize;
     private ImageView img_share;
     ProgressDialog progressDialog;
+    private ProgressBar progressBar;
 
     @Override
     public void onBackPressed() {
@@ -210,7 +212,7 @@ public class InformationDetailActivity extends AppCompatActivity {
                                 new CheckLike().execute(sharedpreferance.getId(), strID);
 
                             } else {
-                                Toast.makeText(getApplicationContext(), "Already liked this information.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), R.string.likealready, Toast.LENGTH_SHORT).show();
                             }
 
                         }
@@ -235,6 +237,7 @@ public class InformationDetailActivity extends AppCompatActivity {
                     dialog = new Dialog(InformationDetailActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
+                    progressBar = (ProgressBar) dialog.findViewById(R.id.progressbar);
                     if (CommonMethod.isInternetConnected(InformationDetailActivity.this)) {
                         new CommentList().execute(strID);
                     } else {
@@ -262,12 +265,12 @@ public class InformationDetailActivity extends AppCompatActivity {
                             } else {
                                 String strComment = etComment.getText().toString();
                                 if (TextUtils.isEmpty(strComment)) {
-                                    etComment.setError("Please enter your comment.");
+                                    etComment.setError("Please enter your comments!");
                                     etComment.requestFocus();
                                 } else {
                                     if (approve.equalsIgnoreCase("1")) {
 
-                                        new CommentPost().execute(etComment.getText().toString());
+                                        new CommentPost().execute(CommonMethod.encodeEmoji(etComment.getText().toString()));
                                         etComment.setText("");
                                     } else {
 //                                    Toast.makeText(InformationDetailActivity.this, "You are not approved user.", Toast.LENGTH_SHORT).show();
@@ -298,11 +301,12 @@ public class InformationDetailActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(InformationDetailActivity.this)
+           /* loadingProgressDialog = KProgressHUD.create(InformationDetailActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+            progressBar.setVisibility(View.VISIBLE);
 
         }
 
@@ -311,7 +315,7 @@ public class InformationDetailActivity extends AppCompatActivity {
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
             return responseJSON;
         }
 
@@ -358,10 +362,12 @@ public class InformationDetailActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
+/*
             if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+
+            progressBar.setVisibility(View.GONE);
             listView = (ListView) dialog.findViewById(R.id.listbyPeopleComment);
             txt_nodata_today = (TextView) dialog.findViewById(R.id.txt_nocomment);
             if (listView != null) {
@@ -398,7 +404,7 @@ public class InformationDetailActivity extends AppCompatActivity {
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
             return responseJSON;
         }
 
@@ -472,7 +478,7 @@ public class InformationDetailActivity extends AppCompatActivity {
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
             return responseJSON;
         }
 
@@ -561,8 +567,8 @@ public class InformationDetailActivity extends AppCompatActivity {
                 holder.txtCommentUserName.setText("Admin");
                 holder.txtCommentDescription.setText(monthComments.getComment());
             } else {
-                holder.txtCommentUserName.setText(listname.get(position));
-                holder.txtCommentDescription.setText(monthComments.getComment());
+                holder.txtCommentUserName.setText(CommonMethod.decodeEmoji(listname.get(position)));
+                holder.txtCommentDescription.setText(CommonMethod.decodeEmoji(monthComments.getComment()));
             }
             return convertView;
         }
@@ -600,7 +606,7 @@ public class InformationDetailActivity extends AppCompatActivity {
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", strID));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Comment", params[0]));
-            response = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/info/comment/", nameValuePairs, InformationDetailActivity.this);
+            response = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/comment/", nameValuePairs, InformationDetailActivity.this);
 
 
             return response;
@@ -615,7 +621,7 @@ public class InformationDetailActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     loadingProgressDialog.dismiss();
-                    Toast.makeText(InformationDetailActivity.this, "Comment added successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InformationDetailActivity.this, R.string.commentsuccess, Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 } else {
                     loadingProgressDialog.dismiss();
@@ -646,7 +652,7 @@ public class InformationDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
-            responeJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/info/likeinfo/", nameValuePairs, InformationDetailActivity.this);
+            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/likeinfo/", nameValuePairs, InformationDetailActivity.this);
             return responeJSON;
         }
 
@@ -674,7 +680,7 @@ public class InformationDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/info/countlikes/", nameValuePairs, InformationDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/countlikes/", nameValuePairs, InformationDetailActivity.this);
             return responseJSON;
         }
 
@@ -715,7 +721,7 @@ public class InformationDetailActivity extends AppCompatActivity {
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", params[0]));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/info/checklike/", nameValuePairs, InformationDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/checklike/", nameValuePairs, InformationDetailActivity.this);
             return responseJSON;
         }
 
@@ -749,7 +755,7 @@ public class InformationDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -790,7 +796,7 @@ public class InformationDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/countviews/information/?infoid=" + strID + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/information/?infoid=" + strID + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -900,9 +906,9 @@ public class InformationDetailActivity extends AppCompatActivity {
                         Log.e("day", "-----------------" + day);
                         String date = dayOfTheWeek + ", " + day + "/" + intMonth + "/" + year + ", " + string[1];
 
-                        etTitle.setText(title);
-                        txtDate.setText(date);
-                        txtDescri.setText(description);
+                        etTitle.setText(CommonMethod.decodeEmoji(title));
+                        txtDate.setText(CommonMethod.decodeEmoji(date));
+                        txtDescri.setText(CommonMethod.decodeEmoji(description));
                         new countView().execute();
 
 

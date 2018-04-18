@@ -53,7 +53,7 @@ public class QuestionAnswerActivity extends AppCompatActivity implements View.On
         ImageView img_search = (ImageView) toolbar.findViewById(R.id.img_search);
         img_search.setVisibility(View.GONE);
         TextView txt_title = (TextView) toolbar.findViewById(R.id.txt_title);
-        txt_title.setText("Q&A");
+        txt_title.setText("Q & A");
         EditText etText = (EditText) findViewById(R.id.etText);
         txt_today = (TextView) findViewById(R.id.txt_today);
         txt_thisweek = (TextView) findViewById(R.id.txt_thisweek);

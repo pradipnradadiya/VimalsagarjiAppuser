@@ -59,7 +59,7 @@ public class TodayInformationFragment extends Fragment {
     private ImageView imsearch;
     private EditText InputBox;
     private CustomAdpter adpter;
-    private final String TodaySearch = "http://www.grapes-solutions.com/vimalsagarji/info/searchallinfobycidtoday/?page=1&psize=1000";
+    private final String TodaySearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/searchallinfobycidtoday/?page=1&psize=1000";
     private List<InformationCategory> listfilterdata = new ArrayList<>();
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private Intent intent;
@@ -392,19 +392,19 @@ public class TodayInformationFragment extends Fragment {
             }
             InformationCategory inCategory = items.get(position);
             holder.txt_Title.setMaxLines((int) 1.5);
-            holder.txt_Title.setText(inCategory.getTitle());
-            holder.txt_Description.setText(inCategory.getDescription());
-            holder.txt_Date.setText(inCategory.getDay() + ", " + inCategory.getDate());
-            holder.txt_Address.setText(inCategory.getAddress());
-            holder.txt_views.setText(inCategory.getView());
+            holder.txt_Title.setText(CommonMethod.decodeEmoji(inCategory.getTitle()));
+            holder.txt_Description.setText(CommonMethod.decodeEmoji(inCategory.getDescription()));
+            holder.txt_Date.setText(CommonMethod.decodeEmoji(inCategory.getDay() + ", " + inCategory.getDate()));
+            holder.txt_Address.setText(CommonMethod.decodeEmoji(inCategory.getAddress()));
+            holder.txt_views.setText(CommonMethod.decodeEmoji(inCategory.getView()));
 
             InformationCategory nCategory = filterdata.get(position);
             holder.txt_Title.setMaxLines((int) 1.5);
-            holder.txt_Title.setText(nCategory.getTitle());
-            holder.txt_Description.setText(nCategory.getDescription());
-            holder.txt_Date.setText(inCategory.getDay() + ", " + inCategory.getDate());
-            holder.txt_Address.setText(inCategory.getAddress());
-            holder.txt_views.setText(inCategory.getView());
+            holder.txt_Title.setText(CommonMethod.decodeEmoji(nCategory.getTitle()));
+            holder.txt_Description.setText(CommonMethod.decodeEmoji(nCategory.getDescription()));
+            holder.txt_Date.setText(CommonMethod.decodeEmoji(inCategory.getDay() + ", " + inCategory.getDate()));
+            holder.txt_Address.setText(CommonMethod.decodeEmoji(inCategory.getAddress()));
+            holder.txt_views.setText(CommonMethod.decodeEmoji(inCategory.getView()));
             return convertView;
         }
 

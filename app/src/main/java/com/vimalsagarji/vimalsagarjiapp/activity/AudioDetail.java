@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,13 +67,14 @@ public class AudioDetail extends AppCompatActivity {
     private String view;
     EditText et_event;
     TextView txt_title;
-    private final String Imagepath = "http://www.grapes-solutions.com/vimalsagarji/static/audioimage/";
-    private final String AudioPath = "http://www.grapes-solutions.com/vimalsagarji/static/audios/";
+    private final String Imagepath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audioimage/";
+    private final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audios/";
     TextView txtDate;
     String click_action;
     int commentsize;
 
     private final ArrayList<String> listname = new ArrayList<>();
+    private ProgressBar progressbar;
 
     @Override
     public void onBackPressed() {
@@ -87,6 +89,7 @@ public class AudioDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.audio_playing_activity);
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         sharedpreferance = new Sharedpreferance(AudioDetail.this);
@@ -195,7 +198,7 @@ public class AudioDetail extends AppCompatActivity {
                             new getLikeCount().execute(id);
                             new CheckLike().execute(sharedpreferance.getId(), id);
                         } else {
-                            Toast.makeText(getApplicationContext(), "Already liked this information.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.likealready, Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Snackbar.make(v, R.string.internet, Snackbar.LENGTH_SHORT).show();
@@ -218,7 +221,7 @@ public class AudioDetail extends AppCompatActivity {
                     dialog = new Dialog(AudioDetail.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
-
+                    progressbar= (ProgressBar) dialog.findViewById(R.id.progressbar);
                     if (CommonMethod.isInternetConnected(AudioDetail.this)) {
                         new CommentList().execute(id);
 
@@ -250,11 +253,11 @@ public class AudioDetail extends AppCompatActivity {
                             } else {
                                 String strComment = etComment.getText().toString();
                                 if (TextUtils.isEmpty(strComment)) {
-                                    etComment.setError("Please enter your comment.");
+                                    etComment.setError("Please enter your comments!");
                                     etComment.requestFocus();
                                 } else {
                                     if (approve.equalsIgnoreCase("1")) {
-                                        new CommentPost().execute(etComment.getText().toString());
+                                        new CommentPost().execute(CommonMethod.encodeEmoji(etComment.getText().toString()));
                                         etComment.setText("");
                                     } else {
 //                                    Toast.makeText(AudioDetail.this, R.string.notregister, Toast.LENGTH_SHORT).show();
@@ -284,7 +287,7 @@ public class AudioDetail extends AppCompatActivity {
     //Method to show the snackbar
     private void showSnackbar(View v) {
         //Creating snackbar
-        Snackbar snackbar = Snackbar.make(v, "Simple Snackbar", Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(v, "Please register to proceed!", Snackbar.LENGTH_LONG);
         //Adding action to snackbar
         snackbar.setAction("Register", new View.OnClickListener() {
             @Override
@@ -317,11 +320,14 @@ public class AudioDetail extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(AudioDetail.this)
+         /*   loadingProgressDialog = KProgressHUD.create(AudioDetail.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
             loadingProgressDialog.show();
+
+*/
+            progressbar.setVisibility(View.VISIBLE);
 
         }
 
@@ -330,7 +336,7 @@ public class AudioDetail extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("aid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/audio/getallappcomments/?page=1&psize=1000", nameValuePairs, AudioDetail.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getallappcomments/?page=1&psize=1000", nameValuePairs, AudioDetail.this);
             return responseJSON;
         }
 
@@ -341,6 +347,7 @@ public class AudioDetail extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                    progressbar.setVisibility(View.GONE);
                     listComments = new ArrayList<>();
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -371,9 +378,10 @@ public class AudioDetail extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (loadingProgressDialog != null) {
+            progressbar.setVisibility(View.GONE);
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
             listView = (ListView) dialog.findViewById(R.id.listbyPeopleComment);
             TextView txt_nodata_today = (TextView) dialog.findViewById(R.id.txt_nocomment);
             if (listView != null) {
@@ -411,7 +419,7 @@ public class AudioDetail extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("aid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/audio/getallappcomments/?page=1&psize=1000", nameValuePairs, AudioDetail.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getallappcomments/?page=1&psize=1000", nameValuePairs, AudioDetail.this);
             return responseJSON;
         }
 
@@ -480,7 +488,7 @@ public class AudioDetail extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("aid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/audio/getallappcomments/?page=1&psize=1000", nameValuePairs, AudioDetail.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getallappcomments/?page=1&psize=1000", nameValuePairs, AudioDetail.this);
             return responseJSON;
         }
 
@@ -600,7 +608,7 @@ public class AudioDetail extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("aid", id));
             nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new BasicNameValuePair("Comment", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/audio/comment/", nameValuePairs, AudioDetail.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/comment/", nameValuePairs, AudioDetail.this);
 
             return responseJSON;
 
@@ -614,7 +622,7 @@ public class AudioDetail extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
-                    Toast.makeText(AudioDetail.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AudioDetail.this, R.string.commentsuccess, Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     loadingProgressDialog.dismiss();
                 } else {
@@ -648,7 +656,7 @@ public class AudioDetail extends AppCompatActivity {
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new BasicNameValuePair("aid", params[0]));
-            responeJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/audio/audiolike/", nameValuePairs, AudioDetail.this);
+            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/audiolike/", nameValuePairs, AudioDetail.this);
             return responeJSON;
         }
 
@@ -677,7 +685,7 @@ public class AudioDetail extends AppCompatActivity {
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("aid", params[0]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/audio/countlikes/", nameValuePairs, AudioDetail.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/countlikes/", nameValuePairs, AudioDetail.this);
             return responseJSON;
         }
 
@@ -718,7 +726,7 @@ public class AudioDetail extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("uid", params[0]));
             nameValuePairs.add(new BasicNameValuePair("aid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/audio/checklike/", nameValuePairs, AudioDetail.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/checklike/", nameValuePairs, AudioDetail.this);
             return responseJSON;
         }
 
@@ -752,7 +760,7 @@ public class AudioDetail extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -793,7 +801,7 @@ public class AudioDetail extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/countviews/audio/?aid=" + id + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/audio/?aid=" + id + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }

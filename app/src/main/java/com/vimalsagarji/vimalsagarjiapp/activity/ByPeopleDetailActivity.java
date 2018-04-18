@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -100,9 +101,9 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
     private String pid;
     private String view;
     TextView txt_title;
-    private final String AudioPath = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleaudio/";
-    private final String VideoPath = "http://www.grapes-solutions.com/vimalsagarji/static/bypeoplevideo/";
-    private final String imagepath = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/";
+    private final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/";
+    private final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/";
+    private final String imagepath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/";
     String click_action;
     RelativeLayout rel_video;
     TextView txt_nodata;
@@ -113,6 +114,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
     private ImageView img_share;
     String title;
     String post;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -190,7 +192,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
 //                            new getLikeCount().execute(pid);
 //                            new CheckLike().execute(sharedpreferance.getId(), pid);
                         } else {
-                            Toast.makeText(getApplicationContext(), "Already liked this information.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.likealready, Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         final Snackbar snackbar = Snackbar
@@ -221,6 +223,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                     dialog = new Dialog(ByPeopleDetailActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
+                    progressBar= (ProgressBar) dialog.findViewById(R.id.progressbar);
                     if (CommonMethod.isInternetConnected(ByPeopleDetailActivity.this)) {
                         new CommentList().execute(pid);
                     } else {
@@ -261,11 +264,11 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                                 if (CommonMethod.isInternetConnected(ByPeopleDetailActivity.this)) {
                                     String strComment = etComment.getText().toString();
                                     if (TextUtils.isEmpty(strComment)) {
-                                        etComment.setError("Please enter your comment.");
+                                        etComment.setError("Please enter your comments!");
                                         etComment.requestFocus();
                                     } else {
                                         if (approve.equalsIgnoreCase("1")) {
-                                            new CommentPost().execute(etComment.getText().toString());
+                                            new CommentPost().execute(CommonMethod.encodeEmoji(etComment.getText().toString()));
                                             etComment.setText("");
                                         } else {
 //                                        Toast.makeText(ByPeopleDetailActivity.this, "You are not approved user.", Toast.LENGTH_SHORT).show();
@@ -556,11 +559,13 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(ByPeopleDetailActivity.this)
+            /*loadingProgressDialog = KProgressHUD.create(ByPeopleDetailActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+
+            progressBar.setVisibility(View.VISIBLE);
 
         }
 
@@ -569,7 +574,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
             return responseJSON;
         }
 
@@ -607,9 +612,10 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+           progressBar.setVisibility(View.GONE);
             listView = (ListView) dialog.findViewById(R.id.listbyPeopleComment);
             TextView txt_nodata_today = (TextView) dialog.findViewById(R.id.txt_nocomment);
             if (listView != null) {
@@ -647,7 +653,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
             return responseJSON;
         }
 
@@ -713,7 +719,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
             return responseJSON;
         }
 
@@ -782,7 +788,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", pid));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Comment", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/comment/", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/comment/", nameValuePairs, ByPeopleDetailActivity.this);
 
             return responseJSON;
         }
@@ -795,7 +801,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     loadingProgressDialog.dismiss();
-                    Toast.makeText(ByPeopleDetailActivity.this, "Comment added successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ByPeopleDetailActivity.this, R.string.commentsuccess, Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
 //                    Toast.makeText(ByPeopleDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 } else {
@@ -828,7 +834,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
-            responeJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/postlike/", nameValuePairs, ByPeopleDetailActivity.this);
+            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/postlike/", nameValuePairs, ByPeopleDetailActivity.this);
             return responeJSON;
         }
 
@@ -857,7 +863,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/countlikes/", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/countlikes/", nameValuePairs, ByPeopleDetailActivity.this);
             return responseJSON;
         }
 
@@ -900,7 +906,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", params[0]));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/checklike/", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/checklike/", nameValuePairs, ByPeopleDetailActivity.this);
             return responseJSON;
         }
 
@@ -932,7 +938,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -973,7 +979,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/countviews/bypeople/?bypid=" + pid + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/bypeople/?bypid=" + pid + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1123,9 +1129,9 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                         Log.e("photosubstring", "-------------" + photosubstring);
 
 
-                        etTitle.setText(strtitle);
-                        txtDate.setText(strdate);
-                        txtDescri.setText(strdescri);
+                        etTitle.setText(CommonMethod.decodeEmoji(strtitle));
+                        txtDate.setText(CommonMethod.decodeEmoji(strdate));
+                        txtDescri.setText(CommonMethod.decodeEmoji(strdescri));
                         rel_video.setVisibility(View.GONE);
 
                         Log.e("photo", "---------------" + photosubstring);

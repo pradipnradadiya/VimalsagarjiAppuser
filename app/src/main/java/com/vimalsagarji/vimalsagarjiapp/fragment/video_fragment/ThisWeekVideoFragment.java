@@ -54,10 +54,10 @@ public class ThisWeekVideoFragment extends Fragment {
 
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     final static String TAG = AllVideoFragment.class.getSimpleName();
-    private final String urls = "http://www.grapes-solutions.com/vimalsagarji/video/getvideobycategoryweek/?page=1&psize=1000&cid=";
-    private static String URL = "";//http://www.grapes-solutions.com/vimalsagarji/video/getvideobycategoryweek/?page=1&psize=100&cid=" + video_cat_id;
-    private final String ImgURL = "http://www.grapes-solutions.com/vimalsagarji/static/videoimage/";
-    private final String VideoPath = "http://www.grapes-solutions.com/vimalsagarji/static/videos/";
+    private final String urls = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategoryweek/?page=1&psize=1000&cid=";
+    private static String URL = "";//http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategoryweek/?page=1&psize=100&cid=" + video_cat_id;
+    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videoimage/";
+    private final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videos/";
 
     private final ArrayList<String> listid = new ArrayList<>();
     private final ArrayList<String> listcatid = new ArrayList<>();
@@ -74,7 +74,7 @@ public class ThisWeekVideoFragment extends Fragment {
     private CustomAdpter customAdpter;
     private TextView txt_nodata_today;
     private EditText InputBox;
-    private final String WeekSearchVideo = "http://www.grapes-solutions.com/vimalsagarji/video/searchallvideosbycidthisweek/?page=1&psize=1000";
+    private final String WeekSearchVideo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/searchallvideosbycidthisweek/?page=1&psize=1000";
     private ProgressBar progressbar;
 
 
@@ -662,7 +662,7 @@ public class ThisWeekVideoFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/geteventsbycategoryweek/?page=1&psize=1000");
+                responJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryweek/?page=1&psize=1000");
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -690,11 +690,11 @@ public class ThisWeekVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/eventvideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String view = object.getString("View");
@@ -774,7 +774,7 @@ public class ThisWeekVideoFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/getallapppostsweek/?page=1&psize=1000");
+                responJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsweek/?page=1&psize=1000");
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -802,11 +802,11 @@ public class ThisWeekVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/bypeoplevideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String view = object.getString("View");
@@ -891,7 +891,7 @@ public class ThisWeekVideoFragment extends Fragment {
 
                 params.add(new BasicNameValuePair("searchterm", searchitem));
                 System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.grapes-solutions.com/vimalsagarji/event/searcheventsbycategoryweek/?searchterm=vimal&page=1&psize=100", "POST", params);
+                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/searcheventsbycategoryweek/?searchterm=vimal&page=1&psize=100", "POST", params);
                 // JSONObject json = JSONParser.getJsonFromUrl(url);
                 Log.d("Create Response", json.toString());
                 status = json.optString(TAG_SUCCESS);
@@ -910,11 +910,11 @@ public class ThisWeekVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/eventvideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/eventaudio/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String view = object.getString("View");
@@ -996,7 +996,7 @@ public class ThisWeekVideoFragment extends Fragment {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("searchterm", searchitem));
                 System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.grapes-solutions.com/vimalsagarji/bypeople/searchallpoststhisweek/?page=1&psize=1000", "POST", params);
+                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/searchallpoststhisweek/?page=1&psize=1000", "POST", params);
                 // JSONObject json = JSONParser.getJsonFromUrl(url);
                 Log.d("Create Response", json.toString());
                 status = json.optString(TAG_SUCCESS);
@@ -1015,11 +1015,11 @@ public class ThisWeekVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/bypeoplevideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String view = object.getString("View");

@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,12 +72,13 @@ public class VideoDetailActivity extends AppCompatActivity {
     String click_action;
     EditText et_event;
     TextView txtDate;
-    private final String ImgURL = "http://www.grapes-solutions.com/vimalsagarji/static/videoimage/";
-    private final String VideoPath = "http://www.grapes-solutions.com/vimalsagarji/static/videos/";
+    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videoimage/";
+    private final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videos/";
     String videoid;
     RelativeLayout rel_video;
     int flag = 0;
     int commentsize;
+    private ProgressBar progressBar;
 //    VideoView video_view;
 
     @Override
@@ -227,7 +229,7 @@ public class VideoDetailActivity extends AppCompatActivity {
                             new getLikeCount().execute(id);
                             new CheckLike().execute(sharedpreferance.getId(), id);
                         } else {
-                            Toast.makeText(getApplicationContext(), "Already liked this information.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.likealready, Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         final Snackbar snackbar = Snackbar
@@ -259,6 +261,7 @@ public class VideoDetailActivity extends AppCompatActivity {
                     dialog = new Dialog(VideoDetailActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
+                    progressBar = (ProgressBar) dialog.findViewById(R.id.progressbar);
 
                     if (CommonMethod.isInternetConnected(VideoDetailActivity.this)) {
                         new CommentList().execute(vid);
@@ -298,11 +301,11 @@ public class VideoDetailActivity extends AppCompatActivity {
                             } else {
                                 String strComment = etComment.getText().toString();
                                 if (TextUtils.isEmpty(strComment)) {
-                                    etComment.setError("Please enter your comment.");
+                                    etComment.setError("Please enter your comments!");
                                     etComment.requestFocus();
                                 } else {
                                     if (approve.equalsIgnoreCase("1")) {
-                                        new CommentPost().execute(id, sharedpreferance.getId(), strComment);
+                                        new CommentPost().execute(id, sharedpreferance.getId(), CommonMethod.encodeEmoji(strComment));
                                         etComment.setText("");
                                     } else {
 //                                    Toast.makeText(VideoDetailActivity.this, "You are not approved user.", Toast.LENGTH_SHORT).show();
@@ -344,11 +347,13 @@ public class VideoDetailActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(VideoDetailActivity.this)
+           /* loadingProgressDialog = KProgressHUD.create(VideoDetailActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+
+            progressBar.setVisibility(View.VISIBLE);
 
         }
 
@@ -357,7 +362,7 @@ public class VideoDetailActivity extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
             return responseJSON;
         }
 
@@ -398,9 +403,10 @@ public class VideoDetailActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (loadingProgressDialog != null) {
+          /*  if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+            progressBar.setVisibility(View.GONE);
             listView = (ListView) dialog.findViewById(R.id.listbyPeopleComment);
             TextView txt_nodata_today = (TextView) dialog.findViewById(R.id.txt_nocomment);
             if (listView != null) {
@@ -438,7 +444,7 @@ public class VideoDetailActivity extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
             return responseJSON;
         }
 
@@ -508,7 +514,7 @@ public class VideoDetailActivity extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
             return responseJSON;
         }
 
@@ -625,7 +631,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("vid", params[0]));
             nameValuePairs.add(new BasicNameValuePair("uid", params[1]));
             nameValuePairs.add(new BasicNameValuePair("Comment", params[2]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/video/comment/", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/comment/", nameValuePairs, VideoDetailActivity.this);
 
             return responseJSON;
         }
@@ -638,11 +644,11 @@ public class VideoDetailActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     loadingProgressDialog.dismiss();
-                    Toast.makeText(VideoDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VideoDetailActivity.this, R.string.commentsuccess, Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 } else {
                     loadingProgressDialog.dismiss();
-                    Toast.makeText(VideoDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VideoDetailActivity.this, R.string.commentsuccess, Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -669,7 +675,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
-            responeJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/video/videolike/", nameValuePairs, VideoDetailActivity.this);
+            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/videolike/", nameValuePairs, VideoDetailActivity.this);
             return responeJSON;
         }
 
@@ -698,7 +704,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/video/countlikes/", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/countlikes/", nameValuePairs, VideoDetailActivity.this);
             return responseJSON;
         }
 
@@ -741,7 +747,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", params[0]));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/video/checklike/", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/checklike/", nameValuePairs, VideoDetailActivity.this);
             return responseJSON;
         }
 
@@ -774,7 +780,7 @@ public class VideoDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -815,7 +821,7 @@ public class VideoDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/countviews/video/?vid=" + vid + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/video/?vid=" + vid + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }

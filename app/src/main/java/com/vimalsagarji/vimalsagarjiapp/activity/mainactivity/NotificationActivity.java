@@ -18,8 +18,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kaopiz.kprogresshud.KProgressHUD;
-import com.vimalsagarji.vimalsagarjiapp.MainActivity;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.adpter.NotificationListAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
@@ -32,9 +30,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by Grapes-Pradip on 02-Oct-17.
- */
 
 public class NotificationActivity extends AppCompatActivity {
     private RecyclerView recycleview_notification;
@@ -55,18 +50,18 @@ public class NotificationActivity extends AppCompatActivity {
     NotificationListAdapter notificationListAdapter;
     ArrayList<NotificationItem> notificationItems;
     private TextView txt_title;
-    private ImageView imgarrorback,img_search;
+    private ImageView imgarrorback, img_search;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
 
-        imgarrorback= (ImageView) findViewById(R.id.imgarrorback);
-        img_search= (ImageView) findViewById(R.id.img_search);
+        imgarrorback = (ImageView) findViewById(R.id.imgarrorback);
+        img_search = (ImageView) findViewById(R.id.img_search);
         img_search.setVisibility(View.GONE);
 
-        txt_title= (TextView) findViewById(R.id.txt_title);
+        txt_title = (TextView) findViewById(R.id.txt_title);
         txt_title.setText("Latest Posts");
 
         imgarrorback.setOnClickListener(new View.OnClickListener() {
@@ -136,34 +131,35 @@ public class NotificationActivity extends AppCompatActivity {
         recycleview_notification.setLayoutManager(linearLayoutManager);
         img_nodata = (ImageView) findViewById(R.id.img_nodata);
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_menu, menu);
+
+    /*
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.home_menu, menu);
 
 
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_home) {
-            finish();
-            overridePendingTransition(R.anim.slide_out_right, R.anim.slide_out_left);
             return true;
         }
 
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            // Handle action bar item clicks here. The action bar will
+            // automatically handle clicks on the Home/Up button, so long
+            // as you specify a parent activity in AndroidManifest.xml.
+            int id = item.getItemId();
 
-        return super.onOptionsItemSelected(item);
-    }
-*/
+            //noinspection SimplifiableIfStatement
+            if (id == R.id.action_home) {
+                finish();
+                overridePendingTransition(R.anim.slide_out_right, R.anim.slide_out_left);
+                return true;
+            }
+
+
+            return super.onOptionsItemSelected(item);
+        }
+    */
     private class GetNotificationList extends AsyncTask<String, Void, String> {
 
         String responseString = "";
@@ -182,7 +178,7 @@ public class NotificationActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            responseString = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/notificationcount/countnotification/?page=" + page_count + "&psize=20");
+            responseString = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/notificationcount/countnotification/?page=" + page_count + "&psize=20");
             return responseString;
         }
 

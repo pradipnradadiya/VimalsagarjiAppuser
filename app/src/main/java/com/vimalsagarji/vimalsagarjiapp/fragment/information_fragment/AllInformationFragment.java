@@ -63,7 +63,7 @@ public class AllInformationFragment extends Fragment {
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
 
     private List<InformationCategory> listallsearchdata = new ArrayList<>();
-    private final String SearchAll = "http://www.grapes-solutions.com/vimalsagarji/info/searchallinfo/?page=1&psize=1000";
+    private final String SearchAll = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/searchallinfo/?page=1&psize=1000";
     private String URL;
     private ProgressBar progressbar;
 
@@ -389,18 +389,18 @@ public class AllInformationFragment extends Fragment {
             }
             InformationCategory informationCategory1 = items.get(position);
 
-            holder.txt_Title.setText(informationCategory1.getTitle());
-            holder.txt_Description.setText(informationCategory1.getDescription());
-            holder.txt_Date.setText(informationCategory1.getDate());
-            holder.txt_Address.setText(informationCategory1.getAddress());
-            holder.txt_views.setText(informationCategory1.getView());
+            holder.txt_Title.setText(CommonMethod.decodeEmoji(informationCategory1.getTitle()));
+            holder.txt_Description.setText(CommonMethod.decodeEmoji(informationCategory1.getDescription()));
+            holder.txt_Date.setText(CommonMethod.decodeEmoji(informationCategory1.getDate()));
+            holder.txt_Address.setText(CommonMethod.decodeEmoji(informationCategory1.getAddress()));
+            holder.txt_views.setText(CommonMethod.decodeEmoji(informationCategory1.getView()));
 
             InformationCategory informationCategory = filterdata.get(position);
-            holder.txt_Title.setText(informationCategory.getTitle());
-            holder.txt_Description.setText(informationCategory.getDescription());
-            holder.txt_Date.setText(informationCategory.getDay() + ", " + informationCategory.getDate());
-            holder.txt_Address.setText(informationCategory.getAddress());
-            holder.txt_views.setText(informationCategory.getView());
+            holder.txt_Title.setText(CommonMethod.decodeEmoji(informationCategory.getTitle()));
+            holder.txt_Description.setText(CommonMethod.decodeEmoji(informationCategory.getDescription()));
+            holder.txt_Date.setText(CommonMethod.decodeEmoji(informationCategory.getDay() + ", " + informationCategory.getDate()));
+            holder.txt_Address.setText(CommonMethod.decodeEmoji(informationCategory.getAddress()));
+            holder.txt_views.setText(CommonMethod.decodeEmoji(informationCategory.getView()));
 
             return convertView;
         }

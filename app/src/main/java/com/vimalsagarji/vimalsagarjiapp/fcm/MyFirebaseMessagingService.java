@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.vimalsagarji.vimalsagarjiapp.MainActivity;
+import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
 import com.vimalsagarji.vimalsagarjiapp.activity.AudioDetail;
 import com.vimalsagarji.vimalsagarjiapp.activity.ByPeopleDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.EventDetailActivity;
@@ -275,6 +275,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     resultIntent.putExtra("message", message);
                     if (sharedpreferance.getPushNotification().equalsIgnoreCase("pushon")) {
 
+
                         // check for image attachment
                         if (TextUtils.isEmpty(imageUrl)) {
                             showNotificationMessage(getApplicationContext(), "Gallery", category_title + "- New image added.", "false", resultIntent);
@@ -286,7 +287,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         Toast.makeText(getApplicationContext(), "Push notification off", Toast.LENGTH_LONG).show();
                     }
                 } else if (click_action.equalsIgnoreCase("user_click")) {
-                    Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent resultIntent = new Intent(getApplicationContext(), ActivityHomeMain.class);
                     resultIntent.putExtra("message", message);
                     if (sharedpreferance.getPushNotification().equalsIgnoreCase("pushon")) {
 
@@ -400,7 +401,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         Toast.makeText(getApplicationContext(), "Push notification off", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent resultIntent = new Intent(getApplicationContext(), ActivityHomeMain.class);
                     resultIntent.putExtra("message", message);
                     if (sharedpreferance.getPushNotification().equalsIgnoreCase("pushon")) {
 
@@ -584,7 +585,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         Toast.makeText(getApplicationContext(), "Push notification off", Toast.LENGTH_LONG).show();
                     }
                 } else if (click_action.equalsIgnoreCase("user_click")) {
-                    Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent resultIntent = new Intent(getApplicationContext(), ActivityHomeMain.class);
                     resultIntent.putExtra("message", message);
                     if (sharedpreferance.getPushNotification().equalsIgnoreCase("pushon")) {
 
@@ -697,7 +698,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         Toast.makeText(getApplicationContext(), "Push notification off", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent resultIntent = new Intent(getApplicationContext(), ActivityHomeMain.class);
                     resultIntent.putExtra("message", message);
                     if (sharedpreferance.getPushNotification().equalsIgnoreCase("pushon")) {
 

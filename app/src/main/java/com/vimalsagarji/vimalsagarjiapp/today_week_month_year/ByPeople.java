@@ -98,7 +98,6 @@ public class ByPeople extends AppCompatActivity implements View.OnClickListener 
         img_search.setOnClickListener(this);
         btn_addpost.setOnClickListener(this);
         etText.setHint("By People");
-        imgSerch.setImageResource(R.drawable.ic_action_add);
         imgSerch.setOnClickListener(this);
         lin_today = (LinearLayout) findViewById(R.id.lin_today);
         lin_week = (LinearLayout) findViewById(R.id.lin_week);
@@ -112,7 +111,7 @@ public class ByPeople extends AppCompatActivity implements View.OnClickListener 
     //Method to show the snackbar
     private void showSnackbar(View v) {
         //Creating snackbar
-        Snackbar snackbar = Snackbar.make(v, "Please first register then add post.", Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_LONG);
 
         //Adding action to snackbar
         snackbar.setAction("Register", new View.OnClickListener() {
@@ -134,6 +133,7 @@ public class ByPeople extends AppCompatActivity implements View.OnClickListener 
         //Displaying snackbar
         snackbar.show();
     }
+
 
     @Override
     public void onClick(View v) {
@@ -164,8 +164,8 @@ public class ByPeople extends AppCompatActivity implements View.OnClickListener 
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 break;
-            case R.id.imgSerch:
 
+            case R.id.imgSerch:
                 if (approve.equalsIgnoreCase("1")) {
                     Intent intent2 = new Intent(ByPeople.this, NewPostByPeople.class);
                     startActivity(intent2);
@@ -204,7 +204,7 @@ public class ByPeople extends AppCompatActivity implements View.OnClickListener 
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }

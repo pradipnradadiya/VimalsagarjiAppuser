@@ -42,8 +42,8 @@ import java.util.List;
 public class GalleryCategory extends AppCompatActivity {
 
     static final String TAG = GalleryCategory.class.getSimpleName();
-    private static final String URL = "http://www.grapes-solutions.com/vimalsagarji/gallery/getallimages/?page=1&psize=1000";
-    private static final String ImgURL = "http://www.grapes-solutions.com/vimalsagarji/static/Gallery/";
+    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallimages/?page=1&psize=1000";
+    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/";
     private final ArrayList<String> listIcon = new ArrayList<String>();
     String strImageUrl = "";
     static Bitmap bitmap = null;
@@ -175,7 +175,7 @@ public class GalleryCategory extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/gallery/getallimagesbycid/?cid=" + cid + "&page=1&psize=1000");
+            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallimagesbycid/?cid=" + cid + "&page=1&psize=1000");
 
             return responseJSON;
         }
@@ -243,7 +243,7 @@ public class GalleryCategory extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000");
+            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000");
 
             return responseJSON;
         }
@@ -264,7 +264,7 @@ public class GalleryCategory extends AppCompatActivity {
 
                         } else {
 
-                            String photo = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + jsonObject1.getString("Photo");
+                            String photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + jsonObject1.getString("Photo");
                             itemSplashArrayList.add(new ImageItemSplash(photo, photo));
                             listIcon.add(photo);
                         }
@@ -314,7 +314,7 @@ public class GalleryCategory extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000");
+            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000");
 
             return responseJSON;
         }
@@ -336,7 +336,7 @@ public class GalleryCategory extends AppCompatActivity {
                         if (jsonObject1.getString("Photo").equalsIgnoreCase("null")) {
 
                         } else {
-                            String photo = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/" + jsonObject1.getString("Photo");
+                            String photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + jsonObject1.getString("Photo");
                             String[] photoarray = photo.split(",");
                             Log.e("photo array 0", "--------------" + photoarray[0]);
                             itemSplashArrayList.add(new ImageItemSplash(photoarray[0], photoarray[0]));

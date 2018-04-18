@@ -17,9 +17,11 @@
         android:layout_below="@+id/toolbar"
         android:orientation="horizontal">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            >
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomEditText
                 android:id="@+id/edittext_search"
@@ -29,6 +31,7 @@
                 android:background="@color/white"
                 android:drawableLeft="@drawable/ic_searching"
                 android:hint="Search"
+                android:lines="1"
                 android:padding="10dp" />
 
             <ImageView
@@ -39,7 +42,7 @@
                 android:layout_centerVertical="true"
                 android:padding="10dp"
                 android:src="@drawable/ic_action_cancel" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/img_datasearch"

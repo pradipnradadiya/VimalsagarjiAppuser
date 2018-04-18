@@ -1,12 +1,18 @@
 package com.vimalsagarji.vimalsagarjiapp;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -18,8 +24,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -121,6 +125,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
     private ImageView img_menu_drawer, img_search, img_notification;
 
     ImageView img_slide;
+    String currentVersion, playStoreVersion;
 
 //    private final String url = "http://ecx.images-amazon.com/images/I/71Pe-ft8QsL._UL1500_.jpg";
 //    private final String url1 = "http://www.wamanharipethesons.com/portalrepository/catalogs/default/WHPS288.248_0_r.jpg";
@@ -131,6 +136,56 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            currentVersion = pInfo.versionName;
+            Log.e("version", "------------------" + currentVersion);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        /*
+
+        VersionChecker versionChecker = new VersionChecker();
+        try {
+            String latestVersion = versionChecker.execute().get();
+            Log.e("latest version","------------"+latestVersion);
+
+            if (currentVersion.equalsIgnoreCase(latestVersion)){
+
+            }else{
+
+                AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(this);
+                }
+                builder.setTitle("Alert")
+                        .setMessage("this app update version available in play store.")
+                        .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                            }
+                        })
+                        .setNegativeButton("Remind me later", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+*/
         sharedpreferance = new Sharedpreferance(ActivityHomeMain.this);
         //Push Notification
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
@@ -164,7 +219,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 
         if (CommonMethod.isInternetConnected(ActivityHomeMain.this)) {
             new LoadSlideImage().execute();
-        }else{
+        } else {
             img_slide.setVisibility(View.VISIBLE);
         }
     }
@@ -197,7 +252,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 
     private void findID() {
 
-        img_slide= (ImageView) findViewById(R.id.img_slide);
+        img_slide = (ImageView) findViewById(R.id.img_slide);
         viewpager_slider = (ViewPager) findViewById(R.id.viewPager);
         indicator = (DashboardCirclePageIndicator) findViewById(R.id.indicator);
 
@@ -577,7 +632,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         if (CommonMethod.isInternetConnected(ActivityHomeMain.this)) {
 //            new LoadSlideImage().execute();
             img_slide.setVisibility(View.GONE);
-        }else{
+        } else {
             img_slide.setVisibility(View.VISIBLE);
         }
 //
@@ -585,17 +640,21 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 
     private class LoadSlideImage extends AsyncTask<String, Void, String> {
         String response = null;
+        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog = new ProgressDialog(ActivityHomeMain.this);
+            progressDialog.setMessage("Please wait..");
+            progressDialog.show();
         }
 
 
         @Override
         protected String doInBackground(String... strings) {
             try {
-                response = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/gallery/getImages");
+                response = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getImages");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -606,20 +665,28 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            progressDialog.dismiss();
+            try {
+                new CheckVersion().execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             Log.e("response", "---------------" + s);
             try {
                 JSONObject jsonObject = new JSONObject(s);
 
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
 
+
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        itemSplashArrayList.add(new SliderItem("http://"+jsonObject1.getString("url")));
+                        itemSplashArrayList.add(new SliderItem(jsonObject1.getString("url")));
                     }
 
                 }
             } catch (JSONException e) {
+
                 e.printStackTrace();
             }
 
@@ -654,4 +721,71 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         }
 
     }
+
+
+    private class CheckVersion extends AsyncTask<String, Void, String> {
+        String responseString = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                responseString = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getversion");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return responseString;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+
+                    playStoreVersion = jsonObject.getString("message");
+
+                    if (playStoreVersion.equalsIgnoreCase(currentVersion)) {
+
+                    } else {
+
+                        AlertDialog.Builder builder;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            builder = new AlertDialog.Builder(ActivityHomeMain.this, android.R.style.Theme_Material_Dialog_Alert);
+                        } else {
+                            builder = new AlertDialog.Builder(ActivityHomeMain.this);
+                        }
+                        builder.setTitle("Alert")
+
+                                .setMessage("Your apps update version available in play store.")
+                                .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // continue with delete
+                                    }
+                                })
+                                .setNegativeButton("Remind me later", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // do nothing
+
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+
 }

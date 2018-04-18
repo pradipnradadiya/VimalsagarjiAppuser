@@ -73,7 +73,7 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
     private EditText InputBox;
     List<ThoughtToday> listfilterdata = new ArrayList<>();
     private Dialog dialog;
-    private final String MonthSearchQuestion = "http://www.grapes-solutions.com/vimalsagarji/questionanswer/searchallappquesmonth/?page=1&psize=1000";
+    private final String MonthSearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/searchallappquesmonth/?page=1&psize=1000";
     String approve = "";
     private ProgressBar progressbar;
 
@@ -195,7 +195,7 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
                                 if (CommonMethod.isInternetConnected(getActivity())) {
                                     String txtpost = etAskQuestion.getText().toString();
                                     if (TextUtils.isEmpty(txtpost)) {
-                                        etAskQuestion.setError("Please enter ask question.");
+                                        etAskQuestion.setError("Please enter your question!");
                                         etAskQuestion.requestFocus();
                                     } else {
                                         new postData().execute(txtpost);
@@ -250,7 +250,7 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/questionanswer/viewallappquesmonth/?page=1&psize=1000");
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesmonth/?page=1&psize=1000");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -346,7 +346,7 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/questionanswer/viewallappquesmonth/?page=1&psize=1000");
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesmonth/?page=1&psize=1000");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -500,7 +500,7 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
                 nameValuePairs.add(new BasicNameValuePair("Question", params[0]));
-                responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/questionanswer/askques/", nameValuePairs, getActivity());
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/", nameValuePairs, getActivity());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -519,7 +519,7 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     dialog.dismiss();
                     loadingProgressDialog.dismiss();
-                    Toast.makeText(getActivity(), "Question asked successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Thank you! You will be responded shortly.", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(getActivity(), "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 } else {
                     dialog.dismiss();
@@ -640,7 +640,7 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
     //Method to show the snackbar
     private void showSnackbar(View v) {
         //Creating snackbar
-        Snackbar snackbar = Snackbar.make(v, "Please register after ask question.", Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_LONG);
 
         //Adding action to snackbar
         snackbar.setAction("Register", new View.OnClickListener() {
@@ -678,7 +678,7 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }

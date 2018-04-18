@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="5dp"
+    android:background="@color/homepage_back"
     >
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -14,7 +15,6 @@
 
         <ListView
             android:id="@+id/list_today"
-            android:background="@color/homepage_back"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >

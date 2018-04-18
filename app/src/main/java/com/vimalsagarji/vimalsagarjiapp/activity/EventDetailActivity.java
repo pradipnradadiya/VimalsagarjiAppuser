@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -114,9 +115,9 @@ public class EventDetailActivity extends AppCompatActivity {
     private TextView txt_title;
     private EditText et_event;
 
-    private final String Photopath = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/";
-    private final String Audiopath = "http://www.grapes-solutions.com/vimalsagarji/static/eventaudio/";
-    private final String Videopath = "http://www.grapes-solutions.com/vimalsagarji/static/eventvideo/";
+    private final String Photopath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/";
+    private final String Audiopath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/";
+    private final String Videopath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/";
 
     String listtitle;
     String strDate;
@@ -153,6 +154,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private ImageView img_share;
     String title;
     String description;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -281,7 +283,7 @@ public class EventDetailActivity extends AppCompatActivity {
 //                            new EventDetail().execute();
 
                         } else {
-                            Toast.makeText(getApplicationContext(), "Already liked this information.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.likealready, Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         final Snackbar snackbar = Snackbar
@@ -316,6 +318,7 @@ public class EventDetailActivity extends AppCompatActivity {
                     dialog = new Dialog(EventDetailActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
+                    progressBar= (ProgressBar) dialog.findViewById(R.id.progressbar);
                     if (CommonMethod.isInternetConnected(EventDetailActivity.this)) {
                         new CommentList().execute(strEventId);
                     } else {
@@ -344,11 +347,11 @@ public class EventDetailActivity extends AppCompatActivity {
                             } else {
                                 String strComment = etComment.getText().toString();
                                 if (TextUtils.isEmpty(strComment)) {
-                                    etComment.setError("Please enter your comment.");
+                                    etComment.setError("Please enter your comments!");
                                     etComment.requestFocus();
                                 } else {
                                     if (approve.equalsIgnoreCase("1")) {
-                                        new CommentPost().execute(strComment);
+                                        new CommentPost().execute(CommonMethod.encodeEmoji(strComment));
                                         etComment.setText("");
                                     } else {
 //                                    Toast.makeText(EventDetailActivity.this, "You are not approved user.", Toast.LENGTH_SHORT).show();
@@ -484,11 +487,13 @@ public class EventDetailActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadingProgressDialog = KProgressHUD.create(EventDetailActivity.this)
+            /*loadingProgressDialog = KProgressHUD.create(EventDetailActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(true);
-            loadingProgressDialog.show();
+            loadingProgressDialog.show();*/
+
+            progressBar.setVisibility(View.VISIBLE);
 
         }
 
@@ -497,7 +502,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/getallcomments/?page=1&psize=1000", nameValuePairs, EventDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/getallcomments/?page=1&psize=1000", nameValuePairs, EventDetailActivity.this);
             return responseJSON;
         }
 
@@ -537,9 +542,10 @@ public class EventDetailActivity extends AppCompatActivity {
             }
 
 
-            if (loadingProgressDialog != null) {
+           /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
-            }
+            }*/
+           progressBar.setVisibility(View.GONE);
             listView = (ListView) dialog.findViewById(R.id.listbyPeopleComment);
             txt_nodata_today = (TextView) dialog.findViewById(R.id.txt_nocomment);
             if (listView != null) {
@@ -577,7 +583,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/getallcomments/?page=1&psize=1000", nameValuePairs, EventDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/getallcomments/?page=1&psize=1000", nameValuePairs, EventDetailActivity.this);
             return responseJSON;
         }
 
@@ -708,7 +714,7 @@ public class EventDetailActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
 //                    Toast.makeText(EventDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(EventDetailActivity.this, "Comment added successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EventDetailActivity.this, R.string.commentsuccess, Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 } else {
                     Toast.makeText(EventDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
@@ -740,7 +746,7 @@ public class EventDetailActivity extends AppCompatActivity {
             try {
                 ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", strEventId));
-                responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/geteventdetails/", nameValuePairs, EventDetailActivity.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventdetails/", nameValuePairs, EventDetailActivity.this);
             } catch (Exception e) {
                 Log.e("Exception", e.toString());
             }
@@ -781,7 +787,7 @@ public class EventDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[0]));
-            responeJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/eventlike/", nameValuePairs, EventDetailActivity.this);
+            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/eventlike/", nameValuePairs, EventDetailActivity.this);
             return responeJSON;
         }
 
@@ -794,7 +800,7 @@ public class EventDetailActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     loadingProgressDialog.dismiss();
-                    Toast.makeText(EventDetailActivity.this, "Events like successfully.", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(EventDetailActivity.this, "Events like successfully.", Toast.LENGTH_SHORT).show();
                     new getLikeCount().execute(strEventId);
                 }
             } catch (JSONException e) {
@@ -819,7 +825,7 @@ public class EventDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[0]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/countlikes/", nameValuePairs, EventDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/countlikes/", nameValuePairs, EventDetailActivity.this);
             return responseJSON;
         }
 
@@ -863,7 +869,7 @@ public class EventDetailActivity extends AppCompatActivity {
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", params[0]));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/checklike/", nameValuePairs, EventDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/checklike/", nameValuePairs, EventDetailActivity.this);
             return responseJSON;
         }
 
@@ -903,7 +909,7 @@ public class EventDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -944,7 +950,7 @@ public class EventDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/countviews/event/?eid=" + strEventId + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/event/?eid=" + strEventId + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1094,10 +1100,10 @@ public class EventDetailActivity extends AppCompatActivity {
                         Log.e("photosubstring", "-------------" + photosubstring);
 
                         txtvideolink.setText(videoLink);
-                        event_dis.setText(description);
-                        et_event.setText(title);
-                        txtAddress.setText(address);
-                        txtDate.setText(date);
+                        event_dis.setText(CommonMethod.decodeEmoji(description));
+                        et_event.setText(CommonMethod.decodeEmoji(title));
+                        txtAddress.setText(CommonMethod.decodeEmoji(address));
+                        txtDate.setText(CommonMethod.decodeEmoji(date));
 
 
                     }

@@ -69,14 +69,17 @@
             android:textStyle="italic"
             android:visibility="gone"
             tools:ignore="HardcodedText" />
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            />
     </RelativeLayout>
 
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
-    </RelativeLayout>
 
     <com.vimalsagarji.vimalsagarjiapp.utils.CustomEditText
         android:textColor="@color/cardview_dark_background"
@@ -99,7 +102,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:background="@drawable/back_gradiant"
+        android:background="@drawable/round_rect_shapeoneselect"
         android:text="Post"
         android:textColor="@color/textColorPrimary"
         android:textSize="14sp"

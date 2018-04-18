@@ -44,8 +44,8 @@ public class CompetitionActivity extends AppCompatActivity {
     private TextView grid_txtTitle;
     //    private KProgressHUD loadingProgressDialog;
     private static final String TAG = CompetitionActivity.class.getSimpleName();
-    private static final String URL = "http://www.grapes-solutions.com/vimalsagarji/competition/getallcategory/?page=1&psize=1000";
-    private static final String ImgURL = "http://www.grapes-solutions.com/vimalsagarji/static/competitioncategory/";
+    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/competition/getallcategory/?page=1&psize=1000";
+    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/competitioncategory/";
     private final ArrayList<String> listID = new ArrayList<String>();
     private final ArrayList<String> listName = new ArrayList<String>();
     private final ArrayList<String> listIcon = new ArrayList<String>();

@@ -48,7 +48,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5sp"
             android:text="Yes"
-            android:textColor="@color/orange"
+            android:textColor="@color/black"
             android:textSize="16sp"
             tools:ignore="HardcodedText" />
     </FrameLayout>
@@ -77,7 +77,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5sp"
             android:text="No"
-            android:textColor="@color/orange"
+            android:textColor="@color/black"
             android:textSize="16sp"
             tools:ignore="HardcodedText" />
 
@@ -100,7 +100,7 @@
             android:background="@drawable/textview_yes"
             android:gravity="center"
             android:text="Yes"
-            android:textColor="@color/orange"
+            android:textColor="@color/black"
             android:textSize="16sp"
             tools:ignore="HardcodedText,RtlHardcoded" />
 
@@ -112,7 +112,7 @@
             android:background="@drawable/textview_no"
             android:gravity="center"
             android:text="No"
-            android:textColor="@color/orange"
+            android:textColor="@color/black"
             android:textSize="16sp"
             tools:ignore="HardcodedText,RtlHardcoded" />
 

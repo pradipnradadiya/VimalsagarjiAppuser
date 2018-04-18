@@ -60,7 +60,7 @@ public class ThisMonthThoughtsFragment extends Fragment {
 
     private EditText InputBox;
     private List<ThoughtToday> listfilterdata = new ArrayList<>();
-    private final String MonthSearchThought = "http://www.grapes-solutions.com/vimalsagarji/thought/searchallthoughtsbycidmonth/?page=1&psize=1000";
+    private final String MonthSearchThought = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/searchallthoughtsbycidmonth/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private ProgressBar progressbar;
 
@@ -170,7 +170,7 @@ public class ThisMonthThoughtsFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON1 = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/thought/getallthoughtsbycidmonth/?page=1&psize=1000");
+                responseJSON1 = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidmonth/?page=1&psize=1000");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -273,7 +273,7 @@ public class ThisMonthThoughtsFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON1 = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/thought/getallthoughtsbycidmonth/?page=1&psize=1000");
+                responseJSON1 = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidmonth/?page=1&psize=1000");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -393,10 +393,10 @@ public class ThisMonthThoughtsFragment extends Fragment {
                 holder = (ViewHolder) convertView.getTag();
             }
             ThoughtToday ats = items.get(position);
-            holder.txt_views.setText(ats.getView());
-            holder.txt_Title.setText(ats.getTitle());
-            holder.txt_Description.setText(ats.getDescription());
-            holder.txt_Date.setText(ats.getDate());
+            holder.txt_views.setText(CommonMethod.decodeEmoji(ats.getView()));
+            holder.txt_Title.setText(CommonMethod.decodeEmoji(ats.getTitle()));
+            holder.txt_Description.setText(CommonMethod.decodeEmoji(ats.getDescription()));
+            holder.txt_Date.setText(CommonMethod.decodeEmoji(ats.getDate()));
             return convertView;
 
         }

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.vimalsagarji.vimalsagarjiapp.MainActivity;
+import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.AudioDetail;
 import com.vimalsagarji.vimalsagarjiapp.activity.ByPeopleDetailActivity;
@@ -18,14 +18,11 @@ import com.vimalsagarji.vimalsagarjiapp.activity.EventDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.InformationDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.ThoughtsDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.VideoDetailActivity;
-import com.vimalsagarji.vimalsagarjiapp.categoryactivity.CompetitionActivity;
 import com.vimalsagarji.vimalsagarjiapp.model.NotificationItem;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.CompetitionList;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.OpinionPoll;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Grapes-Pradip on 04-Oct-17.
@@ -177,7 +174,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
             } else if (itemArrayList.get(getAdapterPosition()).getTable().equalsIgnoreCase("Question")) {
-                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                Intent intent = new Intent(v.getContext(), ActivityHomeMain.class);
                 intent.putExtra("listID", itemArrayList.get(getAdapterPosition()).getId());
                 intent.putExtra("click_action", "");
                 v.getContext().startActivity(intent);

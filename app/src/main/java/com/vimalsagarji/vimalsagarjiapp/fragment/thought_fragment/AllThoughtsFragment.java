@@ -61,7 +61,7 @@ public class AllThoughtsFragment extends Fragment {
 
     private EditText InputBox;
     private List<AllThoughts> listfilterdata = new ArrayList<>();
-    private final String AllSearchThought = "http://www.grapes-solutions.com/vimalsagarji/thought/searchallthoughts/?page=1&psize=1000";
+    private final String AllSearchThought = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/searchallthoughts/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private String url;
     private ProgressBar progressbar;
@@ -359,10 +359,10 @@ public class AllThoughtsFragment extends Fragment {
                 holder = (ViewHolder) convertView.getTag();
             }
             AllThoughts ats = items.get(position);
-            holder.txt_views.setText(ats.getView());
-            holder.txt_Title.setText(ats.getTitle());
-            holder.txt_Description.setText(ats.getDescription());
-            holder.txt_Date.setText(ats.getDate());
+            holder.txt_views.setText(CommonMethod.decodeEmoji(ats.getView()));
+            holder.txt_Title.setText(CommonMethod.decodeEmoji(ats.getTitle()));
+            holder.txt_Description.setText(CommonMethod.decodeEmoji(ats.getDescription()));
+            holder.txt_Date.setText(CommonMethod.decodeEmoji(ats.getDate()));
             return convertView;
 
         }
@@ -370,7 +370,6 @@ public class AllThoughtsFragment extends Fragment {
         private class ViewHolder {
             TextView txt_ID, txt_Title, txt_Description, txt_Date, txt_views;
         }
-
 
     }
 

@@ -64,9 +64,9 @@ public class ThisMonthEventFragment extends Fragment {
     String day = "";
     int dayOfWeek = 0;
     Date date;
-    private final String Photo = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/";
-    private final String Audio = "http://www.grapes-solutions.com/vimalsagarji/static/eventaudio/";
-    private final String Video = "http://www.grapes-solutions.com/vimalsagarji/static/eventvideo/";
+    private final String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/";
+    private final String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/";
+    private final String Video = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/";
     final int drawableImage = R.drawable.event;
 
     private TextView txt_nodata_today;
@@ -74,7 +74,7 @@ public class ThisMonthEventFragment extends Fragment {
     private CustomAdpter adpter;
 //    private KProgressHUD loadingProgressDialog;
     private List<EventAdpter> listfilterdata = new ArrayList<>();
-    private final String MonthSearch = "http://www.grapes-solutions.com/vimalsagarji/event/searcheventsbycategorymonth/?page=1&psize=1000";
+    private final String MonthSearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/searcheventsbycategorymonth/?page=1&psize=1000";
 
     private GridView gridView;
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
@@ -473,10 +473,10 @@ public class ThisMonthEventFragment extends Fragment {
             }
 
             EventAdpter eventAdpterHolder = items.get(position);
-            holder.txt_views.setText(eventAdpterHolder.getView());
-            holder.grid_txtTitle.setText(eventAdpterHolder.getTitle());
-            holder.grid_txtDate.setText(eventAdpterHolder.getDate());
-            holder.grid_txtday.setText(String.valueOf(timelist.get(position)));
+            holder.txt_views.setText(CommonMethod.decodeEmoji(eventAdpterHolder.getView()));
+            holder.grid_txtTitle.setText(CommonMethod.decodeEmoji(eventAdpterHolder.getTitle()));
+            holder.grid_txtDate.setText(CommonMethod.decodeEmoji(eventAdpterHolder.getDate()));
+            holder.grid_txtday.setText(CommonMethod.decodeEmoji(String.valueOf(timelist.get(position))));
             String strPhoto = eventAdpterHolder.getPhoto();
 
             return convertView;

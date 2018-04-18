@@ -155,7 +155,7 @@ public class ThoughtCommentList extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("tid", id));
             nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new BasicNameValuePair("Comment", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/thought/comment/", nameValuePairs, ThoughtCommentList.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/comment/", nameValuePairs, ThoughtCommentList.this);
             return responseJSON;
         }
 
@@ -207,7 +207,7 @@ public class ThoughtCommentList extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("tid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/thought/getallappcomments/?page=" + page_count + "&psize=30", nameValuePairs, ThoughtCommentList.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallappcomments/?page=" + page_count + "&psize=30", nameValuePairs, ThoughtCommentList.this);
             return responseJSON;
         }
 

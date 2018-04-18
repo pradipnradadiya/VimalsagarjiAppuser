@@ -54,10 +54,10 @@ public class ThisMonthVideoFragment extends Fragment {
 
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     final static String TAG = AllVideoFragment.class.getSimpleName();
-    private final String urls = "http://www.grapes-solutions.com/vimalsagarji/video/getvideobycategorymonth/?page=1&psize=1000&cid=";
-    private static String URL = "";//http://www.grapes-solutions.com/vimalsagarji/video/getvideobycategorymonth/?page=1&psize=100&cid=" + video_cat_id;
-    private final String ImgURL = "http://www.grapes-solutions.com/vimalsagarji/static/videoimage/";
-    private final String VideoPath = "http://www.grapes-solutions.com/vimalsagarji/static/videos/";
+    private final String urls = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategorymonth/?page=1&psize=1000&cid=";
+    private static String URL = "";//http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategorymonth/?page=1&psize=100&cid=" + video_cat_id;
+    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videoimage/";
+    private final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videos/";
 
     private final ArrayList<String> listid = new ArrayList<>();
     private final ArrayList<String> listcatid = new ArrayList<>();
@@ -76,7 +76,7 @@ public class ThisMonthVideoFragment extends Fragment {
     private CustomAdpter customAdpter;
     private TextView txt_nodata_today;
     private EditText InputBox;
-    private final String MonthSearchVideo = "http://www.grapes-solutions.com/vimalsagarji/video/searchallvideosbycidthismonth/?page=1&psize=1000";
+    private final String MonthSearchVideo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/searchallvideosbycidthismonth/?page=1&psize=1000";
     private ProgressBar progressbar;
 
     @Override
@@ -285,12 +285,12 @@ public class ThisMonthVideoFragment extends Fragment {
                         listcatid.add(catid);
                         String video = object.getString("Video");
                         String[] vi = video.split(",");
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/eventvideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
                         String[] parray = photo.split(",");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/" + parray[0];
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + parray[0];
 
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
@@ -782,7 +782,7 @@ public class ThisMonthVideoFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/geteventsbycategorymonth/?page=1&psize=1000");
+                responJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorymonth/?page=1&psize=1000");
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -810,11 +810,11 @@ public class ThisMonthVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/eventvideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");
@@ -894,7 +894,7 @@ public class ThisMonthVideoFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/getallapppostsmonth/?page=1&psize=1000");
+                responJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsmonth/?page=1&psize=1000");
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -922,11 +922,11 @@ public class ThisMonthVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/bypeoplevideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String view = object.getString("View");
@@ -1012,7 +1012,7 @@ public class ThisMonthVideoFragment extends Fragment {
 
                 params.add(new BasicNameValuePair("searchterm", searchitem));
                 System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.grapes-solutions.com/vimalsagarji/event/searcheventsbycategorymonth/?searchterm=vimal&page=1&psize=100", "POST", params);
+                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/searcheventsbycategorymonth/?searchterm=vimal&page=1&psize=100", "POST", params);
                 // JSONObject json = JSONParser.getJsonFromUrl(url);
                 Log.d("Create Response", json.toString());
                 status = json.optString(TAG_SUCCESS);
@@ -1031,11 +1031,11 @@ public class ThisMonthVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/eventvideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/eventaudio/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");
@@ -1117,7 +1117,7 @@ public class ThisMonthVideoFragment extends Fragment {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("searchterm", searchitem));
                 System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.grapes-solutions.com/vimalsagarji/bypeople/searchallpoststhismonth/?page=1&psize=1000", "POST", params);
+                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/searchallpoststhismonth/?page=1&psize=1000", "POST", params);
                 // JSONObject json = JSONParser.getJsonFromUrl(url);
                 Log.d("Create Response", json.toString());
                 status = json.optString(TAG_SUCCESS);
@@ -1136,11 +1136,11 @@ public class ThisMonthVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.grapes-solutions.com/vimalsagarji/static/bypeoplevideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String view = object.getString("View");

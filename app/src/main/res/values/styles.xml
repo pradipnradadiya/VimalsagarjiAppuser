@@ -163,4 +163,9 @@
     <style name="AppTheme.WhiteAccent">
         <item name="colorAccent">@color/white</item> <!-- Whatever color you want-->
     </style>
+
+    <style name="AppTheme.BlackAccesnt">
+        <item name="colorAccent">@color/black</item> <!-- Whatever color you want-->
+    </style>
+
 </resources>

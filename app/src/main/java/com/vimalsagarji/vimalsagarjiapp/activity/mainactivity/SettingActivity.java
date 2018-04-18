@@ -13,7 +13,6 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
-import com.vimalsagarji.vimalsagarjiapp.MainActivity;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.ByPeople;
@@ -70,12 +69,12 @@ public class SettingActivity extends AppCompatActivity {
                     // The toggle is enabled
                     sharedpreferance.savePushNotification("pushon");
                     pushonoff.setChecked(true);
-                    Toast.makeText(SettingActivity.this, "Push notification on.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingActivity.this, "You will get notifications from now!", Toast.LENGTH_SHORT).show();
                 } else {
                     // The toggle is disabled
                     sharedpreferance.savePushNotification("pushoff");
                     pushonoff.setChecked(false);
-                    Toast.makeText(SettingActivity.this, "Push notification off.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingActivity.this, "You will not receive any notification from now!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

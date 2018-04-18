@@ -69,13 +69,13 @@ public class TodayQuetionAnswerFragment extends Fragment {
     private String strAskQuestion;
     private ListView listView;
     private Button btn_askQuestion;
-    private final String postQue = "http://www.grapes-solutions.com/vimalsagarji/questionanswer/askques/";
+    private final String postQue = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/";
 
     private Dialog dialog;
     private TextView txt_nodata_today;
     private EditText InputBox;
     List<ThoughtToday> listfilterdata = new ArrayList<>();
-    private final String TodaySearchQuestion = "http://www.grapes-solutions.com/vimalsagarji/questionanswer/searchallappquestoday/?page=1&psize=1000";
+    private final String TodaySearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/searchallappquestoday/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     String approve = "";
     private ProgressBar progressbar;
@@ -202,7 +202,7 @@ public class TodayQuetionAnswerFragment extends Fragment {
                                 if (CommonMethod.isInternetConnected(getActivity())) {
                                     String txtpost = etAskQuestion.getText().toString();
                                     if (TextUtils.isEmpty(txtpost)) {
-                                        etAskQuestion.setError("Please enter ask question.");
+                                        etAskQuestion.setError("Please enter your question!");
                                         etAskQuestion.requestFocus();
                                     } else {
                                         new postData().execute(txtpost);
@@ -240,7 +240,7 @@ public class TodayQuetionAnswerFragment extends Fragment {
     //Method to show the snackbar
     private void showSnackbar(View v) {
         //Creating snackbar
-        Snackbar snackbar = Snackbar.make(v, "Please register after ask question.", Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(v, R.string.notregister, Snackbar.LENGTH_LONG);
 
         //Adding action to snackbar
         snackbar.setAction("Register", new View.OnClickListener() {
@@ -284,7 +284,7 @@ public class TodayQuetionAnswerFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/questionanswer/viewallappquestoday/?page=1&psize=1000");
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquestoday/?page=1&psize=1000");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -386,7 +386,7 @@ public class TodayQuetionAnswerFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/questionanswer/viewallappquestoday/?page=1&psize=1000");
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquestoday/?page=1&psize=1000");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -562,7 +562,7 @@ public class TodayQuetionAnswerFragment extends Fragment {
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     dialog.dismiss();
                     loadingProgressDialog.dismiss();
-                    Toast.makeText(getActivity(), "Question asked successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Thank you! You will be responded shortly.", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(getActivity(), "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 } else {
                     dialog.dismiss();
@@ -687,7 +687,7 @@ public class TodayQuetionAnswerFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }

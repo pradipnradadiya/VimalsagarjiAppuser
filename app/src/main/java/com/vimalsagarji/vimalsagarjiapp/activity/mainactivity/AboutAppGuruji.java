@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vimalsagarji.vimalsagarjiapp.R;
+import com.vimalsagarji.vimalsagarjiapp.utils.TextJustification;
 
 
 public class AboutAppGuruji extends AppCompatActivity implements View.OnClickListener {
@@ -91,8 +92,9 @@ public class AboutAppGuruji extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_eng:
-                txt_description.setText(getResources().getString(R.string.about_guruji_eng));
 
+                txt_description.setText(getResources().getString(R.string.about_guruji_eng));
+                TextJustification.justify(txt_description);
                 txt_eng.setTextColor(Color.WHITE);
                 txt_hnd.setTextColor(Color.BLACK);
                 txt_guj.setTextColor(Color.BLACK);
@@ -102,8 +104,11 @@ public class AboutAppGuruji extends AppCompatActivity implements View.OnClickLis
                 txt_guj.setBackgroundResource(R.drawable.round_rect_shapeone);
 
 
+
+
                 break;
             case R.id.txt_hnd:
+                TextJustification.justify(txt_description);
                 txt_description.setText(getResources().getString(R.string.about_guruji_hnd));
 
                 txt_eng.setTextColor(Color.BLACK);
@@ -113,6 +118,10 @@ public class AboutAppGuruji extends AppCompatActivity implements View.OnClickLis
                 txt_eng.setBackgroundResource(R.drawable.round_rect_shapeone);
                 txt_hnd.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
                 txt_guj.setBackgroundResource(R.drawable.round_rect_shapeone);
+
+
+
+
 
                 break;
             case R.id.txt_guj:
@@ -124,6 +133,10 @@ public class AboutAppGuruji extends AppCompatActivity implements View.OnClickLis
                 txt_eng.setBackgroundResource(R.drawable.round_rect_shapeone);
                 txt_hnd.setBackgroundResource(R.drawable.round_rect_shapeone);
                 txt_guj.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
+
+                TextJustification.justify(txt_description);
+
+
                 break;
         }
     }

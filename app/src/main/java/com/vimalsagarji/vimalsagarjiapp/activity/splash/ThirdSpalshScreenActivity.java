@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
-import com.vimalsagarji.vimalsagarjiapp.MainActivity;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
@@ -71,7 +70,10 @@ public class ThirdSpalshScreenActivity extends AppCompatActivity {
                 if (CommonMethod.isInternetConnected(ThirdSpalshScreenActivity.this)) {
                     new AllreadyRegisterUser().execute(sharedpreferance.getEmail(), sharedpreferance.getMobile(), sharedpreferance.getToken());
                 } else {
-                    Toast.makeText(ThirdSpalshScreenActivity.this, R.string.internet, Toast.LENGTH_SHORT).show();
+
+
+
+                    Toast.makeText(ThirdSpalshScreenActivity.this, R.string.internet, Toast.LENGTH_LONG).show();
 //                    try {
 //                        Thread.sleep(2000);
 ////
@@ -102,7 +104,7 @@ public class ThirdSpalshScreenActivity extends AppCompatActivity {
                 nameValuePairs.add(new BasicNameValuePair("EmailID", params[0]));
                 nameValuePairs.add(new BasicNameValuePair("Phone", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("DeviceID", params[2]));
-                responseJSON = CommonMethod.postStringResponse("http://www.grapes-solutions.com/vimalsagarji/aluser/checkuser", nameValuePairs, ThirdSpalshScreenActivity.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/aluser/checkuser", nameValuePairs, ThirdSpalshScreenActivity.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }

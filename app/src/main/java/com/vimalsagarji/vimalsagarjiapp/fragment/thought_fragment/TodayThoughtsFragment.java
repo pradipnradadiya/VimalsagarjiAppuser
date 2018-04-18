@@ -59,7 +59,7 @@ public class TodayThoughtsFragment extends Fragment {
 
     private EditText InputBox;
     private List<ThoughtToday> listfilterdata = new ArrayList<>();
-    private final String TodaySearchThought = "http://www.grapes-solutions.com/vimalsagarji/thought/searchallthoughtsbycidtoday/?page=1&psize=1000";
+    private final String TodaySearchThought = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/searchallthoughtsbycidtoday/?page=1&psize=1000";
     private String url;
     private ProgressBar progressbar;
 
@@ -173,7 +173,7 @@ public class TodayThoughtsFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/thought/getallthoughtsbycidtoday/?page=1&psize=1000");
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidtoday/?page=1&psize=1000");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -275,7 +275,7 @@ public class TodayThoughtsFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/thought/getallthoughtsbycidtoday/?page=1&psize=1000");
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidtoday/?page=1&psize=1000");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -383,10 +383,10 @@ public class TodayThoughtsFragment extends Fragment {
                 holder = (ViewHolder) convertView.getTag();
             }
             ThoughtToday ats = items.get(position);
-            holder.txt_views.setText(ats.getView());
-            holder.txt_Title.setText(ats.getTitle());
-            holder.txt_Description.setText(ats.getDescription());
-            holder.txt_Date.setText(ats.getDate());
+            holder.txt_views.setText(CommonMethod.decodeEmoji(ats.getView()));
+            holder.txt_Title.setText(CommonMethod.decodeEmoji(ats.getTitle()));
+            holder.txt_Description.setText(CommonMethod.decodeEmoji(ats.getDescription()));
+            holder.txt_Date.setText(CommonMethod.decodeEmoji(ats.getDate()));
             return convertView;
 
         }
@@ -492,7 +492,6 @@ public class TodayThoughtsFragment extends Fragment {
             }
 
         }
-
     }
 
     @Override

@@ -79,14 +79,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
         android:gravity="right"
         android:orientation="horizontal"
         tools:ignore="RtlHardcoded">
 
         <LinearLayout
             android:id="@+id/lin_like"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
             android:gravity="center"
@@ -103,10 +102,10 @@
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:id="@+id/txt_like_event"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="0"
+                android:text="10000"
                 android:textColor="@color/red"
                 tools:ignore="HardcodedText,RtlHardcoded" />
 
@@ -115,7 +114,7 @@
 
         <LinearLayout
             android:id="@+id/lin_comment"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:gravity="center"
@@ -132,7 +131,7 @@
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:id="@+id/txt_comment_event"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="0"

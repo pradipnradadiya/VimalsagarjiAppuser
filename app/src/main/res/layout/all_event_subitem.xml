@@ -205,7 +205,7 @@
                 <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.7"
+                    android:layout_weight="0.8"
                     android:text="Videolink :"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -233,7 +233,7 @@
                 <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.7"
+                    android:layout_weight="0.8"
                     android:text="Location :"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -259,7 +259,7 @@
 
                 <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                     android:layout_width="0dp"
-                    android:layout_weight="0.7"
+                    android:layout_weight="0.8"
                     android:layout_height="wrap_content"
                     android:text="Description :"
                     android:textColor="@color/black"
@@ -289,7 +289,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="2dp"
         android:layout_weight="1"
         android:gravity="right"
         android:orientation="horizontal"
@@ -297,7 +296,7 @@
 
         <LinearLayout
             android:id="@+id/lin_like"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="60dp"
@@ -315,7 +314,7 @@
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:id="@+id/txt_like_event"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="0"
@@ -327,7 +326,7 @@
 
         <LinearLayout
             android:id="@+id/lin_comment"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
@@ -345,7 +344,7 @@
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:id="@+id/txt_comment_event"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="0"

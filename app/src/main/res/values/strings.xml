@@ -2,7 +2,10 @@
     <string name="app_name">Nayi Soch, Sahi Disha</string>
     <string name="text_test">Playing</string>
     <string name="internet">Internet not connected.</string>
-    <string name="notregister">Please first register.</string>
+    <string name="notregister">Please register to proceed!</string>
+    <string name="commentsuccess">Thank you for your valuable comments!</string>
+    <string name="likealready">Thank you! You have already liked it!</string>
+    <!--<string name="notregister">Please first register.</string>-->
 
     <string name="authkey">170539A1PovTWJpc0s5996ef0e</string>
     <string name="title_activity_main2">Nayi Soch, Sahi Disha</string>
@@ -35,8 +38,10 @@
     <string name="gujrati">Gujrati</string>
 
 
-    <!--About-->
-    <string name="about_guruji_eng">English</string>
+
+
+    <string name="about_guruji_eng">Before i start coding i have intialized the array constants ( member_names , profile_pics , statues , contactType  ) inside res/strings.xml . and also i  have kept  all the images inside the drawable folder which you  can find in the download source code below .Before i start coding i have intialized the array constants ( member_names , profile_pics , statues , contactType  ) inside res/strings.xml . and also i  have kept  all the images inside the drawable folder which you  can find in the download source code below .\n\nBefore i start coding i have intialized the array constants ( member_names , profile_pics , statues , contactType  ) inside res/strings.xml . and also i  have kept  all the images inside the drawable folder which you  can find in the download source code below .Before i start coding i have intialized the array constants ( member_names , profile_pics , statues , contactType  ) inside res/strings.xml . and also i  have kept  all the images inside the drawable folder which you  can find in the download source code below .</string>
+
     <string name="about_guruji_hnd">हिंदी</string>
     <string name="about_guruji_guj">ગુજરાતી</string>
 

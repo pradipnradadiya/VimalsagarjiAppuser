@@ -55,7 +55,7 @@ public class AllEventFragment extends Fragment {
     }
 
     private static final String TAG = AllEventFragment.class.getSimpleName();
-    private static final String URL ="http://www.grapes-solutions.com/vimalsagarji/event/geteventsbycategoryyear/?cid=1&page=1&psize=1000";
+    private static final String URL ="http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryyear/?cid=1&page=1&psize=1000";
 //    private static final String URL = Constant.GET_ALLYEAR_EVENT_DATA;
     static String img = Constant.ImgURL;
     private List<EventAdpter> listAllEvent = new ArrayList<>();
@@ -64,9 +64,9 @@ public class AllEventFragment extends Fragment {
     int dayOfWeek = 0;
     Date date;
     private View view;
-    private final String Photo = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/";
-    private final String Audio = "http://www.grapes-solutions.com/vimalsagarji/static/eventaudio/";
-    private final String Video = "http://www.grapes-solutions.com/vimalsagarji/static/eventvideo/";
+    private final String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/";
+    private final String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/";
+    private final String Video = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/";
     final int drawableImage = R.drawable.event;
 
     private TextView txt_nodata_today;
@@ -74,7 +74,7 @@ public class AllEventFragment extends Fragment {
     private CustomAdpter adpter;
     //    private KProgressHUD loadingProgressDialog;
     private List<EventAdpter> listfilterdata = new ArrayList<>();
-    private final String AllSearch = "http://www.grapes-solutions.com/vimalsagarji/event/searchalleventsbycategory/?page=1&psize=1000";
+    private final String AllSearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/searchalleventsbycategory/?page=1&psize=1000";
 
     private GridView gridView;
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
@@ -180,6 +180,7 @@ public class AllEventFragment extends Fragment {
             try {
                 JSONObject jsonObject = JSONParser.getJsonFromUrl(strUrl);
                 // for (int i=0; i<jsonObject.length()  ;i++){
+                Log.e("allevent","--------------"+jsonObject);
                 JSONArray array = jsonObject.getJSONArray("data");
                 timelist=new ArrayList<>();
                 if (array != null) {
@@ -463,10 +464,10 @@ public class AllEventFragment extends Fragment {
             }
 
             EventAdpter eventAdpterHolder = items.get(position);
-            holder.txt_views.setText(eventAdpterHolder.getView());
-            holder.grid_txtTitle.setText(eventAdpterHolder.getTitle());
-            holder.grid_txtDate.setText(eventAdpterHolder.getDate());
-            holder.grid_txtday.setText(String.valueOf(timelist.get(position)));
+            holder.txt_views.setText(CommonMethod.decodeEmoji(eventAdpterHolder.getView()));
+            holder.grid_txtTitle.setText(CommonMethod.decodeEmoji(eventAdpterHolder.getTitle()));
+            holder.grid_txtDate.setText(CommonMethod.decodeEmoji(eventAdpterHolder.getDate()));
+            holder.grid_txtday.setText(CommonMethod.decodeEmoji(String.valueOf(timelist.get(position))));
             String strPhoto = eventAdpterHolder.getPhoto();
 
             return convertView;

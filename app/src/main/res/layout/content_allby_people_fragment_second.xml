@@ -255,7 +255,6 @@
                                             android:layout_width="25dp"
                                             android:layout_height="20dp"
                                             android:layout_marginTop="7dp"
-                                            android:src="@drawable/prevplay"
                                             tools:ignore="ContentDescription,RtlHardcoded" />
 
                                         <RelativeLayout
@@ -268,14 +267,12 @@
                                                 android:layout_width="25dp"
                                                 android:layout_height="25dp"
                                                 android:layout_marginTop="5dp"
-                                                android:src="@drawable/audioplay"
                                                 tools:ignore="ContentDescription,TooDeepLayout" />
 
                                             <ImageView
                                                 android:layout_width="25dp"
                                                 android:layout_height="25dp"
                                                 android:layout_marginTop="5dp"
-                                                android:src="@drawable/audiopush"
                                                 tools:ignore="ContentDescription" />
                                         </RelativeLayout>
 
@@ -284,7 +281,6 @@
                                             android:layout_width="25dp"
                                             android:layout_height="20dp"
                                             android:layout_marginTop="7dp"
-                                            android:src="@drawable/nextplay"
 
                                             tools:ignore="ContentDescription" />
 
@@ -375,7 +371,6 @@
                     android:layout_marginLeft="100dp"
                     android:layout_marginTop="20dp"
                     android:layout_weight="0.5"
-                    android:drawableLeft="@drawable/like_select"
                     android:padding="10dp"
                     android:text="2"
                     android:textAllCaps="false"
@@ -402,30 +397,30 @@
                     tools:ignore="HardcodedText,RtlHardcoded" />
             </LinearLayout>
         </ScrollView>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:background="@color/view" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1sp"
-                android:layout_marginTop="5sp"
-                android:background="@color/red" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_margin="15dp"
                 android:layout_weight="9"
                 android:gravity="right"
                 android:orientation="horizontal"
-                tools:ignore="RtlHardcoded">
+                tools:ignore="RtlHardcoded"
+                android:padding="10dp"
+                >
 
                 <LinearLayout
                     android:id="@+id/lin_like"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="60dp"
                     android:gravity="center"
@@ -442,7 +437,7 @@
 
                     <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                         android:id="@+id/txt_like_event"
-                        android:layout_width="wrap_content"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="0"
@@ -455,7 +450,7 @@
 
                 <LinearLayout
                     android:id="@+id/lin_comment"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:gravity="center"
@@ -472,7 +467,7 @@
 
                     <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                         android:id="@+id/txt_comment_event"
-                        android:layout_width="wrap_content"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="0"

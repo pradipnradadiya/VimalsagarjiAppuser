@@ -30,8 +30,8 @@ import static com.vimalsagarji.vimalsagarjiapp.today_week_month_year.GalleryCate
 public class Splash_Activity2 extends AppCompatActivity {
 
 
-    private static final String URL = "http://www.grapes-solutions.com/vimalsagarji/gallery/getallimages/?page=1&psize=1000";
-    private static final String ImgURL = "http://www.grapes-solutions.com/vimalsagarji/static/Gallery/";
+    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallimages/?page=1&psize=1000";
+    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/";
     private ViewPager viewpager_splash;
     //    private CirclePageIndicator indicator;
     private static int currentPage = 0;
@@ -105,7 +105,7 @@ public class Splash_Activity2 extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/gallery/getallimagesbycid/?cid=" + cid + "&page=1&psize=1000");
+            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallimagesbycid/?cid=" + cid + "&page=1&psize=1000");
 
             return responseJSON;
         }

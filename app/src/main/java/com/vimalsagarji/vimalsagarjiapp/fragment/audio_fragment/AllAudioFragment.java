@@ -52,9 +52,9 @@ public class AllAudioFragment extends Fragment {
 
     CustomAdpter customAdpter;
     SwipeRefreshLayout activity_main_swipe_refresh_layout;
-    final static String URL = "http://www.grapes-solutions.com/vimalsagarji/audio/getaudiobycategoryid/?page=1&psize=1000";
-    String ImgURL = "http://www.grapes-solutions.com/vimalsagarji/static/audioimage/";
-    static String AudioPath = "http://www.grapes-solutions.com/vimalsagarji/static/audios/";
+    final static String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getaudiobycategoryid/?page=1&psize=1000";
+    String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audioimage/";
+    static String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audios/";
     ArrayList<ThisMonthAudio> arrayList = new ArrayList<>();
     private static String strCid = "";
     private View view;
@@ -63,7 +63,7 @@ public class AllAudioFragment extends Fragment {
     TextView txt_nodata_today;
     private EditText InputBox;
     private ImageView imsearch;
-    String MonthSearchAudio = "http://www.grapes-solutions.com/vimalsagarji/audio/searchallaudio/?page=1&psize=1000";
+    String MonthSearchAudio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/searchallaudio/?page=1&psize=1000";
     ListView listView;
 //    ArrayList<ArrayList> audioarraylist=new ArrayList<>();
 
@@ -290,7 +290,7 @@ public class AllAudioFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000");
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -315,7 +315,7 @@ public class AllAudioFragment extends Fragment {
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
                         String Audio = object.getString("Audio");
-                        String Photo = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/" + object.getString("Photo");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + object.getString("Photo");
                         Log.e("photo split", "--------------" + Photo);
                         String[] parray = Photo.split(",");
                         String audiolist = object.getString("Audio");
@@ -556,7 +556,7 @@ public class AllAudioFragment extends Fragment {
                                 i.putExtra("id", items.get(position).getID());
                                 i.putExtra("AudioName", items.get(position).getAudioName());
                                 i.putExtra("CategoryID", items.get(position).getCategoryID());
-                                i.putExtra("Audio", "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleaudio/" + items.get(position).getAudio());
+                                i.putExtra("Audio", "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/" + items.get(position).getAudio());
                                 i.putExtra("Photo", items.get(position).getPhoto());
                                 i.putExtra("Duration", items.get(position).getDuration());
                                 i.putExtra("Date", items.get(position).getDate());
@@ -728,7 +728,7 @@ public class AllAudioFragment extends Fragment {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("searchterm", searchitem));
                 System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.grapes-solutions.com/vimalsagarji/event/searcheventsbycategoryyear/?page=1&psize=1000", "POST", params);
+                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/searcheventsbycategoryyear/?page=1&psize=1000", "POST", params);
                 // JSONObject json = JSONParser.getJsonFromUrl(url);
                 Log.d("Create Response", json.toString());
                 status = json.optString(TAG_SUCCESS);
@@ -743,13 +743,13 @@ public class AllAudioFragment extends Fragment {
                         String id = "eid";
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.grapes-solutions.com/vimalsagarji/static/eventaudio/" + object.getString("Audio");
+                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/" + object.getString("Audio");
                         String audiolist = object.getString("Audio");
                         String[] au = audiolist.split(",");
                         for (int k = 0; i < au.length; i++) {
                             audiolistarraylist.add(au[i]);
                         }
-                        String Photo = "http://www.grapes-solutions.com/vimalsagarji/static/eventimage/" + object.getString("Photo").split(",");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + object.getString("Photo").split(",");
                         Log.e("photo split", "----------------" + Photo);
                         String[] parray = Photo.split(",");
                         String Duration = "5";
@@ -826,7 +826,7 @@ public class AllAudioFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.grapes-solutions.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000");
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -850,7 +850,7 @@ public class AllAudioFragment extends Fragment {
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
                         String Audio = object.getString("Audio");
-                        String Photo = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + object.getString("Photo");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");
@@ -929,7 +929,7 @@ public class AllAudioFragment extends Fragment {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("searchterm", searchitem));
                 System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.grapes-solutions.com/vimalsagarji/bypeople/searchallposts/?page=1&psize=1000", "POST", params);
+                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/searchallposts/?page=1&psize=1000", "POST", params);
                 // JSONObject json = JSONParser.getJsonFromUrl(url);
                 Log.d("Create Response", json.toString());
                 status = json.optString(TAG_SUCCESS);
@@ -943,8 +943,8 @@ public class AllAudioFragment extends Fragment {
                         String id = "bid";
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleaudio/" + object.getString("Audio");
-                        String Photo = "http://www.grapes-solutions.com/vimalsagarji/static/bypeopleimage/" + object.getString("Photo");
+                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/" + object.getString("Audio");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");

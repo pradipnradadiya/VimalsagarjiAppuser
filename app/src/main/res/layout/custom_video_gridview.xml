@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:id="@+id/grid_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
