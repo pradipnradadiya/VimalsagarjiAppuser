@@ -21,11 +21,11 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.kaopiz.kprogresshud.KProgressHUD;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.AudioDetail;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.JSONParser1;
 import com.vimalsagarji.vimalsagarjiapp.model.ThisMonthAudio;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.AudioCategoryitem;
@@ -53,9 +53,9 @@ public class ThisMonthAudioFragment extends Fragment {
     }
 
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
-    private final static String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getaudiobycategorymonth/?page=1&psize=1000";
-    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audioimage/";
-    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audios/";
+    private final static String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/getaudiobycategorymonth/?page=1&psize=1000";
+    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/audioimage/";
+    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/audios/";
     private ArrayList<ThisMonthAudio> arrayList = new ArrayList<>();
     private static String strCid = "";
     private View view;
@@ -66,9 +66,10 @@ public class ThisMonthAudioFragment extends Fragment {
     private TextView txt_nodata_today;
     private EditText InputBox;
     private CustomAdpter customAdpter;
-    private final String MonthSearchAudio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/searchallaudiomonth/?page=1&psize=1000";
+    private final String MonthSearchAudio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/searchallaudiomonth/?page=1&psize=1000";
     private ListView listView;
     private ProgressBar progressbar;
+    Sharedpreferance sharedpreferance;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,12 +83,13 @@ public class ThisMonthAudioFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        sharedpreferance = new Sharedpreferance(getActivity());
         AudioCategoryitem audioCategoryitem = (AudioCategoryitem) getActivity();
         strCid = audioCategoryitem.getMydata();
         listView = (ListView) getActivity().findViewById(R.id.thismonth_audio);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
 
-        progressbar= (ProgressBar) getActivity().findViewById(R.id.progressbar);
+        progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         InputBox = (EditText) getActivity().findViewById(R.id.etText);
         ImageView imsearch = (ImageView) getActivity().findViewById(R.id.imgSerch);
         activity_main_swipe_refresh_layout = (SwipeRefreshLayout) getActivity().findViewById(R.id.activity_main_swipe_refresh_layout);
@@ -107,52 +109,33 @@ public class ThisMonthAudioFragment extends Fragment {
                 return false;
             }
         });
-        imsearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                if (strCid.equalsIgnoreCase("e_alliamgeid")) {
-                    if (CommonMethod.isInternetConnected(getActivity())) {
-                        new SearchMonthEventAudio().execute();
-                    } else {
-                        Snackbar.make(getView(), R.string.internet, Snackbar.LENGTH_SHORT).show();
-                    }
-                } else if (strCid.equalsIgnoreCase("bypeopleidid")) {
-                    if (CommonMethod.isInternetConnected(getActivity())) {
-                        new SearchMonthByPeople().execute();
-                    } else {
-                        Snackbar.make(getView(), R.string.internet, Snackbar.LENGTH_SHORT).show();
-                    }
-
-                } else {
-
-
-                    if (CommonMethod.isInternetConnected(getActivity())) {
-                        new SearchMonthAudio().execute();
-                    } else {
-                        Snackbar.make(getView(), R.string.internet, Snackbar.LENGTH_SHORT).show();
-                    }
-                }
-
-
-            }
-        });
-
 
         if (strCid.equalsIgnoreCase("e_alliamgeid")) {
-            new GetMonthEventAudio().execute();
+            if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                new GetMonthEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategorymonth/?page=1&psize=1000");
+            } else {
+                new GetMonthEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategorymonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+            }
         } else if (strCid.equalsIgnoreCase("bypeopleidid")) {
             if (CommonMethod.isInternetConnected(getActivity())) {
-                new GetMonthByPeople().execute();
+                if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                    new GetMonthByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallapppostsmonth/?page=1&psize=1000");
+                } else {
+                    new GetMonthByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallapppostsmonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                }
             } else {
                 Snackbar.make(getView(), R.string.internet, Snackbar.LENGTH_SHORT).show();
             }
         } else {
 
             if (CommonMethod.isInternetConnected(getActivity())) {
-                GetMonthAudio monthAudio = new GetMonthAudio();
-                monthAudio.execute();
+                if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                    GetMonthAudio monthAudio = new GetMonthAudio();
+                    monthAudio.execute(URL + "&cid=" + strCid);
+                } else {
+                    GetMonthAudio monthAudio = new GetMonthAudio();
+                    monthAudio.execute(URL + "&cid=" + strCid + "&uid=" + sharedpreferance.getId());
+                }
             } else {
                 Snackbar.make(getView(), R.string.internet, Snackbar.LENGTH_SHORT).show();
             }
@@ -165,7 +148,11 @@ public class ThisMonthAudioFragment extends Fragment {
     }
 
     private void loadData() {
-        new LoadGetMonthAudio().execute();
+        if (sharedpreferance.getId().equalsIgnoreCase("")) {
+            new LoadGetMonthAudio().execute(URL + "&cid=" + strCid);
+        } else {
+            new LoadGetMonthAudio().execute(URL + "&cid=" + strCid + "&uid=" + sharedpreferance.getId());
+        }
     }
 
     private class GetMonthAudio extends AsyncTask<String, Void, String> {
@@ -186,7 +173,7 @@ public class ThisMonthAudioFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse(URL + "&cid=" + strCid);
+                responseJSON = CommonMethod.getStringResponse(params[0]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -237,8 +224,13 @@ public class ThisMonthAudioFragment extends Fragment {
                         String[] time = Date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
 
-
-                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate,view));
+                        String flag=null;
+                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                            flag = "true";
+                        }else {
+                            flag = object.getString("is_viewed");
+                        }
+                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate, view, flag));
 
                     }
                 }
@@ -249,23 +241,23 @@ public class ThisMonthAudioFragment extends Fragment {
                 loadingProgressDialog.dismiss();
             }*/
 
-           progressbar.setVisibility(View.GONE);
+            progressbar.setVisibility(View.GONE);
             if (getActivity() != null) {
-            if (listView != null) {
-                customAdpter = new CustomAdpter(getActivity(), arrayList);
+                if (listView != null) {
+                    customAdpter = new CustomAdpter(getActivity(), arrayList);
 
-                if (customAdpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(customAdpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Data");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+                    if (customAdpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(customAdpter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Data");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
-                }
+                    }
 
-            }
+                }
             }
 
         }
@@ -291,7 +283,7 @@ public class ThisMonthAudioFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorymonth/?page=1&psize=1000");
+                responseJSON = CommonMethod.getStringResponse(params[0]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -315,8 +307,8 @@ public class ThisMonthAudioFragment extends Fragment {
                         String id = "eid";
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/" + object.getString("Audio");
-                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + object.getString("Photo");
+                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventaudio/" + object.getString("Audio");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");
@@ -339,7 +331,14 @@ public class ThisMonthAudioFragment extends Fragment {
                         String[] time = Date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
 
-                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate,view));
+                        String flag=null;
+                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                            flag = "true";
+                        }else {
+                            flag = object.getString("is_viewed");
+                        }
+
+                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate, view, flag));
 
                     }
                 }
@@ -349,7 +348,7 @@ public class ThisMonthAudioFragment extends Fragment {
            /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
             }*/
-           progressbar.setVisibility(View.GONE);
+            progressbar.setVisibility(View.GONE);
             if (getActivity() != null) {
                 if (listView != null) {
                     CustomAdpter customAdpter = new CustomAdpter(getActivity(), arrayList);
@@ -386,7 +385,7 @@ public class ThisMonthAudioFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse(URL + "&cid=" + strCid);
+                responseJSON = CommonMethod.getStringResponse(params[0]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -437,7 +436,15 @@ public class ThisMonthAudioFragment extends Fragment {
                         Log.e("time", "-----------------------" + time[1]);
 
 
-                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate,view));
+                        String flag=null;
+                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                            flag = "true";
+                        }else {
+                            flag = object.getString("is_viewed");
+                        }
+
+
+                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate, view, flag));
 
                     }
                 }
@@ -446,22 +453,22 @@ public class ThisMonthAudioFragment extends Fragment {
             }
             if (getActivity() != null) {
 
-            if (listView != null) {
-                customAdpter = new CustomAdpter(getActivity(), arrayList);
+                if (listView != null) {
+                    customAdpter = new CustomAdpter(getActivity(), arrayList);
 
-                if (customAdpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(customAdpter);
-                    activity_main_swipe_refresh_layout.setRefreshing(false);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Data");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+                    if (customAdpter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(customAdpter);
+                        activity_main_swipe_refresh_layout.setRefreshing(false);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setText("No Data");
+                        txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
-                }
+                    }
 
-            }
+                }
 
             }
 
@@ -503,12 +510,23 @@ public class ThisMonthAudioFragment extends Fragment {
                 holder.imgPlayAudio = (ImageView) convertView.findViewById(R.id.imgPlayAudio);
                 holder.imgPlayPush = (ImageView) convertView.findViewById(R.id.imgPlayPush);
                 holder.imgPlayAudio1 = (ImageView) convertView.findViewById(R.id.imgPlayAudio1);
+                holder.img_new = (ImageView) convertView.findViewById(R.id.img_new);
+
                 holder.imgPlayAudio.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Log.e("play audio", "------------------");
+
+                        final ThisMonthAudio informationCategory1 = customAdpter.items.get(position);
+                        Log.e("position list view","---------------------"+position);
+                        informationCategory1.setFlag("true");
+                        customAdpter.items.set(position,informationCategory1);
+                        customAdpter.notifyDataSetChanged();
+
+
+
                         Intent i = new Intent(getActivity(), AudioDetail.class);
-                        i.putExtra("click_action","");
+                        i.putExtra("click_action", "");
                         i.putExtra("id", items.get(position).getID());
                         i.putExtra("AudioName", items.get(position).getAudioName());
                         i.putExtra("CategoryID", items.get(position).getCategoryID());
@@ -531,7 +549,12 @@ public class ThisMonthAudioFragment extends Fragment {
             holder.txt_views.setText(items.get(position).getView());
             holder.txtAudioName.setText(items.get(position).getAudioName());
             holder.txtAudioDate.setText(items.get(position).getDate());
-            Picasso.with(getActivity()).load(items.get(position).getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.no_image).into(holder.imgAudio);
+//            Picasso.with(getActivity()).load(items.get(position).getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.no_image).into(holder.imgAudio);
+
+            Glide.with(getActivity()).load(items.get(position).getPhoto()
+                    .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).dontAnimate().into(holder.imgAudio);
+
+
 //            audioImagname.setText(items.get(position).getAudioName());
 
 
@@ -541,6 +564,16 @@ public class ThisMonthAudioFragment extends Fragment {
 
                 }
             });
+
+
+            if (items.get(position).getFlag().equalsIgnoreCase("true")){
+                holder.img_new.setVisibility(View.GONE);
+            }
+            else{
+                holder.img_new.setVisibility(View.VISIBLE);
+            }
+
+
             return convertView;
         }
 
@@ -548,203 +581,13 @@ public class ThisMonthAudioFragment extends Fragment {
         @SuppressWarnings("unused")
         private class ViewHolder {
             @SuppressWarnings("unused")
-            TextView txtAudioName, txtAudioDate, txtDuration,txt_views;
+            TextView txtAudioName, txtAudioDate, txtDuration, txt_views;
             @SuppressWarnings("unused")
             Button btnLike, btnComment, btnLikeClick;
             @SuppressWarnings("unused")
-            ImageView imgAudio, imgPlayAudio, imgPlayPush, imgPlayAudio1;
+            ImageView imgAudio, imgPlayAudio, imgPlayPush, imgPlayAudio1, img_new;
 
         }
-    }
-
-    @SuppressWarnings({"deprecation", "unused"})
-    public class SearchMonthAudio extends AsyncTask<String, String, String> {
-
-        String status;
-        @SuppressWarnings("unused")
-        public LayoutInflater inflater = null;
-        private static final String TAG_SUCCESS = "success";
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @SuppressWarnings("ResourceType")
-        @Override
-        protected String doInBackground(String... param) {
-            try {
-                JSONParser1 jsonParser = new JSONParser1();
-                //    String count = param[0];
-
-                String searchitem = InputBox.getText().toString();
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("cid", strCid));
-                params.add(new BasicNameValuePair("searchterm", searchitem));
-                System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest(MonthSearchAudio, "POST", params);
-                // JSONObject json = JSONParser.getJsonFromUrl(url);
-                Log.d("Create Response", json.toString());
-                status = json.optString(TAG_SUCCESS);
-                for (int i = 0; i < json.length(); i++) {
-                    arrayList = new ArrayList<>();
-                    JSONArray jsonArray = json.getJSONArray("data");
-                    System.out.println("JsonArray is" + jsonArray.length());
-                    for (int j = 0; j < jsonArray.length(); j++) {
-
-                        JSONObject object = jsonArray.getJSONObject(j);
-                        String id = object.getString("ID");
-                        String AudioName = object.getString("AudioName");
-                        String CategoryID = object.getString("CategoryID");
-                        String Audio = AudioPath + object.getString("Audio");
-                        String Photo = ImgURL + object.getString("Photo");
-                        String Duration = object.getString("Duration");
-                        String Date = object.getString("Date");
-                        String view = object.getString("View");
-                        java.util.Date dt = CommonMethod.convert_date(Date);
-                        Log.e("Convert date is", "------------------" + dt);
-                        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
-                        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
-                        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
-                        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
-                        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
-
-                        Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
-                        Log.e("stringMonth", "-----------------" + stringMonth);
-                        Log.e("intMonth", "-----------------" + intMonth);
-                        Log.e("year", "-----------------" + year);
-                        Log.e("day", "-----------------" + day);
-
-                        String fulldate = day + "/" + intMonth + "/" + year;
-
-                        String[] time = Date.split("\\s+");
-                        Log.e("time", "-----------------------" + time[1]);
-
-
-                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate,view));
-
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return status;
-        }
-
-        protected void onPostExecute(String status) {
-            super.onPostExecute(status);
-            if (getActivity() != null) {
-                if (listView != null) {
-                    customAdpter = new CustomAdpter(getActivity(), arrayList);
-                    if (customAdpter.getCount() != 0) {
-                        listView.setVisibility(View.VISIBLE);
-                        txt_nodata_today.setVisibility(View.GONE);
-                        listView.setAdapter(customAdpter);
-                    } else {
-                        listView.setVisibility(View.GONE);
-                        txt_nodata_today.setText("No Search\n Found");
-                        txt_nodata_today.setVisibility(View.VISIBLE);
-//                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            }
-        }
-
-    }
-
-    @SuppressWarnings({"deprecation", "unused"})
-    public class SearchMonthEventAudio extends AsyncTask<String, String, String> {
-
-        String status;
-        @SuppressWarnings("unused")
-        public LayoutInflater inflater = null;
-        private static final String TAG_SUCCESS = "success";
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @SuppressWarnings("ResourceType")
-        @Override
-        protected String doInBackground(String... param) {
-            try {
-                JSONParser1 jsonParser = new JSONParser1();
-                //    String count = param[0];
-
-                String searchitem = InputBox.getText().toString();
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("searchterm", searchitem));
-                System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/searcheventsbycategorymonth/?page=1&psize=1000", "POST", params);
-                // JSONObject json = JSONParser.getJsonFromUrl(url);
-                Log.d("Create Response", json.toString());
-                status = json.optString(TAG_SUCCESS);
-                for (int i = 0; i < json.length(); i++) {
-                    arrayList = new ArrayList<>();
-                    JSONArray jsonArray = json.getJSONArray("data");
-                    System.out.println("JsonArray is" + jsonArray.length());
-                    for (int j = 0; j < jsonArray.length(); j++) {
-
-                        JSONObject object = jsonArray.getJSONObject(j);
-                        String id = "eid";
-                        String AudioName = object.getString("Title");
-                        String CategoryID = "cid";
-                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/" + object.getString("Audio");
-                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + object.getString("Photo");
-                        String Duration = "5";
-                        String Date = object.getString("Date");
-                        String view = object.getString("View");
-
-                        java.util.Date dt = CommonMethod.convert_date(Date);
-                        Log.e("Convert date is", "------------------" + dt);
-                        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
-                        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
-                        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
-                        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
-                        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
-
-                        Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
-                        Log.e("stringMonth", "-----------------" + stringMonth);
-                        Log.e("intMonth", "-----------------" + intMonth);
-                        Log.e("year", "-----------------" + year);
-                        Log.e("day", "-----------------" + day);
-
-                        String fulldate = day + "/" + intMonth + "/" + year;
-
-                        String[] time = Date.split("\\s+");
-                        Log.e("time", "-----------------------" + time[1]);
-
-
-                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate,view));
-
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return status;
-        }
-
-        protected void onPostExecute(String status) {
-            super.onPostExecute(status);
-            if (getActivity() != null) {
-                if (listView != null) {
-                    CustomAdpter customAdpter = new CustomAdpter(getActivity(), arrayList);
-                    if (customAdpter.getCount() != 0) {
-                        listView.setVisibility(View.VISIBLE);
-                        txt_nodata_today.setVisibility(View.GONE);
-                        listView.setAdapter(customAdpter);
-                    } else {
-                        listView.setVisibility(View.GONE);
-                        txt_nodata_today.setText("No Search\n Found");
-                        txt_nodata_today.setVisibility(View.VISIBLE);
-//                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-        }
-
     }
 
     private class GetMonthByPeople extends AsyncTask<String, Void, String> {
@@ -765,7 +608,7 @@ public class ThisMonthAudioFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsmonth/?page=1&psize=1000");
+                responseJSON = CommonMethod.getStringResponse(params[0]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -789,8 +632,8 @@ public class ThisMonthAudioFragment extends Fragment {
                         String id = "bid";
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/" + object.getString("Audio");
-                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + object.getString("Photo");
+                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleaudio/" + object.getString("Audio");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");
@@ -813,7 +656,14 @@ public class ThisMonthAudioFragment extends Fragment {
                         String[] time = Date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
 
-                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate,view));
+                        String flag=null;
+                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                            flag = "true";
+                        }else {
+                            flag = object.getString("is_viewed");
+                        }
+
+                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate, view, flag));
 
                     }
                 }
@@ -823,123 +673,30 @@ public class ThisMonthAudioFragment extends Fragment {
            /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
             }*/
-           progressbar.setVisibility(View.GONE);
-            if (getActivity() != null) {
-            if (listView != null) {
-                CustomAdpter customAdpter = new CustomAdpter(getActivity(), arrayList);
-
-                if (customAdpter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(customAdpter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setText("No Data");
-                    txt_nodata_today.setVisibility(View.VISIBLE);
-//                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-            }
-
-        }
-
-
-    }
-
-    @SuppressWarnings({"deprecation", "unused"})
-    public class SearchMonthByPeople extends AsyncTask<String, String, String> {
-
-        String status;
-        @SuppressWarnings("unused")
-        public LayoutInflater inflater = null;
-        private static final String TAG_SUCCESS = "success";
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @SuppressWarnings("ResourceType")
-        @Override
-        protected String doInBackground(String... param) {
-            try {
-                JSONParser1 jsonParser = new JSONParser1();
-                //    String count = param[0];
-
-                String searchitem = InputBox.getText().toString();
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("searchterm", searchitem));
-                System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/searchallpoststhismonth/?page=1&psize=1000", "POST", params);
-                // JSONObject json = JSONParser.getJsonFromUrl(url);
-                Log.d("Create Response", json.toString());
-                status = json.optString(TAG_SUCCESS);
-                for (int i = 0; i < json.length(); i++) {
-                    arrayList = new ArrayList<>();
-                    JSONArray jsonArray = json.getJSONArray("data");
-                    System.out.println("JsonArray is" + jsonArray.length());
-                    for (int j = 0; j < jsonArray.length(); j++) {
-
-                        JSONObject object = jsonArray.getJSONObject(j);
-                        String id = "bid";
-                        String AudioName = object.getString("Title");
-                        String CategoryID = "cid";
-                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/" + object.getString("Audio");
-                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + object.getString("Photo");
-                        String Duration = "5";
-                        String Date = object.getString("Date");
-                        String view = object.getString("View");
-
-                        java.util.Date dt = CommonMethod.convert_date(Date);
-                        Log.e("Convert date is", "------------------" + dt);
-                        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
-                        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
-                        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
-                        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
-                        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
-
-                        Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
-                        Log.e("stringMonth", "-----------------" + stringMonth);
-                        Log.e("intMonth", "-----------------" + intMonth);
-                        Log.e("year", "-----------------" + year);
-                        Log.e("day", "-----------------" + day);
-
-                        String fulldate = day + "/" + intMonth + "/" + year;
-
-                        String[] time = Date.split("\\s+");
-                        Log.e("time", "-----------------------" + time[1]);
-
-
-                        arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate,view));
-
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return status;
-        }
-
-        protected void onPostExecute(String status) {
-            super.onPostExecute(status);
+            progressbar.setVisibility(View.GONE);
             if (getActivity() != null) {
                 if (listView != null) {
                     CustomAdpter customAdpter = new CustomAdpter(getActivity(), arrayList);
+
                     if (customAdpter.getCount() != 0) {
                         listView.setVisibility(View.VISIBLE);
                         txt_nodata_today.setVisibility(View.GONE);
                         listView.setAdapter(customAdpter);
                     } else {
                         listView.setVisibility(View.GONE);
-                        txt_nodata_today.setText("No Search\n Found");
+                        txt_nodata_today.setText("No Data");
                         txt_nodata_today.setVisibility(View.VISIBLE);
 //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
                     }
+
+
                 }
             }
 
         }
 
+
     }
+
+
 }

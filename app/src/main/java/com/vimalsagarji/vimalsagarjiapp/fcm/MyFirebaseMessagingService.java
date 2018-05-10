@@ -10,18 +10,13 @@ import android.widget.Toast;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
-import com.vimalsagarji.vimalsagarjiapp.activity.AudioDetail;
-import com.vimalsagarji.vimalsagarjiapp.activity.ByPeopleDetailActivity;
-import com.vimalsagarji.vimalsagarjiapp.activity.EventDetailActivity;
-import com.vimalsagarji.vimalsagarjiapp.activity.InformationDetailActivity;
-import com.vimalsagarji.vimalsagarjiapp.activity.ThoughtsDetailActivity;
-import com.vimalsagarji.vimalsagarjiapp.activity.VideoDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.commentlist.AudioCommentList;
 import com.vimalsagarji.vimalsagarjiapp.activity.commentlist.ByPeopleCommentList;
 import com.vimalsagarji.vimalsagarjiapp.activity.commentlist.EventCommentList;
 import com.vimalsagarji.vimalsagarjiapp.activity.commentlist.InformationCommentList;
 import com.vimalsagarji.vimalsagarjiapp.activity.commentlist.ThoughtCommentList;
 import com.vimalsagarji.vimalsagarjiapp.activity.commentlist.VideoCommentList;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.AudioCategoryitem;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.ByPeople;
@@ -100,12 +95,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             JSONObject data = json;
             String imageUrl = "";
 //            String imageUrl = data.getString("image");
-            String title = data.getString("title");
+            String title = CommonMethod.decodeEmoji(data.getString("title"));
 
-            String click_action = data.getString("click_action");
-            String message = data.getString("message");
-            String categoty_id = data.getString("categoty_id");
-            String category_title = data.getString("category_title");
+            String click_action = CommonMethod.decodeEmoji(data.getString("click_action"));
+            String message = CommonMethod.decodeEmoji(data.getString("message"));
+            String categoty_id = CommonMethod.decodeEmoji(data.getString("categoty_id"));
+            String category_title = CommonMethod.decodeEmoji(data.getString("category_title"));
 
             Log.e(TAG, "title: " + title);
             Log.e(TAG, "message: " + message);
@@ -309,7 +304,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                         // check for image attachment
                         if (TextUtils.isEmpty(imageUrl)) {
-                            showNotificationMessage(getApplicationContext(), "Information comment-"+title, message, "false", resultIntent);
+                            showNotificationMessage(getApplicationContext(), "Information comment-"+CommonMethod.decodeEmoji(title), CommonMethod.decodeEmoji(message), "false", resultIntent);
                         } else {
                             // image is present, show notification with image
                             showNotificationMessageWithBigImage(getApplicationContext(), "Information Comment", message, "false", resultIntent, imageUrl);

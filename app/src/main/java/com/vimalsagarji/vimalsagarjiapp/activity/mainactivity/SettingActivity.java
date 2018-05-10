@@ -12,10 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
-import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.ByPeople;
 
 /**
  * Created by Grapes-Pradip on 26-Oct-17.

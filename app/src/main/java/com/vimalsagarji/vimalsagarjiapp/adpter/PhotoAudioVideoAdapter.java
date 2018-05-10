@@ -9,8 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
-import com.vimalsagarji.vimalsagarjiapp.ImageViewActivity;
+import com.bumptech.glide.Glide;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.Splash_Activity2;
 import com.vimalsagarji.vimalsagarjiapp.util.CommonAPI_Name;
@@ -46,11 +45,20 @@ public class PhotoAudioVideoAdapter extends RecyclerView.Adapter<PhotoAudioVideo
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
         Log.e("images", "---------------" + itemArrayList.get(position));
-        Picasso.with(activity).load(CommonURL.ImagePath + CommonAPI_Name.eventimage + itemArrayList.get(position).replaceAll(" ", "%20")).error(R.drawable.noimageavailable).placeholder(R.drawable.loader).into(holder.img_item);
+
+
+//        Picasso.with(activity).load(CommonURL.ImagePath + CommonAPI_Name.eventimage + itemArrayList.get(position).replaceAll(" ", "%20")).error(R.drawable.noimageavailable).placeholder(R.drawable.loader).into(holder.img_item);
+
+        Glide.with(activity).load(CommonURL.ImagePath + CommonAPI_Name.eventimage + itemArrayList.get(position)
+                .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).dontAnimate().into(holder.img_item);
+
+
+
         holder.img_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity, Splash_Activity2.class);
+//                itemSplashArrayList.clear();
                 intent.putExtra("position", String.valueOf(position));
                 intent.putExtra("cid", "");
 //                intent.putExtra("imagePath", CommonURL.ImagePath + CommonAPI_Name.eventimage + itemArrayList.get(position).replaceAll(" ", "%20"));

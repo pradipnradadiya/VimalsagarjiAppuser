@@ -2,7 +2,6 @@ package com.vimalsagarji.vimalsagarjiapp.adpter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.common.CommentsList;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 
 import java.util.ArrayList;
 
@@ -45,10 +45,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         if (commentList.getName().equalsIgnoreCase("null")) {
             holder.txt_unm.setText("Admin");
         } else {
-            holder.txt_unm.setText(commentList.getName());
+            holder.txt_unm.setText(CommonMethod.decodeEmoji(commentList.getName()));
         }
-        holder.txt_post.setText(commentList.getComment());
-        holder.txt_date.setText(commentList.getDate());
+        holder.txt_post.setText(CommonMethod.decodeEmoji(commentList.getComment()));
+        holder.txt_date.setText(CommonMethod.decodeEmoji(commentList.getDate()));
     }
 
     @Override

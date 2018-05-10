@@ -21,12 +21,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kaopiz.kprogresshud.KProgressHUD;
-import com.squareup.picasso.Picasso;
 import com.vimalsagarji.vimalsagarjiapp.JSONParser;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.ByPeopleDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.AllByPeople;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
 
@@ -49,8 +48,8 @@ public class ThisMonthbyPeopleFragment extends Fragment {
 
     private static final String TAG = AllbyPeopleFragment.class.getSimpleName();
 
-    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/";
-    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/";
+    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleaudio/";
+    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/";
     private static final String strImageUrlName = "bypeopleimage";
     private static final String ImgURL = Constant.ImgURL;
     private static final String IMAGEURL = ImgURL.replace("audioimage", strImageUrlName);
@@ -72,11 +71,14 @@ public class ThisMonthbyPeopleFragment extends Fragment {
     private ListView listView;
     private String strImageUrl = "";
 
-    private final String strURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsmonth/?page=1&psize=1000";
-//    private KProgressHUD loadingProgressDialog;
+    private final String strURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallapppostsmonth/?page=1&psize=1000";
+    //    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private ProgressBar progressbar;
+    Sharedpreferance sharedpreferance;
+
+    CustomAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,9 +90,10 @@ public class ThisMonthbyPeopleFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        sharedpreferance = new Sharedpreferance(getActivity());
         Log.d(TAG, "Image Url Of By people" + IMAGEURL);
         listView = (ListView) getActivity().findViewById(R.id.byPeople_list);
-        progressbar= (ProgressBar) getActivity().findViewById(R.id.progressbar);
+        progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
         activity_main_swipe_refresh_layout = (SwipeRefreshLayout) getActivity().findViewById(R.id.activity_main_swipe_refresh_layout);
         activity_main_swipe_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -103,9 +106,18 @@ public class ThisMonthbyPeopleFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                final AllByPeople allByPeoples = adapter.items.get(position);
+                Log.e("position list view","---------------------"+position);
+                allByPeoples.setFlag("true");
+                adapter.items.set(position,allByPeoples);
+                adapter.notifyDataSetChanged();
+
+
                 AllByPeople allByPeople = (AllByPeople) parent.getItemAtPosition(position);
                 Intent intent = new Intent(getActivity(), ByPeopleDetailActivity.class);
-                intent.putExtra("click_action","");
+                intent.putExtra("click_action", "");
                 intent.putExtra("postId", allByPeople.getId());
                 intent.putExtra("listTitle", allByPeople.getTitle());
                 intent.putExtra("listPost", allByPeople.getPost());
@@ -121,8 +133,15 @@ public class ThisMonthbyPeopleFragment extends Fragment {
         });
 
         if (CommonMethod.isInternetConnected(getActivity())) {
-            JsonTask jsonTask = new JsonTask();
-            jsonTask.execute(strURL, IMAGEURL);
+
+            if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                JsonTask jsonTask = new JsonTask();
+                jsonTask.execute(strURL, IMAGEURL);
+            } else {
+                JsonTask jsonTask = new JsonTask();
+                jsonTask.execute(strURL + "&uid=" + sharedpreferance.getId(), IMAGEURL);
+            }
+
         } else {
             final Snackbar snackbar = Snackbar
                     .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
@@ -140,8 +159,13 @@ public class ThisMonthbyPeopleFragment extends Fragment {
     }
 
     private void loadData() {
-        LoadJsonTask jsonTask = new LoadJsonTask();
-        jsonTask.execute(strURL, IMAGEURL);
+        if (sharedpreferance.getId().equalsIgnoreCase("")) {
+            LoadJsonTask jsonTask = new LoadJsonTask();
+            jsonTask.execute(strURL + "&uid=" + sharedpreferance.getId(), IMAGEURL);
+        } else {
+            LoadJsonTask jsonTask = new LoadJsonTask();
+            jsonTask.execute(strURL, IMAGEURL);
+        }
 
     }
 
@@ -154,7 +178,7 @@ public class ThisMonthbyPeopleFragment extends Fragment {
                     .setLabel("Please Wait")
                     .setCancellable(true);
             loadingProgressDialog.show();*/
-          progressbar.setVisibility(View.VISIBLE);
+            progressbar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -222,6 +246,15 @@ public class ThisMonthbyPeopleFragment extends Fragment {
                         abp.setVideolink(strVideoLink);
                         abp.setName(name);
                         abp.setView(view);
+
+                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                            String flag = "true";
+                            abp.setFlag(flag);
+                        }else {
+                            String flag = object.getString("is_viewed");
+                            abp.setFlag(flag);
+                        }
+
                         listAllByPeople.add(abp);
 
 
@@ -245,19 +278,19 @@ public class ThisMonthbyPeopleFragment extends Fragment {
             }*/
             progressbar.setVisibility(View.GONE);
             if (getActivity() != null) {
-            if (listView != null) {
-                CustomAdapter adapter = new CustomAdapter(getActivity(), listAllByPeople);
-                if (adapter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adapter);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
+                if (listView != null) {
+                    adapter = new CustomAdapter(getActivity(), listAllByPeople);
+                    if (adapter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adapter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
+
+
                 }
-
-
-            }
             }
         }
 
@@ -334,6 +367,16 @@ public class ThisMonthbyPeopleFragment extends Fragment {
                         abp.setVideolink(strVideoLink);
                         abp.setName(name);
                         abp.setView(view);
+
+
+                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                            String flag = "true";
+                            abp.setFlag(flag);
+                        }else {
+                            String flag = object.getString("is_viewed");
+                            abp.setFlag(flag);
+                        }
+
                         listAllByPeople.add(abp);
 
 
@@ -353,19 +396,19 @@ public class ThisMonthbyPeopleFragment extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (getActivity() != null) {
-            if (listView != null) {
-                CustomAdapter adapter = new CustomAdapter(getActivity(), listAllByPeople);
-                if (adapter.getCount() != 0) {
-                    listView.setVisibility(View.VISIBLE);
-                    txt_nodata_today.setVisibility(View.GONE);
-                    listView.setAdapter(adapter);
-                    activity_main_swipe_refresh_layout.setRefreshing(false);
-                } else {
-                    listView.setVisibility(View.GONE);
-                    txt_nodata_today.setVisibility(View.VISIBLE);
-                }
+                if (listView != null) {
+                    adapter = new CustomAdapter(getActivity(), listAllByPeople);
+                    if (adapter.getCount() != 0) {
+                        listView.setVisibility(View.VISIBLE);
+                        txt_nodata_today.setVisibility(View.GONE);
+                        listView.setAdapter(adapter);
+                        activity_main_swipe_refresh_layout.setRefreshing(false);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txt_nodata_today.setVisibility(View.VISIBLE);
+                    }
 
-            }
+                }
 
             }
         }
@@ -401,28 +444,35 @@ public class ThisMonthbyPeopleFragment extends Fragment {
                 holder.txtPost = (TextView) convertView.findViewById(R.id.txtPost);
                 holder.txtDate = (TextView) convertView.findViewById(R.id.txtDate);
                 holder.txt_postby = (TextView) convertView.findViewById(R.id.txt_postby);
+                holder.img_new = (ImageView) convertView.findViewById(R.id.img_new);
 
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
             AllByPeople allByPeople = items.get(position);
-            Picasso.with(getActivity()).load(IMAGEURL + allByPeople.getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.bypeople_error).into(holder.imgAudio);
+//            Picasso.with(getActivity()).load(IMAGEURL + allByPeople.getPhoto().replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.bypeople_error).into(holder.imgAudio);
 
 
-            holder.txt_views.setText(allByPeople.getView());
-            holder.txtTitle.setText(allByPeople.getTitle());
-            holder.txtPost.setText(allByPeople.getPost());
-            holder.txtDate.setText(allByPeople.getDate());
-            holder.txt_postby.setText("Post By:" + allByPeople.getName());
+            holder.txt_views.setText(CommonMethod.decodeEmoji(allByPeople.getView()));
+            holder.txtTitle.setText(CommonMethod.decodeEmoji(allByPeople.getTitle()));
+            holder.txtPost.setText(CommonMethod.decodeEmoji(allByPeople.getPost()));
+            holder.txtDate.setText(CommonMethod.decodeEmoji(allByPeople.getDate()));
+            holder.txt_postby.setText("Post By:" + CommonMethod.decodeEmoji(allByPeople.getName()));
+
+            if (allByPeople.getFlag().equalsIgnoreCase("true")) {
+                holder.img_new.setVisibility(View.GONE);
+            } else {
+                holder.img_new.setVisibility(View.VISIBLE);
+            }
 
             return convertView;
 
         }
 
         private class ViewHolder {
-            TextView txtTitle, txtPost, txtDate, txt_postby,txt_views;
-            ImageView imgAudio;
+            TextView txtTitle, txtPost, txtDate, txt_postby, txt_views;
+            ImageView imgAudio, img_new;
 
         }
 

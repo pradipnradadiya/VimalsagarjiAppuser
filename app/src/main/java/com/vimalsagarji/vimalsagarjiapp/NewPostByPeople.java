@@ -438,9 +438,9 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
 
             Log.e("method", "----------------" + "call");
 
-            String title = e_title.getText().toString();
-            String description = e_description.getText().toString();
-            String VideoLink = edit_videolink.getText().toString();
+            String title = CommonMethod.encodeEmoji(e_title.getText().toString());
+            String description = CommonMethod.encodeEmoji(e_description.getText().toString());
+            String VideoLink = CommonMethod.encodeEmoji(edit_videolink.getText().toString());
 
             Log.e("title", "----------" + title);
             Log.e("description", "----------" + description);
@@ -453,7 +453,7 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
 
             try {
                 HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/addpost/");
+                HttpPost httpPost = new HttpPost("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/addpost/");
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 
                 multipartEntity.addPart("uid", new StringBody(sharedpreferance.getId()));

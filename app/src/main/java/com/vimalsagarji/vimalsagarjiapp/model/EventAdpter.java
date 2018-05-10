@@ -18,6 +18,7 @@ public class EventAdpter {
     private String VideoImage;
     private String Photo;
     private String view;
+    private String flag;
 
     public String getID() {
         return ID;
@@ -113,5 +114,13 @@ public class EventAdpter {
 
     public void setView(String view) {
         this.view = view;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }

@@ -19,6 +19,7 @@ public class AllByPeople {
     private String photo;
     private String name;
     private String view;
+    private String flag;
 
 
     public String getId() {
@@ -131,5 +132,13 @@ public class AllByPeople {
 
     public void setView(String view) {
         this.view = view;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }

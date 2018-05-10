@@ -42,7 +42,9 @@
                             android:layout_height="0dp"
                             android:layout_marginTop="5dp"
                             android:layout_weight="1.5"
-                            android:src="@mipmap/ic_launcher" />
+                            android:src="@mipmap/ic_launcher"
+
+                            />
 
                         <com.vimalsagarji.vimalsagarjiapp.utils.DashboardCirclePageIndicator
                             android:id="@+id/indicator"
@@ -89,18 +91,37 @@
                         style="@style/relatibe_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/img_notification"
+                        android:layout_toLeftOf="@+id/rel_bell"
                         android:padding="8dp"
                         android:src="@drawable/ic_search_white" />
 
-                    <ImageView
-                        android:id="@+id/img_notification"
-                        style="@style/relatibe_back"
+                    <RelativeLayout
+                        android:id="@+id/rel_bell"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_notifications" />
+                        android:layout_alignParentRight="true">
+
+                        <ImageView
+                            android:id="@+id/img_notification"
+                            style="@style/relatibe_back"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_notifications" />
+
+                        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                            android:id="@+id/txt_latestposts_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/badge_circle"
+                            android:text="10"
+                            android:textColor="@color/white"
+                            android:gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="3dp"
+
+                            />
+                    </RelativeLayout>
 
                     <ImageView
                         android:id="@+id/img_slide"

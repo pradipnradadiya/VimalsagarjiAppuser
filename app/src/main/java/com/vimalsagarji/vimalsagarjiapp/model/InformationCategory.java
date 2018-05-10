@@ -12,6 +12,7 @@ public class InformationCategory {
     private String Date;
     private String time;
     private String view;
+    private String flag;
 
     public String getTime() {
         return time;
@@ -77,5 +78,13 @@ public class InformationCategory {
 
     public void setView(String view) {
         this.view = view;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }

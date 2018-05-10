@@ -76,7 +76,7 @@ public class QuestionAnswerActivity extends AppCompatActivity implements View.On
         lin_week = (LinearLayout) findViewById(R.id.lin_week);
         lin_month = (LinearLayout) findViewById(R.id.lin_month);
         lin_all = (LinearLayout) findViewById(R.id.lin_all);
-        openTodayInfromation();
+        openAllInfromation();
     }
 
     @Override

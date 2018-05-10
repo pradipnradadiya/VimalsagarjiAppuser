@@ -15,11 +15,20 @@
         android:orientation="vertical"
         android:padding="10dp">
 
+        <ImageView
+            android:id="@+id/img_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_f_new"
+            android:layout_gravity="right"
+            android:visibility="gone"
+            />
         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
             android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:lines="1"
@@ -37,9 +46,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtTitle"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:maxLines="3"
+            android:ellipsize="end"
             android:text="Description"
             android:textColor="@color/black"
+            android:lineSpacingExtra="7dp"
             android:textSize="15dp"
 
             tools:ignore="HardcodedText,RtlHardcoded" />
@@ -50,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtDescription"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:paddingBottom="5dp">

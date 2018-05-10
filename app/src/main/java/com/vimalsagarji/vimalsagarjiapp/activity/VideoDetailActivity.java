@@ -29,11 +29,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.VideoFullActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.ThisMonthVideo;
 import com.vimalsagarji.vimalsagarjiapp.util.CommonAPI_Name;
@@ -72,13 +74,17 @@ public class VideoDetailActivity extends AppCompatActivity {
     String click_action;
     EditText et_event;
     TextView txtDate;
-    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videoimage/";
-    private final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videos/";
+    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/videoimage/";
+    private final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/videos/";
     String videoid;
     RelativeLayout rel_video;
     int flag = 0;
     int commentsize;
     private ProgressBar progressBar;
+    private TextView txtvideolink, txt_description;
+    private ImageView img_thumb;
+
+
 //    VideoView video_view;
 
     @Override
@@ -103,6 +109,11 @@ public class VideoDetailActivity extends AppCompatActivity {
 
         txtDate = (TextView) findViewById(R.id.txtDate);
         txt_title = (TextView) findViewById(R.id.txt_title);
+        txtvideolink = (TextView) findViewById(R.id.txtvideolink);
+        txt_description = (TextView) findViewById(R.id.txt_description);
+        img_thumb = (ImageView) findViewById(R.id.img_thumb);
+
+
         layout_allEventSubItem = (LinearLayout) findViewById(R.id.layout_allEventSubItem);
 
         ImageView imgHomeBack = (ImageView) findViewById(R.id.imgarrorback);
@@ -145,7 +156,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             String strVideo = intent.getExtras().getString("video");
             Log.e("videofile", "------------------" + strVideo);
             String videoname = intent.getExtras().getString("videoname");
-            et_event.setText(videoname);
+            et_event.setText(CommonMethod.decodeEmoji(videoname));
             Log.e("videoname", "------------------" + videoname);
 
             String catid = intent.getExtras().getString("catid");
@@ -156,7 +167,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             Log.e("date", "------------------" + date);
             txt_title.setText("Video Detail");
             view = intent.getStringExtra("view");
-            txtDate.setText(date);
+            txtDate.setText(CommonMethod.decodeEmoji(date));
             video_play_url = strVideo;
 //            custom_videoplayer_standard.setUp(strVideo, JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, videoname);
             rel_video.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +183,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             String strVideo = intent.getExtras().getString("video");
             Log.e("videofile", "------------------" + strVideo);
             String videoname = intent.getExtras().getString("videoname");
-            et_event.setText(videoname);
+            et_event.setText(CommonMethod.decodeEmoji(videoname));
             Log.e("videoname", "------------------" + videoname);
 
             String catid = intent.getExtras().getString("catid");
@@ -183,7 +194,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             Log.e("date", "------------------" + date);
             txt_title.setText("Video Detail");
             view = intent.getStringExtra("view");
-            txtDate.setText(date);
+            txtDate.setText(CommonMethod.decodeEmoji(date));
             video_play_url = strVideo;
             rel_video.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -362,7 +373,7 @@ public class VideoDetailActivity extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
             return responseJSON;
         }
 
@@ -399,6 +410,9 @@ public class VideoDetailActivity extends AppCompatActivity {
                         listname.add(name);
 
                     }
+
+                    commentsize = listComments.size();
+                    txt_comment.setText(String.valueOf(commentsize));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -444,7 +458,7 @@ public class VideoDetailActivity extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
             return responseJSON;
         }
 
@@ -514,7 +528,7 @@ public class VideoDetailActivity extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
             return responseJSON;
         }
 
@@ -597,10 +611,10 @@ public class VideoDetailActivity extends AppCompatActivity {
 
             if (listname.get(position).equalsIgnoreCase("null")) {
                 holder.txtCommentUserName.setText("Admin");
-                holder.txtCommentDescription.setText(monthComments.getComment());
+                holder.txtCommentDescription.setText(CommonMethod.decodeEmoji(monthComments.getComment()));
             } else {
-                holder.txtCommentUserName.setText(listname.get(position));
-                holder.txtCommentDescription.setText(monthComments.getComment());
+                holder.txtCommentUserName.setText(CommonMethod.decodeEmoji(listname.get(position)));
+                holder.txtCommentDescription.setText(CommonMethod.decodeEmoji(monthComments.getComment()));
             }
             return convertView;
         }
@@ -631,7 +645,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("vid", params[0]));
             nameValuePairs.add(new BasicNameValuePair("uid", params[1]));
             nameValuePairs.add(new BasicNameValuePair("Comment", params[2]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/comment/", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/comment/", nameValuePairs, VideoDetailActivity.this);
 
             return responseJSON;
         }
@@ -645,7 +659,8 @@ public class VideoDetailActivity extends AppCompatActivity {
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     loadingProgressDialog.dismiss();
                     Toast.makeText(VideoDetailActivity.this, R.string.commentsuccess, Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
+                    new CommentList().execute(vid);
+//                    dialog.dismiss();
                 } else {
                     loadingProgressDialog.dismiss();
                     Toast.makeText(VideoDetailActivity.this, R.string.commentsuccess, Toast.LENGTH_SHORT).show();
@@ -675,7 +690,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
-            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/videolike/", nameValuePairs, VideoDetailActivity.this);
+            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/videolike/", nameValuePairs, VideoDetailActivity.this);
             return responeJSON;
         }
 
@@ -704,7 +719,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/countlikes/", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/countlikes/", nameValuePairs, VideoDetailActivity.this);
             return responseJSON;
         }
 
@@ -747,7 +762,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", params[0]));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/checklike/", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/checklike/", nameValuePairs, VideoDetailActivity.this);
             return responseJSON;
         }
 
@@ -780,7 +795,7 @@ public class VideoDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -821,7 +836,7 @@ public class VideoDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/video/?vid=" + vid + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/countviews/video/?vid=" + vid + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -910,10 +925,12 @@ public class VideoDetailActivity extends AppCompatActivity {
                         videoid = jsonObject1.getString("ID");
                         String videonames = jsonObject1.getString("VideoName");
                         String cid = jsonObject1.getString("CategoryID");
-                        String video = jsonObject1.getString("Video").replaceAll(" ", "%20");
+                        final String video = jsonObject1.getString("Video").replaceAll(" ", "%20");
                         String photo = jsonObject1.getString("Photo").replaceAll(" ", "%20");
                         String duration = jsonObject1.getString("Duration");
                         String dates = jsonObject1.getString("Date");
+                        String video_link = jsonObject1.getString("video_link");
+                        String Description = jsonObject1.getString("Description");
                         view = jsonObject1.getString("View");
 
 
@@ -940,28 +957,61 @@ public class VideoDetailActivity extends AppCompatActivity {
 
 
                         String strVideo = VideoPath + video;
+
+                        if (video.equalsIgnoreCase("")) {
+                            rel_video.setVisibility(View.GONE);
+                        }else {
+
+                            Glide.with(VideoDetailActivity.this).load(CommonURL.ImagePath + "videoimage/" + photo
+                                    .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).dontAnimate().into(img_thumb);
+                        }
+
+
                         Log.e("videofile", "------------------" + strVideo);
                         String videoname = videonames;
 
-                        et_event.setText(videoname);
+                        et_event.setText(CommonMethod.decodeEmoji(videoname));
                         Log.e("videoname", "------------------" + videoname);
 
                         Log.e("date", "------------------" + date);
                         txt_title.setText("Video Detail");
-                        txtDate.setText(date);
+                        txtDate.setText(CommonMethod.decodeEmoji(date));
+                        txtvideolink.setText(CommonMethod.decodeEmoji(video_link));
+                        txt_description.setText(CommonMethod.decodeEmoji(Description));
+
+                        if (!video_link.equalsIgnoreCase("")) {
+                            String[] str = video_link.split("/");
+                            final String v_vode = str[3];
+                            Log.e("code", "----------------" + v_vode);
+                            txtvideolink.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(VideoDetailActivity.this, YoutubePlayActivity.class);
+                                    intent.putExtra("vcode", v_vode);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+
+
                         video_play_url = strVideo;
                         rel_video.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent1 = new Intent(VideoDetailActivity.this, VideoFullActivity.class);
-                                startActivity(intent1);
+                                Log.e("video", "------------------" + video);
+                                if (!video.equalsIgnoreCase("")) {
+                                    Intent intent1 = new Intent(VideoDetailActivity.this, VideoFullActivity.class);
+                                    startActivity(intent1);
+                                } else {
+                                    Toast.makeText(VideoDetailActivity.this, "Video not available please click on videolink.", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
 //                        custom_videoplayer_standard.setUp(strVideo, JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, videoname);
                         new countView().execute();
 
-
                     }
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -989,6 +1039,7 @@ public class VideoDetailActivity extends AppCompatActivity {
                     new CheckUserApprove().execute();
 //                new getLikeCount().execute(id);
                     new CheckLike().execute(sharedpreferance.getId(), vid);
+                    new checkViewed().execute();
                 }
                 new VideoDetail().execute();
                 new CommentList2().execute(vid);
@@ -1008,6 +1059,34 @@ public class VideoDetailActivity extends AppCompatActivity {
                 });
             }
         }
+    }
+
+    private class checkViewed extends AsyncTask<String, Void, String> {
+
+        String responseJson = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
+            nameValuePairs.add(new BasicNameValuePair("vid", vid));
+
+            responseJson = CommonMethod.postStringResponse(CommonUrl.Main_url + "video/setvideoviewed", nameValuePairs, VideoDetailActivity.this);
+            return responseJson;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response","-----------------"+s);
+        }
+
     }
 
 }

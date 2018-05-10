@@ -5,8 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/round_rect_shape"
     android:orientation="horizontal"
-    android:padding="10dp"
-    >
+    android:padding="10dp">
 
 
     <RelativeLayout
@@ -18,8 +17,7 @@
             android:id="@+id/imgVideo"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:padding="1dp"
-            android:scaleType="centerCrop"
+            android:padding="2dp"
             android:src="@android:drawable/ic_menu_gallery"
             tools:ignore="ContentDescription" />
 
@@ -27,8 +25,8 @@
             android:id="@+id/imgPlayVideo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="40dp"
             android:layout_centerHorizontal="true"
+            android:layout_margin="40dp"
             android:src="@drawable/play"
             tools:ignore="ContentDescription" />
 
@@ -60,8 +58,17 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:padding="10dp"
-        >
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/img_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:src="@drawable/ic_f_new"
+            android:visibility="gone"
+            />
+
 
         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
             android:id="@+id/txtVideoName"
@@ -69,20 +76,20 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/imgVideo"
             android:ellipsize="end"
-            android:lines="1"
-            android:maxLines="1"
-            android:text="VideoName"
+            android:lineSpacingExtra="7dp"
+            android:maxLines="3"
+            android:text="VideoName fgfg dgf d fgf fg"
+            android:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="15sp"
-            android:textAllCaps="true"
             tools:ignore="HardcodedText,RtlHardcoded" />
 
         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-            android:layout_marginTop="7dp"
             android:id="@+id/txtVideoDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtVideoName"
+            android:layout_marginTop="7dp"
             android:layout_toRightOf="@+id/imgVideo"
             android:lines="1"
             android:text="Date"
@@ -94,10 +101,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtVideoDate"
-            android:layout_toRightOf="@+id/imgVideo"
-            android:orientation="horizontal"
             android:layout_marginTop="7dp"
-            >
+            android:layout_toRightOf="@+id/imgVideo"
+            android:orientation="horizontal">
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:id="@+id/txt_views"

@@ -1,6 +1,5 @@
 package com.vimalsagarji.vimalsagarjiapp;
 
-import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;

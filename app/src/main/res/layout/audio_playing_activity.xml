@@ -21,8 +21,12 @@
         android:enabled="false"
         android:focusable="false"
         android:hint=""
-        android:padding="10dp"
+        android:padding="7dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:textSize="20dp"
+        android:lineSpacingExtra="7dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:background="@null"
@@ -36,8 +40,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+
+        >
 
         <com.vimalsagarji.vimalsagarjiapp.jcplayer.JcPlayerView
             android:id="@+id/jcplayerview_audio"
@@ -51,6 +58,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
             >
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
@@ -72,16 +81,41 @@
                 tools:ignore="HardcodedText,RtlHardcoded" />
 
         </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                android:id="@+id/txt_description"
+                android:textSize="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:padding="10dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:lineSpacingExtra="7dp"
+
+                />
+
+        </ScrollView>
 
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/view"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:gravity="right|center_vertical"
         android:orientation="horizontal"
-        tools:ignore="RtlHardcoded">
+        tools:ignore="RtlHardcoded"
+        >
 
         <LinearLayout
             android:id="@+id/lin_like"

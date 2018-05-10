@@ -32,13 +32,14 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.kaopiz.kprogresshud.KProgressHUD;
-import com.squareup.picasso.Picasso;
 import com.vimalsagarji.vimalsagarjiapp.ImageViewActivity;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.VideoFullActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.jcplayer.JcPlayerView;
 import com.vimalsagarji.vimalsagarjiapp.util.CommonAPI_Name;
@@ -52,6 +53,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import ch.boye.httpclientandroidlib.NameValuePair;
+import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 
 import static com.vimalsagarji.vimalsagarjiapp.R.id.imgarrorback;
 import static com.vimalsagarji.vimalsagarjiapp.fragment.event_fragment.TodayEventFragment.video_play_url;
@@ -101,12 +105,12 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
     private String pid;
     private String view;
     TextView txt_title;
-    private final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/";
-    private final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/";
-    private final String imagepath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/";
+    private final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleaudio/";
+    private final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/";
+    private final String imagepath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleimage/";
     String click_action;
     RelativeLayout rel_video;
-    TextView txt_nodata;
+    TextView txt_nodata, txtvideolink;
 
     String p, a, vi;
     int commentsize;
@@ -115,6 +119,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
     String title;
     String post;
     private ProgressBar progressBar;
+    String videoLink = "";
 
 
     @Override
@@ -162,6 +167,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
 //                new CheckLike().execute(sharedpreferance.getId(), pid);
             } else {
                 new CheckLike().execute(sharedpreferance.getId(), pid);
+                new checkViewed().execute();
             }
             new GetPostDetail().execute();
             new CommentList2().execute(pid);
@@ -223,7 +229,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                     dialog = new Dialog(ByPeopleDetailActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
-                    progressBar= (ProgressBar) dialog.findViewById(R.id.progressbar);
+                    progressBar = (ProgressBar) dialog.findViewById(R.id.progressbar);
                     if (CommonMethod.isInternetConnected(ByPeopleDetailActivity.this)) {
                         new CommentList().execute(pid);
                     } else {
@@ -324,6 +330,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
         setSupportActionBar(toolbar);
 //        videoView = (JCVideoPlayerStandard) findViewById(R.id.video_bypeople);
         txt_nodata = (TextView) findViewById(R.id.txt_nodata);
+        txtvideolink = (TextView) findViewById(R.id.txtvideolink);
         rel_video = (RelativeLayout) findViewById(R.id.rel_video);
         jcplayer = (JcPlayerView) findViewById(R.id.jcplayer);
         imgBack = (ImageView) toolbar.findViewById(imgarrorback);
@@ -364,7 +371,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                    String sAux = "\n By People \n" + title + "\n" + post + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
+                    String sAux = "\n By People \n" + CommonMethod.decodeEmoji(title) + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
                     sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
                     intent.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(intent, "Choose One"));
@@ -399,12 +406,18 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                     } else {
                         txt_nodata.setVisibility(View.GONE);
                         img_bypeople.setVisibility(View.VISIBLE);
-                        Picasso.with(ByPeopleDetailActivity.this)
-                                .load(image.replaceAll(" ", "%20"))
-                                .placeholder(R.drawable.loader)
-                                .resize(0, 200)
-                                .error(R.drawable.no_image)
-                                .into(img_bypeople);
+
+//                        Picasso.with(ByPeopleDetailActivity.this)
+//                                .load(image.replaceAll(" ", "%20"))
+//                                .placeholder(R.drawable.loader)
+//                                .resize(0, 200)
+//                                .error(R.drawable.no_image)
+//                                .into(img_bypeople);
+
+
+                        Glide.with(ByPeopleDetailActivity.this).load(image
+                                .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).into(img_bypeople);
+
 
 //                        Intent intent = new Intent(ByPeopleDetailActivity.this, ImageViewActivity.class);
 //                        intent.putExtra("imagePath", image.replaceAll(" ", "%20"));
@@ -537,10 +550,10 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             // holder.txt_ID.setText(items.get(position));
             if (listname.get(position).equalsIgnoreCase("null")) {
                 holder.txtCommentUserName.setText("Admin");
-                holder.txtCommentDescription.setText(listComment.get(position));
+                holder.txtCommentDescription.setText(CommonMethod.decodeEmoji(listComment.get(position)));
             } else {
                 holder.txtCommentUserName.setText(listname.get(position));
-                holder.txtCommentDescription.setText(listComment.get(position));
+                holder.txtCommentDescription.setText(CommonMethod.decodeEmoji(listComment.get(position)));
             }
             return convertView;
         }
@@ -574,7 +587,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
             return responseJSON;
         }
 
@@ -608,6 +621,8 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                         listname.add(name);
 
                     }
+                    commentsize = listComment.size();
+                    txt_comment.setText(String.valueOf(commentsize));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -615,7 +630,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
            /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
             }*/
-           progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
             listView = (ListView) dialog.findViewById(R.id.listbyPeopleComment);
             TextView txt_nodata_today = (TextView) dialog.findViewById(R.id.txt_nocomment);
             if (listView != null) {
@@ -653,7 +668,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
             return responseJSON;
         }
 
@@ -719,7 +734,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
             return responseJSON;
         }
 
@@ -788,7 +803,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", pid));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Comment", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/comment/", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/comment/", nameValuePairs, ByPeopleDetailActivity.this);
 
             return responseJSON;
         }
@@ -802,7 +817,8 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     loadingProgressDialog.dismiss();
                     Toast.makeText(ByPeopleDetailActivity.this, R.string.commentsuccess, Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
+//                    dialog.dismiss();
+                    new CommentList().execute(pid);
 //                    Toast.makeText(ByPeopleDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 } else {
                     loadingProgressDialog.dismiss();
@@ -834,7 +850,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
-            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/postlike/", nameValuePairs, ByPeopleDetailActivity.this);
+            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/postlike/", nameValuePairs, ByPeopleDetailActivity.this);
             return responeJSON;
         }
 
@@ -863,7 +879,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/countlikes/", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/countlikes/", nameValuePairs, ByPeopleDetailActivity.this);
             return responseJSON;
         }
 
@@ -906,7 +922,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", params[0]));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/checklike/", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/checklike/", nameValuePairs, ByPeopleDetailActivity.this);
             return responseJSON;
         }
 
@@ -938,7 +954,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -979,7 +995,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/bypeople/?bypid=" + pid + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/countviews/bypeople/?bypid=" + pid + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1078,7 +1094,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                         String audios = object.getString("Audio").replaceAll(" ", "%20");
                         a = object.getString("Audio").replaceAll(" ", "%20");
                         String audioimage = object.getString("AudioImage").replaceAll(" ", "%20");
-                        String videoLink = object.getString("VideoLink");
+                        videoLink = object.getString("VideoLink");
                         String videos = object.getString("Video").replaceAll(" ", "%20");
                         vi = object.getString("Video").replaceAll(" ", "%20");
                         String videoimage = object.getString("VideoImage").replaceAll(" ", "%20");
@@ -1132,7 +1148,25 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                         etTitle.setText(CommonMethod.decodeEmoji(strtitle));
                         txtDate.setText(CommonMethod.decodeEmoji(strdate));
                         txtDescri.setText(CommonMethod.decodeEmoji(strdescri));
+                        txtvideolink.setText(CommonMethod.decodeEmoji(videoLink));
                         rel_video.setVisibility(View.GONE);
+
+
+                        if (!videoLink.equalsIgnoreCase("")) {
+                            String[] str = videoLink.split("/");
+                            final String v_vode = str[3];
+                            Log.e("code", "----------------" + v_vode);
+                            txtvideolink.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(ByPeopleDetailActivity.this, YoutubePlayActivity.class);
+                                    intent.putExtra("vcode", v_vode);
+                                    startActivity(intent);
+                                }
+                            });
+
+                        }
+
 
                         Log.e("photo", "---------------" + photosubstring);
                         if (photosubstring.equalsIgnoreCase("/bypeopleimage/null")) {
@@ -1144,12 +1178,17 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                             txt_nodata.setVisibility(View.GONE);
                             txt_nodata.setText("No Image\nAvalable.");
 
-                            Picasso.with(ByPeopleDetailActivity.this)
-                                    .load(image.replaceAll(" ", "%20"))
-                                    .placeholder(R.drawable.loader)
-                                    .resize(0, 200)
-                                    .error(R.drawable.no_image)
-                                    .into(img_bypeople);
+//                            Picasso.with(ByPeopleDetailActivity.this)
+//                                    .load(image.replaceAll(" ", "%20"))
+//                                    .placeholder(R.drawable.loader)
+//                                    .resize(0, 200)
+//                                    .error(R.drawable.no_image)
+//                                    .into(img_bypeople);
+
+
+
+                            Glide.with(ByPeopleDetailActivity.this).load(image
+                                    .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).dontAnimate().into(img_bypeople);
 
                             img_bypeople.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -1180,6 +1219,34 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
         super.onResume();
         // put your code here...
 
+
+    }
+
+    private class checkViewed extends AsyncTask<String, Void, String> {
+
+        String responseJson = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
+            nameValuePairs.add(new BasicNameValuePair("bid", pid));
+
+            responseJson = CommonMethod.postStringResponse(CommonUrl.Main_url + "bypeople/setbypeopleviewed", nameValuePairs, ByPeopleDetailActivity.this);
+            return responseJson;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response","-----------------"+s);
+        }
 
     }
 

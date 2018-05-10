@@ -29,17 +29,19 @@
             android:id="@+id/etTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="7dp"
             android:background="@color/homepage_back"
-            android:ellipsize="end"
             android:ems="7"
             android:enabled="false"
             android:focusable="true"
             android:gravity="start"
-            android:maxLines="1"
-            android:padding="10dp"
+            android:lineSpacingExtra="7dp"
+            android:padding="7dp"
             android:text=""
-            android:textSize="20dp"
             android:textColor="@color/black"
+            android:textSize="20dp"
             tools:ignore="HardcodedText,TextFields" />
 
 
@@ -52,7 +54,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                 android:id="@+id/txtDate"
@@ -71,6 +75,7 @@
                 android:id="@+id/img_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:padding="5dp"
                 android:src="@drawable/ic_share_black_24dp" />
         </LinearLayout>
@@ -86,15 +91,45 @@
             android:layout_height="0dp"
             android:layout_weight="9">
 
-            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-                android:id="@+id/txtDescri"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Description"
-                android:textColor="#403f3f"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/img_thought"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:scaleType="centerCrop" />
+
+                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                    android:id="@+id/txtlocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:lineSpacingExtra="7dp"
+                    android:padding="10dp"
+                    android:text="Location"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                    android:id="@+id/txtDescri"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:lineSpacingExtra="7dp"
+                    android:padding="10dp"
+                    android:text="Description"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
         </ScrollView>
 
         <View
@@ -107,9 +142,8 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:orientation="horizontal"
-            tools:ignore="RtlHardcoded"
             android:padding="10dp"
-            >
+            tools:ignore="RtlHardcoded">
 
             <LinearLayout
                 android:id="@+id/lin_like"

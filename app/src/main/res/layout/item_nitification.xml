@@ -17,14 +17,16 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         app:cardCornerRadius="10dp"
-        android:background="@drawable/round_rect"
+        android:background="@drawable/round_rect_shape"
         >
         <!-- put whatever you want -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="5dp"
+            >
 
             <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/notification_image"
@@ -51,6 +53,7 @@
                     android:ellipsize="end"
                     android:lines="1"
                     android:padding="5dp"
+                    android:lineSpacingExtra="7dp"
                     android:text=""
                     android:textStyle="bold" />
 
@@ -62,6 +65,7 @@
                     android:ellipsize="end"
                     android:lines="1"
                     android:padding="5dp"
+                    android:lineSpacingExtra="7dp"
                     android:text="No Description available." />
 
                 <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
@@ -70,6 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
+                    android:lineSpacingExtra="7dp"
                     android:text="" />
 
             </LinearLayout>

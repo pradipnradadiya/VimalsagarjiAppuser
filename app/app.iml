@@ -136,9 +136,11 @@
     <orderEntry type="library" name="Gradle: com.android.support:animated-vector-drawable-25.3.1" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:multidex-1.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-compat-25.3.1" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:D.\Current Project\VimalsagarjiAppuser\app\libs\YouTubeAndroidPlayerApi.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-analytics-impl-10.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:transition-25.3.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-messaging-10.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.uncopt:android.justified:1.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.daimajia.easing:library-1.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.nineoldandroids:library:2.4.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-iid-10.0.1" level="project" />
@@ -154,6 +156,7 @@
     <orderEntry type="library" name="Gradle: com.kaopiz:kprogresshud-1.0.5" level="project" />
     <orderEntry type="library" name="Gradle: com.pnikosis:materialish-progress-1.7" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:recyclerview-v7-25.3.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.jsoup:jsoup:1.8.3@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-core-10.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:design-25.3.1" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:glide:3.7.0@jar" level="project" />

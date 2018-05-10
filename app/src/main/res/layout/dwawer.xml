@@ -46,6 +46,19 @@
                         android:text="@string/alert"
 
                         />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                            android:id="@+id/txt_d_latest_posts"
+                            style="@style/badge_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+
                 </LinearLayout>
 
                 <View
@@ -158,6 +171,17 @@
                         android:text="@string/information"
 
                         />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                            android:id="@+id/txt_d_infomation"
+                            style="@style/badge_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <View
@@ -185,6 +209,18 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="@string/event" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                            android:id="@+id/txt_d_event"
+                            style="@style/badge_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <View
@@ -214,6 +250,19 @@
                         android:text="@string/thought"
 
                         />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                            android:id="@+id/txt_d_thought"
+                            style="@style/badge_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+
                 </LinearLayout>
 
                 <View
@@ -243,6 +292,19 @@
                         android:text="@string/audio"
 
                         />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                            android:id="@+id/txt_d_audio"
+                            style="@style/badge_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+
                 </LinearLayout>
 
                 <View
@@ -272,6 +334,19 @@
                         android:text="@string/video"
 
                         />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                            android:id="@+id/txt_d_video"
+                            style="@style/badge_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+
                 </LinearLayout>
 
                 <View
@@ -301,6 +376,8 @@
                         android:text="@string/gallaery"
 
                         />
+
+
                 </LinearLayout>
 
                 <View
@@ -330,6 +407,19 @@
                         android:text="@string/question"
 
                         />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                            android:id="@+id/txt_d_qa"
+                            style="@style/badge_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+
                 </LinearLayout>
 
                 <View
@@ -388,6 +478,20 @@
                         android:text="@string/bypeople"
 
                         />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                            android:id="@+id/txt_d_bypeople"
+                            style="@style/badge_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
                 </LinearLayout>
 
                 <View

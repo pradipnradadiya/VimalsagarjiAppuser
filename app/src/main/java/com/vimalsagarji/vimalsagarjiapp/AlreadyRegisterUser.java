@@ -179,7 +179,7 @@ public class AlreadyRegisterUser extends AppCompatActivity {
                 nameValuePairs.add(new BasicNameValuePair("EmailID", params[0]));
                 nameValuePairs.add(new BasicNameValuePair("Phone", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("DeviceID", params[2]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/aluser/checkuser", nameValuePairs, AlreadyRegisterUser.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/aluser/checkuser", nameValuePairs, AlreadyRegisterUser.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }

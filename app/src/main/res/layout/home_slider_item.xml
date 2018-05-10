@@ -12,5 +12,18 @@
         tools:ignore="ContentDescription"
         android:layout_centerHorizontal="true"
         />
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+        android:id="@+id/txt_quote"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+
+        />
 
 </RelativeLayout>

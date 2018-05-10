@@ -7,8 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.model.SliderItem;
 
@@ -42,11 +43,20 @@ public class HomeSliderAdapter extends android.support.v4.view.PagerAdapter {
         SliderItem item = imageItemArrayList.get(position);
 
         final ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
+        final TextView txt_quote = (TextView) itemView.findViewById(R.id.txt_quote);
+
         if (imageItemArrayList.size() == 0) {
             imageView.setImageResource(R.drawable.noimageavailable);
         }
         Log.e("image url", "------------------" + item.getImageUrl());
-        Picasso.with(mcontext).load(item.getImageUrl()).into(imageView);
+
+//        Picasso.with(mcontext).load(item.getImageUrl()).into(imageView);
+
+        Glide.with(mcontext).load(item.getImageUrl()
+                .replaceAll(" ", "%20")).crossFade().dontAnimate().into(imageView);
+
+
+
         imageView.setTag(imageItemArrayList.get(position));
         container.addView(itemView);
         return itemView;

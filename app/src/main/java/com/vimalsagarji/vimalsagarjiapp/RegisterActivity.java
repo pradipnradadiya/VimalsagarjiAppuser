@@ -30,12 +30,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.fcm.Config;
 import com.vimalsagarji.vimalsagarjiapp.fcm.NotificationUtils;
-import com.vimalsagarji.vimalsagarjiapp.utils.StringUtils;
 import com.vimalsagarji.vimalsagarjiapp.utils.ValidationUtils;
 
 import org.json.JSONArray;
@@ -260,7 +258,7 @@ public class RegisterActivity extends AppCompatActivity {
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Address", params[3]));
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Phone", params[4]));
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("DeviceToken", params[5]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/adduser/", nameValuePairs, RegisterActivity.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/userregistration/adduser/", nameValuePairs, RegisterActivity.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -332,7 +330,7 @@ public class RegisterActivity extends AppCompatActivity {
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new BasicNameValuePair("EmailID", params[0]));
                 nameValuePairs.add(new BasicNameValuePair("Phone", params[1]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/aluser/checkuser", nameValuePairs, RegisterActivity.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/aluser/checkuser", nameValuePairs, RegisterActivity.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }

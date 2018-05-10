@@ -19,11 +19,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.kaopiz.kprogresshud.KProgressHUD;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.vimalsagarji.vimalsagarjiapp.R;
+import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.AudioAllBypeopleActivity;
+import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.AudioAllEventActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.AudioCategoryitem;
@@ -81,7 +81,7 @@ public class AudioCategory extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-        progressbar= (ProgressBar) findViewById(R.id.progressbar);
+        progressbar = (ProgressBar) findViewById(R.id.progressbar);
         txt_nodata_today = (TextView) findViewById(R.id.txt_nodata_today);
         ImageView imgHome = (ImageView) toolbar_home.findViewById(R.id.imgHome);
         rel_audio = (RelativeLayout) findViewById(R.id.rel_audio);
@@ -164,14 +164,15 @@ public class AudioCategory extends AppCompatActivity {
                         String strID = object.getString("ID");
                         listID.add(strID);
                         strImageUrl = ImgURL + strCategoryIcon;
+
                     }
                     listID.add("e_alliamgeid");
                     listName.add("Event");
-                    listIcon.add("http://theme.behsamanco.com/images/avatarpack/26.png");
+                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/Gallery/event.png");
 
                     listID.add("bypeopleidid");
                     listName.add("ByPeople");
-                    listIcon.add("http://theme.behsamanco.com/images/avatarpack/26.png");
+                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/Gallery/bypeople.png");
                 }
 
 
@@ -181,10 +182,11 @@ public class AudioCategory extends AppCompatActivity {
            /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
             }*/
-           progressbar.setVisibility(View.GONE);
+            progressbar.setVisibility(View.GONE);
             gridView = (GridView) findViewById(R.id.grid_audio);
             if (gridView != null) {
                 CustomAdpter customAdpter = new CustomAdpter(AudioCategory.this, listName);
+                customAdpter.notifyDataSetChanged();
                 if (customAdpter.getCount() != 0) {
                     gridView.setVisibility(View.VISIBLE);
                     txt_nodata_today.setVisibility(View.GONE);
@@ -192,18 +194,31 @@ public class AudioCategory extends AppCompatActivity {
                     gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            grid_txtTitle = (TextView) findViewById(R.id.grid_txtTitle);
-                            String strAudioTitle = listName.get(position);
-                            Log.e(TAG, "Audio Category Title" + strAudioTitle);
-                            String strListId = listID.get(position);
-                            Log.e(TAG, "ListID is:" + strListId);
-                            //(String) ((TextView)findViewById(R.id.grid_txtTitle)).getText();
-                            Intent intent = new Intent(AudioCategory.this, AudioCategoryitem.class);
-                            intent.putExtra("listTitle", strAudioTitle);
-                            intent.putExtra("listId", strListId);
-                            intent.putExtra("listCategoryId", strListId);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                            if (listID.get(position).equalsIgnoreCase("e_alliamgeid")) {
+                                Intent intent = new Intent(AudioCategory.this, AudioAllEventActivity.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            } else if (listID.get(position).equalsIgnoreCase("bypeopleidid")) {
+                                Intent intent = new Intent(AudioCategory.this, AudioAllBypeopleActivity.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            } else {
+                                grid_txtTitle = (TextView) findViewById(R.id.grid_txtTitle);
+                                String strAudioTitle = listName.get(position);
+                                Log.e(TAG, "Audio Category Title" + strAudioTitle);
+                                String strListId = listID.get(position);
+                                Log.e(TAG, "ListID is:" + strListId);
+                                //(String) ((TextView)findViewById(R.id.grid_txtTitle)).getText();
+
+
+                                Intent intent = new Intent(AudioCategory.this, AudioCategoryitem.class);
+                                intent.putExtra("listTitle", strAudioTitle);
+                                intent.putExtra("listId", strListId);
+                                intent.putExtra("listCategoryId", strListId);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            }
                         }
                     });
                 } else {
@@ -250,8 +265,13 @@ public class AudioCategory extends AppCompatActivity {
                 holder = (ViewHolder) convertView.getTag();
             }
             // holder.txt_ID.setText(items.get(position));
-            holder.grid_txtTitle.setText(items.get(position));
-            Picasso.with(AudioCategory.this).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.no_image).into(holder.grid_img);
+            holder.grid_txtTitle.setText(CommonMethod.decodeEmoji(items.get(position)));
+
+//            Picasso.with(AudioCategory.this).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0, 200).error(R.drawable.no_image).into(holder.grid_img);
+
+            Glide.with(AudioCategory.this).load(listIcon.get(position)
+                    .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).dontAnimate().into(holder.grid_img);
+
             return convertView;
 
         }

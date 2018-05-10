@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,14 +21,13 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.kaopiz.kprogresshud.KProgressHUD;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.vimalsagarji.vimalsagarjiapp.CustomImageAdapter;
-import com.vimalsagarji.vimalsagarjiapp.Gallery_gridview_full_image;
 import com.vimalsagarji.vimalsagarjiapp.ImageItemSplash;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.Splash_Activity2;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,12 +36,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.boye.httpclientandroidlib.NameValuePair;
+import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
+
 @SuppressWarnings("ALL")
 public class GalleryCategory extends AppCompatActivity {
 
     static final String TAG = GalleryCategory.class.getSimpleName();
-    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallimages/?page=1&psize=1000";
-    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/";
+    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/gallery/getallimages/?page=1&psize=1000";
+    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/Gallery/";
     private final ArrayList<String> listIcon = new ArrayList<String>();
     String strImageUrl = "";
     static Bitmap bitmap = null;
@@ -55,6 +56,7 @@ public class GalleryCategory extends AppCompatActivity {
     public static ArrayList<ImageItemSplash> itemSplashArrayList = new ArrayList<>();
     private CustomImageAdapter customImageAdapter;
     private ProgressBar progressbar;
+    private TextView etGalleryTitle;
 
     @Override
     public void onBackPressed() {
@@ -74,9 +76,11 @@ public class GalleryCategory extends AppCompatActivity {
         gridView = (GridView) findViewById(R.id.gallery_gridview);
         txt_nodata_today = (TextView) findViewById(R.id.txt_nodata_today);
         rel_gallary = (RelativeLayout) findViewById(R.id.rel_gallary);
+        etGalleryTitle = (TextView) findViewById(R.id.etGalleryTitle);
         ImageView imgarrorback = (ImageView) toolbar.findViewById(R.id.imgarrorback);
         ImageView imgHome = (ImageView) toolbar.findViewById(R.id.imgHome);
         TextView txt_title = (TextView) toolbar.findViewById(R.id.txt_title);
+
         imgarrorback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +101,7 @@ public class GalleryCategory extends AppCompatActivity {
 
         cid = getIntent().getStringExtra("cid");
         catname = getIntent().getStringExtra("catname");
-        txt_title.setText(catname);
+        txt_title.setText(CommonMethod.decodeEmoji(catname));
 
        /* if (CommonMethod.isInternetConnected(GalleryCategory.this)) {
             JsonTask jsonTask = new JsonTask();
@@ -106,6 +110,7 @@ public class GalleryCategory extends AppCompatActivity {
 
         if (cid.equalsIgnoreCase("e_alliamgeid")) {
             Log.e("event click", "-----------");
+            etGalleryTitle.setText("Gallery");
             if (CommonMethod.isInternetConnected(GalleryCategory.this)) {
                 new EventImage().execute();
             } else {
@@ -122,6 +127,7 @@ public class GalleryCategory extends AppCompatActivity {
             }
         } else if (cid.equalsIgnoreCase("bypeopleidid")) {
             Log.e("bypeople click", "-----------");
+            etGalleryTitle.setText("Gallery");
             if (CommonMethod.isInternetConnected(GalleryCategory.this)) {
                 new ByPeopleImage().execute();
             } else {
@@ -139,6 +145,8 @@ public class GalleryCategory extends AppCompatActivity {
 
         } else {
             if (CommonMethod.isInternetConnected(GalleryCategory.this)) {
+
+                new getCategoryDescription().execute();
                 JsonTask jsonTask = new JsonTask();
                 jsonTask.execute(URL, ImgURL);
             } else {
@@ -154,7 +162,6 @@ public class GalleryCategory extends AppCompatActivity {
                 });
             }
         }
-
 
     }
 
@@ -175,7 +182,7 @@ public class GalleryCategory extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallimagesbycid/?cid=" + cid + "&page=1&psize=1000");
+            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/gallery/getallimagesbycid/?cid=" + cid + "&page=1&psize=1000");
 
             return responseJSON;
         }
@@ -243,7 +250,7 @@ public class GalleryCategory extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000");
+            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappposts/?page=1&psize=1000");
 
             return responseJSON;
         }
@@ -264,7 +271,7 @@ public class GalleryCategory extends AppCompatActivity {
 
                         } else {
 
-                            String photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + jsonObject1.getString("Photo");
+                            String photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleimage/" + jsonObject1.getString("Photo");
                             itemSplashArrayList.add(new ImageItemSplash(photo, photo));
                             listIcon.add(photo);
                         }
@@ -314,7 +321,7 @@ public class GalleryCategory extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000");
+            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategoryyear/?page=1&psize=1000");
 
             return responseJSON;
         }
@@ -336,11 +343,15 @@ public class GalleryCategory extends AppCompatActivity {
                         if (jsonObject1.getString("Photo").equalsIgnoreCase("null")) {
 
                         } else {
-                            String photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + jsonObject1.getString("Photo");
+                            String photo = jsonObject1.getString("Photo");
                             String[] photoarray = photo.split(",");
-                            Log.e("photo array 0", "--------------" + photoarray[0]);
-                            itemSplashArrayList.add(new ImageItemSplash(photoarray[0], photoarray[0]));
-                            listIcon.add(photoarray[0]);
+
+                            for (int j = 0; j < photoarray.length; j++) {
+                                Log.e("photo array ", "--------------" + photoarray[j]);
+                                itemSplashArrayList.add(new ImageItemSplash("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/" + photoarray[j], "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/" + photoarray[j]));
+                                listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/" + photoarray[j]);
+                            }
+
                         }
                     }
                 }
@@ -366,6 +377,45 @@ public class GalleryCategory extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private class getCategoryDescription extends AsyncTask<String, Void, String> {
+        String jsonresponse="";
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair("gid",cid));
+            jsonresponse=CommonMethod.postStringResponse(CommonUrl.Main_url+"gallery/getdescription",nameValuePairs,GalleryCategory.this);
+
+            return jsonresponse;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response","-------------------"+s);
+            try {
+                JSONObject jsonObject=new JSONObject(s);
+                if (jsonObject.getString("status").equalsIgnoreCase("success")){
+                    JSONArray jsonArray=jsonObject.getJSONArray("data");
+                    JSONObject object=jsonArray.getJSONObject(0);
+                    etGalleryTitle.setText(CommonMethod.decodeEmoji(object.getString("Description")));
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+//            etGalleryTitle.setText("");
+        }
+
     }
 
     @SuppressWarnings("NullableProblems")
@@ -396,13 +446,19 @@ public class GalleryCategory extends AppCompatActivity {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            Picasso.with(GalleryCategory.this)
-                    .load(items.get(position)
-                            .replaceAll(" ", "%20"))
-                    .placeholder(R.drawable.loader)
-                    .resize(0, 200)
-                    .error(R.drawable.no_image)
-                    .into(holder.grid_img);
+            Log.e("gallery image", "------------" + items.get(position));
+
+//            Picasso.with(GalleryCategory.this)
+//                    .load(items.get(position)
+//                            .replaceAll(" ", "%20"))
+//                    .placeholder(R.drawable.loader)
+//                    .resize(0, 200)
+////                    .error(R.drawable.loader)
+//                    .into(holder.grid_img);
+
+
+            Glide.with(GalleryCategory.this).load(items.get(position)
+                    .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).into(holder.grid_img);
 
 
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -419,7 +475,6 @@ public class GalleryCategory extends AppCompatActivity {
                 }
             });
 
-
             return convertView;
 
         }
@@ -429,7 +484,6 @@ public class GalleryCategory extends AppCompatActivity {
 
         }
     }
-
 
     @Override
     public void onResume() {

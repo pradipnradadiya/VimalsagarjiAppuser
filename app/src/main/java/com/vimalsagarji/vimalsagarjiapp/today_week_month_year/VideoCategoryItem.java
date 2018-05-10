@@ -21,7 +21,6 @@ import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
 import com.vimalsagarji.vimalsagarjiapp.fragment.video_fragment.AllVideoFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.video_fragment.ThisMonthVideoFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.video_fragment.ThisWeekVideoFragment;
-import com.vimalsagarji.vimalsagarjiapp.fragment.video_fragment.TodayAllVideoFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.video_fragment.TodayVideoFragment;
 
 import static com.vimalsagarji.vimalsagarjiapp.fragment.video_fragment.TodayVideoFragment.listViewvideo;
@@ -93,7 +92,7 @@ public class VideoCategoryItem extends AppCompatActivity implements View.OnClick
             lin_main.setVisibility(View.GONE);
             openAllInfromation();
         } else {
-            openTodayInfromation();
+            openAllInfromation();
         }
 
     }

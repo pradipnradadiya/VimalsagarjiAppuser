@@ -3,26 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/round_rect_shape"
-    >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:orientation="vertical"
-
-        >
+        android:padding="5dp">
 
         <ImageView
             android:id="@+id/grid_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="2dp"
-            android:layout_gravity="center"
-            android:src="@android:drawable/ic_menu_gallery"
-            android:scaleType="fitXY"
-            tools:ignore="ContentDescription" />
+            android:scaleType="centerInside"
+            tools:ignore="ContentDescription"
+            android:layout_centerInParent="true"
+
+            />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -34,13 +33,15 @@
             android:id="@+id/grid_txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_centerInParent="true"
-            android:textSize="16sp"
-            android:textColor="@color/red"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
             android:lines="2"
             android:text=""
-            android:gravity="center" />
+            android:lineSpacingExtra="7dp"
+            android:textColor="@color/red"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 

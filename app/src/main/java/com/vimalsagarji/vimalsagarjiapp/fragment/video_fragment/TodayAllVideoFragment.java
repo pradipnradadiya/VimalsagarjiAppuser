@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.squareup.picasso.Picasso;
 import com.vimalsagarji.vimalsagarjiapp.R;
@@ -51,10 +52,10 @@ public class TodayAllVideoFragment extends Fragment {
     }
 
     final static String TAG = TodayAllVideoFragment.class.getSimpleName();
-    private final String urls = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategorytoday/?page=1&psize=1000&cid=";
+    private final String urls = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/getvideobycategorytoday/?page=1&psize=1000&cid=";
     private static String URL = "";
-    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videoimage/";
-    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videos/";
+    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/videoimage/";
+    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/videos/";
     private final ArrayList<String> listid = new ArrayList<>();
     private final ArrayList<String> listcatid = new ArrayList<>();
     private ArrayList<String> listVideoName = new ArrayList<String>();
@@ -67,7 +68,7 @@ public class TodayAllVideoFragment extends Fragment {
     private CustomAdpter customAdpter;
     private TextView txt_nodata_today;
     private EditText InputBox;
-    private final String AllSearchVideo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/searchvideobycategory/?page=1&psize=1000";
+    private final String AllSearchVideo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/searchvideobycategory/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
 
     ArrayList<String> videolistarray = new ArrayList<>();
@@ -477,16 +478,21 @@ public class TodayAllVideoFragment extends Fragment {
                 holder.imgPlayVideo = (ImageView) convertView.findViewById(R.id.imgPlayVideo);
                 holder.imgPlayPush = (ImageView) convertView.findViewById(R.id.imgPlayPush);
                 holder.imgPlayVideo1 = (ImageView) convertView.findViewById(R.id.imgPlayVideo1);
+                holder.img_new = (ImageView) convertView.findViewById(R.id.img_new);
 
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.txt_views.setText(listview.get(position));
-            holder.txtVideoName.setText(items.get(position));
-            holder.txtVideoDate.setText(listDate.get(position));
+            holder.txt_views.setText(CommonMethod.decodeEmoji(listview.get(position)));
+            holder.txtVideoName.setText(CommonMethod.decodeEmoji(items.get(position)));
+            holder.txtVideoDate.setText(CommonMethod.decodeEmoji(listDate.get(position)));
             if (listIcon != null) {
-                Picasso.with(getActivity()).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.no_image).into(holder.imgVideo);
+//                Picasso.with(getActivity()).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0,200).error(R.drawable.no_image).into(holder.imgVideo);
+
+                Glide.with(getActivity()).load(listIcon.get(position)
+                        .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).dontAnimate().into(holder.imgVideo);
+
             } else {
                 Picasso.with(getActivity()).load(R.drawable.no_image);
             }
@@ -538,7 +544,7 @@ public class TodayAllVideoFragment extends Fragment {
 
         private class ViewHolder {
             TextView txtVideoName, txtVideoDate, txt_views;
-            ImageView imgVideo, imgPlayVideo, imgPlayPush, imgPlayVideo1;
+            ImageView imgVideo, imgPlayVideo, imgPlayPush, imgPlayVideo1,img_new;
 
         }
     }
@@ -672,7 +678,7 @@ public class TodayAllVideoFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000");
+                responJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategoryyear/?page=1&psize=1000");
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -705,12 +711,12 @@ public class TodayAllVideoFragment extends Fragment {
                         for (int k = 0; k < vi.length; k++) {
                             videolistarray.add(vi[k]);
                         }
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventvideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
                         String[] parray = photo.split(",");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + parray[0];
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/" + parray[0];
 
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
@@ -789,7 +795,7 @@ public class TodayAllVideoFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000");
+                responJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappposts/?page=1&psize=1000");
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -817,11 +823,11 @@ public class TodayAllVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");
@@ -906,7 +912,7 @@ public class TodayAllVideoFragment extends Fragment {
 
                 params.add(new BasicNameValuePair("searchterm", searchitem));
                 System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/searcheventsbycategoryyear/?searchterm=vimal&page=1&psize=100", "POST", params);
+                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/searcheventsbycategoryyear/?searchterm=vimal&page=1&psize=100", "POST", params);
                 // JSONObject json = JSONParser.getJsonFromUrl(url);
                 Log.d("Create Response", json.toString());
                 status = json.optString(TAG_SUCCESS);
@@ -929,12 +935,12 @@ public class TodayAllVideoFragment extends Fragment {
                         for (int k = 0; k < vi.length; k++) {
                             videolistarray.add(vi[k]);
                         }
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventvideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
                         String[] parray = photo.split(",");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/" + parray[0];
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventaudio/" + parray[0];
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");
@@ -1016,7 +1022,7 @@ public class TodayAllVideoFragment extends Fragment {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("searchterm", searchitem));
                 System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/searchallposts/?page=1&psize=1000", "POST", params);
+                JSONObject json = jsonParser.makeHttpRequest("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/searchallposts/?page=1&psize=1000", "POST", params);
                 // JSONObject json = JSONParser.getJsonFromUrl(url);
                 Log.d("Create Response", json.toString());
                 status = json.optString(TAG_SUCCESS);
@@ -1035,11 +1041,11 @@ public class TodayAllVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");

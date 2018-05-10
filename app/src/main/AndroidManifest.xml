@@ -245,15 +245,11 @@
         <activity
             android:name=".today_week_month_year.CompetitionListQuestion"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ActivityHomeMain"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Splash_Activity2"
             android:screenOrientation="portrait" />
@@ -312,6 +308,39 @@
         <activity
             android:name=".activity.mainactivity.SettingActivity"
             android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".activity.mainactivity.VideoAllActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.mainactivity.VideoAllActivityByPeople"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.mainactivity.AudioAllBypeopleActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.mainactivity.AudioAllEventActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.YoutubePlayActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.mainactivity.AudioMainCategoryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.mainactivity.EventGalleryAlbumActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.mainactivity.EventGalleryAllImagesActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".jcplayer.JcPlayerService" />
 

@@ -22,11 +22,11 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.JSONParser;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.InformationDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.InformationCategory;
 import com.vimalsagarji.vimalsagarjiapp.model.JSONParser1;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
@@ -48,6 +48,7 @@ public class TodayInformationFragment extends Fragment {
     public TodayInformationFragment() {
 
     }
+
     //    private KProgressHUD loadingProgressDialog;
     private boolean isLoading = true;
     private int pageCount = 5;
@@ -59,11 +60,12 @@ public class TodayInformationFragment extends Fragment {
     private ImageView imsearch;
     private EditText InputBox;
     private CustomAdpter adpter;
-    private final String TodaySearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/searchallinfobycidtoday/?page=1&psize=1000";
+    private final String TodaySearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/info/searchallinfobycidtoday/?page=1&psize=1000";
     private List<InformationCategory> listfilterdata = new ArrayList<>();
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private Intent intent;
     private ProgressBar progressbar;
+    Sharedpreferance sharedpreferance;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,6 +77,8 @@ public class TodayInformationFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        sharedpreferance = new Sharedpreferance(getActivity());
+
         progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         listView = (ListView) getActivity().findViewById(R.id.list_today);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
@@ -98,28 +102,18 @@ public class TodayInformationFragment extends Fragment {
             }
         });
 
-        imsearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (CommonMethod.isInternetConnected(getActivity())) {
-                    new SearchTodayInformation().execute();
-                } else {
-                    final Snackbar snackbar = Snackbar
-                            .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
-                    snackbar.setActionTextColor(Color.RED);
-                    snackbar.show();
-                    snackbar.setAction("Dismiss", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            snackbar.dismiss();
-                        }
-                    });
-                }
-            }
-        });
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                final InformationCategory informationCategory1 = adpter.items.get(position);
+                Log.e("position list view","---------------------"+position);
+                informationCategory1.setFlag("true");
+                adpter.items.set(position,informationCategory1);
+                adpter.notifyDataSetChanged();
+
 
                 InformationCategory informationCategory = (InformationCategory) parent.getItemAtPosition(position);
                 intent = new Intent(getActivity(), InformationDetailActivity.class);
@@ -168,7 +162,11 @@ public class TodayInformationFragment extends Fragment {
 
     private void loadData() {
 //        adpter.clear();
-        new LoadJsonTask().execute(URL);
+        if (sharedpreferance.getId().equalsIgnoreCase("")) {
+
+        } else {
+            new LoadJsonTask().execute(URL + "&uid=" + sharedpreferance.getId());
+        }
     }
 
     private void onLoadData() {
@@ -236,6 +234,16 @@ public class TodayInformationFragment extends Fragment {
                             category.setDate(fulldate);
                             category.setDay(dayOfTheWeek);
                             category.setView(view);
+
+
+                            if (sharedpreferance.getId().equalsIgnoreCase("")){
+                                String flag = "true";
+                                category.setFlag(flag);
+                            }else {
+                                String flag = object.getString("is_viewed");
+                                category.setFlag(flag);
+                            }
+
                             listTodayInformationlist.add(category);
                         }
                     }
@@ -257,7 +265,7 @@ public class TodayInformationFragment extends Fragment {
 //            }
             if (getActivity() != null) {
                 if (listView != null) {
-                    CustomAdpter adpter = new CustomAdpter(getActivity(), listTodayInformationlist);
+                    adpter = new CustomAdpter(getActivity(), listTodayInformationlist);
                     if (adpter.getCount() != 0) {
                         listView.setVisibility(View.VISIBLE);
                         txt_nodata_today.setVisibility(View.GONE);
@@ -325,6 +333,16 @@ public class TodayInformationFragment extends Fragment {
                             category.setDate(fulldate);
                             category.setDay(dayOfTheWeek);
                             category.setView(view);
+
+
+                            if (sharedpreferance.getId().equalsIgnoreCase("")){
+                                String flag = "true";
+                                category.setFlag(flag);
+                            }else {
+                                String flag = object.getString("is_viewed");
+                                category.setFlag(flag);
+                            }
+
                             listTodayInformationlist.add(category);
                         }
                     }
@@ -342,7 +360,7 @@ public class TodayInformationFragment extends Fragment {
 
             if (getActivity() != null) {
                 if (listView != null) {
-                    CustomAdpter adpter = new CustomAdpter(getActivity(), listTodayInformationlist);
+                    adpter = new CustomAdpter(getActivity(), listTodayInformationlist);
                     if (adpter.getCount() != 0) {
                         listView.setVisibility(View.VISIBLE);
                         txt_nodata_today.setVisibility(View.GONE);
@@ -385,31 +403,42 @@ public class TodayInformationFragment extends Fragment {
                 holder.txt_Description = (TextView) convertView.findViewById(R.id.txtDescription);
                 holder.txt_Date = (TextView) convertView.findViewById(R.id.txtDate);
                 holder.txt_Address = (TextView) convertView.findViewById(R.id.txt_address);
-
+                holder.img_new = (ImageView) convertView.findViewById(R.id.img_new);
                 convertView.setTag(holder);
+
+
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
             InformationCategory inCategory = items.get(position);
-            holder.txt_Title.setMaxLines((int) 1.5);
+//            holder.txt_Title.setMaxLines((int) 1.5);
             holder.txt_Title.setText(CommonMethod.decodeEmoji(inCategory.getTitle()));
             holder.txt_Description.setText(CommonMethod.decodeEmoji(inCategory.getDescription()));
             holder.txt_Date.setText(CommonMethod.decodeEmoji(inCategory.getDay() + ", " + inCategory.getDate()));
             holder.txt_Address.setText(CommonMethod.decodeEmoji(inCategory.getAddress()));
             holder.txt_views.setText(CommonMethod.decodeEmoji(inCategory.getView()));
 
-            InformationCategory nCategory = filterdata.get(position);
-            holder.txt_Title.setMaxLines((int) 1.5);
-            holder.txt_Title.setText(CommonMethod.decodeEmoji(nCategory.getTitle()));
-            holder.txt_Description.setText(CommonMethod.decodeEmoji(nCategory.getDescription()));
-            holder.txt_Date.setText(CommonMethod.decodeEmoji(inCategory.getDay() + ", " + inCategory.getDate()));
-            holder.txt_Address.setText(CommonMethod.decodeEmoji(inCategory.getAddress()));
-            holder.txt_views.setText(CommonMethod.decodeEmoji(inCategory.getView()));
+            if (inCategory.getFlag().equalsIgnoreCase("true")){
+                holder.img_new.setVisibility(View.GONE);
+            }
+            else{
+                holder.img_new.setVisibility(View.VISIBLE);
+            }
+
+
+//            InformationCategory nCategory = filterdata.get(position);
+//            holder.txt_Title.setMaxLines((int) 1.5);
+//            holder.txt_Title.setText(CommonMethod.decodeEmoji(nCategory.getTitle()));
+//            holder.txt_Description.setText(CommonMethod.decodeEmoji(nCategory.getDescription()));
+//            holder.txt_Date.setText(CommonMethod.decodeEmoji(inCategory.getDay() + ", " + inCategory.getDate()));
+//            holder.txt_Address.setText(CommonMethod.decodeEmoji(inCategory.getAddress()));
+//            holder.txt_views.setText(CommonMethod.decodeEmoji(inCategory.getView()));
             return convertView;
         }
 
         private class ViewHolder {
             TextView txt_ID, txt_Title, txt_Description, txt_Address, txt_Date, txt_views;
+            private ImageView img_new;
         }
 
         public void addNewData(List<InformationCategory> list) {
@@ -496,93 +525,22 @@ public class TodayInformationFragment extends Fragment {
     }
 
 
-    @SuppressWarnings("deprecation")
-    public class SearchTodayInformation extends AsyncTask<String, String, String> {
-
-        String status;
-        public LayoutInflater inflater = null;
-        private static final String TAG_SUCCESS = "success";
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @SuppressWarnings("ResourceType")
-        @Override
-        protected String doInBackground(String... param) {
-            try {
-                JSONParser1 jsonParser = new JSONParser1();
-                //    String count = param[0];
-
-                String searchitem = InputBox.getText().toString();
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("searchterm", searchitem));
-                System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest(TodaySearch, "POST", params);
-                // JSONObject json = JSONParser.getJsonFromUrl(url);
-                Log.d("Create Response", json.toString());
-                status = json.optString(TAG_SUCCESS);
-                for (int i = 0; i < json.length(); i++) {
-                    listfilterdata = new ArrayList<>();
-                    JSONArray jsonArray = json.getJSONArray("data");
-                    System.out.println("JsonArray is" + jsonArray.length());
-                    for (int j = 0; j < jsonArray.length(); j++) {
-                        JSONObject object = jsonArray.getJSONObject(j);
-                        String strID = object.getString("ID");
-                        String strTitle = object.getString("Title");
-                        String strDescription = object.getString("Description");
-                        String strAddress = object.getString("Address");
-                        String strDate = object.getString("Date");
-                        String view = object.getString("View");
-                        String str = strDate.substring(0, 10);
-
-                        InformationCategory informationCategory = new InformationCategory();
-                        informationCategory.setID(strID);
-                        informationCategory.setTitle(strTitle);
-                        informationCategory.setDescription(strDescription);
-                        informationCategory.setAddress(strAddress);
-                        informationCategory.setDate(strDate);
-                        informationCategory.setView(view);
-                        listfilterdata.add(informationCategory);
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return status;
-        }
-
-        protected void onPostExecute(String status) {
-            super.onPostExecute(status);
-            InformationCategory informationCategory = new InformationCategory();
-
-            if (getActivity() != null) {
-                if (listView != null) {
-                    adpter = new CustomAdpter(getActivity(), listfilterdata);
-                    if (adpter.getCount() != 0) {
-                        listView.setVisibility(View.VISIBLE);
-                        txt_nodata_today.setVisibility(View.GONE);
-                        listView.setAdapter(adpter);
-                    } else {
-                        listView.setVisibility(View.GONE);
-                        txt_nodata_today.setVisibility(View.VISIBLE);
-                        txt_nodata_today.setText("No Search\n Found");
-//                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            }
-        }
-
-    }
-
     @Override
     public void onResume() {
         super.onResume();
+        listView.setVisibility(View.GONE);
         if (CommonMethod.isInternetConnected(getActivity())) {
             listTodayInformationlist.clear();
-            JsonTask jsonTask = new JsonTask();
-            jsonTask.execute(URL);
+
+            if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                JsonTask jsonTask = new JsonTask();
+                jsonTask.execute(URL);
+            } else {
+                JsonTask jsonTask = new JsonTask();
+                jsonTask.execute(URL + "&uid=" + sharedpreferance.getId());
+            }
+
+
         } else {
             final Snackbar snackbar = Snackbar
                     .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);

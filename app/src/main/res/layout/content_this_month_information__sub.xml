@@ -4,13 +4,11 @@
     android:id="@+id/rl_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_above="@+id/layout_likeComment"
     android:background="@color/white"
-    android:clickable="true"
-    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context="com.vimalsagarji.vimalsagarjiapp.activity.InformationDetailActivity"
     tools:ignore="Overdraw">
+
 
     <include
         android:id="@+id/toolbar_thisMonthSubActivity"
@@ -18,22 +16,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.vimalsagarji.vimalsagarjiapp.utils.CustomEditTextBold
-        android:id="@+id/etTitle"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:ems="7"
-        android:enabled="false"
-        android:focusable="true"
-        android:gravity="start"
-        android:maxLines="1"
-        android:padding="10dp"
-        android:text=""
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:background="@null"
-        tools:ignore="HardcodedText,TextFields" />
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:padding="7dp">
+
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+            android:id="@+id/etTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:lineSpacingExtra="7dp"
+            android:text="test"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            tools:ignore="HardcodedText,TextFields" />
+    </LinearLayout>
 
     <View
         android:id="@+id/line"
@@ -45,6 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -89,10 +92,11 @@
         android:layout_height="1dp"
         android:background="@color/view" />
 
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
+        android:layout_weight="9"
         android:scrollbars="vertical">
 
         <LinearLayout
@@ -100,20 +104,46 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/img_info"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:scaleType="centerCrop" />
+
+
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                android:id="@+id/txtlocation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:lineSpacingExtra="7dp"
+                android:padding="10dp"
+                android:scrollbars="vertical"
+                android:text="Location"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:id="@+id/txtDescri"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:lineSpacingExtra="7dp"
                 android:padding="10dp"
                 android:scrollbars="vertical"
                 android:text="Description"
-                android:textColor="#403f3f"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 tools:ignore="HardcodedText" />
 
 
         </LinearLayout>
+
 
     </ScrollView>
 

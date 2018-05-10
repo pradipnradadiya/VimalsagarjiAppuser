@@ -18,10 +18,6 @@ import com.vimalsagarji.vimalsagarjiapp.model.PhotoAudioVideoItem;
 
 import java.util.ArrayList;
 
-/**
- * Created by Grapes-Pradip on 13-Oct-17.
- */
-
 public class EventsAllDisplay extends AppCompatActivity {
 
     RecyclerView recycleview;

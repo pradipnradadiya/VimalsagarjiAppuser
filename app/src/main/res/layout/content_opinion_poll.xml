@@ -82,9 +82,13 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_opinionPoll"
         android:background="@color/white"
-        android:text="Opinion poll text"
-        android:textSize="20dp"
-        android:gravity="center"
+        android:text="This feature will be activated when the number of application users increases to the required quantity.\n\nएप्लिकेशन के उपयोगकर्ताओं की संख्या पर्याप्त मात्रा में बढ़ जाने के बाद यह फीचर काम करेगा."
+        android:textSize="22dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:padding="25dp"
+        android:lineSpacingExtra="7dp"
+
         />
 
 

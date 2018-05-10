@@ -17,16 +17,13 @@ import com.vimalsagarji.vimalsagarjiapp.activity.EventDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.InformationDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.ThoughtsDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.VideoDetailActivity;
-import com.vimalsagarji.vimalsagarjiapp.categoryactivity.CompetitionActivity;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.Gallery_All_Category;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.model.SearchItem;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.CompetitionList;
-import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.GalleryCategory;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.OpinionPoll;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Grapes-Pradip on 04-Oct-17.
@@ -57,58 +54,58 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
 
         if (searchItem.getTable().equalsIgnoreCase("Information")) {
             holder.search_image.setImageResource(R.drawable.infromation);
-            holder.txt_title.setText(searchItem.getTitle());
-            holder.txt_date.setText(searchItem.getDate());
-            holder.txt_content.setText(searchItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(searchItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(searchItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(searchItem.getDescription()));
         } else if (searchItem.getTable().equalsIgnoreCase("Events")) {
             holder.search_image.setImageResource(R.drawable.event);
-            holder.txt_title.setText(searchItem.getTitle());
-            holder.txt_date.setText(searchItem.getDate());
-            holder.txt_content.setText(searchItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(searchItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(searchItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(searchItem.getDescription()));
         } else if (searchItem.getTable().equalsIgnoreCase("Audio")) {
             holder.search_image.setImageResource(R.drawable.audio);
-            holder.txt_title.setText(searchItem.getTitle());
-            holder.txt_date.setText(searchItem.getDate());
-            holder.txt_content.setText(searchItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(searchItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(searchItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(searchItem.getDescription()));
         } else if (searchItem.getTable().equalsIgnoreCase("Video")) {
             holder.search_image.setImageResource(R.drawable.video);
-            holder.txt_title.setText(searchItem.getTitle());
-            holder.txt_date.setText(searchItem.getDate());
-            holder.txt_content.setText(searchItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(searchItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(searchItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(searchItem.getDescription()));
         } else if (searchItem.getTable().equalsIgnoreCase("Thoughts")) {
             holder.search_image.setImageResource(R.drawable.thoughts);
-            holder.txt_title.setText(searchItem.getTitle());
-            holder.txt_date.setText(searchItem.getDate());
-            holder.txt_content.setText(searchItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(searchItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(searchItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(searchItem.getDescription()));
         } else if (searchItem.getTable().equalsIgnoreCase("ByPeople")) {
             holder.search_image.setImageResource(R.drawable.bypeople);
-            holder.txt_title.setText(searchItem.getTitle());
-            holder.txt_date.setText(searchItem.getDate());
-            holder.txt_content.setText(searchItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(searchItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(searchItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(searchItem.getDescription()));
         } else if (searchItem.getTable().equalsIgnoreCase("Question")) {
             holder.search_image.setImageResource(R.drawable.qa);
-            holder.txt_title.setText(searchItem.getTitle());
-            holder.txt_date.setText(searchItem.getDate());
-            holder.txt_content.setText(searchItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(searchItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(searchItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(searchItem.getDescription()));
         } else if (searchItem.getTable().equalsIgnoreCase("CompetitionMain")) {
             holder.search_image.setImageResource(R.drawable.competition);
-            holder.txt_title.setText(searchItem.getTitle());
-            holder.txt_date.setText(searchItem.getDate());
-            holder.txt_content.setText(searchItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(searchItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(searchItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(searchItem.getDescription()));
         } else if (searchItem.getTable().equalsIgnoreCase("Gallery")) {
             holder.search_image.setImageResource(R.drawable.gallary);
-            holder.txt_title.setText(searchItem.getTitle());
-            holder.txt_date.setText(searchItem.getDate());
-            holder.txt_content.setText(searchItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(searchItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(searchItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(searchItem.getDescription()));
         }else if (searchItem.getTable().equalsIgnoreCase("OpinionPollMain")) {
             holder.search_image.setImageResource(R.drawable.opinionpoll);
-            holder.txt_title.setText(searchItem.getTitle());
-            holder.txt_date.setText(searchItem.getDate());
-            holder.txt_content.setText(searchItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(searchItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(searchItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(searchItem.getDescription()));
             if (searchItem.getDescription().equalsIgnoreCase("")){
                 holder.txt_content.setText("Yes & No Answer.");
             }else {
-                holder.txt_content.setText(searchItem.getDescription());
+                holder.txt_content.setText(CommonMethod.decodeEmoji(searchItem.getDescription()));
             }
         }
 

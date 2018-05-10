@@ -5,15 +5,12 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,13 +30,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.kaopiz.kprogresshud.KProgressHUD;
+import com.vimalsagarji.vimalsagarjiapp.ImageViewActivity;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.ThisMonthComments;
-import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.InformationCategory;
 import com.vimalsagarji.vimalsagarjiapp.util.CommonAPI_Name;
 import com.vimalsagarji.vimalsagarjiapp.util.CommonURL;
 import com.vimalsagarji.vimalsagarjiapp.utils.SessionManager;
@@ -52,6 +51,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import ch.boye.httpclientandroidlib.NameValuePair;
+import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 
 @SuppressWarnings("ALL")
 public class InformationDetailActivity extends AppCompatActivity {
@@ -79,10 +81,10 @@ public class InformationDetailActivity extends AppCompatActivity {
     private LinearLayout rl_layout;
     private String approve = "";
     private final ArrayList<String> listname = new ArrayList<>();
-    EditText etTitle;
+    TextView etTitle;
     String title;
     String description;
-
+    CustomAdpter adpter;
     //check like
     private String status;
     private String message;
@@ -91,15 +93,15 @@ public class InformationDetailActivity extends AppCompatActivity {
     private TextView txt_title;
     String click_action;
     int commentsize;
-    private ImageView img_share;
+    private ImageView img_share, img_info;
     ProgressDialog progressDialog;
     private ProgressBar progressBar;
+    private String photo;
+    private TextView txtlocation;
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        Intent intent = new Intent(InformationDetailActivity.this, InformationCategory.class);
-//        startActivity(intent);
         finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
@@ -110,31 +112,23 @@ public class InformationDetailActivity extends AppCompatActivity {
         setContentView(R.layout.content_this_month_information__sub);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         sharedpreferance = new Sharedpreferance(InformationDetailActivity.this);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_thisMonthSubActivity);
-//        setSupportActionBar(toolbar);
         rl_layout = (LinearLayout) findViewById(R.id.rl_layout);
 
         Intent intent1 = getIntent();
 
-//        String strtitle = intent1.getStringExtra("listTitle");
-//        String date = intent1.getStringExtra("listDate");
-//        String time = intent1.getStringExtra("time");
-//        String strdescri = intent1.getStringExtra("listDescription");
         strID = intent1.getStringExtra("listID");
         click_action = intent1.getStringExtra("click_action");
+
+        if (!sharedpreferance.getId().equalsIgnoreCase("")) {
+            new checkViewed().execute();
+        }
+
+
 //        view = intent1.getStringExtra("view");
         Log.e("strid", "--------------------------" + strID);
 
 
-//        if (CommonMethod.isInternetConnected(InformationDetailActivity.this)) {
-//
-//            new CheckUserApprove().execute();
-////            new getLikeCount().execute(strID);
-//            new CheckLike().execute(sharedpreferance.getId(), strID);
-//            new GetAllInfo().execute();
-//        } else {
-//            Snackbar.make(rl_layout, R.string.internet, Snackbar.LENGTH_SHORT).show();
-//        }
+        txtlocation = (TextView) findViewById(R.id.txtlocation);
         ImageView imgHomeBack = (ImageView) findViewById(R.id.imgarrorback);
         ImageView imgHome = (ImageView) findViewById(R.id.imgHome);
         imgHome.setVisibility(View.GONE);
@@ -151,7 +145,8 @@ public class InformationDetailActivity extends AppCompatActivity {
         });
 
         img_share = (ImageView) findViewById(R.id.img_share);
-        etTitle = (EditText) findViewById(R.id.etTitle);
+        img_info = (ImageView) findViewById(R.id.img_info);
+        etTitle = (TextView) findViewById(R.id.etTitle);
         txtDate = (TextView) findViewById(R.id.txtDate);
         txt_time = (TextView) findViewById(R.id.txt_time);
         txtDescri = (TextView) findViewById(R.id.txtDescri);
@@ -168,6 +163,15 @@ public class InformationDetailActivity extends AppCompatActivity {
         txt_comment = (TextView) findViewById(R.id.txt_comment);
 
 
+        img_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InformationDetailActivity.this, ImageViewActivity.class);
+                intent.putExtra("imagePath", CommonURL.ImagePath + "infoimage/" + photo.replaceAll(" ", "%20"));
+                startActivity(intent);
+            }
+        });
+
         img_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,7 +180,7 @@ public class InformationDetailActivity extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                    String sAux = "\n Information \n" + title + "\n" + description + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
+                    String sAux = "\n Information \n" + CommonMethod.decodeEmoji(title) + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
                     sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
                     intent.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(intent, "Choose One"));
@@ -269,7 +273,6 @@ public class InformationDetailActivity extends AppCompatActivity {
                                     etComment.requestFocus();
                                 } else {
                                     if (approve.equalsIgnoreCase("1")) {
-
                                         new CommentPost().execute(CommonMethod.encodeEmoji(etComment.getText().toString()));
                                         etComment.setText("");
                                     } else {
@@ -315,7 +318,7 @@ public class InformationDetailActivity extends AppCompatActivity {
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
             return responseJSON;
         }
 
@@ -351,6 +354,7 @@ public class InformationDetailActivity extends AppCompatActivity {
                         listname.add(name);
 
                     }
+
                     commentsize = listComments.size();
                     Log.e("Comment size", "---------------------" + listComments.size());
                     count_comment = listComments.size();
@@ -371,7 +375,7 @@ public class InformationDetailActivity extends AppCompatActivity {
             listView = (ListView) dialog.findViewById(R.id.listbyPeopleComment);
             txt_nodata_today = (TextView) dialog.findViewById(R.id.txt_nocomment);
             if (listView != null) {
-                CustomAdpter adpter = new CustomAdpter(getApplicationContext(), listComments);
+                adpter = new CustomAdpter(getApplicationContext(), listComments);
                 if (adpter.getCount() != 0) {
                     listView.setVisibility(View.VISIBLE);
                     txt_nodata_today.setVisibility(View.GONE);
@@ -404,7 +408,7 @@ public class InformationDetailActivity extends AppCompatActivity {
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
             return responseJSON;
         }
 
@@ -478,7 +482,7 @@ public class InformationDetailActivity extends AppCompatActivity {
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
             return responseJSON;
         }
 
@@ -606,7 +610,7 @@ public class InformationDetailActivity extends AppCompatActivity {
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", strID));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Comment", params[0]));
-            response = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/comment/", nameValuePairs, InformationDetailActivity.this);
+            response = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/info/comment/", nameValuePairs, InformationDetailActivity.this);
 
 
             return response;
@@ -622,7 +626,8 @@ public class InformationDetailActivity extends AppCompatActivity {
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     loadingProgressDialog.dismiss();
                     Toast.makeText(InformationDetailActivity.this, R.string.commentsuccess, Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
+                    new CommentList().execute(strID);
+//                    dialog.dismiss();
                 } else {
                     loadingProgressDialog.dismiss();
                     Toast.makeText(InformationDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
@@ -652,7 +657,7 @@ public class InformationDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
-            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/likeinfo/", nameValuePairs, InformationDetailActivity.this);
+            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/info/likeinfo/", nameValuePairs, InformationDetailActivity.this);
             return responeJSON;
         }
 
@@ -680,7 +685,7 @@ public class InformationDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/countlikes/", nameValuePairs, InformationDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/info/countlikes/", nameValuePairs, InformationDetailActivity.this);
             return responseJSON;
         }
 
@@ -721,7 +726,7 @@ public class InformationDetailActivity extends AppCompatActivity {
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", params[0]));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/checklike/", nameValuePairs, InformationDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/info/checklike/", nameValuePairs, InformationDetailActivity.this);
             return responseJSON;
         }
 
@@ -755,7 +760,7 @@ public class InformationDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -796,7 +801,7 @@ public class InformationDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/information/?infoid=" + strID + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/countviews/information/?infoid=" + strID + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -886,6 +891,7 @@ public class InformationDetailActivity extends AppCompatActivity {
                         String address = object.getString("Address");
                         String dates = object.getString("Date");
                         view = object.getString("View");
+                        photo = object.getString("Photo");
 
                         String[] string = dates.split(" ");
                         Log.e("str1", "--------" + string[0]);
@@ -909,6 +915,15 @@ public class InformationDetailActivity extends AppCompatActivity {
                         etTitle.setText(CommonMethod.decodeEmoji(title));
                         txtDate.setText(CommonMethod.decodeEmoji(date));
                         txtDescri.setText(CommonMethod.decodeEmoji(description));
+                        txtlocation.setText("Location: " + CommonMethod.decodeEmoji(address));
+
+                        if (!photo.equalsIgnoreCase("")) {
+                            Glide.with(InformationDetailActivity.this).load(CommonURL.ImagePath + "infoimage/" + photo
+                                    .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).into(img_info);
+                        } else {
+                            img_info.setVisibility(View.GONE);
+                        }
+
                         new countView().execute();
 
 
@@ -950,6 +965,34 @@ public class InformationDetailActivity extends AppCompatActivity {
         } else {
             Snackbar.make(rl_layout, R.string.internet, Snackbar.LENGTH_SHORT).show();
         }
+    }
+
+    private class checkViewed extends AsyncTask<String, Void, String> {
+
+        String responseJson = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
+            nameValuePairs.add(new BasicNameValuePair("infoid", strID));
+
+            responseJson = CommonMethod.postStringResponse(CommonUrl.Main_url + "info/setinfoviewed", nameValuePairs, InformationDetailActivity.this);
+            return responseJson;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response","-----------------"+s);
+        }
+
     }
 
 }

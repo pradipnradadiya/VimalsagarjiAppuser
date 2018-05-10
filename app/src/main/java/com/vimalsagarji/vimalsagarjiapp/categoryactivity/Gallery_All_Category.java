@@ -20,15 +20,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.kaopiz.kprogresshud.KProgressHUD;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.vimalsagarji.vimalsagarjiapp.R;
+import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.EventGalleryAlbumActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.GalleryCategory;
-import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.InformationCategory;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
 
 import org.json.JSONArray;
@@ -71,6 +69,8 @@ public class Gallery_All_Category extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_audio_category);
+
+
         toolbar_home = (Toolbar) findViewById(R.id.toolbar_audio);
         setSupportActionBar(toolbar_home);
         progressbar= (ProgressBar) findViewById(R.id.progressbar);
@@ -93,6 +93,8 @@ public class Gallery_All_Category extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+
+
 
         imgarrorback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,7 +148,7 @@ public class Gallery_All_Category extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallcategory");
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/gallery/getallcategory");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -168,15 +170,15 @@ public class Gallery_All_Category extends AppCompatActivity {
                         strName = object.getString("Name");
                         listName.add(strName);
                         String strCategoryIcon = object.getString("CategoryIcon");
-                        listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/gallerycategory/" + strCategoryIcon);
+                        listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/gallerycategory/" + strCategoryIcon);
                     }
                     listID.add("e_alliamgeid");
                     listName.add("Event");
-                    listIcon.add("http://theme.behsamanco.com/images/avatarpack/26.png");
+                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/Gallery/event.png");
 
                     listID.add("bypeopleidid");
                     listName.add("ByPeople");
-                    listIcon.add("http://theme.behsamanco.com/images/avatarpack/26.png");
+                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/Gallery/bypeople.png");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -192,6 +194,7 @@ public class Gallery_All_Category extends AppCompatActivity {
                     gridView.setVisibility(View.VISIBLE);
                     txt_nodata_today.setVisibility(View.GONE);
                     gridView.setAdapter(customAdpter);
+                    customAdpter.notifyDataSetChanged();
 
                 } else {
                     gridView.setVisibility(View.GONE);
@@ -237,25 +240,35 @@ public class Gallery_All_Category extends AppCompatActivity {
                 holder = (ViewHolder) convertView.getTag();
             }
             // holder.txt_ID.setText(items.get(position));
-            holder.grid_txtTitle.setText(items.get(position));
+            holder.grid_txtTitle.setText(CommonMethod.decodeEmoji(items.get(position)));
 
 
-            Picasso.with(Gallery_All_Category.this).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).error(R.drawable.bypeople_error).into(holder.grid_img);
+//            Picasso.with(Gallery_All_Category.this).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).error(R.drawable.bypeople_error).into(holder.grid_img);
+
+            Glide.with(Gallery_All_Category.this).load(listIcon.get(position)
+                    .replaceAll(" ", "%20")).placeholder(R.drawable.loader).dontAnimate().into(holder.grid_img);
+
 
             holder.grid_img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Gallery_All_Category.this, GalleryCategory.class);
-                    intent.putExtra("cid", listID.get(position));
-                    intent.putExtra("catname", listName.get(position));
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                    if (listID.get(position).equalsIgnoreCase("e_alliamgeid")){
+                        Intent intent = new Intent(Gallery_All_Category.this, EventGalleryAlbumActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }else {
+                        Intent intent = new Intent(Gallery_All_Category.this, GalleryCategory.class);
+                        intent.putExtra("cid", listID.get(position));
+                        intent.putExtra("catname", listName.get(position));
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
                 }
             });
             return convertView;
 
         }
-
 
         private class ViewHolder {
             TextView grid_txtTitle;

@@ -21,12 +21,12 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.kaopiz.kprogresshud.KProgressHUD;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
+import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.VideoAllActivity;
+import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.VideoAllActivityByPeople;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
-import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.EventActivity;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.VideoCategoryItem;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
 
@@ -167,11 +167,11 @@ public class VideoCategory extends AppCompatActivity {
 
                     listId.add("e_alliamgeid");
                     listName.add("Event");
-                    listIcon.add("http://theme.behsamanco.com/images/avatarpack/26.png");
+                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/Gallery/event.png");
 
                     listId.add("bypeopleidid");
                     listName.add("ByPeople");
-                    listIcon.add("http://theme.behsamanco.com/images/avatarpack/26.png");
+                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/Gallery/bypeople.png");
 
                 } else {
 
@@ -196,14 +196,29 @@ public class VideoCategory extends AppCompatActivity {
                     gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            grid_txtTitle = (TextView) findViewById(R.id.grid_txtTitle);
-                            String strAudioTitle = grid_txtTitle.getText().toString();
-                            Intent intent = new Intent(VideoCategory.this, VideoCategoryItem.class);
-                            intent.putExtra("listTitle", strAudioTitle);
-                            intent.putExtra("v_cid", listId.get(position));
-                            Log.e("id", "----------------------" + listId.get(position));
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                            if (listId.get(position).equalsIgnoreCase("e_alliamgeid")) {
+                                Intent intent = new Intent(VideoCategory.this, VideoAllActivity.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                            } else if (listId.get(position).equalsIgnoreCase("bypeopleidid")) {
+                                Intent intent = new Intent(VideoCategory.this, VideoAllActivityByPeople.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                            } else {
+                                grid_txtTitle = (TextView) findViewById(R.id.grid_txtTitle);
+                                String strAudioTitle = grid_txtTitle.getText().toString();
+                                Intent intent = new Intent(VideoCategory.this, VideoCategoryItem.class);
+                                intent.putExtra("listTitle", strAudioTitle);
+                                intent.putExtra("v_cid", listId.get(position));
+                                Log.e("id", "----------------------" + listId.get(position));
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            }
+
+
                         }
                     });
                 } else {
@@ -212,7 +227,9 @@ public class VideoCategory extends AppCompatActivity {
                 }
 
 
-            } else {
+            } else
+
+            {
                 gridView.setVisibility(View.GONE);
             }
         }
@@ -247,9 +264,13 @@ public class VideoCategory extends AppCompatActivity {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.grid_txtTitle.setText(items.get(position));
+            holder.grid_txtTitle.setText(CommonMethod.decodeEmoji(items.get(position)));
 
-            Picasso.with(VideoCategory.this).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0, 200).error(R.drawable.no_image).into(holder.grid_img);
+//            Picasso.with(VideoCategory.this).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0, 200).error(R.drawable.no_image).into(holder.grid_img);
+
+            Glide.with(VideoCategory.this).load(listIcon.get(position)
+                    .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).dontAnimate().into(holder.grid_img);
+
             return convertView;
 
         }

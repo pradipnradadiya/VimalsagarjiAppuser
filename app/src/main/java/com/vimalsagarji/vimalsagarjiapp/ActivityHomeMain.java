@@ -48,6 +48,7 @@ import com.vimalsagarji.vimalsagarjiapp.categoryactivity.CompetitionActivity;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.Gallery_All_Category;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.VideoCategory;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.fcm.Config;
 import com.vimalsagarji.vimalsagarjiapp.model.SliderItem;
@@ -57,16 +58,20 @@ import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.InformationCategor
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.OpinionPoll;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.QuestionAnswerActivity;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.ThoughtsActivity;
+import com.vimalsagarji.vimalsagarjiapp.utils.AllQuestionDetail;
 import com.vimalsagarji.vimalsagarjiapp.utils.DashboardCirclePageIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import ch.boye.httpclientandroidlib.NameValuePair;
+import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ActivityHomeMain extends AppCompatActivity implements View.OnClickListener {
@@ -84,8 +89,8 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 
     private ViewPager viewpager_slider;
     private DashboardCirclePageIndicator indicator;
-    private static int currentPage = 0;
-    private static int NUM_PAGES = 0;
+    private int currentPage = 0;
+    private int NUM_PAGES = 0;
     private final ArrayList<SliderItem> itemSplashArrayList = new ArrayList<>();
     private HomeSliderAdapter customImageAdapter;
 
@@ -127,10 +132,8 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
     ImageView img_slide;
     String currentVersion, playStoreVersion;
 
-//    private final String url = "http://ecx.images-amazon.com/images/I/71Pe-ft8QsL._UL1500_.jpg";
-//    private final String url1 = "http://www.wamanharipethesons.com/portalrepository/catalogs/default/WHPS288.248_0_r.jpg";
-//    private final String url2 = "http://www.southjewellery.com/wp-content/uploads/2013/09/grt_jewellers_gold_necklace.jpg";
-//    private final String url3 = "http://baggout.tiles.large.new1.s3-ap-southeast-1.amazonaws.com/MK-Jewellers-Traditional-Gold-Design-Beautiful-Immitation-Necklace-Jewellery-Set-82650665-e5a6b7bb-0afa-46b5-8639-573cad42dd0b_0.jpg";
+    //Count posts
+    private TextView txt_latestposts_count, txt_d_latest_posts, txt_d_infomation, txt_d_event, txt_d_thought, txt_d_audio, txt_d_video, txt_d_qa, txt_d_bypeople;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -145,6 +148,30 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
             e.printStackTrace();
         }
 
+//        new FetchAppVersionFromGooglePlayStore().execute();
+
+
+
+      /*  String newVersion = null;
+        try {
+            newVersion = Jsoup
+                    .connect(
+                            "https://play.google.com/store/apps/details?id="
+                                    + getPackageName() + "&hl=en")
+                    .timeout(30000)
+                    .userAgent(
+                            "Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                    .referrer("http://www.google.com")
+                    .get()
+                    .select("div[itemprop=softwareVersion]")
+                    .first()
+                    .ownText();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Log.e("new Version", newVersion);
+*/
         /*
 
         VersionChecker versionChecker = new VersionChecker();
@@ -218,6 +245,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         idClick();
 
         if (CommonMethod.isInternetConnected(ActivityHomeMain.this)) {
+
             new LoadSlideImage().execute();
         } else {
             img_slide.setVisibility(View.VISIBLE);
@@ -288,6 +316,18 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         txt_aboutmission = (TextView) headerLayout.findViewById(R.id.txt_aboutmission);
         txt_appinfo = (TextView) headerLayout.findViewById(R.id.txt_appinfo);
         img_hide_show = (ImageView) headerLayout.findViewById(R.id.img_adds);
+
+        txt_latestposts_count = (TextView) findViewById(R.id.txt_latestposts_count);
+        txt_d_latest_posts = (TextView) headerLayout.findViewById(R.id.txt_d_latest_posts);
+        txt_d_infomation = (TextView) headerLayout.findViewById(R.id.txt_d_infomation);
+        txt_d_event = (TextView) headerLayout.findViewById(R.id.txt_d_event);
+        txt_d_thought = (TextView) headerLayout.findViewById(R.id.txt_d_thought);
+        txt_d_audio = (TextView) headerLayout.findViewById(R.id.txt_d_audio);
+        txt_d_video = (TextView) headerLayout.findViewById(R.id.txt_d_video);
+        txt_d_qa = (TextView) headerLayout.findViewById(R.id.txt_d_qa);
+        txt_d_bypeople = (TextView) headerLayout.findViewById(R.id.txt_d_bypeople);
+
+
         drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
         img_menu_drawer = (ImageView) findViewById(R.id.img_menu_drawer);
         img_search = (ImageView) findViewById(R.id.img_search);
@@ -298,6 +338,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
     private void idClick() {
         rel_info.setOnClickListener(this);
         rel_event.setOnClickListener(this);
+
         rel_audio.setOnClickListener(this);
         rel_video.setOnClickListener(this);
         rel_thought.setOnClickListener(this);
@@ -339,6 +380,8 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         } else {
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed();
+                Log.e("double back click", "----------------");
+                finishAffinity();
                 return;
             }
 
@@ -350,6 +393,8 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 @Override
                 public void run() {
                     doubleBackToExitPressedOnce = false;
+                    Log.e("back click", "----------------");
+
                 }
             }, 2000);
 
@@ -449,6 +494,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 }
 
                 break;
+
             case R.id.lin_event:
                 Log.e("information", "------------------" + "click");
                 intent = new Intent(ActivityHomeMain.this, EventActivity.class);
@@ -564,28 +610,28 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 intent = new Intent(ActivityHomeMain.this, AboutAppGuruji.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                onBackPressed();
+//                onBackPressed();
                 break;
 
             case R.id.txt_aboutguruji:
                 intent = new Intent(ActivityHomeMain.this, GurujiVisionActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                onBackPressed();
+//                onBackPressed();
                 break;
 
             case R.id.txt_aboutmission:
                 intent = new Intent(ActivityHomeMain.this, GurujiMissionActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                onBackPressed();
+//                onBackPressed();
                 break;
 
             case R.id.txt_appinfo:
                 intent = new Intent(ActivityHomeMain.this, AboutAppInfo.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                onBackPressed();
+//                onBackPressed();
                 break;
 
 
@@ -635,6 +681,20 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         } else {
             img_slide.setVisibility(View.VISIBLE);
         }
+
+        if (sharedpreferance.getId().equalsIgnoreCase("")) {
+            txt_latestposts_count.setVisibility(View.GONE);
+            txt_d_latest_posts.setVisibility(View.GONE);
+            txt_d_infomation.setVisibility(View.GONE);
+            txt_d_event.setVisibility(View.GONE);
+            txt_d_thought.setVisibility(View.GONE);
+            txt_d_audio.setVisibility(View.GONE);
+            txt_d_video.setVisibility(View.GONE);
+            txt_d_qa.setVisibility(View.GONE);
+            txt_d_bypeople.setVisibility(View.GONE);
+        } else {
+            new checkCount().execute();
+        }
 //
     }
 
@@ -654,7 +714,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         @Override
         protected String doInBackground(String... strings) {
             try {
-                response = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getImages");
+                response = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/gallery/getallbanner");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -681,8 +741,9 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        itemSplashArrayList.add(new SliderItem(jsonObject1.getString("url")));
+                        itemSplashArrayList.add(new SliderItem("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bannerimage/" + jsonObject1.getString("image")));
                     }
+
 
                 }
             } catch (JSONException e) {
@@ -697,6 +758,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
             indicator.setViewPager(viewpager_slider);
 
             Log.e("image length", "" + itemSplashArrayList.size());
+
             if (itemSplashArrayList.size() > 1) {
                 NUM_PAGES = itemSplashArrayList.size();
                 final android.os.Handler handler = new android.os.Handler();
@@ -709,17 +771,18 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                         viewpager_slider.setCurrentItem(currentPage++);
                     }
                 };
+
                 Timer timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         handler.post(runnable);
+
                     }
 
                 }, 5000, 5000);
             }
         }
-
     }
 
 
@@ -734,7 +797,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         @Override
         protected String doInBackground(String... strings) {
             try {
-                responseString = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getversion");
+                responseString = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/info/getversion");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -755,23 +818,34 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 
                     } else {
 
-                        AlertDialog.Builder builder;
+                        final AlertDialog.Builder builder;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             builder = new AlertDialog.Builder(ActivityHomeMain.this, android.R.style.Theme_Material_Dialog_Alert);
                         } else {
                             builder = new AlertDialog.Builder(ActivityHomeMain.this);
                         }
+                        builder.setCancelable(false);
                         builder.setTitle("Alert")
 
-                                .setMessage("Your apps update version available in play store.")
+                                .setMessage("This apps latest update version available in play store, so please download it.")
                                 .setPositiveButton("Update", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        // continue with delete
+                                        // continue with delete]
+
+                                        final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+                                        try {
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                                        } catch (android.content.ActivityNotFoundException anfe) {
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                                        }
+
                                     }
                                 })
                                 .setNegativeButton("Remind me later", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         // do nothing
+
+                                        dialog.dismiss();
 
                                     }
                                 })
@@ -779,6 +853,141 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                                 .show();
                     }
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    class FetchAppVersionFromGooglePlayStore extends AsyncTask<String, Void, String> {
+
+        protected String doInBackground(String... urls) {
+            try {
+                return
+                        Jsoup.connect("https://play.google.com/store/apps/details?id=" + "com.aacharyavimalsagarsuriji.nayisochsahidisha" + "&hl=en")
+                                .timeout(10000)
+                                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                                .referrer("http://www.google.com")
+                                .get()
+                                .select("div[itemprop=softwareVersion]")
+                                .first()
+                                .ownText();
+
+            } catch (Exception e) {
+                return "";
+            }
+        }
+
+        protected void onPostExecute(String string) {
+            String newVersion = string;
+            Log.e("new Version", newVersion);
+        }
+    }
+
+    private class checkCount extends AsyncTask<String, Void, String> {
+
+        String responseJson = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
+
+            responseJson = CommonMethod.postStringResponse(CommonUrl.Main_url + "countviews/getuserviewcount", nameValuePairs, ActivityHomeMain.this);
+            return responseJson;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response", "-----------------" + s);
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(s);
+                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+
+                    JSONObject object = jsonObject.getJSONObject("data");
+                    int audio = object.getInt("audio");
+                    int bypeople = object.getInt("bypeople");
+                    int event = object.getInt("event");
+                    int info = object.getInt("info");
+                    int thought = object.getInt("thought");
+                    int video = object.getInt("video");
+                    int qa = object.getInt("qa");
+
+                    int total = audio + bypeople + event + info + thought + video + qa;
+                    if (total == 0) {
+                        txt_d_latest_posts.setVisibility(View.GONE);
+                        txt_latestposts_count.setVisibility(View.GONE);
+                    } else {
+                        txt_d_latest_posts.setVisibility(View.VISIBLE);
+                        txt_latestposts_count.setVisibility(View.VISIBLE);
+                        txt_d_latest_posts.setText(String.valueOf(total));
+                        txt_latestposts_count.setText(String.valueOf(total));
+                    }
+
+                    if (audio == 0) {
+                        txt_d_audio.setVisibility(View.GONE);
+                    } else {
+                        txt_d_audio.setVisibility(View.VISIBLE);
+                        txt_d_audio.setText(String.valueOf(audio));
+                    }
+
+                    if (bypeople == 0) {
+                        txt_d_bypeople.setVisibility(View.GONE);
+
+                    } else {
+                        txt_d_bypeople.setVisibility(View.VISIBLE);
+                        txt_d_bypeople.setText(String.valueOf(bypeople));
+
+                    }
+
+                    if (event == 0) {
+                        txt_d_event.setVisibility(View.GONE);
+                    } else {
+                        txt_d_event.setVisibility(View.VISIBLE);
+                        txt_d_event.setText(String.valueOf(event));
+                    }
+
+                    if (info == 0) {
+                        txt_d_infomation.setVisibility(View.GONE);
+                    } else {
+                        txt_d_infomation.setVisibility(View.VISIBLE);
+                        txt_d_infomation.setText(String.valueOf(info));
+                    }
+
+                    if (thought == 0) {
+                        txt_d_thought.setVisibility(View.GONE);
+                    } else {
+                        txt_d_thought.setVisibility(View.VISIBLE);
+                        txt_d_thought.setText(String.valueOf(thought));
+                    }
+
+                    if (video == 0) {
+                        txt_d_video.setVisibility(View.GONE);
+                    } else {
+                        txt_d_video.setVisibility(View.VISIBLE);
+                        txt_d_video.setText(String.valueOf(video));
+
+                    }
+
+                    if (qa == 0) {
+                        txt_d_qa.setVisibility(View.GONE);
+                    } else {
+                        txt_d_qa.setVisibility(View.VISIBLE);
+                        txt_d_qa.setText(String.valueOf(qa));
+                    }
+
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

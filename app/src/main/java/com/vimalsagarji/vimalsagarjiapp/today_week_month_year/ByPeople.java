@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vimalsagarji.vimalsagarjiapp.NewPostByPeople;
 import com.vimalsagarji.vimalsagarjiapp.R;
@@ -103,7 +102,7 @@ public class ByPeople extends AppCompatActivity implements View.OnClickListener 
         lin_week = (LinearLayout) findViewById(R.id.lin_week);
         lin_month = (LinearLayout) findViewById(R.id.lin_month);
         lin_all = (LinearLayout) findViewById(R.id.lin_all);
-        openTodayInfromation();
+        openAllInfromation();
 
     }
 
@@ -204,7 +203,7 @@ public class ByPeople extends AppCompatActivity implements View.OnClickListener 
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }

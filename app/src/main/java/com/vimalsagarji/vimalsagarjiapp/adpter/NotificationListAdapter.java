@@ -18,9 +18,11 @@ import com.vimalsagarji.vimalsagarjiapp.activity.EventDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.InformationDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.ThoughtsDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.VideoDetailActivity;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.model.NotificationItem;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.CompetitionList;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.OpinionPoll;
+import com.vimalsagarji.vimalsagarjiapp.utils.AllQuestionDetail;
 
 import java.util.ArrayList;
 
@@ -54,50 +56,50 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         Log.e("table", "------------" + notificationItem.getTable());
         if (notificationItem.getTable().equalsIgnoreCase("Information")) {
             holder.notification_image.setImageResource(R.drawable.infromation);
-            holder.txt_title.setText(notificationItem.getTitle());
-            holder.txt_date.setText(notificationItem.getDate());
-            holder.txt_content.setText(notificationItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(notificationItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(notificationItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(notificationItem.getDescription()));
 
 
         } else if (notificationItem.getTable().equalsIgnoreCase("Events")) {
             holder.notification_image.setImageResource(R.drawable.event);
-            holder.txt_title.setText(notificationItem.getTitle());
-            holder.txt_date.setText(notificationItem.getDate());
-            holder.txt_content.setText(notificationItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(notificationItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(notificationItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(notificationItem.getDescription()));
         } else if (notificationItem.getTable().equalsIgnoreCase("Audio")) {
             holder.notification_image.setImageResource(R.drawable.audio);
-            holder.txt_title.setText(notificationItem.getTitle());
-            holder.txt_date.setText(notificationItem.getDate());
-            holder.txt_content.setText(notificationItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(notificationItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(notificationItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(notificationItem.getDescription()));
         } else if (notificationItem.getTable().equalsIgnoreCase("Video")) {
             holder.notification_image.setImageResource(R.drawable.video);
-            holder.txt_title.setText(notificationItem.getTitle());
-            holder.txt_date.setText(notificationItem.getDate());
-            holder.txt_content.setText(notificationItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(notificationItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(notificationItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(notificationItem.getDescription()));
         } else if (notificationItem.getTable().equalsIgnoreCase("Thoughts")) {
             holder.notification_image.setImageResource(R.drawable.thoughts);
-            holder.txt_title.setText(notificationItem.getTitle());
-            holder.txt_date.setText(notificationItem.getDate());
-            holder.txt_content.setText(notificationItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(notificationItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(notificationItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(notificationItem.getDescription()));
         } else if (notificationItem.getTable().equalsIgnoreCase("ByPeople")) {
             holder.notification_image.setImageResource(R.drawable.bypeople);
-            holder.txt_title.setText(notificationItem.getTitle());
-            holder.txt_date.setText(notificationItem.getDate());
-            holder.txt_content.setText(notificationItem.getDescription());
-        } else if (notificationItem.getTable().equalsIgnoreCase("Question")) {
+            holder.txt_title.setText(CommonMethod.decodeEmoji(notificationItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(notificationItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(notificationItem.getDescription()));
+        } else if (notificationItem.getTable().equalsIgnoreCase("QuestionAnswer")) {
             holder.notification_image.setImageResource(R.drawable.qa);
-            holder.txt_title.setText(notificationItem.getTitle());
-            holder.txt_date.setText(notificationItem.getDate());
-            holder.txt_content.setText(notificationItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(notificationItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(notificationItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(notificationItem.getDescription()));
         } else if (notificationItem.getTable().equalsIgnoreCase("CompetitionMain")) {
             holder.notification_image.setImageResource(R.drawable.competition);
-            holder.txt_title.setText(notificationItem.getTitle());
-            holder.txt_date.setText(notificationItem.getDate());
-            holder.txt_content.setText(notificationItem.getDescription());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(notificationItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(notificationItem.getDate()));
+            holder.txt_content.setText(CommonMethod.decodeEmoji(notificationItem.getDescription()));
         } else if (notificationItem.getTable().equalsIgnoreCase("OpinionPollMain")) {
             holder.notification_image.setImageResource(R.drawable.opinionpoll);
-            holder.txt_title.setText(notificationItem.getTitle());
-            holder.txt_date.setText(notificationItem.getDate());
+            holder.txt_title.setText(CommonMethod.decodeEmoji(notificationItem.getTitle()));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(notificationItem.getDate()));
 
             if (notificationItem.getDescription().equalsIgnoreCase("")) {
                 holder.txt_content.setText("Yes & No Answer.");
@@ -173,10 +175,9 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                 v.getContext().startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
-            } else if (itemArrayList.get(getAdapterPosition()).getTable().equalsIgnoreCase("Question")) {
-                Intent intent = new Intent(v.getContext(), ActivityHomeMain.class);
-                intent.putExtra("listID", itemArrayList.get(getAdapterPosition()).getId());
-                intent.putExtra("click_action", "");
+            } else if (itemArrayList.get(getAdapterPosition()).getTable().equalsIgnoreCase("QuestionAnswer")) {
+                Intent intent = new Intent(v.getContext(), AllQuestionDetail.class);
+                intent.putExtra("qid", itemArrayList.get(getAdapterPosition()).getId());
                 v.getContext().startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 

@@ -14,29 +14,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.vimalsagarji.vimalsagarjiapp.utils.CustomEditTextBold
+
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
         android:id="@+id/etGalleryTitle"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar_gallery"
         android:background="@color/homepage_back"
-        android:focusable="false"
-        android:hint="Gallery"
-        android:lines="1"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="7dp"
         android:padding="10dp"
-        android:textSize="20dp"
-        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        android:textSize="18dp"
         tools:ignore="HardcodedText" />
 
 
     <View
-        android:visibility="gone"
         android:id="@+id/gridview_viewline"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/etGalleryTitle"
-        android:background="@color/colorPrimary" />
-
+        android:background="@color/colorPrimary"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -72,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
-    </RelativeLayout>
 
+    </RelativeLayout>
 
 </RelativeLayout>

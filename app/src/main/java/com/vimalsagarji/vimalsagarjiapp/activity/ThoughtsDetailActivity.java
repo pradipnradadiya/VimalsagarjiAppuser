@@ -31,10 +31,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.kaopiz.kprogresshud.KProgressHUD;
+import com.vimalsagarji.vimalsagarjiapp.ImageViewActivity;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.ThisMonthVideo;
 import com.vimalsagarji.vimalsagarjiapp.util.CommonAPI_Name;
@@ -48,12 +51,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ch.boye.httpclientandroidlib.NameValuePair;
+import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
+
 /**
  * Created by BHARAT on 04/02/2016.
  */
 @SuppressWarnings("ALL")
 public class ThoughtsDetailActivity extends AppCompatActivity {
 
+
+    private String photo;
 
     public ThoughtsDetailActivity() {
 
@@ -71,9 +79,9 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
     private final ArrayList<String> listIs_Approved = new ArrayList<String>();
     private ArrayList<String> listUserID = new ArrayList<String>();
     private final ArrayList<String> listUserName = new ArrayList<String>();
-    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallappcomments/?page=1&psize=1000";
-    private static final String PostCommentURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/comment/";
-    private static final String strLikeURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/likethought/";
+    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/getallappcomments/?page=1&psize=1000";
+    private static final String PostCommentURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/comment/";
+    private static final String strLikeURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/likethought/";
     ProgressDialog pd;
     String strResult;
     int countLike = 1;
@@ -102,6 +110,9 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
     String description;
 
     private ProgressBar progressBar;
+    private ImageView img_thought;
+    private TextView txtlocation;
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -117,6 +128,9 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         sharedpreferance = new Sharedpreferance(ThoughtsDetailActivity.this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_allthoughtsubactivity);
         setSupportActionBar(toolbar);
+
+        img_thought= (ImageView) findViewById(R.id.img_thought);
+        txtlocation= (TextView) findViewById(R.id.txtlocation);
         ImageView imgHomeBack = (ImageView) toolbar.findViewById(R.id.imgarrorback);
         ImageView imgHome = (ImageView) toolbar.findViewById(R.id.imgHome);
         rl_layout = (RelativeLayout) findViewById(R.id.rl_layout);
@@ -133,6 +147,15 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
+
+        img_thought.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ThoughtsDetailActivity.this, ImageViewActivity.class);
+                intent.putExtra("imagePath",CommonURL.ImagePath + "thoughtimage/" + photo.replaceAll(" ", "%20"));
+                startActivity(intent);
             }
         });
 
@@ -182,6 +205,9 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
 //            });
 //        }
 
+        if (!sharedpreferance.getId().equalsIgnoreCase("")) {
+            new checkViewed().execute();
+        }
         img_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,7 +215,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                    String sAux = "\n Thought \n" + title + "\n" + description + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
+                    String sAux = "\n Thought \n" + CommonMethod.decodeEmoji(title) + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
                     sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
                     intent.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(intent, "Choose One"));
@@ -246,7 +272,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                     dialog = new Dialog(ThoughtsDetailActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
-                    progressBar= (ProgressBar) dialog.findViewById(R.id.progressbar);
+                    progressBar = (ProgressBar) dialog.findViewById(R.id.progressbar);
 
                     if (CommonMethod.isInternetConnected(ThoughtsDetailActivity.this)) {
                         new CommentList().execute(tid);
@@ -400,7 +426,8 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     loadingProgressDialog.dismiss();
                     Toast.makeText(ThoughtsDetailActivity.this, R.string.commentsuccess, Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
+                    new CommentList().execute(tid);
+//                    dialog.dismiss();
                 } else {
                     loadingProgressDialog.dismiss();
                     Toast.makeText(ThoughtsDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
@@ -426,7 +453,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("tid", tid));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/checklike/", nameValuePairs, ThoughtsDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/checklike/", nameValuePairs, ThoughtsDetailActivity.this);
             return responseJSON;
         }
 
@@ -460,7 +487,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("tid", tid));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/countlikes/", nameValuePairs, ThoughtsDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/countlikes/", nameValuePairs, ThoughtsDetailActivity.this);
             return responseJSON;
         }
 
@@ -500,7 +527,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("tid", tid));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/countcomments/", nameValuePairs, ThoughtsDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/countcomments/", nameValuePairs, ThoughtsDetailActivity.this);
             return responseJSON;
         }
 
@@ -570,7 +597,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                     .setLabel("Please Wait")
                     .setCancellable(true);
             loadingProgressDialog.show();*/
-         progressBar.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
 
         }
 
@@ -615,6 +642,9 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                         listUserName.add(name);
 
                     }
+                    commentsize = listComment.size();
+                    txt_comment.setText(String.valueOf(commentsize));
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -624,7 +654,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
            /* if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
             }*/
-           progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
             listView = (ListView) dialog.findViewById(R.id.listbyPeopleComment);
             txt_nodata_today = (TextView) dialog.findViewById(R.id.txt_nocomment);
             if (listView != null) {
@@ -727,7 +757,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -768,7 +798,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/thought/?tid=" + tid + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/countviews/thought/?tid=" + tid + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -856,7 +886,8 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                         description = object.getString("Description");
                         String dates = object.getString("Date");
                         view = object.getString("View");
-
+                        photo = object.getString("Photo");
+                        String location=object.getString("location");
                         String[] string = dates.split(" ");
                         Log.e("str1", "--------" + string[0]);
                         Log.e("str2", "--------" + string[1]);
@@ -880,6 +911,15 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                         etTitle.setText(CommonMethod.decodeEmoji(title));
                         txtDate.setText(CommonMethod.decodeEmoji(date));
                         txtDescri.setText(CommonMethod.decodeEmoji(description));
+                        Log.e("location","------------"+location);
+                        txtlocation.setText("Location: "+CommonMethod.decodeEmoji(location));
+
+                        if (!photo.equalsIgnoreCase("")) {
+                            Glide.with(ThoughtsDetailActivity.this).load(CommonURL.ImagePath + "thoughtimage/" + photo
+                                    .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).into(img_thought);
+                        }else{
+                            img_thought.setVisibility(View.GONE);
+                        }
 
                         new countView().execute();
 
@@ -895,6 +935,34 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    private class checkViewed extends AsyncTask<String, Void, String> {
+
+        String responseJson = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
+            nameValuePairs.add(new BasicNameValuePair("tid", tid));
+
+            responseJson = CommonMethod.postStringResponse(CommonUrl.Main_url + "thought/setthoughtviewed", nameValuePairs, ThoughtsDetailActivity.this);
+            return responseJson;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response","-----------------"+s);
+        }
+
     }
 
 

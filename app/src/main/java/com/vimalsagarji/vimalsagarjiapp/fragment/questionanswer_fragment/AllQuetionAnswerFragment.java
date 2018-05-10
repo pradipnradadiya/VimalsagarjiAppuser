@@ -33,7 +33,6 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
-import com.vimalsagarji.vimalsagarjiapp.model.JSONParser1;
 import com.vimalsagarji.vimalsagarjiapp.model.ThoughtToday;
 import com.vimalsagarji.vimalsagarjiapp.utils.AllQuestionDetail;
 
@@ -44,9 +43,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import ch.boye.httpclientandroidlib.NameValuePair;
-import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 
 
 @SuppressWarnings("ALL")
@@ -66,13 +62,14 @@ public class AllQuetionAnswerFragment extends Fragment {
     private final ArrayList<String> listIsApproved = new ArrayList<String>();
     private final ArrayList<String> listName = new ArrayList<String>();
     private final ArrayList<String> listview = new ArrayList<String>();
+    private final ArrayList<String> listflag = new ArrayList<String>();
     private Button btnAskQuestion;
     private final String res = "";
 
 
-    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappques/?page=1&psize=1000";
-//    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesyear/?page=1&psize=1000";
-    static final String PostURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/";
+    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappques/?page=1&psize=1000";
+//    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquesyear/?page=1&psize=1000";
+    static final String PostURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/askques/";
     private ListView listView;
     private Dialog dialog;
 
@@ -81,9 +78,9 @@ public class AllQuetionAnswerFragment extends Fragment {
     private TextView txt_nodata_today;
     private EditText InputBox;
     List<ThoughtToday> listfilterdata = new ArrayList<>();
-    private final String AllSearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/searchallappques/?page=1&psize=1000";
+    private final String AllSearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/searchallappques/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
-    String approve = "";
+//    String approve = "";
     private ProgressBar progressbar;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -116,29 +113,16 @@ public class AllQuetionAnswerFragment extends Fragment {
                 return false;
             }
         });
-        imsearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (CommonMethod.isInternetConnected(getActivity())) {
-//                    new SearchAllQuestion().execute();
-                } else {
-                    final Snackbar snackbar = Snackbar
-                            .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
-                    snackbar.setActionTextColor(Color.RED);
-                    snackbar.show();
-                    snackbar.setAction("Dismiss", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            snackbar.dismiss();
-                        }
-                    });
-                }
-            }
-        });
+
         if (CommonMethod.isInternetConnected(getActivity())) {
-            JsonTask jsonTask = new JsonTask();
-            jsonTask.execute(URL);
-            new CheckUserApprove().execute();
+            if (sharedpreferance.getId().equalsIgnoreCase("")){
+                JsonTask jsonTask = new JsonTask();
+                jsonTask.execute(URL);
+            }else{
+                JsonTask jsonTask = new JsonTask();
+                jsonTask.execute(URL+"&uid="+sharedpreferance.getId());
+            }
+
         } else {
             final Snackbar snackbar = Snackbar
                     .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
@@ -156,6 +140,11 @@ public class AllQuetionAnswerFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                listflag.set(position,"true");
+                adpter.notifyDataSetChanged();
+
                 Intent intent = new Intent(getActivity(), AllQuestionDetail.class);
                 Log.e("Question", listQuestion.get(position));
                 Log.e("Answer", listAnswer.get(position));
@@ -165,6 +154,7 @@ public class AllQuetionAnswerFragment extends Fragment {
                 intent.putExtra("qid", listID.get(position));
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
             }
         });
         btnAskQuestion = (Button) getActivity().findViewById(R.id.btnAskQuestion);
@@ -178,7 +168,7 @@ public class AllQuetionAnswerFragment extends Fragment {
                 } else {
 
                     Log.e("else call","-------------");
-                    if (approve.equalsIgnoreCase("1")) {
+
                         Log.e("approve call","-------------");
                         dialog = new Dialog(getActivity());
 //                Window window = dialog.getWindow();
@@ -209,7 +199,7 @@ public class AllQuetionAnswerFragment extends Fragment {
                                         etAskQuestion.setError("Please enter your question!");
                                         etAskQuestion.requestFocus();
                                     } else {
-                                        new postData().execute(etAskQuestion.getText().toString());
+                                        new postData().execute(CommonMethod.encodeEmoji(etAskQuestion.getText().toString()));
                                         if (res != null) {
                                             etAskQuestion.getText().clear();
 //                                    Toast.makeText(getActivity(), "Post Your Data Succesfully", Toast.LENGTH_SHORT).show();
@@ -232,10 +222,7 @@ public class AllQuetionAnswerFragment extends Fragment {
                                 }
                             }
                         });
-                    } else {
-                        Log.e("not approve call","-------------");
-//                        Toast.makeText(getActivity(), "You are not approved user.", Toast.LENGTH_SHORT).show();
-                    }
+
                 }
             }
         });
@@ -244,7 +231,11 @@ public class AllQuetionAnswerFragment extends Fragment {
 
     private void loadData() {
         adpter.clear();
-        new LoadJsonTask().execute(URL);
+        if (sharedpreferance.getId().equalsIgnoreCase("")){
+            new LoadJsonTask().execute(URL);
+        }else {
+            new LoadJsonTask().execute(URL+"&uid="+sharedpreferance.getId());
+        }
     }
 
     //Method to show the snackbar
@@ -276,6 +267,7 @@ public class AllQuetionAnswerFragment extends Fragment {
         //Displaying snackbar
         snackbar.show();
     }
+
     private class JsonTask extends AsyncTask<String, String, String> {
 
         @Override
@@ -342,6 +334,14 @@ public class AllQuetionAnswerFragment extends Fragment {
                         listDate.add(dayOfTheWeek + ", " + fulldate);
                         Log.d(TAG, "list IsApproved data:" + listIsApproved);
                         listName.add(name);
+
+                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                            String flag = "true";
+                            listflag.add(flag);
+                        }else {
+                            String flag = object.getString("is_viewed");
+                            listflag.add(flag);
+                        }
                     }
                 }
             } catch (Exception e) {
@@ -440,6 +440,14 @@ public class AllQuetionAnswerFragment extends Fragment {
                         Log.d(TAG, "list IsApproved data:" + listIsApproved);
                         listName.add(name);
 
+                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                            String flag = "true";
+                            listflag.add(flag);
+                        }else {
+                            String flag = object.getString("is_viewed");
+                            listflag.add(flag);
+                        }
+
                     }
                 }
             } catch (Exception e) {
@@ -501,6 +509,7 @@ public class AllQuetionAnswerFragment extends Fragment {
                 holder.txtAnswer = (TextView) convertView.findViewById(R.id.txtAnswer);
                 holder.txt_date = (TextView) convertView.findViewById(R.id.txt_datess);
                 holder.txt_postby = (TextView) convertView.findViewById(R.id.txt_postby);
+                holder.img_new = (ImageView) convertView.findViewById(R.id.img_new);
                 //makeTextViewResizable(holder.txtAnswer, 2,"Read More",true);
                 //  holder.btnReadMore=(Button)convertView.findViewById(R.id.btnReadMore);
                 convertView.setTag(holder);
@@ -508,10 +517,18 @@ public class AllQuetionAnswerFragment extends Fragment {
                 holder = (ViewHolder) convertView.getTag();
             }
             holder.txt_views.setText(listview.get(position));
-            holder.txtQuestion.setText("Q: "+items.get(position));
-            holder.txtAnswer.setText("A: "+listAnswer.get(position));
-            holder.txt_date.setText(listDate.get(position));
-            holder.txt_postby.setText("Question By:" + listName.get(position));
+            holder.txtQuestion.setText("Q: "+CommonMethod.decodeEmoji(items.get(position)));
+            holder.txtAnswer.setText("A: "+CommonMethod.decodeEmoji(listAnswer.get(position)));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(listDate.get(position)));
+            holder.txt_postby.setText("Question By:" + CommonMethod.decodeEmoji(listName.get(position)));
+
+            if (listflag.get(position).equalsIgnoreCase("true")){
+                holder.img_new.setVisibility(View.GONE);
+            }
+            else{
+                holder.img_new.setVisibility(View.VISIBLE);
+            }
+
             return convertView;
 
         }
@@ -519,6 +536,7 @@ public class AllQuetionAnswerFragment extends Fragment {
 
         private class ViewHolder {
             TextView txtQuestion, txtAnswer, txt_date, txt_postby, txt_views;
+            ImageView img_new;
             //  Button btnReadMore;
 
         }
@@ -547,7 +565,7 @@ public class AllQuetionAnswerFragment extends Fragment {
                 ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Question", params[0]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/", nameValuePairs, getActivity());
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/askques/", nameValuePairs, getActivity());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -580,149 +598,4 @@ public class AllQuetionAnswerFragment extends Fragment {
         }
     }
 
-/*
-    @SuppressWarnings("deprecation")
-    public class SearchAllQuestion extends AsyncTask<String, String, String> {
-
-        String status;
-        public LayoutInflater inflater = null;
-        private static final String TAG_SUCCESS = "success";
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @SuppressWarnings("ResourceType")
-        @Override
-        protected String doInBackground(String... param) {
-            try {
-                JSONParser1 jsonParser = new JSONParser1();
-                //    String count = param[0];
-
-                String searchitem = InputBox.getText().toString();
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("searchterm", searchitem));
-                System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest(AllSearchQuestion, "POST", params);
-                // JSONObject json = JSONParser.getJsonFromUrl(url);
-                Log.d("Create Response", json.toString());
-                status = json.optString(TAG_SUCCESS);
-                for (int i = 0; i < json.length(); i++) {
-                    listQuestion = new ArrayList<>();
-                    JSONArray jsonArray = json.getJSONArray("data");
-                    System.out.println("JsonArray is" + jsonArray.length());
-                    for (int j = 0; j < jsonArray.length(); j++) {
-                        JSONObject object = jsonArray.getJSONObject(j);
-                        String id = object.getString("ID");
-                        listID.add(id);
-                        String Question = object.getString("Question");
-                        String Answer = object.getString("Answer");
-                        String Date = object.getString("Date");
-                        String uid = object.getString("UserID");
-                        String view = object.getString("View");
-                        listview.add(view);
-
-
-                        Date dt = CommonMethod.convert_date(Date);
-                        Log.e("Convert date is", "------------------" + dt);
-                        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
-                        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
-                        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
-                        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
-                        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
-
-                        Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
-                        Log.e("stringMonth", "-----------------" + stringMonth);
-                        Log.e("intMonth", "-----------------" + intMonth);
-                        Log.e("year", "-----------------" + year);
-                        Log.e("day", "-----------------" + day);
-
-                        String fulldate = day + "/" + intMonth + "/" + year;
-
-                        String[] time = Date.split("\\s+");
-                        Log.e("time", "-----------------------" + time[1]);
-
-                        listQuestion.add(Question);
-                        listDate.add(dayOfTheWeek + ", " + fulldate);
-                        listAnswer.add(Answer);
-                        listUserID.add(uid);
-
-
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return status;
-        }
-
-        protected void onPostExecute(String status) {
-            super.onPostExecute(status);
-
-            try {
-                if (getActivity() != null) {
-                    if (listView != null) {
-                        adpter = new CustomAdpter(getActivity(), listQuestion);
-                        if (adpter.getCount() != 0) {
-                            listView.setVisibility(View.VISIBLE);
-                            txt_nodata_today.setVisibility(View.GONE);
-                            listView.setAdapter(adpter);
-                        } else {
-                            listView.setVisibility(View.GONE);
-                            txt_nodata_today.setText("No Search \n Found");
-                            txt_nodata_today.setVisibility(View.VISIBLE);
-                            //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-
-    }*/
-
-    //Check user approve or not
-    private class CheckUserApprove extends AsyncTask<String, Void, String> {
-        String responseJSON = "";
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return responseJSON;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Log.e("response", "-------------------------" + s);
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        approve = jsonObject1.getString("Is_Active");
-                    }
-
-                } else {
-//                    Toast.makeText(getActivity(), "" + jsonObject.get("message"), Toast.LENGTH_SHORT).show();
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

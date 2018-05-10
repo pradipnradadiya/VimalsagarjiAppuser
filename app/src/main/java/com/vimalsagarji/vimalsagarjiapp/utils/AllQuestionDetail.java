@@ -12,10 +12,17 @@ import android.widget.TextView;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
+import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import ch.boye.httpclientandroidlib.NameValuePair;
+import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 
 /**
  * Created by Pradip-PC on 10/21/2016.
@@ -34,6 +41,7 @@ public class AllQuestionDetail extends AppCompatActivity {
     private String ans;
 
     KProgressHUD loadingProgressDialog;
+    Sharedpreferance sharedpreferance;
 
     @Override
     public void onBackPressed() {
@@ -45,6 +53,7 @@ public class AllQuestionDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_detail);
+        sharedpreferance=new Sharedpreferance(AllQuestionDetail.this);
         txt_question = (TextView) findViewById(R.id.txt_question);
         txt_answer = (TextView) findViewById(R.id.txt_answer);
         imgBack = (ImageView) findViewById(R.id.imgarrorback);
@@ -67,9 +76,11 @@ public class AllQuestionDetail extends AppCompatActivity {
         new viewQuestionAnswer().execute();
 
 
-        if (CommonMethod.isInternetConnected(AllQuestionDetail.this)) {
-            new countView().execute();
+        if (!sharedpreferance.getId().equalsIgnoreCase("")) {
+            new checkViewed().execute();
         }
+
+
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +114,7 @@ public class AllQuestionDetail extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/question/?qid=" + qid + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/countviews/question/?qid=" + qid + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -135,7 +146,7 @@ public class AllQuestionDetail extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewquesansbyid/?qid=" + qid);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewquesansbyid/?qid=" + qid);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -159,9 +170,12 @@ public class AllQuestionDetail extends AppCompatActivity {
                         jsonObject1.getString("Date");
                         jsonObject1.getString("Is_Approved");
                         jsonObject1.getString("UserID");
-                        jsonObject1.getString("View");
-                        txt_answer.setText("Answer: " + ans);
-                        txt_question.setText("Question: " + que);
+                        view=jsonObject1.getString("View");
+                        txt_answer.setText("Answer: " + CommonMethod.decodeEmoji(ans));
+                        txt_question.setText("Question: " + CommonMethod.decodeEmoji(que));
+                        if (CommonMethod.isInternetConnected(AllQuestionDetail.this)) {
+                            new countView().execute();
+                        }
                     }
                 }
             } catch (JSONException e) {
@@ -173,4 +187,33 @@ public class AllQuestionDetail extends AppCompatActivity {
         }
 
     }
+
+    private class checkViewed extends AsyncTask<String, Void, String> {
+
+        String responseJson = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair("uid",sharedpreferance.getId()));
+            nameValuePairs.add(new BasicNameValuePair("qid", qid));
+
+            responseJson = CommonMethod.postStringResponse(CommonUrl.Main_url + "questionanswer/setqaviewed", nameValuePairs, AllQuestionDetail.this);
+            return responseJson;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response","-----------------"+s);
+        }
+
+    }
+
 }

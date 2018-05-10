@@ -3,8 +3,6 @@ package com.vimalsagarji.vimalsagarjiapp;
 import android.app.Application;
 import android.content.Context;
 
-import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
-
 public class MyApplication extends Application {
 
     private static MyApplication mInstance;

@@ -1,10 +1,10 @@
 package com.vimalsagarji.vimalsagarjiapp.activity.mainactivity;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,12 +12,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.uncopt.android.widget.text.justify.JustifiedTextView;
 import com.vimalsagarji.vimalsagarjiapp.R;
-import com.vimalsagarji.vimalsagarjiapp.utils.TextJustification;
 
 
 public class AboutAppGuruji extends AppCompatActivity implements View.OnClickListener {
-    private TextView txt_eng, txt_hnd, txt_guj, txt_description;
+    private TextView txt_eng, txt_hnd, txt_guj;
+    JustifiedTextView txt_description;
     private LinearLayout lin_eng, lin_hnd, lin_guj;
     private TextView txt_title;
     private ImageView imgarrorback, img_search;
@@ -38,6 +39,12 @@ public class AboutAppGuruji extends AppCompatActivity implements View.OnClickLis
             }
         });
 
+        Typeface face = Typeface.createFromAsset(getAssets(),
+                "fonts/calibri_regular.ttf");
+        txt_description.setTypeface(face);
+
+        txt_description.setText(getResources().getString(R.string.about_guruji_hnd));
+
     }
 
     private void bindId() {
@@ -45,12 +52,10 @@ public class AboutAppGuruji extends AppCompatActivity implements View.OnClickLis
         txt_title = (TextView) findViewById(R.id.txt_title);
         img_search = (ImageView) findViewById(R.id.img_search);
         imgarrorback = (ImageView) findViewById(R.id.imgarrorback);
-
-
         txt_eng = (TextView) findViewById(R.id.txt_eng);
         txt_hnd = (TextView) findViewById(R.id.txt_hnd);
         txt_guj = (TextView) findViewById(R.id.txt_guj);
-        txt_description = (TextView) findViewById(R.id.txt_description);
+        txt_description = (JustifiedTextView) findViewById(R.id.txt_description);
         lin_eng = (LinearLayout) findViewById(R.id.lin_eng);
         lin_hnd = (LinearLayout) findViewById(R.id.lin_hnd);
         lin_guj = (LinearLayout) findViewById(R.id.lin_guj);
@@ -94,7 +99,6 @@ public class AboutAppGuruji extends AppCompatActivity implements View.OnClickLis
             case R.id.txt_eng:
 
                 txt_description.setText(getResources().getString(R.string.about_guruji_eng));
-                TextJustification.justify(txt_description);
                 txt_eng.setTextColor(Color.WHITE);
                 txt_hnd.setTextColor(Color.BLACK);
                 txt_guj.setTextColor(Color.BLACK);
@@ -104,11 +108,8 @@ public class AboutAppGuruji extends AppCompatActivity implements View.OnClickLis
                 txt_guj.setBackgroundResource(R.drawable.round_rect_shapeone);
 
 
-
-
                 break;
             case R.id.txt_hnd:
-                TextJustification.justify(txt_description);
                 txt_description.setText(getResources().getString(R.string.about_guruji_hnd));
 
                 txt_eng.setTextColor(Color.BLACK);
@@ -118,9 +119,6 @@ public class AboutAppGuruji extends AppCompatActivity implements View.OnClickLis
                 txt_eng.setBackgroundResource(R.drawable.round_rect_shapeone);
                 txt_hnd.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
                 txt_guj.setBackgroundResource(R.drawable.round_rect_shapeone);
-
-
-
 
 
                 break;
@@ -133,8 +131,6 @@ public class AboutAppGuruji extends AppCompatActivity implements View.OnClickLis
                 txt_eng.setBackgroundResource(R.drawable.round_rect_shapeone);
                 txt_hnd.setBackgroundResource(R.drawable.round_rect_shapeone);
                 txt_guj.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
-
-                TextJustification.justify(txt_description);
 
 
                 break;

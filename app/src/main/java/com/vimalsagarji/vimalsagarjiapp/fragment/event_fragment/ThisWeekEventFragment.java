@@ -20,29 +20,21 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.kaopiz.kprogresshud.KProgressHUD;
-import com.squareup.picasso.Picasso;
 import com.vimalsagarji.vimalsagarjiapp.JSONParser;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.EventDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.EventAdpter;
-import com.vimalsagarji.vimalsagarjiapp.model.InformationCategory;
-import com.vimalsagarji.vimalsagarjiapp.model.JSONParser1;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import ch.boye.httpclientandroidlib.NameValuePair;
-import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 
 /**
  * Created by BHARAT on 20/01/2016.
@@ -54,7 +46,7 @@ public class ThisWeekEventFragment extends Fragment {
 
     }
 
-//    private KProgressHUD loadingProgressDialog;
+    //    private KProgressHUD loadingProgressDialog;
     private static final String TAG = ThisWeekEventFragment.class.getSimpleName();
     private static final String constantURL = Constant.GET_ALLYEAR_EVENT_DATA;
     private static final String strMonth = "geteventsbycategoryweek";
@@ -65,9 +57,9 @@ public class ThisWeekEventFragment extends Fragment {
     String day = "";
     int dayOfWeek = 0;
     Date date;
-    private final String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/";
-    private final String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/";
-    private final String Video = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/";
+    private final String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/";
+    private final String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventaudio/";
+    private final String Video = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventvideo/";
     final int drawableImage = R.drawable.event;
 
 
@@ -75,12 +67,13 @@ public class ThisWeekEventFragment extends Fragment {
     private EditText InputBox;
     private CustomAdpter adpter;
     private List<EventAdpter> listfilterdata = new ArrayList<>();
-    private final String WeekSearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/searcheventsbycategoryweek/?page=1&psize=1000";
+    private final String WeekSearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/searcheventsbycategoryweek/?page=1&psize=1000";
 
     private GridView gridView;
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private ProgressBar progressbar;
-    ArrayList<String> timelist=new ArrayList<>();
+    ArrayList<String> timelist = new ArrayList<>();
+    Sharedpreferance sharedpreferance;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,8 +83,8 @@ public class ThisWeekEventFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        progressbar= (ProgressBar) getActivity().findViewById(R.id.progressbar);
+        sharedpreferance = new Sharedpreferance(getActivity());
+        progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         gridView = (GridView) getActivity().findViewById(R.id.grid_thisWeek);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
         InputBox = (EditText) getActivity().findViewById(R.id.etText);
@@ -113,28 +106,15 @@ public class ThisWeekEventFragment extends Fragment {
                 return false;
             }
         });
-        imsearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (CommonMethod.isInternetConnected(getActivity())) {
-//                    new SearchWeekEvent().execute();
-                } else {
-                    final Snackbar snackbar = Snackbar
-                            .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
-                    snackbar.setActionTextColor(Color.RED);
-                    snackbar.show();
-                    snackbar.setAction("Dismiss", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            snackbar.dismiss();
-                        }
-                    });
-                }
-            }
-        });
+
         if (CommonMethod.isInternetConnected(getActivity())) {
-            JsonTask jsonTask = new JsonTask();
-            jsonTask.execute(URL);
+            if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                JsonTask jsonTask = new JsonTask();
+                jsonTask.execute(URL);
+            } else {
+                JsonTask jsonTask = new JsonTask();
+                jsonTask.execute(URL + "&uid=" + sharedpreferance.getId());
+            }
         } else {
             final Snackbar snackbar = Snackbar
                     .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
@@ -148,12 +128,56 @@ public class ThisWeekEventFragment extends Fragment {
             });
         }
 
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                final EventAdpter eventitem = adpter.items.get(position);
+                Log.e("position list view", "---------------------" + position);
+                eventitem.setFlag("true");
+                adpter.items.set(position, eventitem);
+                adpter.notifyDataSetChanged();
+
+                EventAdpter eventAdpter = (EventAdpter) parent.getItemAtPosition(position);
+                Intent intent = new Intent(getActivity(), EventDetailActivity.class);
+                intent.putExtra("click_action", "");
+                intent.putExtra("listtitle", eventAdpter.getTitle());
+                intent.putExtra("listDate", eventAdpter.getDate());
+                intent.putExtra("listAddress", eventAdpter.getAddress());
+                intent.putExtra("listID", eventAdpter.getID());
+                intent.putExtra("discription", eventAdpter.getDescription());
+                Log.e("discription", "-----------------------" + eventAdpter.getDescription());
+                intent.putExtra("Audio", Audio + eventAdpter.getAudio());
+                String audio = Audio + eventAdpter.getAudio();
+                audio = audio.replace(" ", "_");
+                String video = Video + eventAdpter.getVideo();
+                video = video.replace(" ", "_");
+                String photo = Photo + eventAdpter.getPhoto();
+                photo = photo.replace(" ", "-");
+                Log.e("Audio", "-----------------------" + audio);
+                intent.putExtra("Video", video);
+                Log.e("Video", "-----------------------" + video);
+                intent.putExtra("Photo", photo);
+                Log.e("Photo", "-----------------------" + photo);
+                intent.putExtra("view", eventAdpter.getView());
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+
     }
 
     private void loadData() {
         adpter.clear();
-        LoadJsonTask loadJsonTask = new LoadJsonTask();
-        loadJsonTask.execute(URL);
+        if (sharedpreferance.getId().equalsIgnoreCase("")) {
+            LoadJsonTask loadJsonTask = new LoadJsonTask();
+            loadJsonTask.execute(URL);
+        } else {
+            LoadJsonTask loadJsonTask = new LoadJsonTask();
+            loadJsonTask.execute(URL + "&uid=" + sharedpreferance.getId());
+        }
     }
 
     private class JsonTask extends AsyncTask<String, String, String> {
@@ -176,7 +200,7 @@ public class ThisWeekEventFragment extends Fragment {
                 JSONObject jsonObject = JSONParser.getJsonFromUrl(strUrl);
                 // for (int i=0; i<jsonObject.length()  ;i++){
                 JSONArray array = jsonObject.getJSONArray("data");
-                timelist=new ArrayList<>();
+                timelist = new ArrayList<>();
                 if (array != null) {
                     for (int j = 0; j < array.length(); j++) {
                         JSONObject object = array.getJSONObject(j);
@@ -229,6 +253,16 @@ public class ThisWeekEventFragment extends Fragment {
                         eventAdpter.setVideoImage(strVideoImage);
                         eventAdpter.setPhoto(strPhoto);
                         eventAdpter.setView(view);
+
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                            String flag = "true";
+                            eventAdpter.setFlag(flag);
+                        } else {
+                            String flag = object.getString("is_viewed");
+                            eventAdpter.setFlag(flag);
+                        }
+
+
                         listAllEvent.add(eventAdpter);
                         timelist.add(dayOfTheWeek);
                     }
@@ -263,35 +297,6 @@ public class ThisWeekEventFragment extends Fragment {
 //                    Toast.makeText(getActivity(), "No ThisWeek Event Found", Toast.LENGTH_SHORT).show();
                     }
 
-                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            EventAdpter eventAdpter = (EventAdpter) parent.getItemAtPosition(position);
-                            Intent intent = new Intent(getActivity(), EventDetailActivity.class);
-                            intent.putExtra("click_action", "");
-                            intent.putExtra("listtitle", eventAdpter.getTitle());
-                            intent.putExtra("listDate", eventAdpter.getDate());
-                            intent.putExtra("listAddress", eventAdpter.getAddress());
-                            intent.putExtra("listID", eventAdpter.getID());
-                            intent.putExtra("discription", eventAdpter.getDescription());
-                            Log.e("discription", "-----------------------" + eventAdpter.getDescription());
-                            intent.putExtra("Audio", Audio + eventAdpter.getAudio());
-                            String audio = Audio + eventAdpter.getAudio();
-                            audio = audio.replace(" ", "_");
-                            String video = Video + eventAdpter.getVideo();
-                            video = video.replace(" ", "_");
-                            String photo = Photo + eventAdpter.getPhoto();
-                            photo = photo.replace(" ", "-");
-                            Log.e("Audio", "-----------------------" + audio);
-                            intent.putExtra("Video", video);
-                            Log.e("Video", "-----------------------" + video);
-                            intent.putExtra("Photo", photo);
-                            Log.e("Photo", "-----------------------" + photo);
-                            intent.putExtra("view", eventAdpter.getView());
-                            startActivity(intent);
-                            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        }
-                    });
 
                 } else {
                     gridView.setVisibility(View.GONE);
@@ -318,7 +323,7 @@ public class ThisWeekEventFragment extends Fragment {
                 JSONObject jsonObject = JSONParser.getJsonFromUrl(strUrl);
                 // for (int i=0; i<jsonObject.length()  ;i++){
                 JSONArray array = jsonObject.getJSONArray("data");
-                timelist=new ArrayList<>();
+                timelist = new ArrayList<>();
                 if (array != null) {
                     for (int j = 0; j < array.length(); j++) {
                         JSONObject object = array.getJSONObject(j);
@@ -371,6 +376,16 @@ public class ThisWeekEventFragment extends Fragment {
                         eventAdpter.setVideoImage(strVideoImage);
                         eventAdpter.setPhoto(strPhoto);
                         eventAdpter.setView(view);
+
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                            String flag = "true";
+                            eventAdpter.setFlag(flag);
+                        } else {
+                            String flag = object.getString("is_viewed");
+                            eventAdpter.setFlag(flag);
+                        }
+
+
                         listAllEvent.add(eventAdpter);
                         timelist.add(dayOfTheWeek);
                     }
@@ -400,33 +415,6 @@ public class ThisWeekEventFragment extends Fragment {
 //                    Toast.makeText(getActivity(), "No ThisWeek Event Found", Toast.LENGTH_SHORT).show();
                     }
 
-                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            EventAdpter eventAdpter = (EventAdpter) parent.getItemAtPosition(position);
-                            Intent intent = new Intent(getActivity(), EventDetailActivity.class);
-                            intent.putExtra("listDate", eventAdpter.getDate());
-                            intent.putExtra("listAddress", eventAdpter.getAddress());
-                            intent.putExtra("listID", eventAdpter.getID());
-                            intent.putExtra("discription", eventAdpter.getDescription());
-                            Log.e("discription", "-----------------------" + eventAdpter.getDescription());
-                            intent.putExtra("Audio", Audio + eventAdpter.getAudio());
-                            String audio = Audio + eventAdpter.getAudio();
-                            audio = audio.replace(" ", "_");
-                            String video = Video + eventAdpter.getVideo();
-                            video = video.replace(" ", "_");
-                            String photo = Photo + eventAdpter.getPhoto();
-                            photo = photo.replace(" ", "-");
-                            Log.e("Audio", "-----------------------" + audio);
-                            intent.putExtra("Video", video);
-                            Log.e("Video", "-----------------------" + video);
-                            intent.putExtra("Photo", photo);
-                            Log.e("Photo", "-----------------------" + photo);
-                            intent.putExtra("view", eventAdpter.getView());
-                            startActivity(intent);
-                            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        }
-                    });
 
                 } else {
                     gridView.setVisibility(View.GONE);
@@ -466,6 +454,7 @@ public class ThisWeekEventFragment extends Fragment {
                 holder.grid_txtTitle = (TextView) convertView.findViewById(R.id.grid_txtTitle);
                 holder.grid_txtDate = (TextView) convertView.findViewById(R.id.grid_txtDate);
                 holder.grid_txtday = (TextView) convertView.findViewById(R.id.grid_txtday);
+                holder.img_new = (ImageView) convertView.findViewById(R.id.img_new);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -478,12 +467,19 @@ public class ThisWeekEventFragment extends Fragment {
             holder.grid_txtday.setText(CommonMethod.decodeEmoji(String.valueOf(timelist.get(position))));
             String strPhoto = eventAdpterHolder.getPhoto();
 
+            if (eventAdpterHolder.getFlag().equalsIgnoreCase("true")) {
+                holder.img_new.setVisibility(View.GONE);
+            } else {
+                holder.img_new.setVisibility(View.VISIBLE);
+            }
+
             return convertView;
 
         }
 
         private class ViewHolder {
-            TextView grid_txtTitle, grid_txtDate,txt_views,grid_txtday;
+            TextView grid_txtTitle, grid_txtDate, txt_views, grid_txtday;
+            ImageView img_new;
 
 
         }

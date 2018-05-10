@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.fragment.audio_fragment.AllAudioFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.audio_fragment.ThisMonthAudioFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.audio_fragment.ThisWeekAudioFragment;
@@ -75,7 +76,7 @@ public class AudioCategoryitem extends AppCompatActivity implements View.OnClick
         Intent intent = getIntent();
         strAudioTitle = intent.getStringExtra("listTitle");
         Log.e("title", "--------------------------------" + strAudioTitle);
-        txt_title.setText(strAudioTitle);
+        txt_title.setText(CommonMethod.decodeEmoji(strAudioTitle));
         audiostrid = intent.getStringExtra("listId");
         Log.e("sid", "--------------------------------" + audiostrid);
         strCategoryID = intent.getStringExtra("listCategoryId");
@@ -96,7 +97,7 @@ public class AudioCategoryitem extends AppCompatActivity implements View.OnClick
             openAllInfromation();
         }
         else {
-            openTodayInfromation();
+            openAllInfromation();
         }
 
 

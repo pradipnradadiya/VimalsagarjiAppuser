@@ -33,6 +33,7 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.jcplayer.JcPlayerView;
 import com.vimalsagarji.vimalsagarjiapp.model.ThisMonthVideo;
@@ -67,14 +68,15 @@ public class AudioDetail extends AppCompatActivity {
     private String view;
     EditText et_event;
     TextView txt_title;
-    private final String Imagepath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audioimage/";
-    private final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audios/";
+    private final String Imagepath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/audioimage/";
+    private final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/audios/";
     TextView txtDate;
     String click_action;
     int commentsize;
 
     private final ArrayList<String> listname = new ArrayList<>();
     private ProgressBar progressbar;
+    private TextView txt_description;
 
     @Override
     public void onBackPressed() {
@@ -94,6 +96,7 @@ public class AudioDetail extends AppCompatActivity {
 
         sharedpreferance = new Sharedpreferance(AudioDetail.this);
         jcPlayerView = (JcPlayerView) findViewById(R.id.jcplayerview_audio);
+        txt_description= (TextView) findViewById(R.id.txt_description);
         et_event = (EditText) findViewById(R.id.et_event);
         txt_title = (TextView) findViewById(R.id.txt_title);
 
@@ -146,7 +149,7 @@ public class AudioDetail extends AppCompatActivity {
             view = intent.getStringExtra("view");
             if (CommonMethod.isInternetConnected(AudioDetail.this)) {
                 assert audio != null;
-                jcPlayerView.playAudio(audio.replaceAll(" ", "%20"), audioname);
+                jcPlayerView.playAudio(audio.replaceAll(" ", "%20"), "");
             }
             txtDate.setText(date);
 
@@ -169,7 +172,7 @@ public class AudioDetail extends AppCompatActivity {
             view = intent.getStringExtra("view");
             if (CommonMethod.isInternetConnected(AudioDetail.this)) {
                 assert audio != null;
-                jcPlayerView.playAudio(audio.replaceAll(" ", "%20"), audioname);
+                jcPlayerView.playAudio(audio.replaceAll(" ", "%20"), "");
             }
             txtDate.setText(date);
         } else {
@@ -297,8 +300,8 @@ public class AudioDetail extends AppCompatActivity {
 //                s.show();
                 jcPlayerView.kill();
                 Intent intent = new Intent(AudioDetail.this, RegisterActivity.class);
-                startActivity(intent);
-                finishAffinity();
+                startActivity(intent);finishAffinity();
+
             }
         });
 
@@ -336,7 +339,7 @@ public class AudioDetail extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("aid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getallappcomments/?page=1&psize=1000", nameValuePairs, AudioDetail.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/getallappcomments/?page=1&psize=1000", nameValuePairs, AudioDetail.this);
             return responseJSON;
         }
 
@@ -374,6 +377,8 @@ public class AudioDetail extends AppCompatActivity {
                         listname.add(name);
 
                     }
+                    commentsize = listComments.size();
+                    txt_comment.setText(String.valueOf(commentsize));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -419,7 +424,7 @@ public class AudioDetail extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("aid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getallappcomments/?page=1&psize=1000", nameValuePairs, AudioDetail.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/getallappcomments/?page=1&psize=1000", nameValuePairs, AudioDetail.this);
             return responseJSON;
         }
 
@@ -488,7 +493,7 @@ public class AudioDetail extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("aid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getallappcomments/?page=1&psize=1000", nameValuePairs, AudioDetail.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/getallappcomments/?page=1&psize=1000", nameValuePairs, AudioDetail.this);
             return responseJSON;
         }
 
@@ -608,7 +613,7 @@ public class AudioDetail extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("aid", id));
             nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new BasicNameValuePair("Comment", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/comment/", nameValuePairs, AudioDetail.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/comment/", nameValuePairs, AudioDetail.this);
 
             return responseJSON;
 
@@ -623,8 +628,9 @@ public class AudioDetail extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     Toast.makeText(AudioDetail.this, R.string.commentsuccess, Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
+//                    dialog.dismiss();
                     loadingProgressDialog.dismiss();
+                    new CommentList().execute(id);
                 } else {
                     loadingProgressDialog.dismiss();
                     Toast.makeText(AudioDetail.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
@@ -656,7 +662,7 @@ public class AudioDetail extends AppCompatActivity {
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new BasicNameValuePair("aid", params[0]));
-            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/audiolike/", nameValuePairs, AudioDetail.this);
+            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/audiolike/", nameValuePairs, AudioDetail.this);
             return responeJSON;
         }
 
@@ -685,7 +691,7 @@ public class AudioDetail extends AppCompatActivity {
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("aid", params[0]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/countlikes/", nameValuePairs, AudioDetail.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/countlikes/", nameValuePairs, AudioDetail.this);
             return responseJSON;
         }
 
@@ -726,7 +732,7 @@ public class AudioDetail extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("uid", params[0]));
             nameValuePairs.add(new BasicNameValuePair("aid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/checklike/", nameValuePairs, AudioDetail.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/checklike/", nameValuePairs, AudioDetail.this);
             return responseJSON;
         }
 
@@ -760,7 +766,7 @@ public class AudioDetail extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -801,7 +807,7 @@ public class AudioDetail extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/audio/?aid=" + id + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/countviews/audio/?aid=" + id + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -864,6 +870,7 @@ public class AudioDetail extends AppCompatActivity {
                         String photo = jsonObject1.getString("Photo").replaceAll(" ", "%20");
                         String duration = jsonObject1.getString("Duration");
                         String date = jsonObject1.getString("Date");
+                        String description = jsonObject1.getString("Description");
                         view = jsonObject1.getString("View");
 
 
@@ -900,9 +907,11 @@ public class AudioDetail extends AppCompatActivity {
 
                         if (CommonMethod.isInternetConnected(AudioDetail.this)) {
                             assert audios != null;
-                            jcPlayerView.playAudio(audios.replaceAll(" ", "%20"), audioname);
+                            jcPlayerView.playAudio(audios.replaceAll(" ", "%20"), "");
                         }
                         txtDate.setText(dates);
+
+                        txt_description.setText(description);
                         new countView().execute();
 
 //                        txt_title.setText(audioname);
@@ -938,12 +947,41 @@ public class AudioDetail extends AppCompatActivity {
                     new CheckUserApprove().execute();
 //                new getLikeCount().execute(id);
                     new CheckLike().execute(sharedpreferance.getId(), id);
+                    new checkViewed().execute();
                 }
                 new AudioDetailId().execute();
                 new CommentList2().execute(id);
 //                new CountComment().execute(id);
             }
         }
+    }
+
+    private class checkViewed extends AsyncTask<String, Void, String> {
+
+        String responseJson = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
+            nameValuePairs.add(new BasicNameValuePair("aid", id));
+
+            responseJson = CommonMethod.postStringResponse(CommonUrl.Main_url + "audio/setaudioviewed", nameValuePairs, AudioDetail.this);
+            return responseJson;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response","-----------------"+s);
+        }
+
     }
 
 }

@@ -155,7 +155,7 @@ public class InformationCommentList extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("infoid", id));
             nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new BasicNameValuePair("Comment", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/comment/", nameValuePairs, InformationCommentList.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/info/comment/", nameValuePairs, InformationCommentList.this);
             return responseJSON;
 
         }
@@ -209,7 +209,7 @@ public class InformationCommentList extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("infoid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getallappcomments/?page=" + page_count + "&psize=30", nameValuePairs, InformationCommentList.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/info/getallappcomments/?page=" + page_count + "&psize=30", nameValuePairs, InformationCommentList.this);
             return responseJSON;
         }
 

@@ -1,10 +1,10 @@
 package com.vimalsagarji.vimalsagarjiapp.activity.mainactivity;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,11 +12,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.uncopt.android.widget.text.justify.JustifiedTextView;
 import com.vimalsagarji.vimalsagarjiapp.R;
 
 
 public class GurujiVisionActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView txt_eng, txt_hnd, txt_guj, txt_description;
+    private TextView txt_eng, txt_hnd, txt_guj;
+    JustifiedTextView txt_description;
 
     private LinearLayout lin_eng,lin_hnd,lin_guj;
     private TextView txt_title;
@@ -38,6 +40,10 @@ public class GurujiVisionActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
+        Typeface face = Typeface.createFromAsset(getAssets(),
+                "fonts/calibri_regular.ttf");
+        txt_description.setTypeface(face);
+        txt_description.setText(getResources().getString(R.string.about_guruji_vision_hnd));
 
     }
 
@@ -50,7 +56,7 @@ public class GurujiVisionActivity extends AppCompatActivity implements View.OnCl
         txt_eng = (TextView) findViewById(R.id.txt_eng);
         txt_hnd = (TextView) findViewById(R.id.txt_hnd);
         txt_guj = (TextView) findViewById(R.id.txt_guj);
-        txt_description = (TextView) findViewById(R.id.txt_description);
+        txt_description = (JustifiedTextView) findViewById(R.id.txt_description);
 
         lin_eng= (LinearLayout) findViewById(R.id.lin_eng);
         lin_hnd= (LinearLayout) findViewById(R.id.lin_hnd);

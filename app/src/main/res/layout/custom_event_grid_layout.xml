@@ -8,111 +8,128 @@
 
     <LinearLayout
 
-        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10sp"
-            tools:ignore="UselessParent">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/img_new"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                >
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:padding="10sp"
-                    android:src="@drawable/event"
-                    tools:ignore="ContentDescription" />
-            </LinearLayout>
-
-            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
-                android:id="@+id/grid_txtTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="1"
-                android:padding="2dp"
-                android:text="Title"
-                android:textColor="@color/black"
-                android:textAllCaps="true"
-                android:textSize="15sp"
-                tools:ignore="HardcodedText" />
-
-            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-                android:id="@+id/grid_txtday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:lines="1"
-                android:text=""
-                android:textColor="@color/textColor"
-                android:textSize="14sp"
-                tools:ignore="HardcodedText"
+                android:layout_gravity="right"
+                android:src="@drawable/ic_f_new"
+                android:padding="10dp"
+                android:layout_alignParentRight="true"
                 />
-
-            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-                android:id="@+id/grid_txtDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:lines="1"
-                android:text="Monday,10/02/2017"
-                android:textColor="@color/textColor"
-                android:textSize="14sp"
-                tools:ignore="HardcodedText"
-
-                android:layout_marginTop="2dp"/>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtDate"
-                android:gravity="center"
-                android:orientation="horizontal"
+                android:orientation="vertical"
+                android:padding="10sp"
+                tools:ignore="UselessParent">
 
-                >
 
-                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-                    android:id="@+id/txt_views"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5sp"
-                    android:gravity="right"
-                    android:lines="1"
-                    android:text="0"
-                    android:textColor="@color/views"
-                    android:textSize="13sp"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
 
-                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:padding="10sp"
+                        android:src="@drawable/event"
+                        tools:ignore="ContentDescription" />
+                </LinearLayout>
+
+                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+                    android:id="@+id/grid_txtTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5sp"
-                    android:gravity="right"
+                    android:layout_gravity="center"
+                    android:ellipsize="end"
+                    android:gravity="center"
                     android:lines="1"
-                    android:text="Views"
-                    android:textColor="@color/views"
-                    android:textSize="13sp"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
+                    android:padding="2dp"
+                    android:text="Title"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    tools:ignore="HardcodedText" />
+
+                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                    android:id="@+id/grid_txtday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:text=""
+                    android:textColor="@color/textColor"
+                    android:textSize="14sp"
+                    tools:ignore="HardcodedText" />
+
+                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                    android:id="@+id/grid_txtDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:text="Monday,10/02/2017"
+                    android:textColor="@color/textColor"
+                    android:textSize="14sp"
+
+                    tools:ignore="HardcodedText" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtDate"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+
+                    >
+
+                    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                        android:id="@+id/txt_views"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5sp"
+                        android:gravity="right"
+                        android:lines="1"
+                        android:text="0"
+                        android:textColor="@color/views"
+                        android:textSize="13sp"
+                        tools:ignore="HardcodedText,RtlHardcoded" />
+
+                    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5sp"
+                        android:gravity="right"
+                        android:lines="1"
+                        android:text="Views"
+                        android:textColor="@color/views"
+                        android:textSize="13sp"
+                        tools:ignore="HardcodedText,RtlHardcoded" />
+                </LinearLayout>
+
+
             </LinearLayout>
 
+        </RelativeLayout>
 
-        </LinearLayout>
     </LinearLayout>
 
 

@@ -1,17 +1,12 @@
 package com.vimalsagarji.vimalsagarjiapp.activity.mainactivity;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -80,6 +75,13 @@ public class NotificationActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, R.string.internet, Toast.LENGTH_SHORT).show();
         }
+
+
+        notificationListAdapter = new NotificationListAdapter(NotificationActivity.this, notificationItems);
+        recycleview_notification.setVisibility(View.VISIBLE);
+        recycleview_notification.setAdapter(notificationListAdapter);
+
+
         recycleview_notification.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -132,34 +134,7 @@ public class NotificationActivity extends AppCompatActivity {
         img_nodata = (ImageView) findViewById(R.id.img_nodata);
     }
 
-    /*
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.home_menu, menu);
 
-
-            return true;
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
-
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.action_home) {
-                finish();
-                overridePendingTransition(R.anim.slide_out_right, R.anim.slide_out_left);
-                return true;
-            }
-
-
-            return super.onOptionsItemSelected(item);
-        }
-    */
     private class GetNotificationList extends AsyncTask<String, Void, String> {
 
         String responseString = "";
@@ -178,7 +153,7 @@ public class NotificationActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            responseString = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/notificationcount/countnotification/?page=" + page_count + "&psize=20");
+            responseString = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/notificationcount/countnotification/?page=" + page_count + "&psize=20");
             return responseString;
         }
 
@@ -192,10 +167,10 @@ public class NotificationActivity extends AppCompatActivity {
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     Log.e("json array", "-------------------" + jsonArray);
-                    if (jsonArray.length() < 20 || jsonArray.length() == 0) {
+                    /*if (jsonArray.length() < 20 || jsonArray.length() == 0) {
                         flag_scroll = true;
                         Log.e("length_array_news", flag_scroll + "" + "<30===OR(0)===" + jsonArray.length());
-                    }
+                    }*/
                     for (int i = 0; i < jsonArray.length(); i++) {
 
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
@@ -231,7 +206,11 @@ public class NotificationActivity extends AppCompatActivity {
                         Log.e("time", "-----------------------" + time[1]);
 
                         notificationItems.add(new NotificationItem(table, id, title, description, fulldate + ", " + time[1]));
+
                     }
+
+                    notificationListAdapter.notifyDataSetChanged();
+
                 } else {
 
                 }
@@ -244,18 +223,7 @@ public class NotificationActivity extends AppCompatActivity {
                 loadingProgressDialog.dismiss();
             }
 */
-            if (recycleview_notification != null) {
-                notificationListAdapter = new NotificationListAdapter(NotificationActivity.this, notificationItems);
-                if (notificationListAdapter.getItemCount() != 0) {
-                    recycleview_notification.setVisibility(View.VISIBLE);
-                    img_nodata.setVisibility(View.GONE);
-                    recycleview_notification.setAdapter(notificationListAdapter);
 
-                } else {
-                    recycleview_notification.setVisibility(View.GONE);
-                    img_nodata.setVisibility(View.VISIBLE);
-                }
-            }
 
         }
 

@@ -12,7 +12,6 @@
         android:layout_height="140dp"
         android:scaleType="centerCrop"
         android:layout_centerVertical="true"
-        android:src="@mipmap/ic_launcher"
         android:layout_marginLeft="5dp"
         />
 

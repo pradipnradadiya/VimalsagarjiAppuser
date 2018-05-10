@@ -30,8 +30,6 @@ import android.widget.Toast;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
-import com.vimalsagarji.vimalsagarjiapp.activity.EventDetailActivity;
-import com.vimalsagarji.vimalsagarjiapp.activity.VideoDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.JSONParser1;
@@ -57,7 +55,7 @@ public class TodayQuetionAnswerFragment extends Fragment {
     }
 
     private CustomAdpter adpter;
-        private KProgressHUD loadingProgressDialog;
+    private KProgressHUD loadingProgressDialog;
     private Sharedpreferance sharedpreferance;
     private ArrayList<String> listQuestion = new ArrayList<String>();
     private final ArrayList<String> listAnswer = new ArrayList<String>();
@@ -66,18 +64,21 @@ public class TodayQuetionAnswerFragment extends Fragment {
     private final ArrayList<String> listDate = new ArrayList<String>();
     private final ArrayList<String> listName = new ArrayList<String>();
     private final ArrayList<String> listview = new ArrayList<String>();
+    private final ArrayList<String> listflag = new ArrayList<String>();
+
+
     private String strAskQuestion;
     private ListView listView;
     private Button btn_askQuestion;
-    private final String postQue = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/";
+    private final String postQue = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/askques/";
 
     private Dialog dialog;
     private TextView txt_nodata_today;
     private EditText InputBox;
     List<ThoughtToday> listfilterdata = new ArrayList<>();
-    private final String TodaySearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/searchallappquestoday/?page=1&psize=1000";
+    private final String TodaySearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/searchallappquestoday/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
-    String approve = "";
+    //    String approve = "";
     private ProgressBar progressbar;
 
     @Override
@@ -111,32 +112,14 @@ public class TodayQuetionAnswerFragment extends Fragment {
                 return false;
             }
         });
-        imsearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (CommonMethod.isInternetConnected(getActivity())) {
-                    new SearchTodayQuestion().execute();
-                } else {
-                    final Snackbar snackbar = Snackbar
-                            .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
-                    snackbar.setActionTextColor(Color.RED);
-                    snackbar.show();
-                    snackbar.setAction("Dismiss", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            snackbar.dismiss();
-                        }
-                    });
-                }
-            }
-        });
+
 
         btn_askQuestion = (Button) getActivity().findViewById(R.id.btn_askQuestion);
         sharedpreferance = new Sharedpreferance(getActivity());
         if (CommonMethod.isInternetConnected(getActivity())) {
 //            GetTodayQuestion getTodayQuestion = new GetTodayQuestion();
 //            getTodayQuestion.execute();
-            new CheckUserApprove().execute();
+//            new CheckUserApprove().execute();
         } else {
             final Snackbar snackbar = Snackbar
                     .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
@@ -154,6 +137,12 @@ public class TodayQuetionAnswerFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                listflag.set(position,"true");
+                adpter.notifyDataSetChanged();
+
+
                 Intent intent = new Intent(getActivity(), AllQuestionDetail.class);
                 Log.e("Question", listQuestion.get(position));
                 Log.e("Answer", listAnswer.get(position));
@@ -176,56 +165,53 @@ public class TodayQuetionAnswerFragment extends Fragment {
                 } else {
 
 
-                    if (approve.equalsIgnoreCase("1")) {
-                        dialog = new Dialog(getActivity());
+                    dialog = new Dialog(getActivity());
 //                Window window = dialog.getWindow();
 //                window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        dialog.setContentView(R.layout.custom_askquestion_dialog);
-                        dialog.setCancelable(false);
-                        final EditText etAskQuestion = (EditText) dialog.findViewById(R.id.etAskQuestion);
-                        Button btnPost = (Button) dialog.findViewById(R.id.btnPost);
-                        final String strUid = sharedpreferance.getId();
-                        strAskQuestion = etAskQuestion.getText().toString();
-                        dialog.show();
-                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        final ImageView img_close = (ImageView) dialog.findViewById(R.id.img_close);
-                        img_close.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
-                        btnPost.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (CommonMethod.isInternetConnected(getActivity())) {
-                                    String txtpost = etAskQuestion.getText().toString();
-                                    if (TextUtils.isEmpty(txtpost)) {
-                                        etAskQuestion.setError("Please enter your question!");
-                                        etAskQuestion.requestFocus();
-                                    } else {
-                                        new postData().execute(txtpost);
-
-                                    }
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.custom_askquestion_dialog);
+                    dialog.setCancelable(false);
+                    final EditText etAskQuestion = (EditText) dialog.findViewById(R.id.etAskQuestion);
+                    Button btnPost = (Button) dialog.findViewById(R.id.btnPost);
+                    final String strUid = sharedpreferance.getId();
+                    strAskQuestion = etAskQuestion.getText().toString();
+                    dialog.show();
+                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    final ImageView img_close = (ImageView) dialog.findViewById(R.id.img_close);
+                    img_close.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+                    btnPost.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (CommonMethod.isInternetConnected(getActivity())) {
+                                String txtpost = etAskQuestion.getText().toString();
+                                if (TextUtils.isEmpty(txtpost)) {
+                                    etAskQuestion.setError("Please enter your question!");
+                                    etAskQuestion.requestFocus();
                                 } else {
-                                    final Snackbar snackbar = Snackbar
-                                            .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
-                                    snackbar.setActionTextColor(Color.RED);
-                                    snackbar.show();
-                                    snackbar.setAction("Dismiss", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            snackbar.dismiss();
-                                        }
-                                    });
-                                }
+                                    new postData().execute(CommonMethod.encodeEmoji(txtpost));
 
+                                }
+                            } else {
+                                final Snackbar snackbar = Snackbar
+                                        .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
+                                snackbar.setActionTextColor(Color.RED);
+                                snackbar.show();
+                                snackbar.setAction("Dismiss", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        snackbar.dismiss();
+                                    }
+                                });
                             }
-                        });
-                    } else {
-//                        Toast.makeText(getActivity(), "You are not approved user.", Toast.LENGTH_SHORT).show();
-                    }
+
+                        }
+                    });
+
                 }
             }
         });
@@ -233,7 +219,11 @@ public class TodayQuetionAnswerFragment extends Fragment {
 
     private void loadData() {
         adpter.clear();
-        new LoadGetTodayQuestion().execute();
+        if (sharedpreferance.getId().equalsIgnoreCase("")){
+            new LoadGetTodayQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquestoday/?page=1&psize=1000");
+        }else {
+            new LoadGetTodayQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquestoday/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+        }
     }
 
 
@@ -284,7 +274,7 @@ public class TodayQuetionAnswerFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquestoday/?page=1&psize=1000");
+                responseJSON = CommonMethod.getStringResponse(params[0]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -334,6 +324,13 @@ public class TodayQuetionAnswerFragment extends Fragment {
                         listAnswer.add(Answer);
                         listUserID.add(uid);
                         listName.add(name);
+                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                            String flag = "true";
+                            listflag.add(flag);
+                        }else {
+                            String flag = object.getString("is_viewed");
+                            listflag.add(flag);
+                        }
 
                     }
                 }
@@ -386,7 +383,7 @@ public class TodayQuetionAnswerFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquestoday/?page=1&psize=1000");
+                responseJSON = CommonMethod.getStringResponse(params[0]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -435,6 +432,13 @@ public class TodayQuetionAnswerFragment extends Fragment {
                         listAnswer.add(Answer);
                         listUserID.add(uid);
                         listName.add(name);
+                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                            String flag = "true";
+                            listflag.add(flag);
+                        }else {
+                            String flag = object.getString("is_viewed");
+                            listflag.add(flag);
+                        }
 
                     }
                 }
@@ -446,7 +450,7 @@ public class TodayQuetionAnswerFragment extends Fragment {
                 loadingProgressDialog.dismiss();
             }
 */
-         progressbar.setVisibility(View.GONE);
+            progressbar.setVisibility(View.GONE);
             if (getActivity() != null) {
                 if (listView != null) {
                     adpter = new CustomAdpter(getActivity(), listQuestion);
@@ -498,17 +502,28 @@ public class TodayQuetionAnswerFragment extends Fragment {
                 holder.txtAnswer = (TextView) convertView.findViewById(R.id.txtAnswer);
                 holder.txt_date = (TextView) convertView.findViewById(R.id.txt_datess);
                 holder.txt_postby = (TextView) convertView.findViewById(R.id.txt_postby);
+                holder.img_new = (ImageView) convertView.findViewById(R.id.img_new);
                 //makeTextViewResizable(holder.txtAnswer, 2,"Read More",true);
                 //  holder.btnReadMore=(Button)convertView.findViewById(R.id.btnReadMore);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.txt_views.setText(listview.get(position));
-            holder.txtQuestion.setText("Q: "+items.get(position));
-            holder.txtAnswer.setText("A: "+listAnswer.get(position));
-            holder.txt_date.setText(listDate.get(position));
-            holder.txt_postby.setText("Question By:" + listName.get(position));
+            holder.txt_views.setText(CommonMethod.decodeEmoji(listview.get(position)));
+            holder.txtQuestion.setText("Q: " + CommonMethod.decodeEmoji(items.get(position)));
+            holder.txtAnswer.setText("A: " + CommonMethod.decodeEmoji(listAnswer.get(position)));
+            holder.txt_date.setText(CommonMethod.decodeEmoji(listDate.get(position)));
+            holder.txt_postby.setText("Question By:" + CommonMethod.decodeEmoji(listName.get(position)));
+
+            if (listflag.get(position).equalsIgnoreCase("true")){
+                holder.img_new.setVisibility(View.GONE);
+            }
+            else{
+                holder.img_new.setVisibility(View.VISIBLE);
+            }
+
+
+
             return convertView;
 
         }
@@ -516,6 +531,7 @@ public class TodayQuetionAnswerFragment extends Fragment {
 
         private class ViewHolder {
             TextView txtQuestion, txtAnswer, txt_date, txt_postby, txt_views;
+            ImageView img_new;
             //  Button btnReadMore;
 
         }
@@ -577,155 +593,21 @@ public class TodayQuetionAnswerFragment extends Fragment {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    public class SearchTodayQuestion extends AsyncTask<String, String, String> {
-
-        String status;
-        public LayoutInflater inflater = null;
-        private static final String TAG_SUCCESS = "success";
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @SuppressWarnings("ResourceType")
-        @Override
-        protected String doInBackground(String... param) {
-            try {
-                JSONParser1 jsonParser = new JSONParser1();
-                //    String count = param[0];
-
-                String searchitem = InputBox.getText().toString();
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("searchterm", searchitem));
-                System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest(TodaySearchQuestion, "POST", params);
-                // JSONObject json = JSONParser.getJsonFromUrl(url);
-                Log.d("Create Response", json.toString());
-                status = json.optString(TAG_SUCCESS);
-                for (int i = 0; i < json.length(); i++) {
-                    listQuestion = new ArrayList<>();
-                    JSONArray jsonArray = json.getJSONArray("data");
-                    System.out.println("JsonArray is" + jsonArray.length());
-                    for (int j = 0; j < jsonArray.length(); j++) {
-                        JSONObject object = jsonArray.getJSONObject(j);
-                        String id = object.getString("ID");
-                        listID.add(id);
-                        String Question = object.getString("Question");
-                        String Answer = object.getString("Answer");
-                        String Date = object.getString("Date");
-                        String uid = object.getString("UserID");
-                        String view = object.getString("View");
-                        listview.add(view);
-
-
-                        java.util.Date dt = CommonMethod.convert_date(Date);
-                        Log.e("Convert date is", "------------------" + dt);
-                        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
-                        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
-                        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
-                        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
-                        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
-
-                        Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
-                        Log.e("stringMonth", "-----------------" + stringMonth);
-                        Log.e("intMonth", "-----------------" + intMonth);
-                        Log.e("year", "-----------------" + year);
-                        Log.e("day", "-----------------" + day);
-
-                        String fulldate = day + "/" + intMonth + "/" + year;
-
-                        String[] time = Date.split("\\s+");
-                        Log.e("time", "-----------------------" + time[1]);
-                        listQuestion.add(Question);
-                        listDate.add(dayOfTheWeek + ", " + fulldate);
-                        listAnswer.add(Answer);
-                        listUserID.add(uid);
-
-
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return status;
-        }
-
-        protected void onPostExecute(String status) {
-            super.onPostExecute(status);
-
-            if (getActivity() != null) {
-                if (listView != null) {
-                    adpter = new CustomAdpter(getActivity(), listQuestion);
-                    if (adpter.getCount() != 0) {
-                        listView.setVisibility(View.VISIBLE);
-                        txt_nodata_today.setVisibility(View.GONE);
-                        listView.setAdapter(adpter);
-                    } else {
-                        listView.setVisibility(View.GONE);
-                        txt_nodata_today.setText("No Search \n Found");
-                        txt_nodata_today.setVisibility(View.VISIBLE);
-//                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-        }
-
-    }
-
-    //Check user approve or not
-    private class CheckUserApprove extends AsyncTask<String, Void, String> {
-        String responseJSON = "";
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return responseJSON;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Log.e("response", "-------------------------" + s);
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        approve = jsonObject1.getString("Is_Active");
-                    }
-
-                } else {
-//                    Toast.makeText(getActivity(), "" + jsonObject.get("message"), Toast.LENGTH_SHORT).show();
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     @Override
     public void onResume() {
         super.onResume();
         // put your code here...
-
+        listView.setVisibility(View.GONE);
         listQuestion.clear();
         if (CommonMethod.isInternetConnected(getActivity())) {
-            GetTodayQuestion getTodayQuestion = new GetTodayQuestion();
-            getTodayQuestion.execute();
+            if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                GetTodayQuestion getTodayQuestion = new GetTodayQuestion();
+                getTodayQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquestoday/?page=1&psize=1000");
+            } else {
+                GetTodayQuestion getTodayQuestion = new GetTodayQuestion();
+                getTodayQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquestoday/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+            }
         }
     }
 

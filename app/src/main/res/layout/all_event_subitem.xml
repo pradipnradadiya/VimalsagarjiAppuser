@@ -21,9 +21,12 @@
         android:background="@null"
         android:enabled="false"
         android:focusable="false"
-        android:hint=""
-        android:padding="10dp"
+        android:padding="7dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:textColor="@color/black"
+        android:layout_marginTop="7dp"
+        android:lineSpacingExtra="7dp"
         android:textSize="20dp"
         tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
@@ -34,6 +37,8 @@
         android:background="@color/view" />
 
     <LinearLayout
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -198,7 +203,8 @@
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:padding="10dp"
-
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
 
                 >
 
@@ -216,8 +222,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:autoLink="web"
                     android:ellipsize="end"
+                    android:lineSpacingExtra="7dp"
                     android:text=""
                     android:textColor="@color/textColor"
                     android:textSize="16sp"
@@ -225,6 +231,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -246,18 +254,22 @@
                     android:layout_weight="2"
                     android:lines="1"
                     android:text="Address"
+                    android:lineSpacingExtra="7dp"
                     android:textColor="@color/textColor"
                     android:textSize="16sp"
                     tools:ignore="HardcodedText,RtlHardcoded" />
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+                    android:visibility="gone"
                     android:layout_width="0dp"
                     android:layout_weight="0.8"
                     android:layout_height="wrap_content"
@@ -271,6 +283,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textSize="16sp"
+                    android:lineSpacingExtra="7dp"
                     android:layout_height="wrap_content"
                     android:scrollbars="vertical"
                     android:textColor="@color/textColor" />
@@ -279,6 +292,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
     </ScrollView>
 
     <View

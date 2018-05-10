@@ -21,10 +21,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.ThoughtsDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.JSONParser1;
 import com.vimalsagarji.vimalsagarjiapp.model.ThoughtToday;
 
@@ -54,15 +54,16 @@ public class ThisMonthThoughtsFragment extends Fragment {
     private ListView listView;
     private CustomAdapter adapter1;
 
-//    private KProgressHUD loadingProgressDialog;
+    //    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
 
 
     private EditText InputBox;
     private List<ThoughtToday> listfilterdata = new ArrayList<>();
-    private final String MonthSearchThought = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/searchallthoughtsbycidmonth/?page=1&psize=1000";
+    private final String MonthSearchThought = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/searchallthoughtsbycidmonth/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private ProgressBar progressbar;
+    Sharedpreferance sharedpreferance;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_thismonth_thoughts, container, false);
@@ -72,7 +73,8 @@ public class ThisMonthThoughtsFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        progressbar= (ProgressBar) getActivity().findViewById(R.id.progressbar);
+        sharedpreferance = new Sharedpreferance(getActivity());
+        progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         listView = (ListView) getActivity().findViewById(R.id.listmonth);
         txt_nodata_today = (TextView) getActivity().findViewById(R.id.txt_nodata_today);
         InputBox = (EditText) getActivity().findViewById(R.id.etText);
@@ -94,28 +96,16 @@ public class ThisMonthThoughtsFragment extends Fragment {
                 return false;
             }
         });
-        imsearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (CommonMethod.isInternetConnected(getActivity())) {
-                    new SearchMonthThought().execute();
-                } else {
-                    final Snackbar snackbar = Snackbar
-                            .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
-                    snackbar.setActionTextColor(Color.RED);
-                    snackbar.show();
-                    snackbar.setAction("Dismiss", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            snackbar.dismiss();
-                        }
-                    });
-                }
-            }
-        });
+
         if (CommonMethod.isInternetConnected(getActivity())) {
-            GetMonthThought getMonthThought = new GetMonthThought();
-            getMonthThought.execute();
+            if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                GetMonthThought getMonthThought = new GetMonthThought();
+                getMonthThought.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/getallthoughtsbycidmonth/?page=1&psize=1000");
+            } else {
+                GetMonthThought getMonthThought = new GetMonthThought();
+                getMonthThought.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/getallthoughtsbycidmonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+            }
+
         } else {
             final Snackbar snackbar = Snackbar
                     .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
@@ -131,9 +121,17 @@ public class ThisMonthThoughtsFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                final ThoughtToday thoughtTodays = adapter1.items.get(position);
+                Log.e("position list view", "---------------------" + position);
+                thoughtTodays.setFlag("true");
+                adapter1.items.set(position, thoughtTodays);
+                adapter1.notifyDataSetChanged();
+
+
                 ThoughtToday thoughtToday = (ThoughtToday) parent.getItemAtPosition(position);
                 Intent intent = new Intent(getActivity(), ThoughtsDetailActivity.class);
-                intent.putExtra("click_action","");
+                intent.putExtra("click_action", "");
                 intent.putExtra("thoughtid", thoughtToday.getId());
                 intent.putExtra("listTitle", thoughtToday.getTitle());
                 intent.putExtra("listDescription", thoughtToday.getDescription());
@@ -149,7 +147,12 @@ public class ThisMonthThoughtsFragment extends Fragment {
     }
 
     private void loadData() {
-        new LoadGetMonthThought().execute();
+        if (sharedpreferance.getId().equalsIgnoreCase("")) {
+
+            new LoadGetMonthThought().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/getallthoughtsbycidmonth/?page=1&psize=1000");
+        } else {
+            new LoadGetMonthThought().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/getallthoughtsbycidmonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+        }
     }
 
     private class GetMonthThought extends AsyncTask<String, Void, String> {
@@ -170,7 +173,7 @@ public class ThisMonthThoughtsFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON1 = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidmonth/?page=1&psize=1000");
+                responseJSON1 = CommonMethod.getStringResponse(params[0]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -219,6 +222,16 @@ public class ThisMonthThoughtsFragment extends Fragment {
                         thoughtToday.setDescription(description);
                         thoughtToday.setDate(dayOfTheWeek + ", " + fulldate);
                         thoughtToday.setView(view);
+//
+
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                            String flag = "true";
+                            thoughtToday.setFlag(flag);
+                        } else {
+                            String flag = object.getString("is_viewed");
+                            thoughtToday.setFlag(flag);
+                        }
+
                         list.add(thoughtToday);
                     }
                 }
@@ -273,7 +286,7 @@ public class ThisMonthThoughtsFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON1 = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidmonth/?page=1&psize=1000");
+                responseJSON1 = CommonMethod.getStringResponse(params[0]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -323,6 +336,15 @@ public class ThisMonthThoughtsFragment extends Fragment {
                         thoughtToday.setDescription(description);
                         thoughtToday.setDate(dayOfTheWeek + ", " + fulldate);
                         thoughtToday.setView(view);
+
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                            String flag = "true";
+                            thoughtToday.setFlag(flag);
+                        } else {
+                            String flag = object.getString("is_viewed");
+                            thoughtToday.setFlag(flag);
+                        }
+
                         list.add(thoughtToday);
                     }
                 }
@@ -388,6 +410,7 @@ public class ThisMonthThoughtsFragment extends Fragment {
                 holder.txt_Title = (TextView) convertView.findViewById(R.id.txtTitle);
                 holder.txt_Description = (TextView) convertView.findViewById(R.id.txtDescription);
                 holder.txt_Date = (TextView) convertView.findViewById(R.id.txtDate);
+                holder.img_new = (ImageView) convertView.findViewById(R.id.img_new);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -397,114 +420,23 @@ public class ThisMonthThoughtsFragment extends Fragment {
             holder.txt_Title.setText(CommonMethod.decodeEmoji(ats.getTitle()));
             holder.txt_Description.setText(CommonMethod.decodeEmoji(ats.getDescription()));
             holder.txt_Date.setText(CommonMethod.decodeEmoji(ats.getDate()));
+
+            if (ats.getFlag().equalsIgnoreCase("true")) {
+                holder.img_new.setVisibility(View.GONE);
+            } else {
+                holder.img_new.setVisibility(View.VISIBLE);
+            }
+
+
             return convertView;
 
         }
 
         private class ViewHolder {
-            TextView txt_ID, txt_Title, txt_Description, txt_Date,txt_views;
+            TextView txt_ID, txt_Title, txt_Description, txt_Date, txt_views;
+            ImageView img_new;
         }
 
-
-    }
-
-    @SuppressWarnings("deprecation")
-    public class SearchMonthThought extends AsyncTask<String, String, String> {
-
-        String status;
-        public LayoutInflater inflater = null;
-        private static final String TAG_SUCCESS = "success";
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @SuppressWarnings("ResourceType")
-        @Override
-        protected String doInBackground(String... param) {
-            try {
-                JSONParser1 jsonParser = new JSONParser1();
-                //    String count = param[0];
-
-                String searchitem = InputBox.getText().toString();
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("searchterm", searchitem));
-                System.out.println("InputBox Value " + searchitem);
-                JSONObject json = jsonParser.makeHttpRequest(MonthSearchThought, "POST", params);
-                // JSONObject json = JSONParser.getJsonFromUrl(url);
-                Log.d("Create Response", json.toString());
-                status = json.optString(TAG_SUCCESS);
-                for (int i = 0; i < json.length(); i++) {
-                    listfilterdata = new ArrayList<>();
-                    JSONArray jsonArray = json.getJSONArray("data");
-                    System.out.println("JsonArray is" + jsonArray.length());
-                    for (int j = 0; j < jsonArray.length(); j++) {
-                        JSONObject object = jsonArray.getJSONObject(j);
-                        String id = object.getString("ID");
-                        String title = object.getString("Title");
-                        String description = object.getString("Description");
-                        String date = object.getString("Date");
-                        String view = object.getString("View");
-
-
-                        Date dt = CommonMethod.convert_date(date);
-                        Log.e("Convert date is", "------------------" + dt);
-                        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
-                        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
-                        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
-                        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
-                        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
-
-                        Log.e("dayOfTheWeek", "-----------------" + dayOfTheWeek);
-                        Log.e("stringMonth", "-----------------" + stringMonth);
-                        Log.e("intMonth", "-----------------" + intMonth);
-                        Log.e("year", "-----------------" + year);
-                        Log.e("day", "-----------------" + day);
-
-                        String fulldate = day + "/" + intMonth + "/" + year;
-
-                        String[] time = date.split("\\s+");
-                        Log.e("time", "-----------------------" + time[1]);
-                        ThoughtToday thoughtToday = new ThoughtToday();
-                        thoughtToday.setId(id);
-                        thoughtToday.setTitle(title);
-                        thoughtToday.setDescription(description);
-                        thoughtToday.setDate(dayOfTheWeek + ", " + fulldate);
-                        thoughtToday.setView(view);
-                        listfilterdata.add(thoughtToday);
-
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return status;
-        }
-
-        protected void onPostExecute(String status) {
-            super.onPostExecute(status);
-
-            try {
-                if (getActivity() != null) {
-                    if (listView != null) {
-                        adapter1 = new CustomAdapter(getActivity(), listfilterdata);
-                        if (adapter1.getCount() != 0) {
-                            listView.setVisibility(View.VISIBLE);
-                            txt_nodata_today.setVisibility(View.GONE);
-                            listView.setAdapter(adapter1);
-                        } else {
-                            listView.setVisibility(View.GONE);
-                            txt_nodata_today.setText("No Search \n Found");
-                            txt_nodata_today.setVisibility(View.VISIBLE);
-                            //                    Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
 
     }
 

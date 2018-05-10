@@ -33,8 +33,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.kaopiz.kprogresshud.KProgressHUD;
-import com.squareup.picasso.Picasso;
 import com.vimalsagarji.vimalsagarjiapp.ImageItemSplash;
 import com.vimalsagarji.vimalsagarjiapp.ImageViewActivity;
 import com.vimalsagarji.vimalsagarjiapp.R;
@@ -43,6 +43,7 @@ import com.vimalsagarji.vimalsagarjiapp.adpter.AudioListAdapter;
 import com.vimalsagarji.vimalsagarjiapp.adpter.PhotoAudioVideoAdapter;
 import com.vimalsagarji.vimalsagarjiapp.adpter.VideoListAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.jcplayer.JcPlayerView;
 import com.vimalsagarji.vimalsagarjiapp.model.EventComment;
@@ -59,6 +60,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import ch.boye.httpclientandroidlib.NameValuePair;
+import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 
 import static com.vimalsagarji.vimalsagarjiapp.today_week_month_year.GalleryCategory.itemSplashArrayList;
 
@@ -115,9 +119,9 @@ public class EventDetailActivity extends AppCompatActivity {
     private TextView txt_title;
     private EditText et_event;
 
-    private final String Photopath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/";
-    private final String Audiopath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/";
-    private final String Videopath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/";
+    private final String Photopath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/";
+    private final String Audiopath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventaudio/";
+    private final String Videopath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventvideo/";
 
     String listtitle;
     String strDate;
@@ -171,6 +175,7 @@ public class EventDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_event_subitem);
+        itemSplashArrayList.clear();
         linearLayoutManager = new LinearLayoutManager(EventDetailActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
@@ -201,6 +206,7 @@ public class EventDetailActivity extends AppCompatActivity {
         if (CommonMethod.isInternetConnected(EventDetailActivity.this)) {
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
             } else {
+                new checkViewed().execute();
                 new CheckUserApprove().execute();
 //            new EventDetail().execute();
                 new CheckLike().execute(sharedpreferance.getId(), strEventId);
@@ -223,7 +229,7 @@ public class EventDetailActivity extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                    String sAux = "\n Event \n" + title + "\n" + description + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
+                    String sAux = "\n Event \n" + CommonMethod.decodeEmoji(title) + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
                     sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
                     intent.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(intent, "Choose One"));
@@ -232,7 +238,6 @@ public class EventDetailActivity extends AppCompatActivity {
                 }
             }
         });
-
 
         img_photo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -502,7 +507,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/getallcomments/?page=1&psize=1000", nameValuePairs, EventDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/getallcomments/?page=1&psize=1000", nameValuePairs, EventDetailActivity.this);
             return responseJSON;
         }
 
@@ -536,6 +541,10 @@ public class EventDetailActivity extends AppCompatActivity {
                         listname.add(name);
 
                     }
+                    commentsize = listComments.size();
+                    txt_comment_event.setText(String.valueOf(commentsize));
+
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -583,7 +592,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/getallcomments/?page=1&psize=1000", nameValuePairs, EventDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/getallcomments/?page=1&psize=1000", nameValuePairs, EventDetailActivity.this);
             return responseJSON;
         }
 
@@ -688,6 +697,10 @@ public class EventDetailActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            loadingProgressDialog = KProgressHUD.create(EventDetailActivity.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please Wait");
+            loadingProgressDialog.show();
         }
 
 
@@ -715,8 +728,11 @@ public class EventDetailActivity extends AppCompatActivity {
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
 //                    Toast.makeText(EventDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     Toast.makeText(EventDetailActivity.this, R.string.commentsuccess, Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
+//                    dialog.dismiss();
+                    loadingProgressDialog.dismiss();
+                    new CommentList().execute(strEventId);
                 } else {
+                    loadingProgressDialog.dismiss();
                     Toast.makeText(EventDetailActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
@@ -746,7 +762,7 @@ public class EventDetailActivity extends AppCompatActivity {
             try {
                 ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", strEventId));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventdetails/", nameValuePairs, EventDetailActivity.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventdetails/", nameValuePairs, EventDetailActivity.this);
             } catch (Exception e) {
                 Log.e("Exception", e.toString());
             }
@@ -787,7 +803,7 @@ public class EventDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[0]));
-            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/eventlike/", nameValuePairs, EventDetailActivity.this);
+            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/eventlike/", nameValuePairs, EventDetailActivity.this);
             return responeJSON;
         }
 
@@ -825,7 +841,7 @@ public class EventDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[0]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/countlikes/", nameValuePairs, EventDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/countlikes/", nameValuePairs, EventDetailActivity.this);
             return responseJSON;
         }
 
@@ -869,7 +885,7 @@ public class EventDetailActivity extends AppCompatActivity {
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", params[0]));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/checklike/", nameValuePairs, EventDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/checklike/", nameValuePairs, EventDetailActivity.this);
             return responseJSON;
         }
 
@@ -909,7 +925,7 @@ public class EventDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -950,7 +966,7 @@ public class EventDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/event/?eid=" + strEventId + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/countviews/event/?eid=" + strEventId + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1036,6 +1052,8 @@ public class EventDetailActivity extends AppCompatActivity {
 
 
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
                         title = object.getString("Title");
@@ -1054,6 +1072,8 @@ public class EventDetailActivity extends AppCompatActivity {
 
                         }
                         String videoLink = object.getString("VideoLink");
+                        Log.e("videolink","-------------"+videoLink);
+
                         String video = object.getString("Video").replaceAll(" ", "%20");
                         if (video.equalsIgnoreCase("")) {
 
@@ -1106,6 +1126,23 @@ public class EventDetailActivity extends AppCompatActivity {
                         txtDate.setText(CommonMethod.decodeEmoji(date));
 
 
+                        if (!videoLink.equalsIgnoreCase("")){
+                            String[] str = videoLink.split("/");
+                            final String v_vode = str[3];
+                            Log.e("code","----------------"+v_vode);
+                            txtvideolink.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent=new Intent(EventDetailActivity.this,YoutubePlayActivity.class);
+                                    intent.putExtra("vcode",v_vode);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+
+
+
+
                     }
                     JSONArray jsonArray1 = jsonObject.getJSONArray("Photo");
                     for (int i = 0; i < jsonArray1.length(); i++) {
@@ -1122,12 +1159,18 @@ public class EventDetailActivity extends AppCompatActivity {
                             imgEvent.setVisibility(View.GONE);
                             Toast.makeText(EventDetailActivity.this, "This event image not available.", Toast.LENGTH_SHORT).show();
                         } else {
-                            Picasso.with(EventDetailActivity.this)
-                                    .load(Photo)
-                                    .placeholder(R.drawable.loader)
-                                    .resize(0, 200)
-                                    .error(R.drawable.no_image)
-                                    .into(imgEvent);
+
+//                            Picasso.with(EventDetailActivity.this)
+//                                    .load(Photo)
+//                                    .placeholder(R.drawable.loader)
+//                                    .resize(0, 200)
+//                                    .error(R.drawable.no_image)
+//                                    .into(imgEvent);
+
+                            Glide.with(EventDetailActivity.this).load(Photo
+                                    .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).dontAnimate().into(imgEvent);
+
+
 
                             imgEvent.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -1203,6 +1246,35 @@ public class EventDetailActivity extends AppCompatActivity {
                 loadingProgressDialog.dismiss();
             }
         }
+
+    }
+
+    private class checkViewed extends AsyncTask<String, Void, String> {
+
+        String responseJson = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
+            nameValuePairs.add(new BasicNameValuePair("eid", strEventId));
+
+            responseJson = CommonMethod.postStringResponse(CommonUrl.Main_url + "event/seteventviewed", nameValuePairs, EventDetailActivity.this);
+            return responseJson;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response","-----------------"+s);
+        }
+
     }
 
 

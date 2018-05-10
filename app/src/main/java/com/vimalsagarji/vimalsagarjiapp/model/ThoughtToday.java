@@ -11,6 +11,7 @@ public class ThoughtToday {
     private String description;
     private String date;
     private String view;
+    private String flag;
 
     public String getId() {
         return id;
@@ -50,5 +51,13 @@ public class ThoughtToday {
 
     public void setView(String view) {
         this.view = view;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }
