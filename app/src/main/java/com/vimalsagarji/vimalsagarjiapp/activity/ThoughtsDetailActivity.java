@@ -642,7 +642,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                         listUserName.add(name);
 
                     }
-                    commentsize = listComment.size();
+                    commentsize = listUserID.size();
                     txt_comment.setText(String.valueOf(commentsize));
 
                 }
@@ -916,7 +916,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
 
                         if (!photo.equalsIgnoreCase("")) {
                             Glide.with(ThoughtsDetailActivity.this).load(CommonURL.ImagePath + "thoughtimage/" + photo
-                                    .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).into(img_thought);
+                                    .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).dontAnimate().into(img_thought);
                         }else{
                             img_thought.setVisibility(View.GONE);
                         }

@@ -38,6 +38,7 @@
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:lines="2"
+            android:ellipsize="end"
             android:text=""
             android:lineSpacingExtra="7dp"
             android:textColor="@color/red"

@@ -109,7 +109,9 @@
                         android:layout_gravity="right"
                         android:background="?android:attr/selectableItemBackground"
                         android:padding="5dp"
-                        android:text="Already Registered user?" />
+                        android:text="Sign in?"
+                        android:textColor="@color/black"
+                        />
 
                     <Button
                         android:id="@+id/btnRegister"

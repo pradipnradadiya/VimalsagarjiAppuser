@@ -995,7 +995,11 @@ public class EventDetailActivity extends AppCompatActivity {
                 //Displaying another snackbar when user click the action for first snackbar
 //                Snackbar s = Snackbar.make(v, "Register", Snackbar.LENGTH_LONG);
 //                s.show();
-                jcplayer.kill();
+                try {
+                    jcplayer.kill();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 Intent intent = new Intent(EventDetailActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 finishAffinity();

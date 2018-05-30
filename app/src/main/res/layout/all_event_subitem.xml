@@ -73,6 +73,33 @@
             android:src="@drawable/ic_share_black_24dp" />
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location :"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            tools:ignore="HardcodedText" />
+
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+            android:id="@+id/txtAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:lineSpacingExtra="7dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/textColor"
+            android:textSize="16sp"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -230,35 +257,7 @@
                     tools:ignore="HardcodedText,RtlHardcoded" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
-                    android:text="Location :"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    tools:ignore="HardcodedText" />
-
-                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-                    android:id="@+id/txtAddress"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:lines="1"
-                    android:text="Address"
-                    android:lineSpacingExtra="7dp"
-                    android:textColor="@color/textColor"
-                    android:textSize="16sp"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_marginLeft="15dp"

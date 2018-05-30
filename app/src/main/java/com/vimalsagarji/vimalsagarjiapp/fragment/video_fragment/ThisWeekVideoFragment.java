@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,8 +28,6 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.VideoDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
-import com.vimalsagarji.vimalsagarjiapp.model.InformationCategory;
-import com.vimalsagarji.vimalsagarjiapp.model.JSONParser1;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,9 +36,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import ch.boye.httpclientandroidlib.NameValuePair;
-import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 
 import static com.vimalsagarji.vimalsagarjiapp.fragment.video_fragment.TodayVideoFragment.listViewvideo;
 import static com.vimalsagarji.vimalsagarjiapp.today_week_month_year.VideoCategoryItem.video_cat_id;
@@ -190,6 +186,43 @@ public class ThisWeekVideoFragment extends Fragment {
             }
         }
 
+
+        listViewvideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listflag.set(position,"true");
+                customAdpter.notifyDataSetChanged();
+
+
+                String strVideo = listVideo.get(position);
+                Log.e("videofile", "------------------" + strVideo);
+                String videoname = listVideoName.get(position);
+                Log.e("videoname", "------------------" + videoname);
+                String ids = listid.get(position);
+                Log.e("id", "------------------" + id);
+                String catid = listcatid.get(position);
+                Log.e("catid", "------------------" + catid);
+                String photo = listIcon.get(position);
+                Log.e("photo", "------------------" + photo);
+                String date = listDate.get(position);
+                Log.e("date", "------------------" + date);
+
+                Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
+                intent.putExtra("click_action", "");
+                intent.putExtra("video", strVideo);
+                intent.putExtra("videoname", videoname);
+                intent.putExtra("id", ids);
+                intent.putExtra("catid", catid);
+                intent.putExtra("photo", photo);
+                intent.putExtra("date", date);
+                intent.putExtra("view", listview.get(position));
+
+
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
     }
 
     private void loadData() {
@@ -279,8 +312,13 @@ public class ThisWeekVideoFragment extends Fragment {
                         listDate.add(dayOfTheWeek + ", " + fulldate);
 //                        String name = object.getString("Name");
 
-                        String flag=object.getString("is_viewed");
-                        listflag.add(flag);
+                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                            String flag = "true";
+                            listflag.add(flag);
+                        }else {
+                            String flag = object.getString("is_viewed");
+                            listflag.add(flag);
+                        }
                     }
                 } else {
 
@@ -389,8 +427,13 @@ public class ThisWeekVideoFragment extends Fragment {
                         listDate.add(dayOfTheWeek + ", " + fulldate);
 //                        String name = object.getString("Name");
 
-                        String flag=object.getString("is_viewed");
-                        listflag.add(flag);
+                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                            String flag = "true";
+                            listflag.add(flag);
+                        }else {
+                            String flag = object.getString("is_viewed");
+                            listflag.add(flag);
+                        }
                     }
                 } else {
 
@@ -468,7 +511,7 @@ public class ThisWeekVideoFragment extends Fragment {
                 Picasso.with(getActivity()).load(R.drawable.no_image);
             }
 
-            holder.imgPlayVideo.setOnClickListener(new View.OnClickListener() {
+            /*holder.imgPlayVideo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -504,7 +547,7 @@ public class ThisWeekVideoFragment extends Fragment {
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
-
+*/
 
             if (listflag.get(position).equalsIgnoreCase("true")){
                 holder.img_new.setVisibility(View.GONE);
@@ -601,9 +644,13 @@ public class ThisWeekVideoFragment extends Fragment {
 
                         listDate.add(dayOfTheWeek + ", " + fulldate);
                         String name = object.getString("Name");
-
-                        String flag=object.getString("is_viewed");
-                        listflag.add(flag);
+                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                            String flag = "true";
+                            listflag.add(flag);
+                        }else {
+                            String flag = object.getString("is_viewed");
+                            listflag.add(flag);
+                        }
                     }
                 } else {
 
@@ -716,8 +763,15 @@ public class ThisWeekVideoFragment extends Fragment {
 
                         listDate.add(dayOfTheWeek + ", " + fulldate);
                         String name = object.getString("Name");
-                        String flag=object.getString("is_viewed");
-                        listflag.add(flag);
+
+
+                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                            String flag = "true";
+                            listflag.add(flag);
+                        }else {
+                            String flag = object.getString("is_viewed");
+                            listflag.add(flag);
+                        }
                     }
                 } else {
 

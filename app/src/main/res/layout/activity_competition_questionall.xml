@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/homepage_back"
+    android:orientation="vertical">
+
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+        android:id="@+id/txt_timer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="22dp" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleview_competition"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+        <TextView
+            android:id="@+id/txt_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="No Competition \n Available"
+            android:textColor="@color/black"
+            android:textSize="28dp"
+            android:visibility="gone" />
+
+
+        <ProgressBar
+            android:id="@+id/progress_load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:background="@drawable/back_gradiant"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -60,6 +60,8 @@
             android:layout_below="@+id/txtDescription"
             android:layout_gravity="right"
             android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="7dp"
             android:ellipsize="end"
             android:lineSpacingExtra="7dp"
             android:lines="1"

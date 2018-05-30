@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,7 +47,7 @@ public class AllAudioFragment extends Fragment {
 
     }
 
-    CustomAdpter customAdpter;
+    private CustomAdpter customAdpter;
     SwipeRefreshLayout activity_main_swipe_refresh_layout;
     final static String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/getaudiobycategoryid/?page=1&psize=1000";
     String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/audioimage/";
@@ -121,8 +122,8 @@ public class AllAudioFragment extends Fragment {
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
                     new GetAllByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappposts/?page=1&psize=1000");
-                }else {
-                    new GetAllByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappposts/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+                } else {
+                    new GetAllByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappposts/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
                 }
             } else {
                 Snackbar.make(getView(), R.string.internet, Snackbar.LENGTH_SHORT).show();
@@ -144,6 +145,99 @@ public class AllAudioFragment extends Fragment {
 
 
         audioImagname = (TextView) getActivity().findViewById(R.id.audioImagname);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                if (customAdpter.items.get(position).getID().equalsIgnoreCase("eid" + String.valueOf(position))) {
+                    Intent intent = new Intent(getActivity(), EventsAllDisplay.class);
+                    if (customAdpter.items.get(position).getAudio().equalsIgnoreCase("")) {
+                        Log.e("audio play lisy list", "-------------" + audiolistarraylist);
+
+                        audiolistarraylist = new ArrayList<>();
+                        intent.putExtra("mylist", audiolistarraylist);
+                        intent.putExtra("status", "a");
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                                audiolistarraylist.clear();
+                    } else {
+
+                        final ThisMonthAudio informationCategory1 = customAdpter.items.get(position);
+                        Log.e("position list view", "---------------------" + position);
+                        informationCategory1.setFlag("true");
+                        customAdpter.items.set(position, informationCategory1);
+                        customAdpter.notifyDataSetChanged();
+
+                        audiolistarraylist = new ArrayList<>();
+                        String[] au = customAdpter.items.get(position).getAudio().split(",");
+                        for (int j = 0; j < au.length; j++) {
+                            audiolistarraylist.add(au[j]);
+                        }
+                        Log.e("audio play lisy list", "-------------" + audiolistarraylist);
+
+                        intent.putExtra("mylist", audiolistarraylist);
+                        intent.putExtra("status", "a");
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+
+                } else if (customAdpter.items.get(position).getID().equalsIgnoreCase("bid" + String.valueOf(position))) {
+
+                    if (customAdpter.items.get(position).getAudio().equalsIgnoreCase("")) {
+
+                        Toast.makeText(getActivity(), "This posts audio not avalable.", Toast.LENGTH_SHORT).show();
+
+                    } else {
+
+                        final ThisMonthAudio informationCategory1 = customAdpter.items.get(position);
+                        Log.e("position list view", "---------------------" + position);
+                        informationCategory1.setFlag("true");
+                        customAdpter.items.set(position, informationCategory1);
+                        customAdpter.notifyDataSetChanged();
+
+                        Intent i = new Intent(getActivity(), AudioDetail.class);
+                        i.putExtra("click_action", "");
+                        i.putExtra("id", customAdpter.items.get(position).getID());
+                        i.putExtra("AudioName", customAdpter.items.get(position).getAudioName());
+                        i.putExtra("CategoryID", customAdpter.items.get(position).getCategoryID());
+                        i.putExtra("Audio", "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleaudio/" + customAdpter.items.get(position).getAudio());
+                        i.putExtra("Photo", customAdpter.items.get(position).getPhoto());
+                        i.putExtra("Duration", customAdpter.items.get(position).getDuration());
+                        i.putExtra("Date", customAdpter.items.get(position).getDate());
+                        i.putExtra("view", customAdpter.items.get(position).getView());
+                        startActivity(i);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                    }
+
+                } else {
+
+
+                    final ThisMonthAudio informationCategory1 = customAdpter.items.get(position);
+                    Log.e("position list view", "---------------------" + position);
+                    informationCategory1.setFlag("true");
+                    customAdpter.items.set(position, informationCategory1);
+                    customAdpter.notifyDataSetChanged();
+
+                    Intent i = new Intent(getActivity(), AudioDetail.class);
+                    i.putExtra("click_action", "");
+                    i.putExtra("id", customAdpter.items.get(position).getID());
+                    i.putExtra("AudioName", customAdpter.items.get(position).getAudioName());
+                    i.putExtra("CategoryID", customAdpter.items.get(position).getCategoryID());
+                    i.putExtra("Audio", customAdpter.items.get(position).getAudio());
+                    i.putExtra("Photo", customAdpter.items.get(position).getPhoto());
+                    i.putExtra("Duration", customAdpter.items.get(position).getDuration());
+                    i.putExtra("Date", customAdpter.items.get(position).getDate());
+                    i.putExtra("view", customAdpter.items.get(position).getView());
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            }
+
+
+        });
+
     }
 
     private void loadData() {
@@ -223,10 +317,10 @@ public class AllAudioFragment extends Fragment {
                         String[] time = Date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
 
-                        String flag=null;
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                        String flag = null;
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
                             flag = "true";
-                        }else {
+                        } else {
                             flag = object.getString("is_viewed");
                         }
                         arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate, view, flag));
@@ -341,10 +435,10 @@ public class AllAudioFragment extends Fragment {
                         String[] time = Date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
 
-                        String flag=null;
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                        String flag = null;
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
                             flag = "true";
-                        }else {
+                        } else {
                             flag = object.getString("is_viewed");
                         }
 
@@ -362,7 +456,7 @@ public class AllAudioFragment extends Fragment {
             progressbar.setVisibility(View.GONE);
             if (getActivity() != null) {
                 if (listView != null) {
-                    CustomAdpter customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
+                    customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
 
                     if (customAdpter.getCount() != 0) {
                         listView.setVisibility(View.VISIBLE);
@@ -444,10 +538,10 @@ public class AllAudioFragment extends Fragment {
 
                         String[] time = Date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
-                        String flag=null;
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                        String flag = null;
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
                             flag = "true";
-                        }else {
+                        } else {
                             flag = object.getString("is_viewed");
                         }
                         arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate, view, flag));
@@ -517,10 +611,12 @@ public class AllAudioFragment extends Fragment {
                 holder.img_new = (ImageView) convertView.findViewById(R.id.img_new);
 
 
-                holder.imgPlayAudio.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.e("play audio", "------------------");
+//                holder.imgPlayAudio.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Log.e("play audio", "------------------");
+
+                        /*customAdpter.notifyDataSetChanged();
 
                         if (items.get(position).getID().equalsIgnoreCase("eid" + String.valueOf(position))) {
                             Intent intent = new Intent(getActivity(), EventsAllDisplay.class);
@@ -533,16 +629,15 @@ public class AllAudioFragment extends Fragment {
                                 startActivity(intent);
                                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //                                audiolistarraylist.clear();
-                            } else {
+                            }
+
+                            else {
 
                                 final ThisMonthAudio informationCategory1 = customAdpter.items.get(position);
                                 Log.e("position list view","---------------------"+position);
                                 informationCategory1.setFlag("true");
                                 customAdpter.items.set(position,informationCategory1);
                                 customAdpter.notifyDataSetChanged();
-
-
-
 
                                 audiolistarraylist = new ArrayList<>();
                                 String[] au = items.get(position).getAudio().split(",");
@@ -588,6 +683,7 @@ public class AllAudioFragment extends Fragment {
 
                         } else {
 
+
                             final ThisMonthAudio informationCategory1 = customAdpter.items.get(position);
                             Log.e("position list view","---------------------"+position);
                             informationCategory1.setFlag("true");
@@ -607,9 +703,10 @@ public class AllAudioFragment extends Fragment {
                             startActivity(i);
                             getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         }
-                    }
+                    }*/
 
-                });
+//                    }
+//                });
 
 
                 convertView.setTag(holder);
@@ -633,10 +730,9 @@ public class AllAudioFragment extends Fragment {
                 }
             });
 
-            if (items.get(position).getFlag().equalsIgnoreCase("true")){
+            if (items.get(position).getFlag().equalsIgnoreCase("true")) {
                 holder.img_new.setVisibility(View.GONE);
-            }
-            else{
+            } else {
                 holder.img_new.setVisibility(View.VISIBLE);
             }
 
@@ -718,10 +814,10 @@ public class AllAudioFragment extends Fragment {
                         String[] time = Date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
 
-                        String flag=null;
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                        String flag = null;
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
                             flag = "true";
-                        }else {
+                        } else {
                             flag = object.getString("is_viewed");
                         }
 
@@ -738,7 +834,7 @@ public class AllAudioFragment extends Fragment {
             progressbar.setVisibility(View.GONE);
             if (getActivity() != null) {
                 if (listView != null) {
-                    CustomAdpter customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
+                    customAdpter = new CustomAdpter(getActivity(), R.layout.audiocategorylistviewsubelement, arrayList);
 
                     if (customAdpter.getCount() != 0) {
                         listView.setVisibility(View.VISIBLE);

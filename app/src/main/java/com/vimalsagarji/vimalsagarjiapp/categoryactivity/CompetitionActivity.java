@@ -131,7 +131,7 @@ public class CompetitionActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressbar.setVisibility(View.VISIBLE);
-         /*   loadingProgressDialog = KProgressHUD.create(CompetitionActivity.this)
+         /*   loadingProgressDialog = KProgressHUD.create(CompetitionAllActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(false);
@@ -209,7 +209,7 @@ public class CompetitionActivity extends AppCompatActivity {
 
 
             } else {
-//                Toast.makeText(CompetitionActivity.this, "Gridview is null", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(CompetitionAllActivity.this, "Gridview is null", Toast.LENGTH_SHORT).show();
             }
 
         }

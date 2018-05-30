@@ -74,6 +74,7 @@ public class NotificationUtils {
                     showBigNotification(bitmap, mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
                 } else {
                     showSmallNotification(mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
+                    playNotificationSound();
                 }
             }
         } else {

@@ -42,12 +42,14 @@
         <activity
             android:name=".activity.splash.SecondSplashScreenActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"></activity>
-        <!--<activity
+            android:theme="@style/AppTheme" />
+        <!--
+            <activity
             android:name=".activity.splash.ThirdSpalshScreenActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"></activity>-->
+            android:theme="@style/AppTheme"></activity>
+        -->
         <activity
             android:name=".activity.InformationDetailActivity"
             android:screenOrientation="portrait"
@@ -78,6 +80,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".categoryactivity.EventCategory"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".categoryactivity.AudioCategory"
             android:screenOrientation="portrait"
@@ -181,9 +186,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".VideoFullActivity"
-            android:configChanges="orientation|screenSize"
-
-            />
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".today_week_month_year.ByPeople"
             android:screenOrientation="portrait"
@@ -245,7 +248,6 @@
         <activity
             android:name=".today_week_month_year.CompetitionListQuestion"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ActivityHomeMain"
             android:screenOrientation="portrait"
@@ -308,39 +310,31 @@
         <activity
             android:name=".activity.mainactivity.SettingActivity"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".activity.mainactivity.VideoAllActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.mainactivity.VideoAllActivityByPeople"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.mainactivity.AudioAllBypeopleActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.mainactivity.AudioAllEventActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.YoutubePlayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.mainactivity.AudioMainCategoryActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.mainactivity.EventGalleryAlbumActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".activity.mainactivity.EventGalleryAllImagesActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.mainactivity.EventGalleryAllImagesActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".jcplayer.JcPlayerService" />
 
@@ -400,7 +394,10 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/red" />
 
-        <activity android:name=".activity.mainactivity.PrivacyPolicyActivity"></activity>
+        <activity android:name=".activity.mainactivity.PrivacyPolicyActivity" />
+        <activity android:name=".today_week_month_year.CompetitionAllActivity" />
+        <activity android:name=".today_week_month_year.CompetitionRulesActivity"></activity>
+        <activity android:name=".today_week_month_year.CompetitionQuestionActivity" />
     </application>
 
 </manifest>

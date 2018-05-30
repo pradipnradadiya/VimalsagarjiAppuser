@@ -42,6 +42,7 @@ public class AllQuestionDetail extends AppCompatActivity {
 
     KProgressHUD loadingProgressDialog;
     Sharedpreferance sharedpreferance;
+    private ImageView img_share;
 
     @Override
     public void onBackPressed() {
@@ -58,6 +59,7 @@ public class AllQuestionDetail extends AppCompatActivity {
         txt_answer = (TextView) findViewById(R.id.txt_answer);
         imgBack = (ImageView) findViewById(R.id.imgarrorback);
         imgHome = (ImageView) findViewById(R.id.imgHome);
+        img_share= (ImageView) findViewById(R.id.img_share);
         ImageView img_search = (ImageView) findViewById(R.id.img_search);
         img_search.setVisibility(View.GONE);
         imgHome.setVisibility(View.GONE);
@@ -76,6 +78,7 @@ public class AllQuestionDetail extends AppCompatActivity {
         new viewQuestionAnswer().execute();
 
 
+        Log.e("uid","--------------"+sharedpreferance.getId());
         if (!sharedpreferance.getId().equalsIgnoreCase("")) {
             new checkViewed().execute();
         }
@@ -101,6 +104,27 @@ public class AllQuestionDetail extends AppCompatActivity {
 
             }
         });
+
+
+        img_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                    String sAux = "\n Q & A \n" + CommonMethod.decodeEmoji(ans) + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
+                    sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
+                    intent.putExtra(Intent.EXTRA_TEXT, sAux);
+                    startActivity(Intent.createChooser(intent, "Choose One"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
     }
 
     private class countView extends AsyncTask<String, Void, String> {

@@ -109,13 +109,10 @@ public class AllbyPeopleFragment extends Fragment {
 
 
                 final AllByPeople allByPeoples = adapter.items.get(position);
-                Log.e("position list view","---------------------"+position);
+                Log.e("position list view", "---------------------" + position);
                 allByPeoples.setFlag("true");
-                adapter.items.set(position,allByPeoples);
+                adapter.items.set(position, allByPeoples);
                 adapter.notifyDataSetChanged();
-
-
-
 
                 AllByPeople allByPeople = (AllByPeople) parent.getItemAtPosition(position);
                 Intent intent = new Intent(getActivity(), ByPeopleDetailActivity.class);
@@ -242,10 +239,10 @@ public class AllbyPeopleFragment extends Fragment {
                         abp.setName(name);
                         abp.setView(view);
 
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
                             String flag = "true";
                             abp.setFlag(flag);
-                        }else {
+                        } else {
                             String flag = object.getString("is_viewed");
                             abp.setFlag(flag);
                         }
@@ -363,10 +360,10 @@ public class AllbyPeopleFragment extends Fragment {
                         abp.setName(name);
                         abp.setView(view);
 
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
                             String flag = "true";
                             abp.setFlag(flag);
-                        }else {
+                        } else {
                             String flag = object.getString("is_viewed");
                             abp.setFlag(flag);
                         }

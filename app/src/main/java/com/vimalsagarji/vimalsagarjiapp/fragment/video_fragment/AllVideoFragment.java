@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,8 +30,6 @@ import com.vimalsagarji.vimalsagarjiapp.activity.EventsAllDisplay;
 import com.vimalsagarji.vimalsagarjiapp.activity.VideoDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
-import com.vimalsagarji.vimalsagarjiapp.model.InformationCategory;
-import com.vimalsagarji.vimalsagarjiapp.model.JSONParser1;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,9 +38,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import ch.boye.httpclientandroidlib.NameValuePair;
-import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 
 import static com.vimalsagarji.vimalsagarjiapp.fragment.event_fragment.TodayEventFragment.video_play_url;
 import static com.vimalsagarji.vimalsagarjiapp.fragment.video_fragment.TodayVideoFragment.listViewvideo;
@@ -193,6 +189,110 @@ public class AllVideoFragment extends Fragment {
                 });
             }
         }
+
+        listViewvideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (listid.get(position).equalsIgnoreCase("eid" + String.valueOf(position))) {
+
+                    if (listVideo.get(position).equalsIgnoreCase("")) {
+                        videolistarray = new ArrayList<>();
+                        Intent intent = new Intent(getActivity(), EventsAllDisplay.class);
+                        intent.putExtra("mylist", videolistarray);
+                        intent.putExtra("status", "v");
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                    } else {
+                        listflag.set(position,"true");
+                        customAdpter.notifyDataSetChanged();
+
+                        videolistarray = new ArrayList<>();
+                        String[] vi = listVideo.get(position).split(",");
+                        for (int k = 0; k < vi.length; k++) {
+                            videolistarray.add(vi[k]);
+                        }
+                        Intent intent = new Intent(getActivity(), EventsAllDisplay.class);
+                        intent.putExtra("mylist", videolistarray);
+                        intent.putExtra("status", "v");
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+
+
+                } else if (listid.get(position).equalsIgnoreCase("bid" + String.valueOf(position))) {
+
+                    if (listVideo.get(position).equalsIgnoreCase("")) {
+                        Toast.makeText(getActivity(), "This posts video not avalable.", Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        listflag.set(position,"true");
+                        customAdpter.notifyDataSetChanged();
+
+
+                        String strVideo = listVideo.get(position);
+                        Log.e("videofile", "------------------" + strVideo);
+                        String videoname = listVideoName.get(position);
+                        Log.e("videoname", "------------------" + videoname);
+                        String ids = listid.get(position);
+                        Log.e("id", "------------------" + id);
+                        String catid = listcatid.get(position);
+                        Log.e("catid", "------------------" + catid);
+                        String photo = listIcon.get(position);
+                        Log.e("photo", "------------------" + photo);
+                        String date = listDate.get(position);
+                        Log.e("date", "------------------" + date);
+
+                        video_play_url = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/" + strVideo;
+                        Intent intent = new Intent(getActivity(), VideoFullActivity.class);
+//                            intent.putExtra("click_action", "");
+//                            intent.putExtra("video", "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/" + strVideo);
+//                            intent.putExtra("videoname", videoname);
+//                            intent.putExtra("id", id);
+//                            intent.putExtra("catid", catid);
+//                            intent.putExtra("photo", photo);
+//                            intent.putExtra("date", date);
+//                            intent.putExtra("view", listview.get(position));
+
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+
+                    }
+                } else {
+
+                    listflag.set(position,"true");
+                    customAdpter.notifyDataSetChanged();
+
+                    String strVideo = listVideo.get(position);
+                    Log.e("videofile", "------------------" + strVideo);
+                    String videoname = listVideoName.get(position);
+                    Log.e("videoname", "------------------" + videoname);
+                    String ids = listid.get(position);
+                    Log.e("id", "------------------" + id);
+                    String catid = listcatid.get(position);
+                    Log.e("catid", "------------------" + catid);
+                    String photo = listIcon.get(position);
+                    Log.e("photo", "------------------" + photo);
+                    String date = listDate.get(position);
+                    Log.e("date", "------------------" + date);
+
+                    Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
+                    intent.putExtra("click_action", "");
+                    intent.putExtra("video", strVideo);
+                    intent.putExtra("videoname", videoname);
+                    intent.putExtra("id", ids);
+                    intent.putExtra("catid", catid);
+                    intent.putExtra("photo", photo);
+                    intent.putExtra("date", date);
+                    intent.putExtra("view", listview.get(position));
+
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            }
+        });
+
     }
 
     private void loadData() {
@@ -479,6 +579,7 @@ public class AllVideoFragment extends Fragment {
             holder.txt_views.setText(CommonMethod.decodeEmoji(listview.get(position)));
             holder.txtVideoName.setText(CommonMethod.decodeEmoji(items.get(position)));
             holder.txtVideoDate.setText(CommonMethod.decodeEmoji(listDate.get(position)));
+
             if (listIcon != null) {
 //                Picasso.with(getActivity()).load(listIcon.get(position).replaceAll(" ", "%20")).placeholder(R.drawable.loader).resize(0, 200).error(R.drawable.no_image).into(holder.imgVideo);
 
@@ -488,7 +589,7 @@ public class AllVideoFragment extends Fragment {
             } else {
                 Picasso.with(getActivity()).load(R.drawable.no_image);
             }
-            holder.imgPlayVideo.setOnClickListener(new View.OnClickListener() {
+            /*holder.imgPlayVideo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listid.get(position).equalsIgnoreCase("eid" + String.valueOf(position))) {
@@ -589,7 +690,7 @@ public class AllVideoFragment extends Fragment {
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
                 }
-            });
+            });*/
 
 
             if (listflag.get(position).equalsIgnoreCase("true")) {

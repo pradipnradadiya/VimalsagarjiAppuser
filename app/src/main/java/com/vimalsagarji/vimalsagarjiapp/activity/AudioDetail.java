@@ -77,13 +77,21 @@ public class AudioDetail extends AppCompatActivity {
     private final ArrayList<String> listname = new ArrayList<>();
     private ProgressBar progressbar;
     private TextView txt_description;
+    ImageView img_share;
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        jcPlayerView.kill();
+
+        try {
+            jcPlayerView.kill();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -95,6 +103,7 @@ public class AudioDetail extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         sharedpreferance = new Sharedpreferance(AudioDetail.this);
+        img_share= (ImageView) findViewById(R.id.img_share);
         jcPlayerView = (JcPlayerView) findViewById(R.id.jcplayerview_audio);
         txt_description= (TextView) findViewById(R.id.txt_description);
         et_event = (EditText) findViewById(R.id.et_event);
@@ -107,7 +116,11 @@ public class AudioDetail extends AppCompatActivity {
         imgHomeBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jcPlayerView.kill();
+                try {
+                    jcPlayerView.kill();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
@@ -134,7 +147,7 @@ public class AudioDetail extends AppCompatActivity {
             lin_like.setVisibility(View.GONE);
             lin_comment.setVisibility(View.GONE);
             String audioname = intent.getExtras().getString("AudioName");
-            et_event.setText(audioname);
+            et_event.setText(CommonMethod.decodeEmoji(audioname));
             Log.e("audioname", "------------------" + audioname);
             String category_id = intent.getExtras().getString("CategoryID");
             Log.e("category_id", "------------------" + category_id);
@@ -149,7 +162,11 @@ public class AudioDetail extends AppCompatActivity {
             view = intent.getStringExtra("view");
             if (CommonMethod.isInternetConnected(AudioDetail.this)) {
                 assert audio != null;
-                jcPlayerView.playAudio(audio.replaceAll(" ", "%20"), "");
+                try {
+                    jcPlayerView.playAudio(audio.replaceAll(" ", "%20"), "");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             txtDate.setText(date);
 
@@ -157,7 +174,7 @@ public class AudioDetail extends AppCompatActivity {
             lin_like.setVisibility(View.GONE);
             lin_comment.setVisibility(View.GONE);
             String audioname = intent.getExtras().getString("AudioName");
-            et_event.setText(audioname);
+            et_event.setText(CommonMethod.decodeEmoji(audioname));
             Log.e("audioname", "------------------" + audioname);
             String category_id = intent.getExtras().getString("CategoryID");
             Log.e("category_id", "------------------" + category_id);
@@ -172,11 +189,27 @@ public class AudioDetail extends AppCompatActivity {
             view = intent.getStringExtra("view");
             if (CommonMethod.isInternetConnected(AudioDetail.this)) {
                 assert audio != null;
-                jcPlayerView.playAudio(audio.replaceAll(" ", "%20"), "");
+                try {
+                    jcPlayerView.playAudio(audio.replaceAll(" ", "%20"), "");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             txtDate.setText(date);
         } else {
             if (CommonMethod.isInternetConnected(AudioDetail.this)) {
+
+
+                if (sharedpreferance.getId().equalsIgnoreCase("")) {
+
+                } else {
+                    new CheckUserApprove().execute();
+//                new getLikeCount().execute(id);
+                    new CheckLike().execute(sharedpreferance.getId(), id);
+                    new checkViewed().execute();
+                }
+                new AudioDetailId().execute();
+                new CommentList2().execute(id);
 //                new CheckUserApprove().execute();
 //                new getLikeCount().execute(id);
 //                new CheckLike().execute(sharedpreferance.getId(), id);
@@ -184,6 +217,8 @@ public class AudioDetail extends AppCompatActivity {
 //                new CountComment().execute(id);
             }
         }
+
+
 
         lin_like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -284,8 +319,30 @@ public class AudioDetail extends AppCompatActivity {
         });
 
 
-    }
 
+        img_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                try {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                    String sAux = "\n Audio \n" + CommonMethod.decodeEmoji(et_event.getText().toString()) + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
+                    sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
+                    intent.putExtra(Intent.EXTRA_TEXT, sAux);
+                    startActivity(Intent.createChooser(intent, "Choose One"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
+
+
+    }
 
     //Method to show the snackbar
     private void showSnackbar(View v) {
@@ -298,7 +355,11 @@ public class AudioDetail extends AppCompatActivity {
                 //Displaying another snackbar when user click the action for first snackbar
 //                Snackbar s = Snackbar.make(v, "Register", Snackbar.LENGTH_LONG);
 //                s.show();
-                jcPlayerView.kill();
+                try {
+                    jcPlayerView.kill();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 Intent intent = new Intent(AudioDetail.this, RegisterActivity.class);
                 startActivity(intent);finishAffinity();
 
@@ -895,7 +956,7 @@ public class AudioDetail extends AppCompatActivity {
                         String fulldate = dayOfTheWeek + ", " + day + "/" + intMonth + "/" + year + ", " + string[1];
 
 
-                        et_event.setText(audioname);
+                        et_event.setText(CommonMethod.decodeEmoji(audioname));
                         Log.e("audioname", "------------------" + audioname);
                         String audios = AudioPath + audio;
                         Log.e("audio", "------------------" + audio);
@@ -907,7 +968,11 @@ public class AudioDetail extends AppCompatActivity {
 
                         if (CommonMethod.isInternetConnected(AudioDetail.this)) {
                             assert audios != null;
-                            jcPlayerView.playAudio(audios.replaceAll(" ", "%20"), "");
+                            try {
+                                jcPlayerView.playAudio(audios.replaceAll(" ", "%20"), "");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                         txtDate.setText(dates);
 
@@ -935,7 +1000,7 @@ public class AudioDetail extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         // put your code here...
-        if (id.equalsIgnoreCase("eid")) {
+       /* if (id.equalsIgnoreCase("eid")) {
 
         } else if (id.equalsIgnoreCase("bid")) {
 
@@ -953,7 +1018,7 @@ public class AudioDetail extends AppCompatActivity {
                 new CommentList2().execute(id);
 //                new CountComment().execute(id);
             }
-        }
+        }*/
     }
 
     private class checkViewed extends AsyncTask<String, Void, String> {
@@ -979,7 +1044,7 @@ public class AudioDetail extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("response","-----------------"+s);
+            Log.e("check viewed response","-----------------"+s);
         }
 
     }

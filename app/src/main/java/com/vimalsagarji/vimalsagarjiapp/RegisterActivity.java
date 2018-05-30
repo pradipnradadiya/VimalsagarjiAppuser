@@ -16,6 +16,9 @@ import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -128,6 +131,26 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail = (EditText) findViewById(R.id.etEmail);
         etMobile = (EditText) findViewById(R.id.etMobile);
         etAddress = (EditText) findViewById(R.id.etAddress);
+
+
+        etName.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+
+        etName.setFilters(new InputFilter[] {
+                new InputFilter() {
+                    public CharSequence filter(CharSequence src, int start,
+                                               int end, Spanned dst, int dstart, int dend) {
+                        if(src.equals("")){ // for backspace
+                            return src;
+                        }
+                        if(src.toString().matches("[a-zA-Z ]+")){
+                            return src;
+                        }
+                        return "";
+                    }
+                }
+        });
+
+
         txt_alreready = (TextView) findViewById(R.id.txt_alreready);
         Button btnRegister = (Button) findViewById(R.id.btnRegister);
         TextView textview_skip = (TextView) findViewById(R.id.textview_skip);
@@ -273,9 +296,22 @@ public class RegisterActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("1")) {
                     Toast.makeText(RegisterActivity.this, "Email id already registerd.", Toast.LENGTH_SHORT).show();
+                    etEmail.setError("Email id already registerd.");
                     etEmail.requestFocus();
                     Log.e("1", "--------------" + "call");
-                } else if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                }
+                else if (jsonObject.getString("status").equalsIgnoreCase("3")) {
+                    Toast.makeText(RegisterActivity.this, "Mobile Number already registerd.", Toast.LENGTH_SHORT).show();
+                    etMobile.setError("Mobile Number already registerd.");
+                    etMobile.requestFocus();
+                    Log.e("3", "--------------" + "call");
+                }
+                else if (jsonObject.getString("status").equalsIgnoreCase("4")) {
+                    Toast.makeText(RegisterActivity.this, "Email id & Mobile Number already registerd.", Toast.LENGTH_SHORT).show();
+                   Log.e("4", "--------------" + "call");
+                }
+
+                else if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     Log.e("1 else ", "--------------" + "call");
                     String status = jsonObject.getString("status");
                     String message = jsonObject.getString("message");
@@ -305,17 +341,17 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private class AllreadyRegisterUser extends AsyncTask<String, Void, String> {
+    /*private class AllreadyRegisterUser extends AsyncTask<String, Void, String> {
         String responseJSON = "";
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-          /*  loadingProgressDialog = KProgressHUD.create(RegisterActivity.this)
+          *//*  loadingProgressDialog = KProgressHUD.create(RegisterActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
                     .setCancellable(false);
-            loadingProgressDialog.show();*/
+            loadingProgressDialog.show();*//*
 
             progressDialog = new ProgressDialog(RegisterActivity.this);
             progressDialog.setMessage("Please wait..");
@@ -398,7 +434,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
 
-    }
+    }*/
 
     @Override
     protected void onResume() {
@@ -442,7 +478,7 @@ public class RegisterActivity extends AppCompatActivity {
             int min = 100000;
             randno = String.valueOf(Math.round(Math.random() * (max - min + 1) + min));
 //            int mobile=Integer.parseInt(etMobile.getText().toString());
-            responseString = CommonMethod.getStringResponse("https://control.msg91.com/api/sendotp.php?authkey=210431AROU1gUWMy5ad5aa00&mobile=91" + etMobile.getText().toString() + "&message=Your%20OTP%20is%20" + randno + "&sender=VSNSND&otp=" + randno + "&otp_expiry=5&otp_length=6");
+            responseString = CommonMethod.getStringResponse("https://control.msg91.com/api/sendotp.php?authkey=210431AROU1gUWMy5ad5aa00&mobile=91" + etMobile.getText().toString() + "&message=Your%20OTP%20is%20" + randno + "&sender=NAYISO&otp=" + randno + "&otp_expiry=5&otp_length=6");
 //            responseString=CommonMethod.getStringResponse("https://control.msg91.com/api/sendotp.php?authkey=170539A1PovTWJpc0s5996ef0e&mobile=919725800283&message=Your%20otp%20is%20" + String.valueOf(randno) + "&sender=Nayi Soch&otp=" + String.valueOf(randno)+"&otp_length=6");
             return responseString;
 
@@ -496,6 +532,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
 
                     }.start();
+
 
 
                     resendotp.setOnClickListener(new View.OnClickListener() {

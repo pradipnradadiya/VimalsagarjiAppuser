@@ -84,6 +84,7 @@ public class VideoDetailActivity extends AppCompatActivity {
     private TextView txtvideolink, txt_description;
     private ImageView img_thumb;
 
+    ImageView img_share;
 
 //    VideoView video_view;
 
@@ -104,6 +105,8 @@ public class VideoDetailActivity extends AppCompatActivity {
         setContentView(R.layout.video_play_activity);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         sharedpreferance = new Sharedpreferance(VideoDetailActivity.this);
+        img_share= (ImageView) findViewById(R.id.img_share);
+
 //        custom_videoplayer_standard = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_standard);
         et_event = (EditText) findViewById(R.id.et_event);
 
@@ -348,6 +351,28 @@ public class VideoDetailActivity extends AppCompatActivity {
 //        jzVideoPlayerStandard.setUp("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
 //                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子闭眼睛");
 //        jzVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
+
+
+
+
+        img_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                    String sAux = "\n Video \n" + CommonMethod.decodeEmoji(et_event.getText().toString()) + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
+                    sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
+                    intent.putExtra(Intent.EXTRA_TEXT, sAux);
+                    startActivity(Intent.createChooser(intent, "Choose One"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
     }
 

@@ -44,13 +44,21 @@ public class AudioPlayActivity extends AppCompatActivity {
         Intent intent=getIntent();
         audio=intent.getStringExtra("audiopath");
         jcplayer_audio = (JcPlayerView) findViewById(R.id.jcplayer_audio);
-        jcplayer_audio.playAudio(audio, "music");
+        try {
+            jcplayer_audio.playAudio(audio, "music");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        jcplayer_audio.kill();
+        try {
+            jcplayer_audio.kill();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         onPause();
         finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

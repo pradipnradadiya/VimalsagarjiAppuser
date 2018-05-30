@@ -212,9 +212,10 @@ public class AlreadyRegisterUser extends AppCompatActivity {
                         Log.e("email", "---------------" + sharedpreferance.getEmail());
                         Log.e("uid", "---------------" + sharedpreferance.getId());
 
-                        new GenrateOTP().execute();
+
 
                     }
+                    new GenrateOTP().execute();
 
                 } else {
                     Toast.makeText(AlreadyRegisterUser.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
@@ -255,7 +256,7 @@ public class AlreadyRegisterUser extends AppCompatActivity {
             int min = 100000;
             randno = String.valueOf(Math.round(Math.random() * (max - min + 1) + min));
 //            int mobile=Integer.parseInt(etMobile.getText().toString());
-            responseString = CommonMethod.getStringResponse("https://control.msg91.com/api/sendotp.php?authkey=210431AROU1gUWMy5ad5aa00&mobile=91" + edit_mobile.getText().toString() + "&message=Your%20otp%20is%20" + randno + "&sender=NayoSoch&otp=" + randno + "&otp_expiry=5&otp_length=6");
+            responseString = CommonMethod.getStringResponse("https://control.msg91.com/api/sendotp.php?authkey=210431AROU1gUWMy5ad5aa00&mobile=91" + edit_mobile.getText().toString() + "&message=Your%20otp%20is%20" + randno + "&sender=NAYISO&otp=" + randno + "&otp_expiry=5&otp_length=6");
 //            responseString=CommonMethod.getStringResponse("https://control.msg91.com/api/sendotp.php?authkey=170539A1PovTWJpc0s5996ef0e&mobile=919725800283&message=Your%20otp%20is%20" + String.valueOf(randno) + "&sender=Nayi Soch&otp=" + String.valueOf(randno)+"&otp_length=6");
             return responseString;
 

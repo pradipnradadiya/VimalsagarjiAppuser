@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/homepage_back"
+    >
+
+    <include layout="@layout/toolbar_home" />
+
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/competition"
+        android:textColor="@color/black"
+        android:textSize="22dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleview_competition"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/txt_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="No Competition \n Available"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="28dp"
+            />
+        <ProgressBar
+            android:id="@+id/progress_load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
+</LinearLayout>

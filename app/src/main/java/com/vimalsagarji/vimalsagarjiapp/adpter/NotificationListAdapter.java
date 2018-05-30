@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.AudioDetail;
 import com.vimalsagarji.vimalsagarjiapp.activity.ByPeopleDetailActivity;

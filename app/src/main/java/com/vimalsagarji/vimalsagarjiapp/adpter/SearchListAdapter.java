@@ -22,6 +22,8 @@ import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.model.SearchItem;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.CompetitionList;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.OpinionPoll;
+import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.QuestionAnswerActivity;
+import com.vimalsagarji.vimalsagarjiapp.utils.AllQuestionDetail;
 
 import java.util.ArrayList;
 
@@ -82,7 +84,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
             holder.txt_title.setText(CommonMethod.decodeEmoji(searchItem.getTitle()));
             holder.txt_date.setText(CommonMethod.decodeEmoji(searchItem.getDate()));
             holder.txt_content.setText(CommonMethod.decodeEmoji(searchItem.getDescription()));
-        } else if (searchItem.getTable().equalsIgnoreCase("Question")) {
+        } else if (searchItem.getTable().equalsIgnoreCase("QuestionAnswer")) {
             holder.search_image.setImageResource(R.drawable.qa);
             holder.txt_title.setText(CommonMethod.decodeEmoji(searchItem.getTitle()));
             holder.txt_date.setText(CommonMethod.decodeEmoji(searchItem.getDate()));
@@ -176,9 +178,9 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
                 v.getContext().startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
-            } else if (itemArrayList.get(getAdapterPosition()).getTable().equalsIgnoreCase("Question")) {
-                Intent intent = new Intent(v.getContext(), ActivityHomeMain.class);
-                intent.putExtra("listID", itemArrayList.get(getAdapterPosition()).getId());
+            } else if (itemArrayList.get(getAdapterPosition()).getTable().equalsIgnoreCase("QuestionAnswer")) {
+                Intent intent = new Intent(v.getContext(), AllQuestionDetail.class);
+                intent.putExtra("qid", itemArrayList.get(getAdapterPosition()).getId());
                 intent.putExtra("click_action", "");
                 v.getContext().startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

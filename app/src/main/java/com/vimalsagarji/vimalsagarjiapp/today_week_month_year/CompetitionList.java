@@ -263,6 +263,7 @@ public class CompetitionList extends AppCompatActivity {
                         competitionQuestion.setStatus(status);
                         competitionQuestions.add(competitionQuestion);
 
+
                     }
                 }
             } catch (JSONException e) {
@@ -433,6 +434,8 @@ public class CompetitionList extends AppCompatActivity {
                         Log.e("id", "----------------" + holder.radioButton.getId());
                         holder.radioButton.setText(opt[j]);
                         holder.radiogroup.addView(holder.radioButton);
+
+
                         holder.radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(RadioGroup group, int checkedId) {

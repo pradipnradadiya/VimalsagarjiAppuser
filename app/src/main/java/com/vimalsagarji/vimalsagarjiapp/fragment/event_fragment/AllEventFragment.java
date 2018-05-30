@@ -47,8 +47,8 @@ public class AllEventFragment extends Fragment {
     }
 
     private static final String TAG = AllEventFragment.class.getSimpleName();
-    private static final String URL ="http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategoryyear/?cid=1&page=1&psize=1000";
-//    private static final String URL = Constant.GET_ALLYEAR_EVENT_DATA;
+    private static String URL = "";
+    //    private static final String URL = Constant.GET_ALLYEAR_EVENT_DATA;
     static String img = Constant.ImgURL;
     private List<EventAdpter> listAllEvent = new ArrayList<>();
     String[] daysArray = new String[]{"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
@@ -72,12 +72,15 @@ public class AllEventFragment extends Fragment {
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
 
     private ProgressBar progressbar;
-    ArrayList<String> timelist=new ArrayList<>();
+    ArrayList<String> timelist = new ArrayList<>();
     Sharedpreferance sharedpreferance;
+    private String cid;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
+            cid = getArguments().getString("cid");
+            Log.e("cid","------------------"+cid);
             return inflater.inflate(R.layout.fragment_allevent, container, false);
         }
         return view;
@@ -87,7 +90,10 @@ public class AllEventFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        sharedpreferance=new Sharedpreferance(getActivity());
+        sharedpreferance = new Sharedpreferance(getActivity());
+        URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategoryyear/?cid=" + cid + "&page=1&psize=1000";
+
+
         progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         gridView = (GridView) getActivity().findViewById(R.id.grid_allEvent);
 //        gridView = (GridView) getActivity().findViewById(R.id.grid_allEvent);
@@ -118,7 +124,7 @@ public class AllEventFragment extends Fragment {
                 jsonTask.execute(URL);
             } else {
                 JsonTask jsonTask = new JsonTask();
-                jsonTask.execute(URL+"&uid="+sharedpreferance.getId());
+                jsonTask.execute(URL + "&uid=" + sharedpreferance.getId());
             }
         } else {
             final Snackbar snackbar = Snackbar
@@ -139,9 +145,9 @@ public class AllEventFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 final EventAdpter eventitem = adpter.items.get(position);
-                Log.e("position list view","---------------------"+position);
+                Log.e("position list view", "---------------------" + position);
                 eventitem.setFlag("true");
-                adpter.items.set(position,eventitem);
+                adpter.items.set(position, eventitem);
                 adpter.notifyDataSetChanged();
 
                 EventAdpter eventAdpter = (EventAdpter) parent.getItemAtPosition(position);
@@ -178,9 +184,9 @@ public class AllEventFragment extends Fragment {
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
             LoadJsonTask loadJsonTask = new LoadJsonTask();
             loadJsonTask.execute(URL);
-        }else {
+        } else {
             LoadJsonTask loadJsonTask = new LoadJsonTask();
-            loadJsonTask.execute(URL+"&uid="+sharedpreferance.getId());
+            loadJsonTask.execute(URL + "&uid=" + sharedpreferance.getId());
         }
     }
 
@@ -204,9 +210,9 @@ public class AllEventFragment extends Fragment {
             try {
                 JSONObject jsonObject = JSONParser.getJsonFromUrl(strUrl);
                 // for (int i=0; i<jsonObject.length()  ;i++){
-                Log.e("allevent","--------------"+jsonObject);
+                Log.e("allevent", "--------------" + jsonObject);
                 JSONArray array = jsonObject.getJSONArray("data");
-                timelist=new ArrayList<>();
+                timelist = new ArrayList<>();
                 if (array != null) {
                     for (int j = 0; j < array.length(); j++) {
                         JSONObject object = array.getJSONObject(j);
@@ -298,7 +304,6 @@ public class AllEventFragment extends Fragment {
                     }
 
 
-
                 } else {
 //                Toast.makeText(getActivity(), "Gridview is null", Toast.LENGTH_SHORT).show();
                 }
@@ -321,10 +326,10 @@ public class AllEventFragment extends Fragment {
             try {
                 JSONObject jsonObject = JSONParser.getJsonFromUrl(strUrl);
 
-                Log.e("response","-------------"+jsonObject);
+                Log.e("response", "-------------" + jsonObject);
                 // for (int i=0; i<jsonObject.length()  ;i++){
                 JSONArray array = jsonObject.getJSONArray("data");
-                timelist=new ArrayList<>();
+                timelist = new ArrayList<>();
                 if (array != null) {
                     for (int j = 0; j < array.length(); j++) {
                         JSONObject object = array.getJSONObject(j);
@@ -414,7 +419,6 @@ public class AllEventFragment extends Fragment {
                     }
 
 
-
                 } else {
 //                Toast.makeText(getActivity(), "Gridview is null", Toast.LENGTH_SHORT).show();
                 }
@@ -463,10 +467,9 @@ public class AllEventFragment extends Fragment {
             holder.grid_txtday.setText(CommonMethod.decodeEmoji(String.valueOf(timelist.get(position))));
             String strPhoto = eventAdpterHolder.getPhoto();
 
-            if (eventAdpterHolder.getFlag().equalsIgnoreCase("true")){
+            if (eventAdpterHolder.getFlag().equalsIgnoreCase("true")) {
                 holder.img_new.setVisibility(View.GONE);
-            }
-            else{
+            } else {
                 holder.img_new.setVisibility(View.VISIBLE);
             }
 
@@ -476,7 +479,7 @@ public class AllEventFragment extends Fragment {
         }
 
         private class ViewHolder {
-            TextView grid_txtTitle, grid_txtDate, txt_views,grid_txtday;
+            TextView grid_txtTitle, grid_txtDate, txt_views, grid_txtday;
             ImageView img_new;
 
 

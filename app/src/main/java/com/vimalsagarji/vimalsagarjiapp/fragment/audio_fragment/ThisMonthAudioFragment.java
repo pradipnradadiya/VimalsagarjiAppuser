@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +27,6 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.AudioDetail;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
-import com.vimalsagarji.vimalsagarjiapp.model.JSONParser1;
 import com.vimalsagarji.vimalsagarjiapp.model.ThisMonthAudio;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.AudioCategoryitem;
 
@@ -36,9 +36,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import ch.boye.httpclientandroidlib.NameValuePair;
-import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 
 import static com.vimalsagarji.vimalsagarjiapp.R.id.imgAudio;
 
@@ -144,6 +141,29 @@ public class ThisMonthAudioFragment extends Fragment {
 
         audioImagname = (TextView) getActivity().findViewById(R.id.audioImagname);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final ThisMonthAudio informationCategory1 = customAdpter.items.get(position);
+                Log.e("position list view", "---------------------" + position);
+                informationCategory1.setFlag("true");
+                customAdpter.items.set(position, informationCategory1);
+                customAdpter.notifyDataSetChanged();
+                Intent i = new Intent(getActivity(), AudioDetail.class);
+                i.putExtra("click_action", "");
+                i.putExtra("id", customAdpter.items.get(position).getID());
+                i.putExtra("AudioName", customAdpter.items.get(position).getAudioName());
+                i.putExtra("CategoryID", customAdpter.items.get(position).getCategoryID());
+                i.putExtra("Audio", customAdpter.items.get(position).getAudio());
+                i.putExtra("Photo", customAdpter.items.get(position).getPhoto());
+                i.putExtra("Duration", customAdpter.items.get(position).getDuration());
+                i.putExtra("Date", customAdpter.items.get(position).getDate());
+                i.putExtra("view", customAdpter.items.get(position).getView());
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
 
     }
 
@@ -224,10 +244,10 @@ public class ThisMonthAudioFragment extends Fragment {
                         String[] time = Date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
 
-                        String flag=null;
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                        String flag = null;
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
                             flag = "true";
-                        }else {
+                        } else {
                             flag = object.getString("is_viewed");
                         }
                         arrayList.add(new ThisMonthAudio(id, AudioName, CategoryID, Audio, Photo, Duration, dayOfTheWeek + ", " + fulldate, view, flag));
@@ -331,10 +351,10 @@ public class ThisMonthAudioFragment extends Fragment {
                         String[] time = Date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
 
-                        String flag=null;
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                        String flag = null;
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
                             flag = "true";
-                        }else {
+                        } else {
                             flag = object.getString("is_viewed");
                         }
 
@@ -436,10 +456,10 @@ public class ThisMonthAudioFragment extends Fragment {
                         Log.e("time", "-----------------------" + time[1]);
 
 
-                        String flag=null;
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                        String flag = null;
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
                             flag = "true";
-                        }else {
+                        } else {
                             flag = object.getString("is_viewed");
                         }
 
@@ -512,7 +532,7 @@ public class ThisMonthAudioFragment extends Fragment {
                 holder.imgPlayAudio1 = (ImageView) convertView.findViewById(R.id.imgPlayAudio1);
                 holder.img_new = (ImageView) convertView.findViewById(R.id.img_new);
 
-                holder.imgPlayAudio.setOnClickListener(new View.OnClickListener() {
+               /* holder.imgPlayAudio.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Log.e("play audio", "------------------");
@@ -540,7 +560,7 @@ public class ThisMonthAudioFragment extends Fragment {
                     }
 
                 });
-
+*/
 
                 convertView.setTag(holder);
             } else {
@@ -566,10 +586,9 @@ public class ThisMonthAudioFragment extends Fragment {
             });
 
 
-            if (items.get(position).getFlag().equalsIgnoreCase("true")){
+            if (items.get(position).getFlag().equalsIgnoreCase("true")) {
                 holder.img_new.setVisibility(View.GONE);
-            }
-            else{
+            } else {
                 holder.img_new.setVisibility(View.VISIBLE);
             }
 
@@ -656,10 +675,10 @@ public class ThisMonthAudioFragment extends Fragment {
                         String[] time = Date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
 
-                        String flag=null;
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                        String flag = null;
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
                             flag = "true";
-                        }else {
+                        } else {
                             flag = object.getString("is_viewed");
                         }
 

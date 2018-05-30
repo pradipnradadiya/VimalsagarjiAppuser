@@ -158,11 +158,9 @@
 
                         <ImageView
                             android:id="@+id/img_bypeople"
-                            android:layout_width="175sp"
+                            android:layout_width="match_parent"
                             android:layout_height="175dp"
                             android:layout_centerHorizontal="true"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/no_image"
                             android:visibility="gone"
                             tools:ignore="ContentDescription" />
 
@@ -303,7 +301,7 @@
                                         android:layout_marginLeft="10dp"
                                         android:layout_marginRight="28dp"
                                         android:text="PlayingDuration"
-                                        android:textColor="@android:color/black"
+                                        android:textColor="@color/black"
                                         android:textSize="12sp"
                                         android:visibility="gone"
                                         tools:ignore="HardcodedText,RtlHardcoded" />
@@ -315,7 +313,7 @@
                                         android:layout_marginRight="28dp"
                                         android:gravity="center"
                                         android:text="Duration"
-                                        android:textColor="@android:color/black"
+                                        android:textColor="@color/black"
                                         android:textSize="12sp"
 
                                         tools:ignore="HardcodedText,RtlHardcoded" />

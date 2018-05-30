@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -17,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -27,14 +30,17 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.vimalsagarji.vimalsagarjiapp.activity.InformationDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.AboutAppGuruji;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.AboutAppInfo;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.GurujiMissionActivity;
@@ -45,6 +51,7 @@ import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SettingActivity;
 import com.vimalsagarji.vimalsagarjiapp.adpter.HomeSliderAdapter;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.AudioCategory;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.CompetitionActivity;
+import com.vimalsagarji.vimalsagarjiapp.categoryactivity.EventCategory;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.Gallery_All_Category;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.VideoCategory;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
@@ -53,12 +60,13 @@ import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.fcm.Config;
 import com.vimalsagarji.vimalsagarjiapp.model.SliderItem;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.ByPeople;
+import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.CompetitionAllActivity;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.EventActivity;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.InformationCategory;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.OpinionPoll;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.QuestionAnswerActivity;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.ThoughtsActivity;
-import com.vimalsagarji.vimalsagarjiapp.utils.AllQuestionDetail;
+import com.vimalsagarji.vimalsagarjiapp.util.CommonURL;
 import com.vimalsagarji.vimalsagarjiapp.utils.DashboardCirclePageIndicator;
 
 import org.json.JSONArray;
@@ -120,9 +128,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
     ToggleButton pushonoff;
     private Dialog dialog;
 
-    static Button notifCount;
-    static int mNotifCount = 0;
-    private ImageView img_back;
+
     private ImageView img_hide_show;
     private int flag = 0;
 
@@ -147,6 +153,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
 
 //        new FetchAppVersionFromGooglePlayStore().execute();
 
@@ -244,9 +251,12 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         findID();
         idClick();
 
+//        drawer_layout.setPadding(0, getStatusBarHeight(), 0, 0);
         if (CommonMethod.isInternetConnected(ActivityHomeMain.this)) {
 
             new LoadSlideImage().execute();
+            new GetAllNotes().execute();
+
         } else {
             img_slide.setVisibility(View.VISIBLE);
         }
@@ -410,7 +420,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.rel_event:
-                intent = new Intent(ActivityHomeMain.this, EventActivity.class);
+                intent = new Intent(ActivityHomeMain.this, EventCategory.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
@@ -497,7 +507,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 
             case R.id.lin_event:
                 Log.e("information", "------------------" + "click");
-                intent = new Intent(ActivityHomeMain.this, EventActivity.class);
+                intent = new Intent(ActivityHomeMain.this, EventCategory.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
@@ -538,7 +548,8 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.lin_comp:
                 Log.e("lin_comp", "------------------" + "click");
-                intent = new Intent(ActivityHomeMain.this, CompetitionActivity.class);
+                intent = new Intent(ActivityHomeMain.this, CompetitionAllActivity.class);
+//                intent = new Intent(ActivityHomeMain.this, CompetitionActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
@@ -780,7 +791,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 
                     }
 
-                }, 5000, 5000);
+                }, 10000, 10000);
             }
         }
     }
@@ -994,6 +1005,94 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 
         }
 
+    }
+
+    // A method to find height of the status bar
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+    private class GetAllNotes extends AsyncTask<String, Void, String> {
+        String responseJSON = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            responseJSON = CommonMethod.getStringResponse(CommonURL.Main_url + "competition/getcompetitionnote");
+            return responseJSON;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("response", "---------------------" + s);
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+
+//                    usersItems=new ArrayList<>();
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    Log.e("json array", "-------------------" + jsonArray);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                        String id = jsonObject1.getString("id");
+                        Log.e("id", "---------------" + id);
+                        String title = jsonObject1.getString("title");
+                        String description = jsonObject1.getString("description");
+                        String date = jsonObject1.getString("date");
+                        String time = jsonObject1.getString("time");
+
+
+                        dialog = new Dialog(ActivityHomeMain.this);
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.setContentView(R.layout.dialog_alert);
+
+                        ImageView img_close = (ImageView) dialog.findViewById(R.id.img_close_popup);
+                        img_close.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+
+
+                        TextView txt_title = (TextView) dialog.findViewById(R.id.txt_title);
+                        TextView txt_description = (TextView) dialog.findViewById(R.id.txt_description);
+                        TextView txt_date = (TextView) dialog.findViewById(R.id.txt_date);
+                        TextView txt_time = (TextView) dialog.findViewById(R.id.txt_time);
+
+                        txt_title.setText(CommonMethod.decodeEmoji(title));
+                        txt_description.setText(CommonMethod.decodeEmoji(description));
+
+                        String[] datesarray = CommonMethod.decodeEmoji(date).split("-");
+
+                        txt_date.setText(CommonMethod.decodeEmoji(datesarray[2] + "-" + datesarray[1] + "-" + datesarray[0]));
+
+                        txt_time.setText(CommonMethod.decodeEmoji(time));
+
+                        dialog.show();
+                        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                    }
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
     }
 
 

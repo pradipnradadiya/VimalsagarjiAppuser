@@ -119,13 +119,17 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
     String title;
     String post;
     private ProgressBar progressBar;
-    String videoLink = "";
+//    String videoLink = "";
 
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        jcplayer.kill();
+        try {
+            jcplayer.kill();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -361,6 +365,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
         img_share = (ImageView) findViewById(R.id.img_share);
         img_share.setOnClickListener(this);
 
+
     }
 
     @Override
@@ -385,7 +390,11 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.img_photo:
                 if (CommonMethod.isInternetConnected(ByPeopleDetailActivity.this)) {
-                    jcplayer.kill();
+                    try {
+                        jcplayer.kill();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     lin_music.setVisibility(View.GONE);
                     rel_video.setVisibility(View.GONE);
                     jcplayer.setVisibility(View.GONE);
@@ -398,9 +407,14 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                     img_audio.setBackgroundColor(ContextCompat.getColor(ByPeopleDetailActivity.this, R.color.back));
                     img_video_icon.setBackgroundColor(ContextCompat.getColor(ByPeopleDetailActivity.this, R.color.back));
 
+
+                    Log.e("photo","---------------------"+p);
+
+
                     if (p.equalsIgnoreCase("null")) {
                         img_bypeople.setVisibility(View.GONE);
                         txt_nodata.setVisibility(View.VISIBLE);
+                        txt_nodata.setText("No Image\nAvalable.");
 //                        Toast.makeText(ByPeopleDetailActivity.this, "Image not available.", Toast.LENGTH_SHORT).show();
 
                     } else {
@@ -441,7 +455,11 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                 img_audio.setBackgroundColor(ContextCompat.getColor(ByPeopleDetailActivity.this, R.color.back));
                 img_video_icon.setBackgroundColor(ContextCompat.getColor(ByPeopleDetailActivity.this, R.color.kprogresshud_grey_color));
                 if (CommonMethod.isInternetConnected(ByPeopleDetailActivity.this)) {
-                    jcplayer.kill();
+                    try {
+                        jcplayer.kill();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     jcplayer.setVisibility(View.GONE);
                     lin_music.setVisibility(View.GONE);
 //                    rel_video.setVisibility(View.VISIBLE);
@@ -500,7 +518,11 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                         txt_nodata.setVisibility(View.GONE);
 
                         jcplayer.setVisibility(View.VISIBLE);
-                        jcplayer.playAudio(audio.replaceAll(" ", "%20"), "music");
+                        try {
+                            jcplayer.playAudio(audio.replaceAll(" ", "%20"), "music");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 } else {
                     final Snackbar snackbar = Snackbar
@@ -621,7 +643,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                         listname.add(name);
 
                     }
-                    commentsize = listComment.size();
+                    commentsize = listUserID.size();
                     txt_comment.setText(String.valueOf(commentsize));
                 }
             } catch (JSONException e) {
@@ -1024,7 +1046,11 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                 //Displaying another snackbar when user click the action for first snackbar
 //                Snackbar s = Snackbar.make(v, "Register", Snackbar.LENGTH_LONG);
 //                s.show();
-                jcplayer.kill();
+                try {
+                    jcplayer.kill();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 Intent intent = new Intent(ByPeopleDetailActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 finishAffinity();
@@ -1051,7 +1077,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             loadingProgressDialog = KProgressHUD.create(ByPeopleDetailActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please Wait")
-                    .setCancellable(true);
+                    .setCancellable(false);
             loadingProgressDialog.show();
 
         }
@@ -1085,7 +1111,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
                         String photo = object.getString("Photo").replaceAll(" ", "%20");
-                        p = object.getString("Photo").replaceAll(" ", "%20");
+                        p = object.getString("Photo");
                         title = object.getString("Title");
                         post = object.getString("Post");
                         String uid = object.getString("UserID");
@@ -1094,7 +1120,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                         String audios = object.getString("Audio").replaceAll(" ", "%20");
                         a = object.getString("Audio").replaceAll(" ", "%20");
                         String audioimage = object.getString("AudioImage").replaceAll(" ", "%20");
-                        videoLink = object.getString("VideoLink");
+                        String videoLink = CommonMethod.decodeEmoji(object.getString("VideoLink"));
                         String videos = object.getString("Video").replaceAll(" ", "%20");
                         vi = object.getString("Video").replaceAll(" ", "%20");
                         String videoimage = object.getString("VideoImage").replaceAll(" ", "%20");
@@ -1152,6 +1178,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                         rel_video.setVisibility(View.GONE);
 
 
+                        Log.e("videolink","---------------------"+videoLink);
                         if (!videoLink.equalsIgnoreCase("")) {
                             String[] str = videoLink.split("/");
                             final String v_vode = str[3];
@@ -1168,8 +1195,11 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                         }
 
 
+
+
+
                         Log.e("photo", "---------------" + photosubstring);
-                        if (photosubstring.equalsIgnoreCase("/bypeopleimage/null")) {
+                        if (p.equalsIgnoreCase("null")) {
                             img_bypeople.setVisibility(View.GONE);
                             txt_nodata.setVisibility(View.VISIBLE);
 //                            Toast.makeText(ByPeopleDetailActivity.this, "Image not available.", Toast.LENGTH_SHORT).show();

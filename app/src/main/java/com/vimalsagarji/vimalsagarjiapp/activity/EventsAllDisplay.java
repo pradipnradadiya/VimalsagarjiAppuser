@@ -147,9 +147,10 @@ public class EventsAllDisplay extends AppCompatActivity {
             }
         }
 
-        photoAudioVideoItems = new ArrayList<PhotoAudioVideoItem>();
+        photoAudioVideoItems = new ArrayList<>();
         photoAudioVideoAdapter = new PhotoAudioVideoAdapter(EventsAllDisplay.this, photolist);
         recycleview.setAdapter(photoAudioVideoAdapter);
+
     }
 
 

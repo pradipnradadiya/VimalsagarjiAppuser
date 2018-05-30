@@ -26,7 +26,6 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.ThoughtsDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
-import com.vimalsagarji.vimalsagarjiapp.model.JSONParser1;
 import com.vimalsagarji.vimalsagarjiapp.model.ThoughtToday;
 
 import org.json.JSONArray;
@@ -36,9 +35,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import ch.boye.httpclientandroidlib.NameValuePair;
-import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 
 /**
  * Created by BHARAT on 04/02/2016.

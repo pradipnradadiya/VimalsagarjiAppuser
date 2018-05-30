@@ -27,11 +27,11 @@
         android:layout_below="@+id/txtCommentUserName"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="2dp"
-        android:text="comment"
+        android:text=""
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:padding="2dp"
-        android:maxLines="2"
+        android:lineSpacingExtra="5dp"
         tools:ignore="HardcodedText,RtlHardcoded" />
 
 

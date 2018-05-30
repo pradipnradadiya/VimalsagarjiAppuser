@@ -26,6 +26,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import ch.boye.httpclientandroidlib.NameValuePair;
+import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
+
 public class EventGalleryAlbumActivity extends AppCompatActivity {
     private RecyclerView recycleviewVideo;
     private GridLayoutManager linearLayoutManager;
@@ -148,7 +151,11 @@ public class EventGalleryAlbumActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
 
-            responseJson = CommonMethod.getStringResponse(AllOurCommonUrl.commonUrl + AllOurApiName.eventgalleryalbum + "?page=" + page_count + "&psize=15");
+            ArrayList<NameValuePair> nameValuePairs=new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair("page",String.valueOf(page_count)));
+            nameValuePairs.add(new BasicNameValuePair("psize","15"));
+
+            responseJson = CommonMethod.postStringResponse(AllOurCommonUrl.commonUrl + AllOurApiName.eventgalleryalbums ,nameValuePairs,EventGalleryAlbumActivity.this);
             return responseJson;
         }
 

@@ -18,18 +18,18 @@
         android:id="@+id/et_event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="7dp"
+        android:background="@null"
         android:enabled="false"
         android:focusable="false"
         android:hint=""
-        android:padding="7dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:textSize="20dp"
         android:lineSpacingExtra="7dp"
+        android:padding="7dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
-        android:background="@null"
+        android:textSize="20dp"
         tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
     <View
@@ -56,11 +56,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
-            >
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                 android:layout_width="wrap_content"
@@ -68,34 +67,52 @@
                 android:text="Date :"
                 android:textColor="@color/black"
                 android:textSize="16sp"
+                android:layout_gravity="center"
                 tools:ignore="HardcodedText" />
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:id="@+id/txtDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date"
                 android:layout_marginLeft="5dp"
+                android:text="Date"
                 android:textColor="@color/textColor"
                 android:textSize="16sp"
+                android:layout_gravity="center"
                 tools:ignore="HardcodedText,RtlHardcoded" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/img_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_share_black_24dp" />
+            </RelativeLayout>
+
+
         </LinearLayout>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:id="@+id/txt_description"
-                android:textSize="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:lineSpacingExtra="7dp"
                 android:padding="10dp"
                 android:text=""
                 android:textColor="@color/black"
-                android:lineSpacingExtra="7dp"
+                android:textSize="16dp"
 
                 />
 
@@ -107,15 +124,16 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/view"/>
+        android:background="@color/view" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.2"
         android:gravity="right|center_vertical"
         android:orientation="horizontal"
-        tools:ignore="RtlHardcoded"
-        >
+        tools:ignore="RtlHardcoded">
+
 
         <LinearLayout
             android:id="@+id/lin_like"
@@ -139,7 +157,7 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="10000"
+                android:text="0"
                 android:textColor="@color/red"
                 tools:ignore="HardcodedText,RtlHardcoded" />
 

@@ -15,6 +15,7 @@
 
 
 
+
     <style name="TabTexTheme" parent="TabTexTheme.Base">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>

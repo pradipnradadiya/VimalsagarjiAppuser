@@ -100,7 +100,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="VideoLink :"
+                android:text="Youtube VideoLink :"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 tools:ignore="HardcodedText" />
@@ -175,6 +175,7 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 tools:ignore="HardcodedText" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

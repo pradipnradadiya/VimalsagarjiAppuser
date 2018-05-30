@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2sp"
+    android:layout_marginLeft="2sp"
+    android:layout_marginRight="2sp"
+    android:layout_marginTop="2sp"
+
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/round_rect_shape"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/lin_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_audio_category"
+                android:layout_width="0sp"
+                android:layout_height="75sp"
+                android:layout_weight="3"
+                android:padding="5sp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/competition"
+                tools:ignore="ContentDescription" />
+
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+                android:id="@+id/txt_title"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:layout_weight="7"
+                android:ellipsize="end"
+                android:lines="1"
+                android:padding="10sp"
+                android:text="Competition-1"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+
+
+        </LinearLayout>
+
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+            android:id="@+id/txt_total_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="10dp"
+            android:text="Number of question : 20"
+            android:textColor="@color/black" />
+
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+            android:id="@+id/txt_timer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="10dp"
+            android:text="Time : 30 minutes"
+            android:textColor="@color/black"
+
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+            android:id="@+id/txt_last_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="4"
+            android:padding="10dp"
+            android:text="20-05-2018"
+            android:textColor="@color/black" />
+
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+            android:id="@+id/txt_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="6"
+            android:padding="10dp"
+            android:text="10:15 am"
+            android:gravity="right"
+            android:textColor="@color/black" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

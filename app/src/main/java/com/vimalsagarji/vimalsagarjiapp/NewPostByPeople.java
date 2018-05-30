@@ -478,12 +478,13 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
                 }
                 if (videoPath == null) {
                     Log.e("if call", "-----------");
+
                 } else {
+
                     File file3 = new File(videoPath);
                     FileBody fileBody3 = new FileBody(file3);
                     multipartEntity.addPart("Video", fileBody3);
                 }
-
 
                 httpPost.setEntity(multipartEntity);
                 HttpResponse httpResponse = httpClient.execute(httpPost);

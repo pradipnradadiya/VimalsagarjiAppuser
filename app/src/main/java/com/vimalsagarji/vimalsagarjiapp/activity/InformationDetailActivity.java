@@ -917,11 +917,15 @@ public class InformationDetailActivity extends AppCompatActivity {
                         txtDescri.setText(CommonMethod.decodeEmoji(description));
                         txtlocation.setText("Location: " + CommonMethod.decodeEmoji(address));
 
-                        if (!photo.equalsIgnoreCase("")) {
-                            Glide.with(InformationDetailActivity.this).load(CommonURL.ImagePath + "infoimage/" + photo
-                                    .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).into(img_info);
-                        } else {
-                            img_info.setVisibility(View.GONE);
+                        try {
+                            if (!photo.equalsIgnoreCase("")) {
+                                Glide.with(InformationDetailActivity.this).load(CommonURL.ImagePath + "infoimage/" + photo
+                                        .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).dontAnimate().into(img_info);
+                            } else {
+                                img_info.setVisibility(View.GONE);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
 
                         new countView().execute();

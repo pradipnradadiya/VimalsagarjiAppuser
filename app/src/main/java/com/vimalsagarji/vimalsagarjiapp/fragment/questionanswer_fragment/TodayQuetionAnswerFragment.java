@@ -32,7 +32,6 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
-import com.vimalsagarji.vimalsagarjiapp.model.JSONParser1;
 import com.vimalsagarji.vimalsagarjiapp.model.ThoughtToday;
 import com.vimalsagarji.vimalsagarjiapp.utils.AllQuestionDetail;
 

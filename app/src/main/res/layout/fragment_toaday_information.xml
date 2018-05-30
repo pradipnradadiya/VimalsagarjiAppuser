@@ -17,6 +17,8 @@
             android:id="@+id/list_today"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:divider="@null"
+            android:dividerHeight="0dp"
             >
         </ListView>
     </android.support.v4.widget.SwipeRefreshLayout>

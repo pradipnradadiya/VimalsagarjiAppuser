@@ -54,6 +54,7 @@
                     android:lines="1"
                     android:padding="5dp"
                     android:lineSpacingExtra="7dp"
+                    android:textColor="@color/black"
                     android:text=""
                     android:textStyle="bold" />
 
@@ -66,6 +67,7 @@
                     android:lines="1"
                     android:padding="5dp"
                     android:lineSpacingExtra="7dp"
+                    android:textColor="@color/black"
                     android:text="No Description available." />
 
                 <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
@@ -74,6 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
+                    android:textColor="@color/black"
                     android:lineSpacingExtra="7dp"
                     android:text="" />
 

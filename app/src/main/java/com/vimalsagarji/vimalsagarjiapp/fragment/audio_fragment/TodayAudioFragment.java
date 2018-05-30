@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +27,6 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.AudioDetail;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
-import com.vimalsagarji.vimalsagarjiapp.model.JSONParser1;
 import com.vimalsagarji.vimalsagarjiapp.model.ThisMonthAudio;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.AudioCategoryitem;
 
@@ -36,9 +36,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import ch.boye.httpclientandroidlib.NameValuePair;
-import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 
 import static com.vimalsagarji.vimalsagarjiapp.R.id.imgAudio;
 
@@ -140,6 +137,34 @@ public class TodayAudioFragment extends Fragment {
 
 
         audioImagname = (TextView) getActivity().findViewById(R.id.audioImagname);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                final ThisMonthAudio informationCategory1 = customAdpter.items.get(position);
+                Log.e("position list view","---------------------"+position);
+                informationCategory1.setFlag("true");
+                customAdpter.items.set(position,informationCategory1);
+                customAdpter.notifyDataSetChanged();
+
+
+                Intent i = new Intent(getActivity(), AudioDetail.class);
+                i.putExtra("click_action", "");
+                i.putExtra("id", customAdpter.items.get(position).getID());
+                i.putExtra("AudioName", customAdpter.items.get(position).getAudioName());
+                i.putExtra("CategoryID", customAdpter.items.get(position).getCategoryID());
+                i.putExtra("Audio", customAdpter.items.get(position).getAudio());
+                i.putExtra("Photo", customAdpter.items.get(position).getPhoto());
+                i.putExtra("Duration", customAdpter.items.get(position).getDuration());
+                i.putExtra("Date", customAdpter.items.get(position).getDate());
+                i.putExtra("view", customAdpter.items.get(position).getView());
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+            }
+        });
+
     }
 
     private void loadData() {
@@ -394,11 +419,11 @@ public class TodayAudioFragment extends Fragment {
                 holder.imgPlayPush = (ImageView) convertView.findViewById(R.id.imgPlayPush);
                 holder.imgPlayAudio1 = (ImageView) convertView.findViewById(R.id.imgPlayAudio1);
                 holder.img_new = (ImageView) convertView.findViewById(R.id.img_new);
-                holder.imgPlayAudio.setOnClickListener(new View.OnClickListener() {
+              /*  holder.imgPlayAudio.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Log.e("play audio", "------------------");
-                        final ThisMonthAudio informationCategory1 = customAdpter.items.get(position);
+                       *//* final ThisMonthAudio informationCategory1 = customAdpter.items.get(position);
                         Log.e("position list view","---------------------"+position);
                         informationCategory1.setFlag("true");
                         customAdpter.items.set(position,informationCategory1);
@@ -416,11 +441,11 @@ public class TodayAudioFragment extends Fragment {
                         i.putExtra("Date", items.get(position).getDate());
                         i.putExtra("view", items.get(position).getView());
                         startActivity(i);
-                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*//*
                     }
 
                 });
-
+*/
 
                 convertView.setTag(holder);
             } else {

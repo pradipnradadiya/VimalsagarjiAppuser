@@ -67,12 +67,13 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:orientation="horizontal"
-            android:padding="10dp">
+           >
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                 android:layout_width="0dp"
@@ -80,6 +81,8 @@
                 android:layout_weight="1"
                 android:text="Date :"
                 android:textColor="@color/black"
+                android:paddingLeft="10dp"
+                android:layout_gravity="center"
                 android:textSize="16sp"
                 tools:ignore="HardcodedText" />
 
@@ -90,9 +93,21 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="2.7"
                 android:text="Date"
+                android:paddingLeft="10dp"
                 android:textColor="@color/textColor"
+                android:layout_gravity="center"
                 android:textSize="16sp"
                 tools:ignore="HardcodedText,RtlHardcoded" />
+
+
+
+                <ImageView
+                    android:id="@+id/img_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_share_black_24dp" />
+
 
         </LinearLayout>
 

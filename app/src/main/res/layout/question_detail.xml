@@ -14,72 +14,83 @@
         android:layout_height="wrap_content" />
 
 
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/round_rect"
-        >
-    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
-        android:id="@+id/txt_question"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:padding="5dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:text="Question?"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:lineSpacingExtra="7dp"
-        tools:ignore="HardcodedText"
-        android:background="@color/white"
-        />
-
-    <View
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/view" />
-
-    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:padding="10dp"
-        android:text="Answer:"
-        android:textColor="@color/textColor"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        tools:ignore="HardcodedText" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-            android:id="@+id/txt_answer"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:scrollbars="vertical"
-            android:text="Answer."
-            android:textColor="@color/textColor"
-            android:textSize="16sp"
-            android:background="@color/white"
-            tools:ignore="HardcodedText"
-            android:lineSpacingExtra="7dp"
-            android:layout_marginBottom="5dp"
-            />
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_rect"
+            android:orientation="vertical">
+
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+                android:id="@+id/txt_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/white"
+                android:lineSpacingExtra="7dp"
+                android:padding="5dp"
+                android:text="Question?"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/view"
+                android:visibility="gone" />
+
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:text="Answer:"
+                android:textColor="@color/textColor"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/img_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_share_black_24dp" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                    android:id="@+id/txt_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/white"
+                    android:lineSpacingExtra="7dp"
+                    android:padding="5dp"
+                    android:scrollbars="vertical"
+                    android:text="Answer."
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+            </ScrollView>
+
+        </LinearLayout>
     </ScrollView>
-
-    </LinearLayout>
-
 
 </LinearLayout>

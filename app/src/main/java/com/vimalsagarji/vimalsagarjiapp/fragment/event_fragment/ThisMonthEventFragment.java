@@ -49,7 +49,7 @@ public class ThisMonthEventFragment extends Fragment {
     private static final String TAG = ThisMonthEventFragment.class.getSimpleName();
     private static final String constantURL = Constant.GET_ALLYEAR_EVENT_DATA;
     private static final String strMonth = "geteventsbycategorymonth";
-    private static final String URL = constantURL.replace("geteventsbycategor", strMonth);
+    private static String URL = "";
     static String img = Constant.ImgURL;
     private final List<EventAdpter> listAllEvent = new ArrayList<>();
     String[] daysArray = new String[]{"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
@@ -73,9 +73,12 @@ public class ThisMonthEventFragment extends Fragment {
     private ProgressBar progressbar;
     ArrayList<String> timelist=new ArrayList<>();
     Sharedpreferance sharedpreferance;
+    private String cid;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        cid = getArguments().getString("cid");
+        Log.e("cid","------------------"+cid);
         return inflater.inflate(R.layout.fragment_thismonth, container, false);
     }
 
@@ -83,6 +86,7 @@ public class ThisMonthEventFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         sharedpreferance=new Sharedpreferance(getActivity());
+        URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategorymonth/?cid=" + cid + "&page=1&psize=1000";
         progressbar= (ProgressBar) getActivity().findViewById(R.id.progressbar);
         gridView = (GridView) getActivity().findViewById(R.id.grid_thisMonth);
 //        gridView = (GridView) getActivity().findViewById(R.id.grid_thisMonth);

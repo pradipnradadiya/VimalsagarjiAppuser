@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.fragment.event_fragment.AllEventFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.event_fragment.ThisMonthEventFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.event_fragment.ThisWeekEventFragment;
@@ -35,6 +36,7 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
     private View view_month;
     private View view_all;
     LinearLayout lin_today, lin_week, lin_month, lin_all;
+    String title,cid;
 
     @Override
     public void onBackPressed() {
@@ -47,6 +49,11 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_information_category1);
+        Intent intent=getIntent();
+        title=intent.getStringExtra("title");
+        cid=intent.getStringExtra("event_category_id");
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_information);
         setSupportActionBar(toolbar);
         txt_today = (TextView) findViewById(R.id.txt_today);
@@ -55,7 +62,7 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
         ImageView imgHome = (ImageView) toolbar.findViewById(R.id.imgHome);
         ImageView img_search = (ImageView) toolbar.findViewById(R.id.img_search);
         TextView txt_title = (TextView) toolbar.findViewById(R.id.txt_title);
-        txt_title.setText("Event");
+        txt_title.setText(CommonMethod.decodeEmoji(title));
         EditText etText = (EditText) findViewById(R.id.etText);
         txt_thisweek = (TextView) findViewById(R.id.txt_thisweek);
         txt_thismonth = (TextView) findViewById(R.id.txt_thismonth);
@@ -121,12 +128,26 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
         txt_thismonth.setTextColor(Color.BLACK);
         txt_all.setTextColor(Color.BLACK);
 
+
         lin_today.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
         lin_week.setBackgroundResource(R.drawable.round_rect_shapeone);
         lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
         lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
+
+
+
+
+
+//        // set Fragmentclass Arguments
+//        TodayEventFragment fragobj = new TodayEventFragment();
+//        fragobj.setArguments(bundle);
+
+
         Fragment fr = null;
         fr = new TodayEventFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("cid",cid);
+        fr.setArguments(bundle);
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);
@@ -148,6 +169,9 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 
         Fragment fr = null;
         fr = new ThisWeekEventFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("cid",cid);
+        fr.setArguments(bundle);
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);
@@ -169,6 +193,9 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 
         Fragment fr = null;
         fr = new ThisMonthEventFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("cid",cid);
+        fr.setArguments(bundle);
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);
@@ -189,6 +216,9 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 
         Fragment fr = null;
         fr = new AllEventFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("cid",cid);
+        fr.setArguments(bundle);
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);
