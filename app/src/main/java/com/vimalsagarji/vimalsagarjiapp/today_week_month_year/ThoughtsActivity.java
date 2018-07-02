@@ -20,6 +20,10 @@ import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
 import com.vimalsagarji.vimalsagarjiapp.fragment.thought_fragment.AllThoughtsFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.thought_fragment.ThisMonthThoughtsFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.thought_fragment.ThisWeekThoughtsFragment;
+import com.vimalsagarji.vimalsagarjiapp.fragment.thought_fragment.ThoughtAllFragment;
+import com.vimalsagarji.vimalsagarjiapp.fragment.thought_fragment.ThoughtMonthFragment;
+import com.vimalsagarji.vimalsagarjiapp.fragment.thought_fragment.ThoughtTodayFragment;
+import com.vimalsagarji.vimalsagarjiapp.fragment.thought_fragment.ThoughtWeekFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.thought_fragment.TodayThoughtsFragment;
 
 @SuppressWarnings("ALL")
@@ -111,8 +115,10 @@ public class ThoughtsActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.txt_all:
                 openAllInfromation();
+
             default:
                 break;
+
         }
 
     }
@@ -129,7 +135,8 @@ public class ThoughtsActivity extends AppCompatActivity implements View.OnClickL
         lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
 
         Fragment fr = null;
-        fr = new TodayThoughtsFragment();
+        fr = new ThoughtTodayFragment();
+//        fr = new TodayThoughtsFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);
@@ -149,7 +156,8 @@ public class ThoughtsActivity extends AppCompatActivity implements View.OnClickL
         lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
 
         Fragment fr = null;
-        fr = new ThisWeekThoughtsFragment();
+        fr = new ThoughtWeekFragment();
+//        fr = new ThisWeekThoughtsFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);
@@ -168,7 +176,8 @@ public class ThoughtsActivity extends AppCompatActivity implements View.OnClickL
         lin_month.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
         lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
         Fragment fr = null;
-        fr = new ThisMonthThoughtsFragment();
+        fr = new ThoughtMonthFragment();
+//        fr = new ThisMonthThoughtsFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);
@@ -187,7 +196,9 @@ public class ThoughtsActivity extends AppCompatActivity implements View.OnClickL
         lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
         lin_all.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
         Fragment fr = null;
-        fr = new AllThoughtsFragment();
+        fr = new ThoughtAllFragment();
+
+//        fr = new AllThoughtsFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);

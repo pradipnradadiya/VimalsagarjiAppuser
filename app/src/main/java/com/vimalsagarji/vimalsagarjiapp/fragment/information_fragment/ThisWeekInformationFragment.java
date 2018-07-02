@@ -45,7 +45,7 @@ public class ThisWeekInformationFragment extends Fragment {
 
     }
 
-    private final String WeekSearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/info/searchallinfobycidweek/?page=1&psize=1000";
+    private final String WeekSearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/searchallinfobycidweek/?page=1&psize=1000";
     private KProgressHUD loadingProgressDialog;
     private static final String TAG = ThisWeekInformationFragment.class.getSimpleName();
     private List<InformationCategory> listThisWeekitem = new ArrayList<>();

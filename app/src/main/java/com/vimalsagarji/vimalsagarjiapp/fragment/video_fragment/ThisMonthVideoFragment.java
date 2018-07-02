@@ -51,10 +51,10 @@ public class ThisMonthVideoFragment extends Fragment {
 
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     final static String TAG = AllVideoFragment.class.getSimpleName();
-    private final String urls = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/getvideobycategorymonth/?page=1&psize=1000&cid=";
-    private static String URL = "";//http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/getvideobycategorymonth/?page=1&psize=100&cid=" + video_cat_id;
-    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/videoimage/";
-    private final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/videos/";
+    private final String urls = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategorymonth/?page=1&psize=1000&cid=";
+    private static String URL = "";//http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategorymonth/?page=1&psize=100&cid=" + video_cat_id;
+    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videoimage/";
+    private final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videos/";
 
     private final ArrayList<String> listid = new ArrayList<>();
     private final ArrayList<String> listcatid = new ArrayList<>();
@@ -74,7 +74,7 @@ public class ThisMonthVideoFragment extends Fragment {
     private CustomAdpter customAdpter;
     private TextView txt_nodata_today;
     private EditText InputBox;
-    private final String MonthSearchVideo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/searchallvideosbycidthismonth/?page=1&psize=1000";
+    private final String MonthSearchVideo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/searchallvideosbycidthismonth/?page=1&psize=1000";
     private ProgressBar progressbar;
     Sharedpreferance sharedpreferance;
 
@@ -123,9 +123,9 @@ public class ThisMonthVideoFragment extends Fragment {
             listVideoName.clear();
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new MonthEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategorymonth/?page=1&psize=1000");
+                    new MonthEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorymonth/?page=1&psize=1000");
                 }else{
-                    new MonthEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategorymonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+                    new MonthEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorymonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
                 }
             } else {
                 final Snackbar snackbar = Snackbar
@@ -145,9 +145,9 @@ public class ThisMonthVideoFragment extends Fragment {
             listVideoName.clear();
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new MonthByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallapppostsmonth/?page=1&psize=1000");
+                    new MonthByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsmonth/?page=1&psize=1000");
                 }else{
-                    new MonthByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallapppostsmonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+                    new MonthByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsmonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
                 }
             } else {
                 final Snackbar snackbar = Snackbar
@@ -623,11 +623,11 @@ public class ThisMonthVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventvideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");
@@ -743,11 +743,11 @@ public class ThisMonthVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleimage/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String view = object.getString("View");

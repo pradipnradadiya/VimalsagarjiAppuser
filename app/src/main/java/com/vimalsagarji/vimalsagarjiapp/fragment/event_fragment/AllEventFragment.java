@@ -56,9 +56,9 @@ public class AllEventFragment extends Fragment {
     int dayOfWeek = 0;
     Date date;
     private View view;
-    private final String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/";
-    private final String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventaudio/";
-    private final String Video = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventvideo/";
+    private final String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/";
+    private final String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/";
+    private final String Video = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/";
     final int drawableImage = R.drawable.event;
 
     private TextView txt_nodata_today;
@@ -66,7 +66,7 @@ public class AllEventFragment extends Fragment {
     private CustomAdpter adpter;
     //    private KProgressHUD loadingProgressDialog;
     private List<EventAdpter> listfilterdata = new ArrayList<>();
-    private final String AllSearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/searchalleventsbycategory/?page=1&psize=1000";
+    private final String AllSearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/searchalleventsbycategory/?page=1&psize=1000";
 
     private GridView gridView;
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
@@ -91,7 +91,7 @@ public class AllEventFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         sharedpreferance = new Sharedpreferance(getActivity());
-        URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategoryyear/?cid=" + cid + "&page=1&psize=1000";
+        URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryyear/?cid=" + cid + "&page=1&psize=1000";
 
 
         progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
@@ -126,6 +126,7 @@ public class AllEventFragment extends Fragment {
                 JsonTask jsonTask = new JsonTask();
                 jsonTask.execute(URL + "&uid=" + sharedpreferance.getId());
             }
+
         } else {
             final Snackbar snackbar = Snackbar
                     .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);

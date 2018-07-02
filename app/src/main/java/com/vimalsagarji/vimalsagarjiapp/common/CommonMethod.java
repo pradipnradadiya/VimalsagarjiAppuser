@@ -13,12 +13,24 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.InvalidParameterSpecException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import ch.boye.httpclientandroidlib.HttpResponse;
 import ch.boye.httpclientandroidlib.client.ClientProtocolException;
@@ -32,7 +44,6 @@ import ch.boye.httpclientandroidlib.util.EntityUtils;
 public class CommonMethod {
     @SuppressLint("SimpleDateFormat")
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
     public static String getStringResponse(String url) {
         String result = "";
         BufferedReader bufferedReader = null;
@@ -57,6 +68,8 @@ public class CommonMethod {
         }
         return result;
     }
+
+
 
     public static String postStringResponse(String url, ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs, Context ctx) {
         HttpClient httpclient = new DefaultHttpClient();
@@ -137,4 +150,35 @@ public class CommonMethod {
             return message;
         }
     }
+
+
+   /* public static SecretKey generateKey()
+            throws NoSuchAlgorithmException, InvalidKeySpecException
+    {
+        return secret = new SecretKeySpec(password.getBytes(), "AES");
+    }
+
+    public static byte[] encryptMsg(String message, SecretKey secret)
+            throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidParameterSpecException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException
+    {
+        *//* Encrypt the message. *//*
+        Cipher cipher = null;
+        cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, secret);
+        byte[] cipherText = cipher.doFinal(message.getBytes("UTF-8"));
+        return cipherText;
+    }
+
+    public static String decryptMsg(byte[] cipherText, SecretKey secret)
+            throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidParameterSpecException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException
+    {
+        *//* Decrypt the message, given derived encContentValues and initialization vector. *//*
+        Cipher cipher = null;
+        cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE, secret);
+        String decryptString = new String(cipher.doFinal(cipherText), "UTF-8");
+        return decryptString;
+    }
+*/
+
 }

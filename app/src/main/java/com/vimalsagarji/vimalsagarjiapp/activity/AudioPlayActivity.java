@@ -35,7 +35,11 @@ public class AudioPlayActivity extends AppCompatActivity {
         imgarrorback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jcplayer_audio.kill();
+                try {
+                    jcplayer_audio.kill();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 onPause();
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

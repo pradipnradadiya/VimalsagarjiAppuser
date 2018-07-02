@@ -16,13 +16,14 @@ import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -39,19 +40,15 @@ import com.vimalsagarji.vimalsagarjiapp.fcm.Config;
 import com.vimalsagarji.vimalsagarjiapp.fcm.NotificationUtils;
 import com.vimalsagarji.vimalsagarjiapp.utils.ValidationUtils;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import ch.boye.httpclientandroidlib.NameValuePair;
-import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
-
 @SuppressWarnings("ALL")
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText etName, etEmail, etMobile, etAddress;
+    private EditText etName,etlastName, etEmail, etMobile, etAddress;
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private Sharedpreferance sharedpreferance;
     private String strDeviceid;
@@ -105,6 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             Log.e("message", "---------------" + message);
                         }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -128,27 +126,31 @@ public class RegisterActivity extends AppCompatActivity {
 
         img_close = (ImageView) findViewById(R.id.img_close);
         etName = (EditText) findViewById(R.id.etName);
+        etlastName = (EditText) findViewById(R.id.etlastName);
         etEmail = (EditText) findViewById(R.id.etEmail);
         etMobile = (EditText) findViewById(R.id.etMobile);
         etAddress = (EditText) findViewById(R.id.etAddress);
 
 
-        etName.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+//        etName.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+//
+//        etName.setFilters(new InputFilter[] {
+//                new InputFilter() {
+//                    public CharSequence filter(CharSequence src, int start,
+//                                               int end, Spanned dst, int dstart, int dend) {
+//                        if(src.equals("")){ // for backspace
+//                            return src;
+//                        }
+//                        if(src.toString().matches("[a-zA-Z ]+")){
+//                            return src;
+//                        }
+//                        return "";
+//                    }
+//                }
+//        });
 
-        etName.setFilters(new InputFilter[] {
-                new InputFilter() {
-                    public CharSequence filter(CharSequence src, int start,
-                                               int end, Spanned dst, int dstart, int dend) {
-                        if(src.equals("")){ // for backspace
-                            return src;
-                        }
-                        if(src.toString().matches("[a-zA-Z ]+")){
-                            return src;
-                        }
-                        return "";
-                    }
-                }
-        });
+        setCapitalizeTextWatcher(etName);
+        setCapitalizeTextWatcher(etlastName);
 
 
         txt_alreready = (TextView) findViewById(R.id.txt_alreready);
@@ -219,6 +221,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void submitProfile() {
         String strName = etName.getText().toString();
+        String strlName = etlastName.getText().toString();
         String strEmail = etEmail.getText().toString();
         String strMobile = etMobile.getText().toString();
         String strAddress = etAddress.getText().toString();
@@ -226,7 +229,12 @@ public class RegisterActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(strName)) {
             etName.setError("Please enter your name.");
             etName.requestFocus();
-        } else if (TextUtils.isEmpty(strEmail) || !ValidationUtils.checkEmail(strEmail)) {
+        }
+        else if (TextUtils.isEmpty(strlName)) {
+            etlastName.setError("Please enter last name.");
+            etlastName.requestFocus();
+        }
+        else if (TextUtils.isEmpty(strEmail) || !ValidationUtils.checkEmail(strEmail)) {
             etEmail.setText(strName);
             etEmail.setError("Please enter valid email.");
             etEmail.requestFocus();
@@ -281,7 +289,7 @@ public class RegisterActivity extends AppCompatActivity {
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Address", params[3]));
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Phone", params[4]));
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("DeviceToken", params[5]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/userregistration/adduser/", nameValuePairs, RegisterActivity.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/adduser/", nameValuePairs, RegisterActivity.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -366,7 +374,7 @@ public class RegisterActivity extends AppCompatActivity {
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new BasicNameValuePair("EmailID", params[0]));
                 nameValuePairs.add(new BasicNameValuePair("Phone", params[1]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/aluser/checkuser", nameValuePairs, RegisterActivity.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/aluser/checkuser", nameValuePairs, RegisterActivity.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -534,7 +542,6 @@ public class RegisterActivity extends AppCompatActivity {
                     }.start();
 
 
-
                     resendotp.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -548,7 +555,6 @@ public class RegisterActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             if (CommonMethod.isInternetConnected(RegisterActivity.this)) {
                                 new VeryfyOTP().execute();
-
 
                             } else {
                                 Toast.makeText(RegisterActivity.this, R.string.internet, Toast.LENGTH_SHORT).show();
@@ -612,7 +618,7 @@ public class RegisterActivity extends AppCompatActivity {
 //                    Toast.makeText(RegisterActivity.this, "Verify OTP", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(RegisterActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     if (CommonMethod.isInternetConnected(RegisterActivity.this)) {
-                        new PostRegisterData().execute(etName.getText().toString(), strDeviceid, etEmail.getText().toString(), etAddress.getText().toString(), etMobile.getText().toString(), strDevicetoken);
+                        new PostRegisterData().execute(etName.getText().toString()+" "+etlastName.getText().toString(), strDeviceid, etEmail.getText().toString(), etAddress.getText().toString(), etMobile.getText().toString(), strDevicetoken);
                     }
                 } else {
                     progressDialog.dismiss();
@@ -631,7 +637,7 @@ public class RegisterActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equalsIgnoreCase("otp")) {
                 final String message = intent.getStringExtra("message");
-                Log.e("message", "-------------------" + message);
+                Log.e("received message", "-------------------" + message);
                 if (message.length() == 6) {
                     edit_otp.setText(message);
                     new VeryfyOTP().execute();
@@ -642,5 +648,55 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
     };
+
+
+    public static void setCapitalizeTextWatcher(final EditText editText) {
+        final TextWatcher textWatcher = new TextWatcher() {
+
+            int mStart = 0;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mStart = start + count;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String input = s.toString();
+                String capitalizedText;
+                if (input.length() < 1)
+                    capitalizedText = input;
+                else
+                    capitalizedText = input.substring(0, 1).toUpperCase() + input.substring(1);
+                if (!capitalizedText.equals(editText.getText().toString())) {
+                    editText.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            editText.setSelection(mStart);
+                            editText.removeTextChangedListener(this);
+                        }
+                    });
+                    editText.setText(capitalizedText);
+                }
+            }
+        };
+
+        editText.addTextChangedListener(textWatcher);
+    }
 
 }

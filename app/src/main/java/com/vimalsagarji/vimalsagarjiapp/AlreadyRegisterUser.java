@@ -1,5 +1,6 @@
 package com.vimalsagarji.vimalsagarjiapp;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -120,15 +121,12 @@ public class AlreadyRegisterUser extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(edit_email.getText().toString())) {
-                    edit_email.setError("Please enter email id.");
-                    edit_email.requestFocus();
-                } else if (TextUtils.isEmpty(edit_mobile.getText().toString())) {
+                 if (TextUtils.isEmpty(edit_mobile.getText().toString())) {
                     edit_mobile.setError("Please enter mobile no.");
                     edit_mobile.requestFocus();
                 } else {
                     if (CommonMethod.isInternetConnected(AlreadyRegisterUser.this)) {
-                        new AllreadyRegisterUser().execute(edit_email.getText().toString(), edit_mobile.getText().toString(), strDevicetoken);
+                        new AllreadyRegisterUser().execute(edit_mobile.getText().toString());
 //                        new GenrateOTP().execute();
                     } else {
                         Toast.makeText(AlreadyRegisterUser.this, R.string.internet, Toast.LENGTH_SHORT).show();
@@ -176,10 +174,10 @@ public class AlreadyRegisterUser extends AppCompatActivity {
             try {
 
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
-                nameValuePairs.add(new BasicNameValuePair("EmailID", params[0]));
-                nameValuePairs.add(new BasicNameValuePair("Phone", params[1]));
-                nameValuePairs.add(new BasicNameValuePair("DeviceID", params[2]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/aluser/checkuser", nameValuePairs, AlreadyRegisterUser.this);
+//                nameValuePairs.add(new BasicNameValuePair("EmailID", params[0]));
+                nameValuePairs.add(new BasicNameValuePair("Phone", params[0]));
+//                nameValuePairs.add(new BasicNameValuePair("DeviceID", params[2]));
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/aluser/checkuser", nameValuePairs, AlreadyRegisterUser.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -240,6 +238,7 @@ public class AlreadyRegisterUser extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class GenrateOTP extends AsyncTask<String, Void, String> {
         String responseString = "";
 
@@ -316,6 +315,7 @@ public class AlreadyRegisterUser extends AppCompatActivity {
 
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class VeryfyOTP extends AsyncTask<String, Void, String> {
         String responseString = "";
 
@@ -355,12 +355,14 @@ public class AlreadyRegisterUser extends AppCompatActivity {
                     Toast.makeText(AlreadyRegisterUser.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
+
         }
 
 

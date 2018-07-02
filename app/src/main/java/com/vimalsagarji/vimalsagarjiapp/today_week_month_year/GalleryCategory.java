@@ -43,8 +43,8 @@ import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 public class GalleryCategory extends AppCompatActivity {
 
     static final String TAG = GalleryCategory.class.getSimpleName();
-    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/gallery/getallimages/?page=1&psize=1000";
-    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/Gallery/";
+    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallimages/?page=1&psize=1000";
+    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/";
     private final ArrayList<String> listIcon = new ArrayList<String>();
     String strImageUrl = "";
     static Bitmap bitmap = null;
@@ -182,7 +182,7 @@ public class GalleryCategory extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/gallery/getallimagesbycid/?cid=" + cid + "&page=1&psize=1000");
+            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallimagesbycid/?cid=" + cid + "&page=1&psize=1000");
 
             return responseJSON;
         }
@@ -250,7 +250,7 @@ public class GalleryCategory extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappposts/?page=1&psize=1000");
+            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000");
 
             return responseJSON;
         }
@@ -271,7 +271,7 @@ public class GalleryCategory extends AppCompatActivity {
 
                         } else {
 
-                            String photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleimage/" + jsonObject1.getString("Photo");
+                            String photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + jsonObject1.getString("Photo");
                             itemSplashArrayList.add(new ImageItemSplash(photo, photo));
                             listIcon.add(photo);
                         }
@@ -321,7 +321,7 @@ public class GalleryCategory extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategoryyear/?page=1&psize=1000");
+            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000");
 
             return responseJSON;
         }
@@ -348,8 +348,8 @@ public class GalleryCategory extends AppCompatActivity {
 
                             for (int j = 0; j < photoarray.length; j++) {
                                 Log.e("photo array ", "--------------" + photoarray[j]);
-                                itemSplashArrayList.add(new ImageItemSplash("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/" + photoarray[j], "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/" + photoarray[j]));
-                                listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/" + photoarray[j]);
+                                itemSplashArrayList.add(new ImageItemSplash("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + photoarray[j], "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + photoarray[j]));
+                                listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + photoarray[j]);
                             }
 
                         }

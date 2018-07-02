@@ -53,18 +53,20 @@ public class TodayVideoFragment extends Fragment {
     }
 
     final static String TAG = AllVideoFragment.class.getSimpleName();
-    private final String urls = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/getvideobycategorytoday/?page=1&psize=1000&cid=";
-    private static String URL = "";// "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/getvideobycategorytoday/?page=1&psize=100&cid=" + video_cat_id;
-    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/videoimage/";
-    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/videos/";
+    private final String urls = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategorytoday/?page=1&psize=1000&cid=";
+    private static String URL = "";// "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategorytoday/?page=1&psize=100&cid=" + video_cat_id;
+    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videoimage/";
+    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videos/";
+
     private final ArrayList<String> listid = new ArrayList<>();
     private final ArrayList<String> listcatid = new ArrayList<>();
     private List<String> listVideoName = new ArrayList<>();
-    private final ArrayList<String> listDate = new ArrayList<String>();
-    private final ArrayList<String> listVideo = new ArrayList<String>();
-    private final ArrayList<String> listIcon = new ArrayList<String>();
-    private final ArrayList<String> listview = new ArrayList<String>();
-    private final ArrayList<String> listflag = new ArrayList<String>();
+    private final ArrayList<String> listDate = new ArrayList<>();
+    private final ArrayList<String> listVideo = new ArrayList<>();
+    private final ArrayList<String> listIcon = new ArrayList<>();
+    private final ArrayList<String> listview = new ArrayList<>();
+    private final ArrayList<String> listflag = new ArrayList<>();
+
     TextView txtAudio;
     String strImageUrl = "";
     static Bitmap bitmap = null;
@@ -75,7 +77,7 @@ public class TodayVideoFragment extends Fragment {
     public static ListView listViewvideo;
     private TextView txt_nodata_today;
     private EditText InputBox;
-    private final String TodaySearchVideo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/searchallvideosbycidtoday/?page=1&psize=1000";
+    private final String TodaySearchVideo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/searchallvideosbycidtoday/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private ProgressBar progressbar;
     Sharedpreferance sharedpreferance;
@@ -125,9 +127,9 @@ public class TodayVideoFragment extends Fragment {
             listVideoName.clear();
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new TodayEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategorytoday/?page=1&psize=1000");
+                    new TodayEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorytoday/?page=1&psize=1000");
                 } else {
-                    new TodayEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategorytoday/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                    new TodayEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorytoday/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
                 }
             } else {
                 final Snackbar snackbar = Snackbar
@@ -147,10 +149,11 @@ public class TodayVideoFragment extends Fragment {
             listVideoName.clear();
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new TodayByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallapppoststoday/?page=1&psize=1000");
+                    new TodayByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppoststoday/?page=1&psize=1000");
                 } else {
-                    new TodayByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallapppoststoday/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+                    new TodayByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppoststoday/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
                 }
+
             } else {
                 final Snackbar snackbar = Snackbar
                         .make(getView(), "No internet connection!", Snackbar.LENGTH_INDEFINITE);
@@ -186,9 +189,9 @@ public class TodayVideoFragment extends Fragment {
         listViewvideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 listflag.set(position,"true");
                 customAdpter.notifyDataSetChanged();
-
 
                 String strVideo = listVideo.get(position);
                 Log.e("videofile", "------------------" + strVideo);
@@ -213,9 +216,9 @@ public class TodayVideoFragment extends Fragment {
                 intent.putExtra("date", date);
                 intent.putExtra("view", listview.get(position));
 
-
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
             }
         });
 
@@ -629,11 +632,11 @@ public class TodayVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventvideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");
@@ -753,11 +756,11 @@ public class TodayVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleimage/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String view = object.getString("View");

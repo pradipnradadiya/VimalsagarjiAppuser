@@ -156,7 +156,7 @@ public class VideoCommentList extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("vid", id));
             nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new BasicNameValuePair("Comment", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/comment/", nameValuePairs, VideoCommentList.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/comment/", nameValuePairs, VideoCommentList.this);
 
             return responseJSON;
 
@@ -209,7 +209,7 @@ public class VideoCommentList extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("vid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/getallappcomments/?page=" + page_count + "&psize=30", nameValuePairs, VideoCommentList.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getallappcomments/?page=" + page_count + "&psize=30", nameValuePairs, VideoCommentList.this);
             return responseJSON;
         }
 

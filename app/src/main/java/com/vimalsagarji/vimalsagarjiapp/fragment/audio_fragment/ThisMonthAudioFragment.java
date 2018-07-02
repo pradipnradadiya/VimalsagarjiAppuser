@@ -50,9 +50,9 @@ public class ThisMonthAudioFragment extends Fragment {
     }
 
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
-    private final static String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/getaudiobycategorymonth/?page=1&psize=1000";
-    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/audioimage/";
-    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/audios/";
+    private final static String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getaudiobycategorymonth/?page=1&psize=1000";
+    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audioimage/";
+    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audios/";
     private ArrayList<ThisMonthAudio> arrayList = new ArrayList<>();
     private static String strCid = "";
     private View view;
@@ -63,7 +63,7 @@ public class ThisMonthAudioFragment extends Fragment {
     private TextView txt_nodata_today;
     private EditText InputBox;
     private CustomAdpter customAdpter;
-    private final String MonthSearchAudio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/searchallaudiomonth/?page=1&psize=1000";
+    private final String MonthSearchAudio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/searchallaudiomonth/?page=1&psize=1000";
     private ListView listView;
     private ProgressBar progressbar;
     Sharedpreferance sharedpreferance;
@@ -109,16 +109,16 @@ public class ThisMonthAudioFragment extends Fragment {
 
         if (strCid.equalsIgnoreCase("e_alliamgeid")) {
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                new GetMonthEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategorymonth/?page=1&psize=1000");
+                new GetMonthEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorymonth/?page=1&psize=1000");
             } else {
-                new GetMonthEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategorymonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                new GetMonthEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorymonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
             }
         } else if (strCid.equalsIgnoreCase("bypeopleidid")) {
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new GetMonthByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallapppostsmonth/?page=1&psize=1000");
+                    new GetMonthByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsmonth/?page=1&psize=1000");
                 } else {
-                    new GetMonthByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallapppostsmonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                    new GetMonthByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsmonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
                 }
             } else {
                 Snackbar.make(getView(), R.string.internet, Snackbar.LENGTH_SHORT).show();
@@ -327,8 +327,8 @@ public class ThisMonthAudioFragment extends Fragment {
                         String id = "eid";
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventaudio/" + object.getString("Audio");
-                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/" + object.getString("Photo");
+                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/" + object.getString("Audio");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");
@@ -651,8 +651,8 @@ public class ThisMonthAudioFragment extends Fragment {
                         String id = "bid";
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleaudio/" + object.getString("Audio");
-                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleimage/" + object.getString("Photo");
+                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/" + object.getString("Audio");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");

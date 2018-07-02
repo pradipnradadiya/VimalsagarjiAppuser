@@ -4,15 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:orientation="vertical"
     >
 
     <LinearLayout
         android:padding="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/round_rect_shape"
@@ -25,6 +22,7 @@
             android:src="@drawable/ic_f_new"
             android:layout_gravity="right"
             android:visibility="gone"
+
             />
 
         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
@@ -52,6 +50,7 @@
             android:layout_marginLeft="10dp"
             android:lineSpacingExtra="7dp"
             android:maxLines="3"
+            android:ellipsize="end"
             android:text="Answer"
             android:textColor="@color/black"
             android:textSize="15sp"

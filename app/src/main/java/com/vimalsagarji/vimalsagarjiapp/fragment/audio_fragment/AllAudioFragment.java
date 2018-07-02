@@ -49,9 +49,9 @@ public class AllAudioFragment extends Fragment {
 
     private CustomAdpter customAdpter;
     SwipeRefreshLayout activity_main_swipe_refresh_layout;
-    final static String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/getaudiobycategoryid/?page=1&psize=1000";
-    String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/audioimage/";
-    static String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/audios/";
+    final static String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getaudiobycategoryid/?page=1&psize=1000";
+    String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audioimage/";
+    static String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audios/";
     ArrayList<ThisMonthAudio> arrayList = new ArrayList<>();
     private static String strCid = "";
     private View view;
@@ -60,7 +60,7 @@ public class AllAudioFragment extends Fragment {
     TextView txt_nodata_today;
     private EditText InputBox;
     private ImageView imsearch;
-    String MonthSearchAudio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/searchallaudio/?page=1&psize=1000";
+    String MonthSearchAudio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/searchallaudio/?page=1&psize=1000";
     ListView listView;
 //    ArrayList<ArrayList> audioarraylist=new ArrayList<>();
 
@@ -112,18 +112,18 @@ public class AllAudioFragment extends Fragment {
             activity_main_swipe_refresh_layout.setRefreshing(false);
             activity_main_swipe_refresh_layout.setEnabled(false);
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                new GetMonthEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategoryyear/?page=1&psize=1000");
+                new GetMonthEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000");
             } else {
-                new GetMonthEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategoryyear/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                new GetMonthEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
             }
         } else if (strCid.equalsIgnoreCase("bypeopleidid")) {
             activity_main_swipe_refresh_layout.setRefreshing(false);
             activity_main_swipe_refresh_layout.setEnabled(false);
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new GetAllByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappposts/?page=1&psize=1000");
+                    new GetAllByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000");
                 } else {
-                    new GetAllByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappposts/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                    new GetAllByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
                 }
             } else {
                 Snackbar.make(getView(), R.string.internet, Snackbar.LENGTH_SHORT).show();
@@ -201,7 +201,7 @@ public class AllAudioFragment extends Fragment {
                         i.putExtra("id", customAdpter.items.get(position).getID());
                         i.putExtra("AudioName", customAdpter.items.get(position).getAudioName());
                         i.putExtra("CategoryID", customAdpter.items.get(position).getCategoryID());
-                        i.putExtra("Audio", "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleaudio/" + customAdpter.items.get(position).getAudio());
+                        i.putExtra("Audio", "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/" + customAdpter.items.get(position).getAudio());
                         i.putExtra("Photo", customAdpter.items.get(position).getPhoto());
                         i.putExtra("Duration", customAdpter.items.get(position).getDuration());
                         i.putExtra("Date", customAdpter.items.get(position).getDate());
@@ -400,7 +400,7 @@ public class AllAudioFragment extends Fragment {
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
                         String Audio = object.getString("Audio");
-                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/" + object.getString("Photo");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + object.getString("Photo");
                         Log.e("photo split", "--------------" + Photo);
                         String[] parray = Photo.split(",");
                         String audiolist = object.getString("Audio");
@@ -671,7 +671,7 @@ public class AllAudioFragment extends Fragment {
                                 i.putExtra("id", items.get(position).getID());
                                 i.putExtra("AudioName", items.get(position).getAudioName());
                                 i.putExtra("CategoryID", items.get(position).getCategoryID());
-                                i.putExtra("Audio", "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleaudio/" + items.get(position).getAudio());
+                                i.putExtra("Audio", "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/" + items.get(position).getAudio());
                                 i.putExtra("Photo", items.get(position).getPhoto());
                                 i.putExtra("Duration", items.get(position).getDuration());
                                 i.putExtra("Date", items.get(position).getDate());
@@ -791,7 +791,7 @@ public class AllAudioFragment extends Fragment {
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
                         String Audio = object.getString("Audio");
-                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleimage/" + object.getString("Photo");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");

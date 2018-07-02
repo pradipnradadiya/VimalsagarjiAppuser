@@ -171,7 +171,7 @@ public class SearchActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("SearchTitle", params[0]));
-            responseString = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/search/searchdata/", nameValuePairs, SearchActivity.this);
+            responseString = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/search/searchdata/", nameValuePairs, SearchActivity.this);
             return responseString;
         }
 

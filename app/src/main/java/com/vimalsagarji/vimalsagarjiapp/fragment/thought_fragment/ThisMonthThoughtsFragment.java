@@ -56,7 +56,7 @@ public class ThisMonthThoughtsFragment extends Fragment {
 
     private EditText InputBox;
     private List<ThoughtToday> listfilterdata = new ArrayList<>();
-    private final String MonthSearchThought = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/searchallthoughtsbycidmonth/?page=1&psize=1000";
+    private final String MonthSearchThought = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/searchallthoughtsbycidmonth/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private ProgressBar progressbar;
     Sharedpreferance sharedpreferance;
@@ -96,10 +96,10 @@ public class ThisMonthThoughtsFragment extends Fragment {
         if (CommonMethod.isInternetConnected(getActivity())) {
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
                 GetMonthThought getMonthThought = new GetMonthThought();
-                getMonthThought.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/getallthoughtsbycidmonth/?page=1&psize=1000");
+                getMonthThought.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidmonth/?page=1&psize=1000");
             } else {
                 GetMonthThought getMonthThought = new GetMonthThought();
-                getMonthThought.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/getallthoughtsbycidmonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                getMonthThought.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidmonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
             }
 
         } else {
@@ -145,9 +145,9 @@ public class ThisMonthThoughtsFragment extends Fragment {
     private void loadData() {
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
 
-            new LoadGetMonthThought().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/getallthoughtsbycidmonth/?page=1&psize=1000");
+            new LoadGetMonthThought().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidmonth/?page=1&psize=1000");
         } else {
-            new LoadGetMonthThought().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/getallthoughtsbycidmonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+            new LoadGetMonthThought().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidmonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
         }
     }
 

@@ -73,7 +73,7 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
     private EditText InputBox;
     List<ThoughtToday> listfilterdata = new ArrayList<>();
     private Dialog dialog;
-    private final String MonthSearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/searchallappquesmonth/?page=1&psize=1000";
+    private final String MonthSearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/searchallappquesmonth/?page=1&psize=1000";
     //    String approve = "";
     private ProgressBar progressbar;
 
@@ -114,10 +114,10 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
         if (CommonMethod.isInternetConnected(getActivity())) {
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
                 GetWeekQuestion getWeekQuestion = new GetWeekQuestion();
-                getWeekQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquesmonth/?page=1&psize=1000");
+                getWeekQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesmonth/?page=1&psize=1000");
             }else{
                 GetWeekQuestion getWeekQuestion = new GetWeekQuestion();
-                getWeekQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquesmonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+                getWeekQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesmonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
             }
         } else {
             final Snackbar snackbar = Snackbar
@@ -147,6 +147,7 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
                 intent.putExtra("qid", listID.get(position));
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
             }
         });
         btn_askQuestion.setOnClickListener(new View.OnClickListener() {
@@ -216,9 +217,9 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
     private void loadData() {
         adpter.clear();
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
-            new LoadGetWeekQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquesmonth/?page=1&psize=1000");
+            new LoadGetWeekQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesmonth/?page=1&psize=1000");
         }else{
-            new LoadGetWeekQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquesmonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+            new LoadGetWeekQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesmonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
         }
     }
 
@@ -515,7 +516,7 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
                 nameValuePairs.add(new BasicNameValuePair("Question", params[0]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/askques/", nameValuePairs, getActivity());
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/", nameValuePairs, getActivity());
             } catch (Exception e) {
                 e.printStackTrace();
             }

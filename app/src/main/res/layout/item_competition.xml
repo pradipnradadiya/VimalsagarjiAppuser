@@ -10,17 +10,18 @@
     android:layout_marginRight="2sp"
     android:layout_marginTop="2sp"
 
+
     >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/round_rect_shape"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        >
+        android:paddingBottom="10dp"
+        android:background="@drawable/round_rect_shape"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/lin_item"
@@ -81,31 +82,55 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-            android:id="@+id/txt_last_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="4"
-            android:padding="10dp"
-            android:text="20-05-2018"
-            android:textColor="@color/black" />
+            android:orientation="horizontal">
 
-        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-            android:id="@+id/txt_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_weight="6"
-            android:padding="10dp"
-            android:text="10:15 am"
-            android:gravity="right"
-            android:textColor="@color/black" />
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                android:id="@+id/txt_last_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="4"
+                android:padding="10dp"
+                android:text="20-05-2018"
+                android:textColor="@color/black" />
+
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                android:visibility="gone"
+                android:id="@+id/txt_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="6"
+                android:gravity="right"
+                android:padding="10dp"
+                android:text="10:15 am"
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+            android:id="@+id/txt_viewresult"
+            android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View Result"
+            android:background="@drawable/round_rect_shapeoneselect"
+            android:textColor="@color/white"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            />
+
+
+        <com.vimalsagarji.vimalsagarjiapp.util.UnderlineTextView
+            android:id="@+id/txt_topten_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Top 10 List"
+            android:textColor="@color/black"
+            android:padding="5dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            />
 
     </LinearLayout>
 

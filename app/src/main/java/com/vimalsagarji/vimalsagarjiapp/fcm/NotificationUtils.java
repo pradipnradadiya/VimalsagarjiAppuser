@@ -2,6 +2,7 @@ package com.vimalsagarji.vimalsagarjiapp.fcm;
 
 import android.app.ActivityManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -10,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -35,6 +37,10 @@ import java.util.Random;
 public class NotificationUtils {
 
     private static String TAG = NotificationUtils.class.getSimpleName();
+
+    public static final String NOTIFICATION_CHANNEL_ID = "10001";
+//    private NotificationCompat.Builder mBuilder;
+
 
     private Context mContext;
 
@@ -104,8 +110,29 @@ public class NotificationUtils {
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        //Android orio
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String id = "id_product";
+            // The user-visible name of the channel.
+            CharSequence name = title;
+            // The user-visible description of the channel.
+            String description = message;
+            int importance = NotificationManager.IMPORTANCE_MAX;
+            NotificationChannel mChannel = new NotificationChannel(id,name,NotificationManager.IMPORTANCE_HIGH);
+            // Configure the notification channel.
+            mChannel.setDescription(description);
+            mChannel.enableLights(true);
+            // Sets the notification light color for notifications posted to this
+            // channel, if the device supports this feature.
+            mChannel.setLightColor(Color.RED);
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
         Random random = new Random();
         int randomNumber = random.nextInt(9999 - 1000) + 1000;
+        assert notificationManager != null;
         notificationManager.notify(randomNumber, notification);
     }
 

@@ -54,10 +54,11 @@ public class TodayThoughtsFragment extends Fragment {
 
     private EditText InputBox;
     private List<ThoughtToday> listfilterdata = new ArrayList<>();
-    private final String TodaySearchThought = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/searchallthoughtsbycidtoday/?page=1&psize=1000";
+    private final String TodaySearchThought = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/searchallthoughtsbycidtoday/?page=1&psize=1000";
     private String url;
     private ProgressBar progressbar;
     Sharedpreferance sharedpreferance;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -138,9 +139,9 @@ public class TodayThoughtsFragment extends Fragment {
     private void loadData() {
         list.clear();
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
-            new LoadGetTodayThought().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/getallthoughtsbycidtoday/?page=1&psize=1000");
+            new LoadGetTodayThought().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidtoday/?page=1&psize=1000");
         } else {
-            new LoadGetTodayThought().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/getallthoughtsbycidtoday/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+            new LoadGetTodayThought().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidtoday/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
         }
     }
 
@@ -427,10 +428,10 @@ public class TodayThoughtsFragment extends Fragment {
         if (CommonMethod.isInternetConnected(getActivity())) {
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
                 GetTodayThought getTodayThought = new GetTodayThought();
-                getTodayThought.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/getallthoughtsbycidtoday/?page=1&psize=1000");
+                getTodayThought.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidtoday/?page=1&psize=1000");
             } else {
                 GetTodayThought getTodayThought = new GetTodayThought();
-                getTodayThought.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/getallthoughtsbycidtoday/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                getTodayThought.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidtoday/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
             }
         }
     }

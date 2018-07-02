@@ -62,6 +62,9 @@
     <string name="privacy_policy">Privacy Policy</string>
 
     <string name="p_p_content">A Privacy Policy agreement is the agreement where you specify if you collect personal data, what kind of personal data you collect from users and what you do with that data.</string>
+    <string name="submit">Submit</string>
+    <!--<string name="vichar_kranti">विचार क्रान्ति</string>-->
+    <string name="vichar_kranti">Vichar Kranti</string>
 
 
 </resources>

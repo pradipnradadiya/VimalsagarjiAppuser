@@ -71,7 +71,7 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
     private TextView txt_nodata_today;
     private EditText InputBox;
     List<ThoughtToday> listfilterdata = new ArrayList<>();
-    private final String WeekSearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/searchallappquesweek/?page=1&psize=1000";
+    private final String WeekSearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/searchallappquesweek/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private Dialog dialog;
 //    String approve = "";
@@ -114,10 +114,10 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
         if (CommonMethod.isInternetConnected(getActivity())) {
             if (sharedpreferance.getId().equalsIgnoreCase("")){
                 GetWeekQuestion getWeekQuestion = new GetWeekQuestion();
-                getWeekQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquesweek/?page=1&psize=1000");
+                getWeekQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesweek/?page=1&psize=1000");
             }else {
                 GetWeekQuestion getWeekQuestion = new GetWeekQuestion();
-                getWeekQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquesweek/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+                getWeekQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesweek/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
             }
 
         } else {
@@ -214,9 +214,9 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
     private void loadData() {
         adpter.clear();
         if (sharedpreferance.getId().equalsIgnoreCase("")){
-            new LoadGetWeekQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquesweek/?page=1&psize=1000");
+            new LoadGetWeekQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesweek/?page=1&psize=1000");
         }else {
-            new LoadGetWeekQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquesweek/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+            new LoadGetWeekQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesweek/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
         }
     }
 
@@ -534,7 +534,7 @@ public class ThisWeekQuetionAnswerFragment extends Fragment {
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
                 nameValuePairs.add(new BasicNameValuePair("Question", params[0]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/askques/", nameValuePairs, getActivity());
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/", nameValuePairs, getActivity());
             } catch (Exception e) {
                 e.printStackTrace();
             }

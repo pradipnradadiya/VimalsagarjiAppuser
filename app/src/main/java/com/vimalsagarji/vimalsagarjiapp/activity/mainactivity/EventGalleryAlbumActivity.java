@@ -176,7 +176,7 @@ public class EventGalleryAlbumActivity extends AppCompatActivity {
                         String title = object.getString("Title");
                         String photo = object.getString("Photo");
                         String[] photoarray = photo.split(",");
-                        eventGalleryItems.add(new EventGalleryItem(eid, title, "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/" + photoarray[0]));
+                        eventGalleryItems.add(new EventGalleryItem(eid, title, "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + photoarray[0]));
 
                     }
 
@@ -198,4 +198,5 @@ public class EventGalleryAlbumActivity extends AppCompatActivity {
 
 
     }
+
 }

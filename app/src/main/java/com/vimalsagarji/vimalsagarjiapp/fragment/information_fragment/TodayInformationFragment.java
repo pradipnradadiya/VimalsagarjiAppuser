@@ -55,7 +55,7 @@ public class TodayInformationFragment extends Fragment {
     private ImageView imsearch;
     private EditText InputBox;
     private CustomAdpter adpter;
-    private final String TodaySearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/info/searchallinfobycidtoday/?page=1&psize=1000";
+    private final String TodaySearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/searchallinfobycidtoday/?page=1&psize=1000";
     private List<InformationCategory> listfilterdata = new ArrayList<>();
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private Intent intent;
@@ -102,7 +102,6 @@ public class TodayInformationFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
                 final InformationCategory informationCategory1 = adpter.items.get(position);
                 Log.e("position list view","---------------------"+position);
                 informationCategory1.setFlag("true");
@@ -143,6 +142,7 @@ public class TodayInformationFragment extends Fragment {
                 if (adpter.getCount() == 0) {
                     return;
                 }
+
                 int i = firstVisibleItem + visibleItemCount;
                 System.out.println("firstVisibleItem : " + firstVisibleItem + "  visibleItemCount " + visibleItemCount + "  totalItemCount " + totalItemCount);
                 if (i >= totalItemCount && !isLoading) {

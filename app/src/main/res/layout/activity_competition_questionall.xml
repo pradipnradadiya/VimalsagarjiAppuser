@@ -14,17 +14,21 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="22dp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black" />
+
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="0dp"
+        android:layout_weight="9">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycleview_competition"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
 
         <TextView
             android:id="@+id/txt_nodata"
@@ -36,25 +40,23 @@
             android:textSize="28dp"
             android:visibility="gone" />
 
-
         <ProgressBar
             android:id="@+id/progress_load"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
 
-        <Button
-            android:id="@+id/btn_submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit"
-            android:background="@drawable/back_gradiant"
-            android:textColor="@color/white"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="5dp"
-            />
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:layout_margin="5dp"
+        android:background="@drawable/round_rect_shapeoneselect"
+        android:text="@string/submit"
+        android:textColor="@color/white" />
 
 </LinearLayout>

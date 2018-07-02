@@ -79,9 +79,9 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
     private final ArrayList<String> listIs_Approved = new ArrayList<String>();
     private ArrayList<String> listUserID = new ArrayList<String>();
     private final ArrayList<String> listUserName = new ArrayList<String>();
-    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/getallappcomments/?page=1&psize=1000";
-    private static final String PostCommentURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/comment/";
-    private static final String strLikeURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/likethought/";
+    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallappcomments/?page=1&psize=1000";
+    private static final String PostCommentURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/comment/";
+    private static final String strLikeURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/likethought/";
     ProgressDialog pd;
     String strResult;
     int countLike = 1;
@@ -405,7 +405,6 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
 
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("tid", tid));
@@ -447,13 +446,12 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
             super.onPreExecute();
         }
 
-
         @Override
         protected String doInBackground(String... params) {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("tid", tid));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/checklike/", nameValuePairs, ThoughtsDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/checklike/", nameValuePairs, ThoughtsDetailActivity.this);
             return responseJSON;
         }
 
@@ -487,7 +485,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("tid", tid));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/countlikes/", nameValuePairs, ThoughtsDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/countlikes/", nameValuePairs, ThoughtsDetailActivity.this);
             return responseJSON;
         }
 
@@ -527,7 +525,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("tid", tid));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/countcomments/", nameValuePairs, ThoughtsDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/countcomments/", nameValuePairs, ThoughtsDetailActivity.this);
             return responseJSON;
         }
 
@@ -757,7 +755,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -798,7 +796,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/countviews/thought/?tid=" + tid + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/thought/?tid=" + tid + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }

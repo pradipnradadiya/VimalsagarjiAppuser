@@ -251,7 +251,10 @@
         <activity
             android:name=".ActivityHomeMain"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+
+
+            />
         <activity
             android:name=".Splash_Activity2"
             android:screenOrientation="portrait" />
@@ -336,6 +339,15 @@
             android:name=".activity.mainactivity.EventGalleryAllImagesActivity"
             android:screenOrientation="portrait" />
 
+
+        <activity
+            android:name=".activity.mainactivity.ParticularUserResultDetail"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".today_week_month_year.OldCompetitionAllActivity"
+            android:screenOrientation="portrait" />
+
         <service android:name=".jcplayer.JcPlayerService" />
 
         <receiver
@@ -385,19 +397,42 @@
         -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/push_notification_small" />
+            android:resource="@mipmap/push_notification" />
+
+
+        <!--<meta-data-->
+        <!--android:name="com.google.firebase.messaging.default_notification_icon"-->
+        <!--android:resource="@drawable/push_notification_small" />-->
         <!--
              Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more.
         -->
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/red" />
 
-        <activity android:name=".activity.mainactivity.PrivacyPolicyActivity" />
-        <activity android:name=".today_week_month_year.CompetitionAllActivity" />
-        <activity android:name=".today_week_month_year.CompetitionRulesActivity"></activity>
-        <activity android:name=".today_week_month_year.CompetitionQuestionActivity" />
+        <activity
+            android:name=".activity.mainactivity.PrivacyPolicyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".today_week_month_year.CompetitionAllActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".today_week_month_year.CompetitionRulesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".today_week_month_year.CompetitionQuestionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.mainactivity.TopTenCompetitionList"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.mainactivity.VisharMessageActivity"
+            android:screenOrientation="portrait" />
+
+
     </application>
 
 </manifest>

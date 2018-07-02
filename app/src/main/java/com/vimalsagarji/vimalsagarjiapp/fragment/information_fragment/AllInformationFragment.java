@@ -57,7 +57,7 @@ public class AllInformationFragment extends Fragment {
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
 
     private List<InformationCategory> listallsearchdata = new ArrayList<>();
-    private final String SearchAll = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/info/searchallinfo/?page=1&psize=1000";
+    private final String SearchAll = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/searchallinfo/?page=1&psize=1000";
     private String URL;
     private ProgressBar progressbar;
     private Sharedpreferance sharedpreferance;
@@ -218,8 +218,6 @@ public class AllInformationFragment extends Fragment {
                         informationCategory.setView(view);
 //
 
-
-
                         if (sharedpreferance.getId().equalsIgnoreCase("")){
                             String flag = "true";
                             informationCategory.setFlag(flag);
@@ -319,7 +317,6 @@ public class AllInformationFragment extends Fragment {
                         String strDate = object.getString("Date");
                         String view = object.getString("View");
 
-
                         Date dt = CommonMethod.convert_date(strDate);
                         Log.e("Convert date is", "------------------" + dt);
                         String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
@@ -375,6 +372,7 @@ public class AllInformationFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
             if (getActivity() != null) {
                 if (listView != null) {
                     adpter = new CustomAdpter(getActivity(), listAllInformationCategory);
@@ -389,7 +387,11 @@ public class AllInformationFragment extends Fragment {
                     }
 
                 }
+
             }
+
+
+
            /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -9,9 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vimalsagarji.vimalsagarjiapp.R;
+import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.ParticularUserResultDetail;
+import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.TopTenCompetitionList;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.CompetitionItem;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.CompetitionRulesActivity;
 
@@ -25,9 +29,8 @@ public class RecyclerCompetitionCategoryAdapter extends RecyclerView.Adapter<Rec
     private final ArrayList<CompetitionItem> itemArrayList;
     private String id;
     public static final ArrayList<String> compcatid = new ArrayList<>();
-    CountDownTimer countDownTimer;          // built in android class CountDownTimer
-    long totalTimeCountInMilliseconds;      // total count down time in milliseconds
-    long timeBlinkInMilliseconds;
+
+    Sharedpreferance sharedpreferance;
 
     public RecyclerCompetitionCategoryAdapter(Activity activity, ArrayList<CompetitionItem> itemArrayList) {
         super();
@@ -38,26 +41,48 @@ public class RecyclerCompetitionCategoryAdapter extends RecyclerView.Adapter<Rec
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_competition, viewGroup, false);
-        totalTimeCountInMilliseconds = 60 * 1000;      // time count for 3 minutes = 180 seconds
-        timeBlinkInMilliseconds = 30 * 1000;
+        sharedpreferance = new Sharedpreferance(activity);
         return new ViewHolder(v);
+
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
 
-
         final CompetitionItem competitionItem = itemArrayList.get(i);
         holder.txt_title.setText(CommonMethod.decodeEmoji(competitionItem.getTitle()));
         holder.txt_timer.setText(CommonMethod.decodeEmoji(competitionItem.getTotal_minute() + " : minutes"));
-        String[] datesarray=competitionItem.getDate().split("-");
+        String[] datesarray = competitionItem.getDate().split("-");
 
 
-        holder.txt_last_date.setText(CommonMethod.decodeEmoji(datesarray[2]+"-"+datesarray[1]+"-"+datesarray[0]));
+        holder.txt_last_date.setText(CommonMethod.decodeEmoji(datesarray[2] + "-" + datesarray[1] + "-" + datesarray[0]));
         holder.txt_time.setText(CommonMethod.decodeEmoji(competitionItem.getTime()));
-        holder.txt_total_question.setText("Number of question : "+CommonMethod.decodeEmoji(competitionItem.getTotal_question()));
+        holder.txt_total_question.setText("Number of question : " + CommonMethod.decodeEmoji(competitionItem.getTotal_question()));
 
+        holder.txt_viewresult.setVisibility(View.GONE);
+        holder.txt_topten_list.setVisibility(View.GONE);
+
+
+        holder.txt_viewresult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, ParticularUserResultDetail.class);
+                intent.putExtra("competition_id", competitionItem.getId());
+                intent.putExtra("user_id", sharedpreferance.getId());
+                activity.startActivity(intent);
+            }
+        });
+
+        holder.txt_topten_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, TopTenCompetitionList.class);
+                intent.putExtra("cid", competitionItem.getId());
+                activity.startActivity(intent);
+            }
+        });
 
     }
 
@@ -76,6 +101,8 @@ public class RecyclerCompetitionCategoryAdapter extends RecyclerView.Adapter<Rec
         final TextView txt_time;
         final TextView txt_last_date;
         final TextView txt_total_question;
+        final TextView txt_viewresult;
+        final TextView txt_topten_list;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -84,6 +111,8 @@ public class RecyclerCompetitionCategoryAdapter extends RecyclerView.Adapter<Rec
             txt_time = (TextView) itemView.findViewById(R.id.txt_time);
             txt_last_date = (TextView) itemView.findViewById(R.id.txt_last_date);
             txt_total_question = (TextView) itemView.findViewById(R.id.txt_total_question);
+            txt_viewresult = (TextView) itemView.findViewById(R.id.txt_viewresult);
+            txt_topten_list = (TextView) itemView.findViewById(R.id.txt_topten_list);
             img_audio_category = (ImageView) itemView.findViewById(R.id.img_audio_category);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
@@ -92,12 +121,21 @@ public class RecyclerCompetitionCategoryAdapter extends RecyclerView.Adapter<Rec
         @Override
         public void onClick(View v) {
 //            Toast.makeText(activity, "on Click" + getAdapterPosition(), Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(v.getContext(), CompetitionRulesActivity.class);
-            intent.putExtra("cid", itemArrayList.get(getAdapterPosition()).getId());
-            intent.putExtra("rules", itemArrayList.get(getAdapterPosition()).getRules());
-            intent.putExtra("minute", itemArrayList.get(getAdapterPosition()).getTotal_minute());
-            v.getContext().startActivity(intent);
-            activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+            if (sharedpreferance.getId().equalsIgnoreCase("")) {
+
+                Toast.makeText(activity, R.string.notregister, Toast.LENGTH_SHORT).show();
+
+            } else {
+
+                Intent intent = new Intent(v.getContext(), CompetitionRulesActivity.class);
+                intent.putExtra("cid", itemArrayList.get(getAdapterPosition()).getId());
+                intent.putExtra("rules", itemArrayList.get(getAdapterPosition()).getRules());
+                intent.putExtra("minute", itemArrayList.get(getAdapterPosition()).getTotal_minute());
+                v.getContext().startActivity(intent);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+            }
         }
 
         @Override

@@ -48,8 +48,8 @@ public class ThisMonthbyPeopleFragment extends Fragment {
 
     private static final String TAG = AllbyPeopleFragment.class.getSimpleName();
 
-    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleaudio/";
-    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/";
+    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/";
+    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/";
     private static final String strImageUrlName = "bypeopleimage";
     private static final String ImgURL = Constant.ImgURL;
     private static final String IMAGEURL = ImgURL.replace("audioimage", strImageUrlName);
@@ -71,7 +71,7 @@ public class ThisMonthbyPeopleFragment extends Fragment {
     private ListView listView;
     private String strImageUrl = "";
 
-    private final String strURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallapppostsmonth/?page=1&psize=1000";
+    private final String strURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsmonth/?page=1&psize=1000";
     //    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
@@ -206,12 +206,15 @@ public class ThisMonthbyPeopleFragment extends Fragment {
                         strIs_Approved = object.getString("Is_Approved");
                         strDate = object.getString("Date");
                         strPhoto = object.getString("Photo");
+
                         strImageUrl = strPhoto;
+
                         String name = object.getString("Name");
                         String view = object.getString("View");
 
 
                         Date dt = CommonMethod.convert_date(strDate);
+
                         Log.e("Convert date is", "------------------" + dt);
                         String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
                         String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
@@ -232,6 +235,7 @@ public class ThisMonthbyPeopleFragment extends Fragment {
 
 
                         AllByPeople abp = new AllByPeople();
+
                         abp.setId(strID);
                         abp.setPost(strPost);
                         abp.setDate(dayOfTheWeek + ", " + fulldate);

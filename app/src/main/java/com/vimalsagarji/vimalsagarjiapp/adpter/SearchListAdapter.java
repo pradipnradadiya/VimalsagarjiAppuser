@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.AudioDetail;
 import com.vimalsagarji.vimalsagarjiapp.activity.ByPeopleDetailActivity;
@@ -22,7 +21,6 @@ import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.model.SearchItem;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.CompetitionList;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.OpinionPoll;
-import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.QuestionAnswerActivity;
 import com.vimalsagarji.vimalsagarjiapp.utils.AllQuestionDetail;
 
 import java.util.ArrayList;

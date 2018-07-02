@@ -53,11 +53,13 @@ public class AllThoughtsFragment extends Fragment {
 
     private EditText InputBox;
     private List<AllThoughts> listfilterdata = new ArrayList<>();
-    private final String AllSearchThought = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/thought/searchallthoughts/?page=1&psize=1000";
+    private final String AllSearchThought = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/searchallthoughts/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private String url;
     private ProgressBar progressbar;
     Sharedpreferance sharedpreferance;
+
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_all_thoughts, container, false);
@@ -67,6 +69,7 @@ public class AllThoughtsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         url = Constant.ALL_THOUGHTS_URL + "&psize=1000";
+
         sharedpreferance=new Sharedpreferance(getActivity());
         progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         listView = (ListView) getActivity().findViewById(R.id.list);
@@ -75,8 +78,6 @@ public class AllThoughtsFragment extends Fragment {
         InputBox = (EditText) getActivity().findViewById(R.id.etText);
         ImageView imsearch = (ImageView) getActivity().findViewById(R.id.imgSerch);
         activity_main_swipe_refresh_layout = (SwipeRefreshLayout) getActivity().findViewById(R.id.activity_main_swipe_refresh_layout);
-
-
 
         activity_main_swipe_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -104,8 +105,6 @@ public class AllThoughtsFragment extends Fragment {
                 allThoughts.setFlag("true");
                 adapter.items.set(position,allThoughts);
                 adapter.notifyDataSetChanged();
-
-
                 AllThoughts ats = (AllThoughts) parent.getItemAtPosition(position);
                 Intent intent = new Intent(getActivity(), ThoughtsDetailActivity.class);
                 intent.putExtra("click_action", "");
@@ -116,6 +115,7 @@ public class AllThoughtsFragment extends Fragment {
                 intent.putExtra("view", ats.getView());
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
             }
         });
         Log.e("all thought", "-----------------------------");
@@ -218,6 +218,7 @@ public class AllThoughtsFragment extends Fragment {
                     }
 
                     listAllThoughts.add(ats);
+
                 }
 //                }
             } catch (Exception e) {
@@ -388,8 +389,6 @@ public class AllThoughtsFragment extends Fragment {
             else{
                 holder.img_new.setVisibility(View.VISIBLE);
             }
-
-
             return convertView;
 
         }

@@ -30,3 +30,4 @@
 -dontwarn io.card.**
 -dontwarn android.support.**
 -dontwarn android.net.SSLCertificateSocketFactory
+

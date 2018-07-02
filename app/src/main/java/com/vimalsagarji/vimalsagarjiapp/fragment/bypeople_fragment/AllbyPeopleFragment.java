@@ -48,8 +48,8 @@ public class AllbyPeopleFragment extends Fragment {
 
     private static final String TAG = AllbyPeopleFragment.class.getSimpleName();
 
-    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleaudio/";
-    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/";
+    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/";
+    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/";
     private static final String strImageUrlName = "bypeopleimage";
     private static final String ImgURL = Constant.ImgURL;
     private static final String IMAGEURL = ImgURL.replace("audioimage", strImageUrlName);
@@ -279,7 +279,6 @@ public class AllbyPeopleFragment extends Fragment {
                         listView.setVisibility(View.GONE);
                         txt_nodata_today.setVisibility(View.VISIBLE);
                     }
-
 
                 }
             }

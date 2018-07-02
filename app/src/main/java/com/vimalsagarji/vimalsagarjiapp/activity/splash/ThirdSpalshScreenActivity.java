@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
@@ -25,12 +26,16 @@ import java.util.ArrayList;
 
 import ch.boye.httpclientandroidlib.NameValuePair;
 import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
+import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission;
+import permission.auron.com.marshmallowpermissionhelper.PermissionResult;
+import permission.auron.com.marshmallowpermissionhelper.PermissionUtils;
 
 @SuppressWarnings("ALL")
-public class ThirdSpalshScreenActivity extends AppCompatActivity {
+public class ThirdSpalshScreenActivity extends ActivityManagePermission {
     Intent intent;
     private Sharedpreferance sharedpreferance;
     private ProgressBar progress;
+    private TextView txt_content,txt_timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,62 @@ public class ThirdSpalshScreenActivity extends AppCompatActivity {
         setContentView(R.layout.content_third_spalsh_screen);
         sharedpreferance = new Sharedpreferance(ThirdSpalshScreenActivity.this);
         progress = (ProgressBar) findViewById(R.id.progress);
+        txt_content = findViewById(R.id.txt_content);
+        txt_timer = findViewById(R.id.txt_timer);
+
+        new ContentGet().execute();
+    }
+
+    private void askforPermission() {
+
+        askCompactPermissions(new String[]{ PermissionUtils.Manifest_RECEIVE_SMS,PermissionUtils.Manifest_READ_SMS}, new PermissionResult() {
+            @Override
+            public void permissionGranted() {
+                Intent intent = new Intent(ThirdSpalshScreenActivity.this, RegisterActivity.class);
+                startActivity(intent);
+                finish();
+//                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+            }
+
+            @Override
+            public void permissionDenied() {
+                //permission denied
+                askforPermission();
+                //replace with your action
+            }
+
+            @Override
+            public void permissionForeverDenied() {
+                askforPermission();
+            }
+        });
+
+    }
+
+    private void askforLogin() {
+
+        askCompactPermissions(new String[]{PermissionUtils.Manifest_RECEIVE_SMS,PermissionUtils.Manifest_READ_SMS}, new PermissionResult() {
+            @Override
+            public void permissionGranted() {
+                Intent intent = new Intent(ThirdSpalshScreenActivity.this, ActivityHomeMain.class);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+//                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+            }
+
+            @Override
+            public void permissionDenied() {
+                //permission denied
+                askforPermission();
+                //replace with your action
+            }
+
+            @Override
+            public void permissionForeverDenied() {
+                askforPermission();
+            }
+        });
     }
 
     @Override
@@ -53,25 +114,29 @@ public class ThirdSpalshScreenActivity extends AppCompatActivity {
         timer.cancel();
     }
 
-
-    private final CountDownTimer timer = new CountDownTimer(2000, 2000) {
+    private final CountDownTimer timer = new CountDownTimer(16000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
+            Log.e("time","----------"+millisUntilFinished / 1000);
+            txt_timer.setText(String.valueOf(millisUntilFinished / 1000));
 
         }
 
         @Override
         public void onFinish() {
+            txt_timer.setText("");
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                Intent intent = new Intent(ThirdSpalshScreenActivity.this, RegisterActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
+//                Intent intent = new Intent(ThirdSpalshScreenActivity.this, RegisterActivity.class);
+//                startActivity(intent);
+//                finish();
+
+                askforPermission();
+            }
+
+            else {
                 if (CommonMethod.isInternetConnected(ThirdSpalshScreenActivity.this)) {
                     new AllreadyRegisterUser().execute(sharedpreferance.getEmail(), sharedpreferance.getMobile(), sharedpreferance.getToken());
                 } else {
-
-
 
                     Toast.makeText(ThirdSpalshScreenActivity.this, R.string.internet, Toast.LENGTH_LONG).show();
 //                    try {
@@ -84,6 +149,8 @@ public class ThirdSpalshScreenActivity extends AppCompatActivity {
 
                 }
             }
+
+
         }
     };
 
@@ -104,7 +171,8 @@ public class ThirdSpalshScreenActivity extends AppCompatActivity {
                 nameValuePairs.add(new BasicNameValuePair("EmailID", params[0]));
                 nameValuePairs.add(new BasicNameValuePair("Phone", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("DeviceID", params[2]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/aluser/checkuser", nameValuePairs, ThirdSpalshScreenActivity.this);
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/aluser/checkuser", nameValuePairs, ThirdSpalshScreenActivity.this);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -128,17 +196,22 @@ public class ThirdSpalshScreenActivity extends AppCompatActivity {
                         String uid = object.getString("ID");
                         String email = object.getString("EmailID");
                         String mobile = object.getString("Phone");
+                        String Address = object.getString("Address");
                         sharedpreferance.saveId(uid);
                         sharedpreferance.saveEmail(email);
                         sharedpreferance.saveMobile(mobile);
+                        sharedpreferance.saveFirst_name(Address);
 
                         Log.e("email", "---------------" + sharedpreferance.getEmail());
                         Log.e("uid", "---------------" + sharedpreferance.getId());
 
-                        Intent intent = new Intent(ThirdSpalshScreenActivity.this, ActivityHomeMain.class);
-                        startActivity(intent);
-                        finish();
-                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
+                        askforLogin();
+//                        Intent intent = new Intent(ThirdSpalshScreenActivity.this, ActivityHomeMain.class);
+//                        startActivity(intent);
+//                        finish();
+//                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
                     }
 
                 } else {
@@ -149,6 +222,65 @@ public class ThirdSpalshScreenActivity extends AppCompatActivity {
                     finish();
 //                Window window = dialog.getWindow();
 //                window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+
+    private class ContentGet extends AsyncTask<String, Void, String> {
+        String responseJSON = "";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/quote/viewQuote");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return responseJSON;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("reponse", "-----------------" + s);
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    Log.e("status", "-----------------success");
+
+
+                        JSONObject object = jsonArray.getJSONObject(0);
+
+                        Log.e("quote","-------------"+object.getString("title"));
+
+                        txt_content.setText(CommonMethod.decodeEmoji(object.getString("title")));
+
+                        Log.e("array", "-----------------success");
+
+
+
+
+
+                    progress.setVisibility(View.GONE);
+
+                } else {
+                    progress.setVisibility(View.GONE);
                 }
 
             } catch (JSONException e) {

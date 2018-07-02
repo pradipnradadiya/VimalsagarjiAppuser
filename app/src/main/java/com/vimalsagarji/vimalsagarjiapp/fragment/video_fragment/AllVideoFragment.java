@@ -52,10 +52,10 @@ public class AllVideoFragment extends Fragment {
     }
 
     final static String TAG = AllVideoFragment.class.getSimpleName();
-    private final String urls = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/getvideobycategoryid/?page=1&psize=1000&cid=";
+    private final String urls = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategoryid/?page=1&psize=1000&cid=";
     private static String URL = "";
-    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/videoimage/";
-    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/videos/";
+    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videoimage/";
+    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videos/";
     private final ArrayList<String> listid = new ArrayList<>();
     private final ArrayList<String> listcatid = new ArrayList<>();
     private ArrayList<String> listVideoName = new ArrayList<String>();
@@ -69,7 +69,7 @@ public class AllVideoFragment extends Fragment {
     private CustomAdpter customAdpter;
     private TextView txt_nodata_today;
     private EditText InputBox;
-    private final String AllSearchVideo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/video/searchvideobycategory/?page=1&psize=1000";
+    private final String AllSearchVideo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/searchvideobycategory/?page=1&psize=1000";
 
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
 
@@ -108,6 +108,7 @@ public class AllVideoFragment extends Fragment {
 
             }
         });
+
         InputBox.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -125,9 +126,9 @@ public class AllVideoFragment extends Fragment {
             activity_main_swipe_refresh_layout.setEnabled(false);
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new AllEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategoryyear/?page=1&psize=1000");
+                    new AllEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000");
                 } else {
-                    new AllEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategoryyear/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                    new AllEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
                 }
             } else {
                 final Snackbar snackbar = Snackbar
@@ -149,9 +150,9 @@ public class AllVideoFragment extends Fragment {
             activity_main_swipe_refresh_layout.setEnabled(false);
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new AllByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappposts/?page=1&psize=1000");
+                    new AllByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000");
                 } else {
-                    new AllByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappposts/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                    new AllByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
                 }
             } else {
                 final Snackbar snackbar = Snackbar
@@ -165,6 +166,7 @@ public class AllVideoFragment extends Fragment {
                     }
                 });
             }
+
         } else {
 
             listVideoName.clear();
@@ -187,6 +189,8 @@ public class AllVideoFragment extends Fragment {
                         snackbar.dismiss();
                     }
                 });
+
+
             }
         }
 
@@ -204,7 +208,7 @@ public class AllVideoFragment extends Fragment {
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
                     } else {
-                        listflag.set(position,"true");
+                        listflag.set(position, "true");
                         customAdpter.notifyDataSetChanged();
 
                         videolistarray = new ArrayList<>();
@@ -226,7 +230,7 @@ public class AllVideoFragment extends Fragment {
                         Toast.makeText(getActivity(), "This posts video not avalable.", Toast.LENGTH_SHORT).show();
                     } else {
 
-                        listflag.set(position,"true");
+                        listflag.set(position, "true");
                         customAdpter.notifyDataSetChanged();
 
 
@@ -243,10 +247,10 @@ public class AllVideoFragment extends Fragment {
                         String date = listDate.get(position);
                         Log.e("date", "------------------" + date);
 
-                        video_play_url = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/" + strVideo;
+                        video_play_url = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + strVideo;
                         Intent intent = new Intent(getActivity(), VideoFullActivity.class);
 //                            intent.putExtra("click_action", "");
-//                            intent.putExtra("video", "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/" + strVideo);
+//                            intent.putExtra("video", "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + strVideo);
 //                            intent.putExtra("videoname", videoname);
 //                            intent.putExtra("id", id);
 //                            intent.putExtra("catid", catid);
@@ -261,7 +265,7 @@ public class AllVideoFragment extends Fragment {
                     }
                 } else {
 
-                    listflag.set(position,"true");
+                    listflag.set(position, "true");
                     customAdpter.notifyDataSetChanged();
 
                     String strVideo = listVideo.get(position);
@@ -381,14 +385,13 @@ public class AllVideoFragment extends Fragment {
                         String[] time = date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
 
-
                         listDate.add(dayOfTheWeek + ", " + fulldate);
                         String name = object.getString("Name");
 
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
                             String flag = "true";
                             listflag.add(flag);
-                        }else {
+                        } else {
                             String flag = object.getString("is_viewed");
                             listflag.add(flag);
                         }
@@ -396,6 +399,7 @@ public class AllVideoFragment extends Fragment {
                 } else {
 
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -422,6 +426,7 @@ public class AllVideoFragment extends Fragment {
                     }
 
                 }
+
             }
 
         }
@@ -501,10 +506,10 @@ public class AllVideoFragment extends Fragment {
 
                         listDate.add(dayOfTheWeek + ", " + fulldate);
                         String name = object.getString("Name");
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
                             String flag = "true";
                             listflag.add(flag);
-                        }else {
+                        } else {
                             String flag = object.getString("is_viewed");
                             listflag.add(flag);
                         }
@@ -530,8 +535,6 @@ public class AllVideoFragment extends Fragment {
                         txt_nodata_today.setVisibility(View.VISIBLE);
 
                     }
-
-
                 }
             }
 
@@ -572,6 +575,7 @@ public class AllVideoFragment extends Fragment {
                 holder.img_new = (ImageView) convertView.findViewById(R.id.img_new);
 
                 convertView.setTag(holder);
+
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
@@ -589,6 +593,7 @@ public class AllVideoFragment extends Fragment {
             } else {
                 Picasso.with(getActivity()).load(R.drawable.no_image);
             }
+
             /*holder.imgPlayVideo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -642,10 +647,10 @@ public class AllVideoFragment extends Fragment {
                             String date = listDate.get(position);
                             Log.e("date", "------------------" + date);
 
-                            video_play_url = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/" + strVideo;
+                            video_play_url = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + strVideo;
                             Intent intent = new Intent(getActivity(), VideoFullActivity.class);
 //                            intent.putExtra("click_action", "");
-//                            intent.putExtra("video", "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/" + strVideo);
+//                            intent.putExtra("video", "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + strVideo);
 //                            intent.putExtra("videoname", videoname);
 //                            intent.putExtra("id", id);
 //                            intent.putExtra("catid", catid);
@@ -758,12 +763,12 @@ public class AllVideoFragment extends Fragment {
                         listcatid.add(catid);
                         String video = object.getString("Video");
 
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventvideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(video);
                         String photo = object.getString("Photo");
                         String[] parray = photo.split(",");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/" + parray[0];
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + parray[0];
 
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
@@ -791,10 +796,10 @@ public class AllVideoFragment extends Fragment {
 
                         listDate.add(dayOfTheWeek + ", " + fulldate);
 //                        String name = object.getString("Name");
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
                             String flag = "true";
                             listflag.add(flag);
-                        }else {
+                        } else {
                             String flag = object.getString("is_viewed");
                             listflag.add(flag);
                         }
@@ -880,11 +885,11 @@ public class AllVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/" + video;
+                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(video);
                         String photo = object.getString("Photo");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleimage/" + photo;
+                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");
@@ -911,10 +916,10 @@ public class AllVideoFragment extends Fragment {
                         String name = object.getString("Name");
                         String view = object.getString("View");
                         listview.add(view);
-                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                        if (sharedpreferance.getId().equalsIgnoreCase("")) {
                             String flag = "true";
                             listflag.add(flag);
-                        }else {
+                        } else {
                             String flag = object.getString("is_viewed");
                             listflag.add(flag);
                         }

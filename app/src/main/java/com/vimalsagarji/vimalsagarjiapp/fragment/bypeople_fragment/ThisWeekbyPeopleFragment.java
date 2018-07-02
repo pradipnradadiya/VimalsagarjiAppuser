@@ -48,8 +48,8 @@ public class ThisWeekbyPeopleFragment extends Fragment {
 
     private static final String TAG = AllbyPeopleFragment.class.getSimpleName();
 
-    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleaudio/";
-    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/";
+    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/";
+    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/";
     private static final String strImageUrlName = "bypeopleimage";
     private static final String ImgURL = Constant.ImgURL;
     private static final String IMAGEURL = ImgURL.replace("audioimage", strImageUrlName);
@@ -71,7 +71,7 @@ public class ThisWeekbyPeopleFragment extends Fragment {
     private ListView listView;
     String strImageUrl = "";
 
-    private final String strURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallapppostsweek/?page=1&psize=1000";
+    private final String strURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsweek/?page=1&psize=1000";
     //    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
     private ProgressBar progressbar;

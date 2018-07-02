@@ -25,6 +25,7 @@
 
 
     <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+        android:visibility="gone"
         android:id="@+id/txtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,6 +41,7 @@
         tools:ignore="HardcodedText,RtlHardcoded" />
 
     <com.vimalsagarji.vimalsagarjiapp.utils.CustomEditText
+        android:visibility="gone"
         android:id="@+id/emailid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,7 +54,6 @@
         android:lines="1"
         android:padding="10sp"
         android:textColor="@color/black" />
-
 
     <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
         android:layout_width="match_parent"

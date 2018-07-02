@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
 import com.vimalsagarji.vimalsagarjiapp.adpter.RecyclerCompetitionCategoryAdapter;
-import com.vimalsagarji.vimalsagarjiapp.categoryactivity.EventCategory;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.model.CompetitionItem;
 import com.vimalsagarji.vimalsagarjiapp.util.CommonURL;
@@ -37,6 +36,7 @@ public class CompetitionAllActivity extends AppCompatActivity {
     private ProgressBar progress_load;
     private ArrayList<CompetitionItem> competitionItemArrayList = new ArrayList<>();
     private TextView txt_nodata;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,14 +73,23 @@ public class CompetitionAllActivity extends AppCompatActivity {
         });
 
     }
+
     private void bindID() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(CompetitionAllActivity.this);
-        recyclerView= (RecyclerView) findViewById(R.id.recycleview_competition);
-        progress_load= (ProgressBar) findViewById(R.id.progress_load);
-        txt_nodata= (TextView) findViewById(R.id.txt_nodata);
+        recyclerView = (RecyclerView) findViewById(R.id.recycleview_competition);
+        progress_load = (ProgressBar) findViewById(R.id.progress_load);
+        txt_nodata = (TextView) findViewById(R.id.txt_nodata);
+        TextView txt_old_comp = (TextView) findViewById(R.id.txt_old_comp);
+        txt_old_comp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CompetitionAllActivity.this, OldCompetitionAllActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
         recyclerView.setLayoutManager(linearLayoutManager);
     }
-
 
     @SuppressLint("StaticFieldLeak")
     private class GetAllCompetitionCategory extends AsyncTask<String, Void, String> {
@@ -105,8 +114,7 @@ public class CompetitionAllActivity extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("page", "1"));
             nameValuePairs.add(new BasicNameValuePair("psize", "1000"));
 
-
-            responseJSON = CommonMethod.postStringResponse(CommonURL.Main_url + "competition/getallcompetition/", nameValuePairs, CompetitionAllActivity.this);
+            responseJSON = CommonMethod.postStringResponse(CommonURL.Main_url + "competition/gettodaycompetition", nameValuePairs, CompetitionAllActivity.this);
             return responseJSON;
         }
 
@@ -119,10 +127,6 @@ public class CompetitionAllActivity extends AppCompatActivity {
                 competitionItemArrayList = new ArrayList<>();
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
-                   /* if (jsonArray.length() < 30 || jsonArray.length() == 0) {
-                        flag_scroll = true;
-                        Log.e("length_array_news", flag_scroll + "" + "<30===OR(0)===" + jsonArray.length());
-                    }*/
                     Log.e("json array", "-------------------" + jsonArray);
                     for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -137,12 +141,13 @@ public class CompetitionAllActivity extends AppCompatActivity {
                         String total_minute = jsonObject1.getString("total_minute");
                         String is_open = jsonObject1.getString("status");
                         String participated_users = jsonObject1.getString("participated_users");
+                        String status = jsonObject1.getString("status");
 
-                        competitionItemArrayList.add(new CompetitionItem(id, title, rules, date, time, total_question, total_minute, is_open, participated_users, false));
+                        competitionItemArrayList.add(new CompetitionItem(id, title, rules, date, time, total_question, total_minute, is_open, participated_users, false, status));
 
                     }
 
-                    Log.e("size","--------------------"+competitionItemArrayList.size());
+                    Log.e("size", "--------------------" + competitionItemArrayList.size());
                 }
 
             } catch (JSONException e) {
@@ -164,7 +169,6 @@ public class CompetitionAllActivity extends AppCompatActivity {
                     txt_nodata.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
                 }
-
 
             }
 

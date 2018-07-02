@@ -105,9 +105,9 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
     private String pid;
     private String view;
     TextView txt_title;
-    private final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleaudio/";
-    private final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeoplevideo/";
-    private final String imagepath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleimage/";
+    private final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/";
+    private final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/";
+    private final String imagepath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/";
     String click_action;
     RelativeLayout rel_video;
     TextView txt_nodata, txtvideolink;
@@ -465,13 +465,17 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
 //                    rel_video.setVisibility(View.VISIBLE);
                     img_bypeople.setVisibility(View.GONE);
                     img_bypeople.setVisibility(View.GONE);
+
+
                     if (vi.equalsIgnoreCase("")) {
                         rel_video.setVisibility(View.GONE);
                         txt_nodata.setVisibility(View.VISIBLE);
                         txt_nodata.setText("Video not\n Avalable");
 
 //                        Toast.makeText(ByPeopleDetailActivity.this, "Video not available.", Toast.LENGTH_SHORT).show();
-                    } else {
+                    }
+
+                    else {
                         txt_nodata.setVisibility(View.GONE);
                         rel_video.setVisibility(View.VISIBLE);
                         video_play_url = video;
@@ -484,6 +488,8 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                         });
 //                        videoView.setUp(video, JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, strtitle);
                     }
+
+
                 } else {
                     final Snackbar snackbar = Snackbar
                             .make(rl_layout, "No internet connection!", Snackbar.LENGTH_INDEFINITE);
@@ -609,7 +615,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
             return responseJSON;
         }
 
@@ -690,7 +696,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
             return responseJSON;
         }
 
@@ -756,7 +762,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappcomments/?page=1&psize=1000", nameValuePairs, ByPeopleDetailActivity.this);
             return responseJSON;
         }
 
@@ -825,7 +831,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", pid));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Comment", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/comment/", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/comment/", nameValuePairs, ByPeopleDetailActivity.this);
 
             return responseJSON;
         }
@@ -872,7 +878,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
-            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/postlike/", nameValuePairs, ByPeopleDetailActivity.this);
+            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/postlike/", nameValuePairs, ByPeopleDetailActivity.this);
             return responeJSON;
         }
 
@@ -901,7 +907,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[0]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/countlikes/", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/countlikes/", nameValuePairs, ByPeopleDetailActivity.this);
             return responseJSON;
         }
 
@@ -944,7 +950,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", params[0]));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("pid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/checklike/", nameValuePairs, ByPeopleDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/checklike/", nameValuePairs, ByPeopleDetailActivity.this);
             return responseJSON;
         }
 
@@ -976,7 +982,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1017,7 +1023,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/countviews/bypeople/?bypid=" + pid + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/bypeople/?bypid=" + pid + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }

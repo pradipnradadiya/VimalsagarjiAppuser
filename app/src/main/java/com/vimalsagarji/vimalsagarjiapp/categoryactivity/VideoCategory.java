@@ -167,11 +167,11 @@ public class VideoCategory extends AppCompatActivity {
 
                     listId.add("e_alliamgeid");
                     listName.add("Event");
-                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/Gallery/event.png");
+                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/event.png");
 
                     listId.add("bypeopleidid");
                     listName.add("ByPeople");
-                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/Gallery/bypeople.png");
+                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/bypeople.png");
 
                 } else {
 
@@ -210,8 +210,9 @@ public class VideoCategory extends AppCompatActivity {
                             } else {
                                 grid_txtTitle = (TextView) findViewById(R.id.grid_txtTitle);
                                 String strAudioTitle = grid_txtTitle.getText().toString();
+                                Log.e("title","------------"+strAudioTitle);
                                 Intent intent = new Intent(VideoCategory.this, VideoCategoryItem.class);
-                                intent.putExtra("listTitle", strAudioTitle);
+                                intent.putExtra("listTitle", listName.get(position));
                                 intent.putExtra("v_cid", listId.get(position));
                                 Log.e("id", "----------------------" + listId.get(position));
                                 startActivity(intent);
@@ -271,10 +272,12 @@ public class VideoCategory extends AppCompatActivity {
             Glide.with(VideoCategory.this).load(listIcon.get(position)
                     .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).dontAnimate().into(holder.grid_img);
 
+
+            Log.e("video cat","---------------"+listIcon.get(position)
+                    .replaceAll(" ", "%20"));
             return convertView;
 
         }
-
 
         private class ViewHolder {
             TextView grid_txtTitle;

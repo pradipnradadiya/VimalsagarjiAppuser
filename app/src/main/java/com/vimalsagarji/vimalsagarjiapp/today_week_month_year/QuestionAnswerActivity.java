@@ -16,6 +16,10 @@ import android.widget.TextView;
 
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.fragment.questionanswer_fragment.AllQuetionAnswerFragment;
+import com.vimalsagarji.vimalsagarjiapp.fragment.questionanswer_fragment.QuestionAllFragment;
+import com.vimalsagarji.vimalsagarjiapp.fragment.questionanswer_fragment.QuestionMonthFragment;
+import com.vimalsagarji.vimalsagarjiapp.fragment.questionanswer_fragment.QuestionTodayFragment;
+import com.vimalsagarji.vimalsagarjiapp.fragment.questionanswer_fragment.QuestionWeekFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.questionanswer_fragment.ThisMonthQuetionAnswerFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.questionanswer_fragment.ThisWeekQuetionAnswerFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.questionanswer_fragment.TodayQuetionAnswerFragment;
@@ -120,7 +124,8 @@ public class QuestionAnswerActivity extends AppCompatActivity implements View.On
         lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
 
         Fragment fr = null;
-        fr = new TodayQuetionAnswerFragment();
+        fr = new QuestionTodayFragment();
+//        fr = new TodayQuetionAnswerFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);
@@ -140,7 +145,8 @@ public class QuestionAnswerActivity extends AppCompatActivity implements View.On
         lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
 
         Fragment fr = null;
-        fr = new ThisWeekQuetionAnswerFragment();
+        fr = new QuestionWeekFragment();
+//        fr = new ThisWeekQuetionAnswerFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);
@@ -160,7 +166,8 @@ public class QuestionAnswerActivity extends AppCompatActivity implements View.On
         lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
 
         Fragment fr = null;
-        fr = new ThisMonthQuetionAnswerFragment();
+        fr = new QuestionMonthFragment();
+//        fr = new ThisMonthQuetionAnswerFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);
@@ -179,12 +186,14 @@ public class QuestionAnswerActivity extends AppCompatActivity implements View.On
         lin_month.setBackgroundResource(R.drawable.round_rect_shapeone);
         lin_all.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
         Fragment fr = null;
-        fr = new AllQuetionAnswerFragment();
+        fr = new QuestionAllFragment();
+//        fr = new AllQuetionAnswerFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);
 //        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
     }
 
 

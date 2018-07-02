@@ -6,9 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.vimalsagarji.vimalsagarjiapp.R;
 
-/**
- * Created by Grapes-Pradip on 02-Oct-17.
- */
 
 public class BuyActivity extends AppCompatActivity {
     @Override

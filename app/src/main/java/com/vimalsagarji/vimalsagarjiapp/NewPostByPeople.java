@@ -38,6 +38,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 
 import ch.boye.httpclientandroidlib.HttpResponse;
 import ch.boye.httpclientandroidlib.client.HttpClient;
@@ -72,6 +81,7 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
     private ImageView img_disp;
     KProgressHUD loadingProgressDialog;
     Bitmap thumbnail;
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -145,6 +155,33 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
                     e_description.requestFocus();
                 } else {
                     if (CommonMethod.isInternetConnected(NewPostByPeople.this)) {
+
+                        try {
+                            String str = "Your string";
+
+                            byte[] array = str.getBytes();
+                            byte[] plaintext = array;
+
+                            KeyGenerator keygen = KeyGenerator.getInstance("AES");
+                            keygen.init(256);
+                            SecretKey key = keygen.generateKey();
+                            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+                            cipher.init(Cipher.ENCRYPT_MODE, key);
+                            byte[] ciphertext = cipher.doFinal(plaintext);
+                            byte[] iv = cipher.getIV();
+
+                        } catch (NoSuchAlgorithmException e) {
+                            e.printStackTrace();
+                        } catch (BadPaddingException e) {
+                            e.printStackTrace();
+                        } catch (IllegalBlockSizeException e) {
+                            e.printStackTrace();
+                        } catch (NoSuchPaddingException e) {
+                            e.printStackTrace();
+                        } catch (InvalidKeyException e) {
+                            e.printStackTrace();
+                        }
+
                         new NewPost().execute();
                     }
                 }
@@ -450,10 +487,10 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
             String Photo = "no photo";
             String Videolink = "";
 
-
             try {
+
                 HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/addpost/");
+                HttpPost httpPost = new HttpPost("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/addpost/");
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 
                 multipartEntity.addPart("uid", new StringBody(sharedpreferance.getId()));
@@ -548,6 +585,7 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
             scale *= 2;
         }
 
+
         // Decode with inSampleSize
         BitmapFactory.Options o2 = new BitmapFactory.Options();
         o2.inSampleSize = scale;
@@ -556,10 +594,11 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
         img_disp.setVisibility(View.VISIBLE);
         img_disp.setImageBitmap(thumbnail);
         OutputStream outFile = null;
-        File file=new File(picturePath);
+        File file = new File(picturePath);
         outFile = new FileOutputStream(file);
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 40, outFile);
         outFile.flush();
         outFile.close();
+
     }
 }

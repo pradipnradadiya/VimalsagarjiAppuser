@@ -138,7 +138,7 @@ public class AllQuestionDetail extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/countviews/question/?qid=" + qid + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/question/?qid=" + qid + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -170,7 +170,7 @@ public class AllQuestionDetail extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewquesansbyid/?qid=" + qid);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewquesansbyid/?qid=" + qid);
             } catch (Exception e) {
                 e.printStackTrace();
             }

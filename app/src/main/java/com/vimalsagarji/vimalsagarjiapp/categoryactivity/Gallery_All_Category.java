@@ -148,7 +148,7 @@ public class Gallery_All_Category extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/gallery/getallcategory");
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallcategory");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -170,15 +170,15 @@ public class Gallery_All_Category extends AppCompatActivity {
                         strName = object.getString("Name");
                         listName.add(strName);
                         String strCategoryIcon = object.getString("CategoryIcon");
-                        listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/gallerycategory/" + strCategoryIcon);
+                        listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/gallerycategory/" + strCategoryIcon);
                     }
                     listID.add("e_alliamgeid");
                     listName.add("Event");
-                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/Gallery/event.png");
+                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/event.png");
 
                     listID.add("bypeopleidid");
                     listName.add("ByPeople");
-                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/Gallery/bypeople.png");
+                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/bypeople.png");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -247,6 +247,10 @@ public class Gallery_All_Category extends AppCompatActivity {
 
             Glide.with(Gallery_All_Category.this).load(listIcon.get(position)
                     .replaceAll(" ", "%20")).placeholder(R.drawable.loader).dontAnimate().into(holder.grid_img);
+
+
+            Log.e("galerry category","--------------"+listIcon.get(position)
+                    .replaceAll(" ", "%20"));
 
 
             holder.grid_img.setOnClickListener(new View.OnClickListener() {

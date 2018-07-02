@@ -90,7 +90,7 @@ public class AudioMainCategoryActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
 
-            responseJson = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/getallcategory");
+            responseJson = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getallcategory");
             return responseJson;
         }
 
@@ -106,11 +106,11 @@ public class AudioMainCategoryActivity extends AppCompatActivity {
                     String CAT_ID = "audio";
                     String ID = object.getString("ID");
                     String Name = object.getString("Name");
-                    String CategoryIcon = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/audiocategory/"+object.getString("CategoryIcon");
+                    String CategoryIcon = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audiocategory/"+object.getString("CategoryIcon");
                     audioAllItems.add(new MainCategoryItem(CAT_ID,ID,Name,CategoryIcon));
                 }
 
-                audioAllItems.add(new MainCategoryItem("audio","e_alliamgeid","Event","http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/Gallery/event.png"));
+                audioAllItems.add(new MainCategoryItem("audio","e_alliamgeid","Event","http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/event.png"));
 
                 audioAllAdapter.notifyDataSetChanged();
 

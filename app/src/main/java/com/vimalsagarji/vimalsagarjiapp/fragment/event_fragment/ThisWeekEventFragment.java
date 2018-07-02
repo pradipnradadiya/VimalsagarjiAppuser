@@ -57,9 +57,9 @@ public class ThisWeekEventFragment extends Fragment {
     String day = "";
     int dayOfWeek = 0;
     Date date;
-    private final String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/";
-    private final String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventaudio/";
-    private final String Video = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventvideo/";
+    private final String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/";
+    private final String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/";
+    private final String Video = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/";
     final int drawableImage = R.drawable.event;
 
 
@@ -67,7 +67,7 @@ public class ThisWeekEventFragment extends Fragment {
     private EditText InputBox;
     private CustomAdpter adpter;
     private List<EventAdpter> listfilterdata = new ArrayList<>();
-    private final String WeekSearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/searcheventsbycategoryweek/?page=1&psize=1000";
+    private final String WeekSearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/searcheventsbycategoryweek/?page=1&psize=1000";
 
     private GridView gridView;
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
@@ -87,7 +87,7 @@ public class ThisWeekEventFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         sharedpreferance = new Sharedpreferance(getActivity());
-        URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategoryweek/?cid=" + cid + "&page=1&psize=1000";
+        URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryweek/?cid=" + cid + "&page=1&psize=1000";
 
 
         progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);

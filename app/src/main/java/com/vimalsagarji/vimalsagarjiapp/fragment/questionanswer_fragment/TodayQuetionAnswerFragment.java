@@ -69,13 +69,13 @@ public class TodayQuetionAnswerFragment extends Fragment {
     private String strAskQuestion;
     private ListView listView;
     private Button btn_askQuestion;
-    private final String postQue = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/askques/";
+    private final String postQue = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/";
 
     private Dialog dialog;
     private TextView txt_nodata_today;
     private EditText InputBox;
     List<ThoughtToday> listfilterdata = new ArrayList<>();
-    private final String TodaySearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/searchallappquestoday/?page=1&psize=1000";
+    private final String TodaySearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/searchallappquestoday/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     //    String approve = "";
     private ProgressBar progressbar;
@@ -219,9 +219,9 @@ public class TodayQuetionAnswerFragment extends Fragment {
     private void loadData() {
         adpter.clear();
         if (sharedpreferance.getId().equalsIgnoreCase("")){
-            new LoadGetTodayQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquestoday/?page=1&psize=1000");
+            new LoadGetTodayQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquestoday/?page=1&psize=1000");
         }else {
-            new LoadGetTodayQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquestoday/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+            new LoadGetTodayQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquestoday/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
         }
     }
 
@@ -602,10 +602,10 @@ public class TodayQuetionAnswerFragment extends Fragment {
         if (CommonMethod.isInternetConnected(getActivity())) {
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
                 GetTodayQuestion getTodayQuestion = new GetTodayQuestion();
-                getTodayQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquestoday/?page=1&psize=1000");
+                getTodayQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquestoday/?page=1&psize=1000");
             } else {
                 GetTodayQuestion getTodayQuestion = new GetTodayQuestion();
-                getTodayQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquestoday/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+                getTodayQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquestoday/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
             }
         }
     }

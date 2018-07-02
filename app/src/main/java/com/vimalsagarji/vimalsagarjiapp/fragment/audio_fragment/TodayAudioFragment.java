@@ -49,9 +49,9 @@ public class TodayAudioFragment extends Fragment {
 
     }
 
-    private final static String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/getaudiobycategorytoday/?page=1&psize=1000";
-    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/audioimage/";
-    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/audios/";
+    private final static String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getaudiobycategorytoday/?page=1&psize=1000";
+    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audioimage/";
+    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audios/";
     private ArrayList<ThisMonthAudio> arrayList = new ArrayList<>();
     private static String strCid = "";
     private View view;
@@ -59,7 +59,7 @@ public class TodayAudioFragment extends Fragment {
     //    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
     private EditText InputBox;
-    private final String MonthSearchAudio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/searchallaudiotoday/?page=1&psize=1000";
+    private final String MonthSearchAudio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/searchallaudiotoday/?page=1&psize=1000";
     private ListView listView;
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private ProgressBar progressbar;
@@ -107,9 +107,9 @@ public class TodayAudioFragment extends Fragment {
         if (strCid.equalsIgnoreCase("e_alliamgeid")) {
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new GetTodayEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategorytoday/?page=1&psize=1000");
+                    new GetTodayEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorytoday/?page=1&psize=1000");
                 } else {
-                    new GetTodayEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/event/geteventsbycategorytoday/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                    new GetTodayEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorytoday/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
                 }
             } else {
                 Snackbar.make(getView(), R.string.internet, Snackbar.LENGTH_SHORT).show();
@@ -117,9 +117,9 @@ public class TodayAudioFragment extends Fragment {
         } else if (strCid.equalsIgnoreCase("bypeopleidid")) {
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new GetTodayByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallapppoststoday/?page=1&psize=1000");
+                    new GetTodayByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppoststoday/?page=1&psize=1000");
                 } else {
-                    new GetTodayByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/bypeople/getallapppoststoday/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+                    new GetTodayByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppoststoday/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
                 }
             } else {
                 Snackbar.make(getView(), R.string.internet, Snackbar.LENGTH_SHORT).show();
@@ -531,8 +531,8 @@ public class TodayAudioFragment extends Fragment {
                         String id = "eid";
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventaudio/" + object.getString("Audio");
-                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/eventimage/" + object.getString("Photo");
+                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/" + object.getString("Audio");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");
@@ -641,8 +641,8 @@ public class TodayAudioFragment extends Fragment {
                         String id = "bid";
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleaudio/" + object.getString("Audio");
-                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bypeopleimage/" + object.getString("Photo");
+                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/" + object.getString("Audio");
+                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");

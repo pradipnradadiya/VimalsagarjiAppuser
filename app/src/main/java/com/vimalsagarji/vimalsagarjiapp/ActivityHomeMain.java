@@ -1,5 +1,7 @@
 package com.vimalsagarji.vimalsagarjiapp;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -19,7 +21,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -29,18 +30,15 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.vimalsagarji.vimalsagarjiapp.activity.InformationDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.AboutAppGuruji;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.AboutAppInfo;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.GurujiMissionActivity;
@@ -48,9 +46,9 @@ import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.GurujiVisionActivi
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.NotificationActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SettingActivity;
+import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.VisharMessageActivity;
 import com.vimalsagarji.vimalsagarjiapp.adpter.HomeSliderAdapter;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.AudioCategory;
-import com.vimalsagarji.vimalsagarjiapp.categoryactivity.CompetitionActivity;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.EventCategory;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.Gallery_All_Category;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.VideoCategory;
@@ -61,7 +59,6 @@ import com.vimalsagarji.vimalsagarjiapp.fcm.Config;
 import com.vimalsagarji.vimalsagarjiapp.model.SliderItem;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.ByPeople;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.CompetitionAllActivity;
-import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.EventActivity;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.InformationCategory;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.OpinionPoll;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.QuestionAnswerActivity;
@@ -104,6 +101,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 
     private View headerLayout;
     private LinearLayout lin_alert;
+    private LinearLayout lin_vichar;
     private LinearLayout lin_home;
     private LinearLayout lin_info;
     private LinearLayout lin_about;
@@ -128,7 +126,6 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
     ToggleButton pushonoff;
     private Dialog dialog;
 
-
     private ImageView img_hide_show;
     private int flag = 0;
 
@@ -145,6 +142,20 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+       /* //make translucent statusBar on kitkat devices
+        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
+            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
+        }
+        if (Build.VERSION.SDK_INT >= 19) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+        //make fully Android Transparent Status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }*/
+
 
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -308,6 +319,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         img_youtube = (CircleImageView) headerLayout.findViewById(R.id.img_youtube);
         img_facebook = (CircleImageView) headerLayout.findViewById(R.id.img_facebook);
         lin_alert = (LinearLayout) headerLayout.findViewById(R.id.lin_alert);
+        lin_vichar = (LinearLayout) headerLayout.findViewById(R.id.lin_vichar);
         lin_info = (LinearLayout) headerLayout.findViewById(R.id.lin_info);
         lin_about = (LinearLayout) headerLayout.findViewById(R.id.lin_about);
         lin_event = (LinearLayout) headerLayout.findViewById(R.id.lin_event);
@@ -358,6 +370,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         rel_bypeople.setOnClickListener(this);
 
         lin_alert.setOnClickListener(this);
+        lin_vichar.setOnClickListener(this);
         lin_info.setOnClickListener(this);
         lin_about.setOnClickListener(this);
         lin_event.setOnClickListener(this);
@@ -411,6 +424,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    @SuppressLint("LongLogTag")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -450,7 +464,8 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.rel_comp:
-                intent = new Intent(ActivityHomeMain.this, CompetitionActivity.class);
+                intent = new Intent(ActivityHomeMain.this, CompetitionAllActivity.class);
+//                intent = new Intent(ActivityHomeMain.this, CompetitionActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
@@ -482,6 +497,15 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 onBackPressed();
                 break;
 
+
+            case R.id.lin_vichar:
+                intent = new Intent(ActivityHomeMain.this, VisharMessageActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                onBackPressed();
+                break;
+
+
             case R.id.lin_info:
                 Log.e("lin_info", "------------------" + "click");
                 intent = new Intent(ActivityHomeMain.this, InformationCategory.class);
@@ -512,6 +536,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
                 break;
+
             case R.id.lin_audio:
                 Log.e("lin_event", "------------------" + "click");
                 intent = new Intent(ActivityHomeMain.this, AudioCategory.class);
@@ -519,6 +544,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
                 break;
+
             case R.id.lin_video:
                 Log.e("lin_video", "------------------" + "click");
                 intent = new Intent(ActivityHomeMain.this, VideoCategory.class);
@@ -526,12 +552,14 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
                 break;
+
             case R.id.lin_thought:
                 Log.e("lin_video", "------------------" + "click");
                 intent = new Intent(ActivityHomeMain.this, ThoughtsActivity.class);
                 startActivity(intent);
                 onBackPressed();
                 break;
+
             case R.id.lin_gallery:
                 Log.e("lin_gallery", "------------------" + "click");
                 intent = new Intent(ActivityHomeMain.this, Gallery_All_Category.class);
@@ -539,6 +567,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
                 break;
+
             case R.id.lin_qa:
                 Log.e("lin_qa", "------------------" + "click");
                 intent = new Intent(ActivityHomeMain.this, QuestionAnswerActivity.class);
@@ -546,6 +575,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
                 break;
+
             case R.id.lin_comp:
                 Log.e("lin_comp", "------------------" + "click");
                 intent = new Intent(ActivityHomeMain.this, CompetitionAllActivity.class);
@@ -554,6 +584,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
                 break;
+
             case R.id.lin_op:
                 Log.e("lin_op", "------------------" + "click");
                 intent = new Intent(ActivityHomeMain.this, OpinionPoll.class);
@@ -561,6 +592,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
                 break;
+
             case R.id.lin_bypeople:
                 Log.e("lin_bypeople", "------------------" + "click");
                 intent = new Intent(ActivityHomeMain.this, ByPeople.class);
@@ -568,6 +600,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
                 break;
+
             case R.id.lin_setting:
                 intent = new Intent(ActivityHomeMain.this, SettingActivity.class);
                 startActivity(intent);
@@ -657,17 +690,83 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.img_facebook:
-                try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/munivimalsagarji?ref=br_rs"));
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/munivimalsagarji?ref=br_rs"));
+//                try {
+//
+//
+//                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/aacharyavimalsagarsooriji/"));
+//                    startActivity(intent);
+//                } catch (Exception e) {
+//                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/aacharyavimalsagarsooriji/"));
+//                }
+////                openFB("100006434383261");
+//                onBackPressed();
+//
+//
+//
+
+             /*   try
+                {
+                    Intent followIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://profile/aacharyavimalsagarsooriji"));
+                    startActivity(followIntent);
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable()
+                    {
+                        @Override
+                        public void run() {
+                            Intent followIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://profile/aacharyavimalsagarsooriji"));
+                            startActivity(followIntent);
+                        }
+                    }, 1000 * 2);
+
                 }
-//                openFB("100006434383261");
-                onBackPressed();
+                catch (Exception e)
+                {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/aacharyavimalsagarsooriji")));
+                    String errorMessage = (e.getMessage()==null)?"Message is empty":e.getMessage();
+                    Log.e("Unlock_ScreenActivityd" ,errorMessage);
+                }*/
+
+
+/*
+                try
+                {
+                    Intent followIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://profile/Vimalsagarsuruji"));
+                    startActivity(followIntent);
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable()
+                    {
+                        @Override
+                        public void run() {
+                            Intent followIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://profile/Vimalsagarsuruji"));
+                            startActivity(followIntent);
+                        }
+                    }, 1000 * 2);
+
+                }
+                catch (Exception e)
+                {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/aacharyavimalsagarsuruji")));
+                    String errorMessage = (e.getMessage()==null)?"Message is empty":e.getMessage();
+                    Log.e("Unlock_Activity:FacebookAppNot" ,errorMessage);
+                }*/
+
                 break;
 
+        }
 
+    }
+
+
+    public static void getOpenFacebookIntent(Context context) {
+        try{
+            // open in Facebook app
+            context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+            new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/Vimalsagarsuruji"));
+        } catch (Exception e) {
+            // open in browser
+            new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/Vimalsagarsuruji"));
         }
     }
 
@@ -721,11 +820,12 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
             progressDialog.show();
         }
 
-
         @Override
         protected String doInBackground(String... strings) {
             try {
-                response = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/gallery/getallbanner");
+
+
+                response = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallbanner");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -752,7 +852,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        itemSplashArrayList.add(new SliderItem("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/bannerimage/" + jsonObject1.getString("image")));
+                        itemSplashArrayList.add(new SliderItem("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bannerimage/" + jsonObject1.getString("image")));
                     }
 
 
@@ -791,7 +891,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 
                     }
 
-                }, 10000, 10000);
+                }, 5000, 5000);
             }
         }
     }
@@ -808,7 +908,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         @Override
         protected String doInBackground(String... strings) {
             try {
-                responseString = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/info/getversion");
+                responseString = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getversion");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1053,7 +1153,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                         String time = jsonObject1.getString("time");
 
 
-                        dialog = new Dialog(ActivityHomeMain.this);
+                        final Dialog dialog = new Dialog(ActivityHomeMain.this);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog.setContentView(R.layout.dialog_alert);
 
@@ -1082,6 +1182,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 
                         dialog.show();
                         dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                        dialog.getWindow().setGravity(Gravity.CENTER);
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                     }
@@ -1093,6 +1194,17 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 
 
         }
+    }
+
+    public static void setWindowFlag(Activity activity, final int bits, boolean on) {
+        Window win = activity.getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
     }
 
 

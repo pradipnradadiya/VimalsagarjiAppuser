@@ -21,14 +21,15 @@ import android.widget.TextView;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
 import com.vimalsagarji.vimalsagarjiapp.fragment.information_fragment.AllInformationFragment;
+import com.vimalsagarji.vimalsagarjiapp.fragment.information_fragment.InformationAllFragment;
+import com.vimalsagarji.vimalsagarjiapp.fragment.information_fragment.InformationMonthFragment;
+import com.vimalsagarji.vimalsagarjiapp.fragment.information_fragment.InformationTodayFragment;
+import com.vimalsagarji.vimalsagarjiapp.fragment.information_fragment.InformationWeekFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.information_fragment.ThisMonthInformationFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.information_fragment.ThisWeekInformationFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.information_fragment.TodayInformationFragment;
 import com.vimalsagarji.vimalsagarjiapp.util.NetworkChangeReceiver;
 
-/**
- * Created by pradip on 04/11//2016.
- */
 @SuppressWarnings("ALL")
 public class InformationCategory extends AppCompatActivity implements View.OnClickListener, NetworkChangeReceiver.NetworkChange {
 
@@ -149,7 +150,8 @@ public class InformationCategory extends AppCompatActivity implements View.OnCli
 
 
         Fragment fr = null;
-        fr = new TodayInformationFragment();
+        fr = new InformationTodayFragment();
+//        fr = new TodayInformationFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);
@@ -171,7 +173,8 @@ public class InformationCategory extends AppCompatActivity implements View.OnCli
         lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
 
         Fragment fr = null;
-        fr = new ThisWeekInformationFragment();
+        fr = new InformationWeekFragment();
+//        fr = new ThisWeekInformationFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);
@@ -193,7 +196,8 @@ public class InformationCategory extends AppCompatActivity implements View.OnCli
         lin_all.setBackgroundResource(R.drawable.round_rect_shapeone);
 
         Fragment fr = null;
-        fr = new ThisMonthInformationFragment();
+        fr = new InformationMonthFragment();
+//        fr = new ThisMonthInformationFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);
@@ -215,7 +219,8 @@ public class InformationCategory extends AppCompatActivity implements View.OnCli
         lin_all.setBackgroundResource(R.drawable.round_rect_shapeoneselect);
 
         Fragment fr = null;
-        fr = new AllInformationFragment();
+        fr = new InformationAllFragment();
+//        fr = new AllInformationFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.framecontent, fr);

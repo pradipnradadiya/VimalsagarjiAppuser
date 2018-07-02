@@ -173,8 +173,7 @@
         <item name="android:background">@drawable/badge_circle</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:text">10</item>
-       <item name="android:gravity">center</item>
-
+        <item name="android:gravity">center</item>
 
 
     </style>

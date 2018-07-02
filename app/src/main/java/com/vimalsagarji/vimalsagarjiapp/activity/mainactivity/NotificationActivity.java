@@ -153,7 +153,7 @@ public class NotificationActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            responseString = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/notificationcount/countnotification/?page=" + page_count + "&psize=20");
+            responseString = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/notificationcount/countnotification/?page=" + page_count + "&psize=20");
             return responseString;
         }
 

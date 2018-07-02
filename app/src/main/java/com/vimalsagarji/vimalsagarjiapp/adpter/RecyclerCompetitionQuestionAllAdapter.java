@@ -2,6 +2,7 @@ package com.vimalsagarji.vimalsagarjiapp.adpter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,175 +30,143 @@ public class RecyclerCompetitionQuestionAllAdapter extends RecyclerView.Adapter<
     private final ArrayList<CompetitionQuestionItem> itemArrayList;
     private String id;
 
-    public ArrayList<String> qidlist = new ArrayList<>();
-    public ArrayList<String> answerlist = new ArrayList<>();
+    //    public ArrayList<String> qidlist = new ArrayList<>();
+//    public ArrayList<String> answerlist = new ArrayList<>();
+    public String[] questionarr;
+    public String[] answerarr;
+
+    public int mSelectedItem = -1;
+    int a=65;
 
     public RecyclerCompetitionQuestionAllAdapter(Activity activity, ArrayList<CompetitionQuestionItem> itemArrayList) {
         super();
         this.activity = activity;
         this.itemArrayList = itemArrayList;
+        Log.e("layout", "---------------call");
+        questionarr = new String[itemArrayList.size()];
+        answerarr = new String[itemArrayList.size()];
     }
-
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_competition_all, viewGroup, false);
+
+
         return new ViewHolder(v);
     }
+
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int i) {
 
         final CompetitionQuestionItem competitionQuestionItem = itemArrayList.get(i);
 
-//        holder.img_option.setVisibility(View.VISIBLE);
         holder.txt_answer.setVisibility(View.GONE);
         holder.txt_type.setVisibility(View.GONE);
 
 
         holder.txt_index.setText(String.valueOf(i + 1) + ") ");
         holder.txt_title.setText(CommonMethod.decodeEmoji(competitionQuestionItem.getQuestion()));
-//        holder.txt_type.setText(competitionQuestionItem.getQtype());
-//        holder.txt_answer.setText(competitionQuestionItem.getAnswer());
 
-        if (competitionQuestionItem.getQtype().equalsIgnoreCase("yes_no")) {
-            holder.lin.setVisibility(View.VISIBLE);
 
-            holder.txt_yes.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    holder.img_yes.setVisibility(View.VISIBLE);
-                    holder.img_no.setVisibility(View.GONE);
+        String[] options;
+        options = null;
+        holder.lin.setVisibility(View.GONE);
+        options = competitionQuestionItem.getOptions().split(",");
 
-                    if (qidlist.contains(competitionQuestionItem.getId())) {
-                        qidlist.set(i, competitionQuestionItem.getId());
-                        answerlist.set(i, "true");
-                    } else {
-                        qidlist.add(i, competitionQuestionItem.getId());
-                        answerlist.add(i, "true");
-                    }
 
-                    Log.e("Question id array", "----------" + qidlist);
-                    Log.e("Answer list array", "----------" + answerlist);
+        Log.e("lenth", "----------------" + options.length);
 
+        holder.radiogroup.removeAllViews();
+
+
+
+
+        for (int j = 0; j < options.length; j++) {
+
+
+            holder.radioButton = new RadioButton(activity);
+           // holder.textview=new TextView(activity);
+
+//            Log.e("id", "----------------" + holder.radioButton.getId());
+//            Log.e("option", "----------------" + options[j]);
+
+          //  holder.textview.setText(""+j);
+            holder.radioButton.setText(options[j]);
+
+//            holder.radioButton.setText(((char)j+a)+options[j]);
+
+            if (competitionQuestionItem.isSelected()) {
+
+                Log.e("if position", "--------------" + i);
+                Log.e("if checked", "--------------" + itemArrayList.get(i).getCheckedId());
+                Log.e("radio button idd", "--------------" + holder.radioButton.getId());
+                holder.radiogroup.setOnCheckedChangeListener(null);
+                holder.radiogroup.check(itemArrayList.get(i).getCheckedId());
+
+                if (holder.radioButton.getText().toString().equalsIgnoreCase(itemArrayList.get(i).getAnswer())){
+                    holder.radioButton.setChecked(true);
+                }else{
+                    holder.radioButton.setChecked(false);
                 }
-            });
 
-            holder.txt_no.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    holder.img_yes.setVisibility(View.GONE);
-                    holder.img_no.setVisibility(View.VISIBLE);
+//                holder.radioButton.setChecked(true);
+//                holder.radiogroup.check(itemArrayList.get(i).getCheckedId());
 
-                    if (qidlist.contains(competitionQuestionItem.getId())) {
-                        qidlist.set(i, competitionQuestionItem.getId());
-                        answerlist.set(i, "false");
-                    } else {
-                        qidlist.add(i, competitionQuestionItem.getId());
-                        answerlist.add(i, "false");
-                    }
+            } else {
+                Log.e("else position", "--------------" + i);
+                Log.e("else checked", "--------------");
+                holder.radiogroup.setOnCheckedChangeListener(null);
+                holder.radiogroup.clearCheck();
+            }
 
-                    Log.e("Question id array", "----------" + qidlist);
-                    Log.e("Answer list array", "----------" + answerlist);
+            holder.radiogroup.addView(holder.radioButton);
 
+        }
+        holder.radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                }
-            });
-
-            holder.img_yes.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    holder.img_yes.setVisibility(View.VISIBLE);
-                    holder.img_no.setVisibility(View.GONE);
-
-                    if (qidlist.contains(competitionQuestionItem.getId())) {
-                        qidlist.set(i, competitionQuestionItem.getId());
-                        answerlist.set(i, "true");
-                    } else {
-                        qidlist.add(i, competitionQuestionItem.getId());
-                        answerlist.add(i, "true");
-                    }
-
-                    Log.e("Question id array", "----------" + qidlist);
-                    Log.e("Answer list array", "----------" + answerlist);
-
-                }
-            });
-
-            holder.img_no.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    holder.img_yes.setVisibility(View.GONE);
-                    holder.img_no.setVisibility(View.VISIBLE);
-
-                    if (qidlist.contains(competitionQuestionItem.getId())) {
-                        qidlist.set(i, competitionQuestionItem.getId());
-                        answerlist.set(i, "false");
-                    } else {
-                        qidlist.add(i, competitionQuestionItem.getId());
-                        answerlist.add(i, "false");
-                    }
-
-                    Log.e("Question id array", "----------" + qidlist);
-                    Log.e("Answer list array", "----------" + answerlist);
-
-
-                }
-            });
-
-        } else {
-
-            holder.lin.setVisibility(View.GONE);
-            String[] options = competitionQuestionItem.getOptions().split(",");
-            for (int j = 0; j < options.length; j++) {
-//                holder.txt_option.append(options[j]+"\n");
-
-                holder.radioButton = new RadioButton(activity);
-                Log.e("id", "----------------" + holder.radioButton.getId());
-                Log.e("option", "----------------" + options[j]);
-                holder.radioButton.setText(options[j]);
-                holder.radiogroup.addView(holder.radioButton);
-
-
-                holder.radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-
-                        RadioButton rb = (RadioButton) activity.findViewById(checkedId);
-                        String rbtext = (String) rb.getText();
-
-                        Log.e("position", "---------------" + i);
+//                    if (checkedId == -1) {
+//                        Log.v("onCheck", "Android bug since RadioButton doesn't get unchecked normally!");
+//                    } else {
+//                        competitionQuestionItem.setSelected(!competitionQuestionItem.isSelected());
+//                        competitionQuestionItem.setCheckedId(group.getCheckedRadioButtonId());
+//                    }
 
 
 
-                        if (qidlist.contains(competitionQuestionItem.getId())) {
-                            qidlist.set(i, competitionQuestionItem.getId());
-                            answerlist.set(i, rbtext);
-                        } else {
-                            qidlist.add(i, competitionQuestionItem.getId());
-                            answerlist.add(i, rbtext);
-                        }
+
+                competitionQuestionItem.setSelected(true);
+                competitionQuestionItem.setCheckedId(checkedId);
 
 
-                        Log.e("Question id array", "----------" + qidlist);
-                        Log.e("Answer list array", "----------" + answerlist);
+                holder.radioButton = (RadioButton) group.findViewById(checkedId);
+
+                String rbtext = (String) holder.radioButton.getText();
+                competitionQuestionItem.setAnswer(rbtext);
+                notifyDataSetChanged();
+//                    String rbtext = "abc";
+//                    Log.e("position", "---------------" + i);
 
 
-                    }
-                });
+                questionarr[i] = competitionQuestionItem.getId();
+                answerarr[i] = rbtext;
+
+
+                Log.e("Question id array", "----------" + questionarr[i]);
+                Log.e("Answer list array", "----------" + answerarr[i]);
 
             }
 
-        }
+        });
+
 
     }
 
 
     @Override
     public int getItemCount() {
-
-//        questionid=new String[itemArrayList.size()];
         return itemArrayList.size();
     }
 
@@ -217,6 +186,7 @@ public class RecyclerCompetitionQuestionAllAdapter extends RecyclerView.Adapter<
         final ImageView img_yes, img_no;
         RadioGroup radiogroup;
         RadioButton radioButton;
+        //TextView textview;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -239,17 +209,11 @@ public class RecyclerCompetitionQuestionAllAdapter extends RecyclerView.Adapter<
 
         @Override
         public void onClick(View v) {
-//            Toast.makeText(activity, "on Click" + getAdapterPosition(), Toast.LENGTH_SHORT).show();
-//            Intent intent = new Intent(v.getContext(), AudioDetailActivity.class);
-//            intent.putExtra("aid", itemArrayList.get(getAdapterPosition()).getId());
-//            intent.putExtra("categoryname", itemArrayList.get(getAdapterPosition()).getCategoryname());
-//            v.getContext().startActivity(intent);
-//            activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
         }
 
         @Override
         public boolean onLongClick(View v) {
-//            Toast.makeText(activity, "long Click" + getAdapterPosition(), Toast.LENGTH_SHORT).show();
             return false;
         }
 

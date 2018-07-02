@@ -168,11 +168,11 @@ public class AudioCategory extends AppCompatActivity {
                     }
                     listID.add("e_alliamgeid");
                     listName.add("Event");
-                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/Gallery/event.png");
+                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/event.png");
 
                     listID.add("bypeopleidid");
                     listName.add("ByPeople");
-                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/static/Gallery/bypeople.png");
+                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/bypeople.png");
                 }
 
 
@@ -272,6 +272,9 @@ public class AudioCategory extends AppCompatActivity {
             Glide.with(AudioCategory.this).load(listIcon.get(position)
                     .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).dontAnimate().into(holder.grid_img);
 
+
+            Log.e("audio cat","---------------"+listIcon.get(position)
+                    .replaceAll(" ", "%20"));
             return convertView;
 
         }

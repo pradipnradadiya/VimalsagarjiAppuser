@@ -67,9 +67,9 @@ public class AllQuetionAnswerFragment extends Fragment {
     private final String res = "";
 
 
-    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappques/?page=1&psize=1000";
-//    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/viewallappquesyear/?page=1&psize=1000";
-    static final String PostURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/askques/";
+    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappques/?page=1&psize=1000";
+//    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesyear/?page=1&psize=1000";
+    static final String PostURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/";
     private ListView listView;
     private Dialog dialog;
 
@@ -78,7 +78,7 @@ public class AllQuetionAnswerFragment extends Fragment {
     private TextView txt_nodata_today;
     private EditText InputBox;
     List<ThoughtToday> listfilterdata = new ArrayList<>();
-    private final String AllSearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/searchallappques/?page=1&psize=1000";
+    private final String AllSearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/searchallappques/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
 //    String approve = "";
     private ProgressBar progressbar;
@@ -289,6 +289,7 @@ public class AllQuetionAnswerFragment extends Fragment {
             Log.d(TAG, "URL Path :" + url);
             try {
                 JSONObject jsonObject = JSONParser.getJsonFromUrl(url);
+                Log.e("response","-------------------"+jsonObject);
                 for (int i = 0; i < jsonObject.length(); i++) {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     listQuestion = new ArrayList<>();
@@ -516,11 +517,17 @@ public class AllQuetionAnswerFragment extends Fragment {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
+
+
+
             holder.txt_views.setText(listview.get(position));
             holder.txtQuestion.setText("Q: "+CommonMethod.decodeEmoji(items.get(position)));
             holder.txtAnswer.setText("A: "+CommonMethod.decodeEmoji(listAnswer.get(position)));
             holder.txt_date.setText(CommonMethod.decodeEmoji(listDate.get(position)));
             holder.txt_postby.setText("Question By:" + CommonMethod.decodeEmoji(listName.get(position)));
+
+
+
 
             if (listflag.get(position).equalsIgnoreCase("true")){
                 holder.img_new.setVisibility(View.GONE);
@@ -565,7 +572,7 @@ public class AllQuetionAnswerFragment extends Fragment {
                 ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Question", params[0]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/questionanswer/askques/", nameValuePairs, getActivity());
+                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/", nameValuePairs, getActivity());
             } catch (Exception e) {
                 e.printStackTrace();
             }

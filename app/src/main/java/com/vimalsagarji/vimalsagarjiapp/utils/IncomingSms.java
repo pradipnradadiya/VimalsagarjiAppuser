@@ -53,6 +53,7 @@ public class IncomingSms extends BroadcastReceiver {
             } // bundle is null
 
         } catch (Exception e) {
+
             Log.e("SmsReceiver", "Exception smsReceiver" +e);
 
         }

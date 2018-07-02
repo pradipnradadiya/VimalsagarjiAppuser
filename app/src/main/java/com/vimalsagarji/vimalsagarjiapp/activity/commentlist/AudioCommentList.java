@@ -157,7 +157,7 @@ public class AudioCommentList extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("aid", id));
             nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new BasicNameValuePair("Comment", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/comment/", nameValuePairs, AudioCommentList.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/comment/", nameValuePairs, AudioCommentList.this);
 
             return responseJSON;
 
@@ -211,7 +211,7 @@ public class AudioCommentList extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("aid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji_qa/audio/getallappcomments/?page=" + page_count + "&psize=30", nameValuePairs, AudioCommentList.this);
+            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getallappcomments/?page=" + page_count + "&psize=30", nameValuePairs, AudioCommentList.this);
             return responseJSON;
         }
 
