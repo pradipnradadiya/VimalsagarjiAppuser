@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/round_rect_shape"
+    android:padding="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+
+    >
+
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+        android:id="@+id/txt_rank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/green"
+        android:layout_gravity="right"
+        android:gravity="right"
+        android:textSize="16dp"
+
+        />
+
+   <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+       android:id="@+id/txt_name"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Name"
+       android:lineSpacingExtra="7dp"
+       android:textSize="18dp"
+       android:textStyle="bold"
+       android:textColor="@color/black"
+       android:padding="5dp"
+       />
+
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+        android:id="@+id/txt_user_marks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Marks"
+        android:lineSpacingExtra="7dp"
+        android:textSize="16dp"
+        android:padding="5dp"
+        android:textColor="@color/black"
+        />
+
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+        android:id="@+id/txt_total_marks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total Marks"
+        android:lineSpacingExtra="7dp"
+        android:padding="5dp"
+        android:textSize="16dp"
+        android:textColor="@color/black"
+        />
+
+
+</LinearLayout>
