@@ -36,7 +36,8 @@
             android:layout_gravity="center"
             android:layout_weight="2"
             android:padding="5dp"
-            android:src="@drawable/ic_close" />
+            android:src="@drawable/ic_close"
+            android:contentDescription="TODO" />
 
 
     </LinearLayout>

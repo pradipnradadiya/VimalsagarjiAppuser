@@ -1,8 +1,5 @@
 package com.vimalsagarji.vimalsagarjiapp;
 
-/**
- * Created by Grapes-Pradip on 12/27/2016.
- */
 
 @SuppressWarnings("ALL")
 public class ImageItemSplash {

@@ -104,6 +104,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             Log.e(TAG, "title: " + title);
             Log.e(TAG, "message: " + message);
+
             Log.e(TAG, "imageUrl: " + imageUrl);
             Log.e(TAG, "categoty_id: " + categoty_id);
             Log.e(TAG, "category_title: " + category_title);
@@ -119,15 +120,22 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //                // play notification sound
 //                NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
 //                notificationUtils.playNotificationSound();
+
                 if (click_action.equalsIgnoreCase("information_click")) {
                     Log.e("click", "--------------information_click");
                     Intent resultIntent = new Intent(getApplicationContext(), InformationCategory.class);
                     resultIntent.putExtra("message", message);
+
+                    Log.e("push", "--------------"+sharedpreferance.getPushNotification());
                     if (sharedpreferance.getPushNotification().equalsIgnoreCase("pushon")) {
 
                         // check for image attachment
                         if (TextUtils.isEmpty(imageUrl)) {
+
+                            Log.e("info inside","-------------------"+imageUrl);
+
                             showNotificationMessage(getApplicationContext(), "Information-" + title, message, "false", resultIntent);
+
                         } else {
                             // image is present, show notification with image
                             showNotificationMessageWithBigImage(getApplicationContext(), "Information -" + title, message, "false", resultIntent, imageUrl);
@@ -270,7 +278,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     resultIntent.putExtra("message", message);
                     if (sharedpreferance.getPushNotification().equalsIgnoreCase("pushon")) {
 
-
                         // check for image attachment
                         if (TextUtils.isEmpty(imageUrl)) {
                             showNotificationMessage(getApplicationContext(), "Gallery", category_title + "- New image added.", "false", resultIntent);
@@ -293,9 +300,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                             // image is present, show notification with image
                             showNotificationMessageWithBigImage(getApplicationContext(), sharedpreferance.getEmail(), "Approved for Admin side", "false", resultIntent, imageUrl);
                         }
-                    } else {
+                    }
+                    else {
                         Toast.makeText(getApplicationContext(), "Push notification off", Toast.LENGTH_LONG).show();
                     }
+
                 } else if (click_action.equalsIgnoreCase("information_comment_click")) {
                     Intent resultIntent = new Intent(getApplicationContext(), InformationCommentList.class);
                     resultIntent.putExtra("click_action", "information_comment_click");
@@ -312,6 +321,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     } else {
                         Toast.makeText(getApplicationContext(), "Push notification off", Toast.LENGTH_LONG).show();
                     }
+
                 } else if (click_action.equalsIgnoreCase("event_comment_click")) {
                     Intent resultIntent = new Intent(getApplicationContext(), EventCommentList.class);
                     resultIntent.putExtra("click_action", "event_comment_click");
@@ -412,12 +422,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     }
                 }
 
-
             }
 
             // app is in background, show the notification in notification tray
             else {
-
 
                 if (click_action.equalsIgnoreCase("information_click")) {
                     Log.e("click", "--------------information_click");
@@ -435,6 +443,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     } else {
                         Toast.makeText(getApplicationContext(), "Push notification off", Toast.LENGTH_LONG).show();
                     }
+
                 } else if (click_action.equalsIgnoreCase("event_click")) {
                     Log.e("click", "--------------event_click");
 
@@ -716,10 +725,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
+
+
+
     /**
      * Showing notification with text only
      */
     private void showNotificationMessage(Context context, String title, String message, String timeStamp, Intent intent) {
+        Log.e(TAG, "show noti: " + title);
+
         notificationUtils = new NotificationUtils(context);
 //        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

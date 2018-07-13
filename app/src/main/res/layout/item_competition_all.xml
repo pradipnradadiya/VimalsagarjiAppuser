@@ -215,7 +215,8 @@
                     android:id="@+id/img_yes"
                     android:layout_width="50dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_done" />
+                    android:src="@drawable/ic_done"
+                    android:contentDescription="TODO" />
 
             </RelativeLayout>
 
@@ -240,7 +241,8 @@
                     android:id="@+id/img_no"
                     android:layout_width="50dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_done" />
+                    android:src="@drawable/ic_done"
+                    android:contentDescription="TODO" />
 
             </RelativeLayout>
 

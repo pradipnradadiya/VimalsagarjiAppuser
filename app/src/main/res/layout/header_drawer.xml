@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/slidebar_image"
-        />
+        android:contentDescription="TODO" />
     <RelativeLayout
         android:visibility="gone"
         android:layout_width="match_parent"

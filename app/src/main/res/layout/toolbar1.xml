@@ -14,7 +14,7 @@
         android:layout_width="50dp"
         android:layout_height="56dp"
         android:src="@drawable/fly"
-        />
+        android:contentDescription="TODO" />
 
     <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
         android:id="@+id/txt_title"

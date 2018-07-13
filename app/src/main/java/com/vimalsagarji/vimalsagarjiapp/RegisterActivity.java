@@ -78,6 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
         totalTimeCountInMilliseconds = 60 * 1000;      // time count for 3 minutes = 180 seconds
         timeBlinkInMilliseconds = 30 * 1000;
 
+
         if (CommonMethod.isInternetConnected(RegisterActivity.this)) {
             mRegistrationBroadcastReceiver = new BroadcastReceiver() {
                 @Override
@@ -149,8 +150,8 @@ public class RegisterActivity extends AppCompatActivity {
 //                }
 //        });
 
-        setCapitalizeTextWatcher(etName);
-        setCapitalizeTextWatcher(etlastName);
+//        setCapitalizeTextWatcher(etName);
+//        setCapitalizeTextWatcher(etlastName);
 
 
         txt_alreready = (TextView) findViewById(R.id.txt_alreready);
@@ -229,10 +230,6 @@ public class RegisterActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(strName)) {
             etName.setError("Please enter your name.");
             etName.requestFocus();
-        }
-        else if (TextUtils.isEmpty(strlName)) {
-            etlastName.setError("Please enter last name.");
-            etlastName.requestFocus();
         }
         else if (TextUtils.isEmpty(strEmail) || !ValidationUtils.checkEmail(strEmail)) {
             etEmail.setText(strName);
@@ -449,6 +446,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onResume();
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("otp"));
         // register GCM registration complete receiver
+
+
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Config.REGISTRATION_COMPLETE));
 
@@ -618,7 +617,7 @@ public class RegisterActivity extends AppCompatActivity {
 //                    Toast.makeText(RegisterActivity.this, "Verify OTP", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(RegisterActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     if (CommonMethod.isInternetConnected(RegisterActivity.this)) {
-                        new PostRegisterData().execute(etName.getText().toString()+" "+etlastName.getText().toString(), strDeviceid, etEmail.getText().toString(), etAddress.getText().toString(), etMobile.getText().toString(), strDevicetoken);
+                        new PostRegisterData().execute(CommonMethod.capitalizeString(etName.getText().toString()), strDeviceid, etEmail.getText().toString(), etAddress.getText().toString(), etMobile.getText().toString(), strDevicetoken);
                     }
                 } else {
                     progressDialog.dismiss();

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_f_new"
             android:layout_gravity="right"
-            />
+            android:contentDescription="TODO" />
 
         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
             android:id="@+id/txtTitle"

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -197,18 +198,35 @@ public class EventDetailActivity extends AppCompatActivity {
 //        String listtitle = intent.getStringExtra("listtitle");
 //        String strDate = intent.getStringExtra("listDate");
 //        String strAddress = intent.getStringExtra("listAddress");
-        strEventId = intent.getStringExtra("listID");
-        Log.e("eid", "--------------" + strEventId);
-        click_action = intent.getStringExtra("click_action");
+
+
+        // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
+
+        if (appLinkData != null) {
+            Log.e("appLinkData", "--------------" + appLinkData.getQueryParameter("key"));
+
+            strEventId = appLinkData.getQueryParameter("key");
+            click_action="event_click";
+        } else {
+
+            strEventId = intent.getStringExtra("listID");
+            Log.e("eid", "--------------" + strEventId);
+            click_action = intent.getStringExtra("click_action");
+        }
+
+
 
         txt_title.setText("Event Detail");
-//First load
+    //First load
         if (CommonMethod.isInternetConnected(EventDetailActivity.this)) {
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
             } else {
                 new checkViewed().execute();
                 new CheckUserApprove().execute();
-//            new EventDetail().execute();
+    //            new EventDetail().execute();
                 new CheckLike().execute(sharedpreferance.getId(), strEventId);
             }
             new GetEventDetail().execute();
@@ -229,7 +247,7 @@ public class EventDetailActivity extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                    String sAux = "\n Event \n" + CommonMethod.decodeEmoji(title) + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
+                    String sAux = "\n Event \n" + CommonMethod.decodeEmoji(title) + "\n\n"+CommonUrl.Main_url+"eventdetail?key="+strEventId+"\n\n"  + getResources().getString(R.string.app_name) + "\n\n";
                     sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
                     intent.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(intent, "Choose One"));
@@ -323,7 +341,7 @@ public class EventDetailActivity extends AppCompatActivity {
                     dialog = new Dialog(EventDetailActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
-                    progressBar= (ProgressBar) dialog.findViewById(R.id.progressbar);
+                    progressBar = (ProgressBar) dialog.findViewById(R.id.progressbar);
                     if (CommonMethod.isInternetConnected(EventDetailActivity.this)) {
                         new CommentList().execute(strEventId);
                     } else {
@@ -378,6 +396,7 @@ public class EventDetailActivity extends AppCompatActivity {
                 }
             }
         });
+
 
     }
 

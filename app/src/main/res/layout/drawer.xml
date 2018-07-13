@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/drawer_footer"
-                />
+                android:contentDescription="TODO" />
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                 android:layout_width="match_parent"

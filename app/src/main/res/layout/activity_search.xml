@@ -41,7 +41,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:padding="10dp"
-                android:src="@drawable/ic_action_cancel" />
+                android:src="@drawable/ic_action_cancel"
+                android:contentDescription="TODO" />
         </LinearLayout>
 
         <ImageView
@@ -52,7 +53,8 @@
             android:background="@color/red"
             android:padding="10dp"
             android:src="@drawable/ic_search_white"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:contentDescription="TODO" />
     </LinearLayout>
 
 
@@ -78,7 +80,8 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/lin_main"
         android:scaleType="centerCrop"
-        android:src="@drawable/nosearchfound" />
+        android:src="@drawable/nosearchfound"
+        android:contentDescription="TODO" />
 
 
 </RelativeLayout>

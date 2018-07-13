@@ -69,7 +69,8 @@
             android:gravity="center_vertical"
             android:layout_gravity="center"
             android:padding="8dp"
-            android:src="@drawable/ic_search_white" />
+            android:src="@drawable/ic_search_white"
+            android:contentDescription="TODO" />
 
         <ImageView
             android:id="@+id/imgHome"

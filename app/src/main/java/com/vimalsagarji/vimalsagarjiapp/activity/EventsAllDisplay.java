@@ -29,7 +29,6 @@ public class EventsAllDisplay extends AppCompatActivity {
     VideoListAdapter videoListAdapter;
     PhotoAudioVideoAdapter photoAudioVideoAdapter;
     ArrayList<String> myList;
-    ArrayList<String> videolist;
     ArrayList<String> photolist;
     TextView textview;
     String status;

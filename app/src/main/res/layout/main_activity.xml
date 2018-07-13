@@ -84,7 +84,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:padding="5dp"
-                        android:src="@drawable/ic_menu" />
+                        android:src="@drawable/ic_menu"
+                        android:contentDescription="TODO" />
 
                     <ImageView
                         android:id="@+id/img_search"
@@ -93,7 +94,8 @@
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@+id/rel_bell"
                         android:padding="8dp"
-                        android:src="@drawable/ic_search_white" />
+                        android:src="@drawable/ic_search_white"
+                        android:contentDescription="TODO" />
 
                     <RelativeLayout
                         android:id="@+id/rel_bell"
@@ -107,7 +109,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
-                            android:src="@drawable/ic_notifications" />
+                            android:src="@drawable/ic_notifications"
+                            android:contentDescription="TODO" />
 
                         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
                             android:id="@+id/txt_latestposts_count"
@@ -132,7 +135,8 @@
                         android:layout_marginTop="5dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/banner"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        android:contentDescription="TODO" />
 
                 </RelativeLayout>
 
@@ -151,7 +155,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:src="@drawable/main_img"
-                        />
+                        android:contentDescription="TODO" />
 
                     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/profile_image"
@@ -242,7 +246,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/infromation" />
+                            android:src="@drawable/infromation"
+                            android:contentDescription="TODO" />
 
                         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                             style="@style/top_margin_home_textview"
@@ -274,7 +279,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/event" />
+                            android:src="@drawable/event"
+                            android:contentDescription="TODO" />
 
                         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                             style="@style/top_margin_home_textview"
@@ -305,7 +311,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/thoughts" />
+                            android:src="@drawable/thoughts"
+                            android:contentDescription="TODO" />
 
                         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                             style="@style/top_margin_home_textview"
@@ -344,7 +351,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/audio" />
+                            android:src="@drawable/audio"
+                            android:contentDescription="TODO" />
 
                         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                             style="@style/top_margin_home_textview"
@@ -374,7 +382,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/video" />
+                            android:src="@drawable/video"
+                            android:contentDescription="TODO" />
 
                         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                             style="@style/top_margin_home_textview"
@@ -405,7 +414,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/gallary" />
+                            android:src="@drawable/gallary"
+                            android:contentDescription="TODO" />
 
                         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                             style="@style/top_margin_home_textview"
@@ -443,7 +453,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/qa" />
+                            android:src="@drawable/qa"
+                            android:contentDescription="TODO" />
 
                         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                             style="@style/top_margin_home_textview"
@@ -473,7 +484,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/competition" />
+                            android:src="@drawable/competition"
+                            android:contentDescription="TODO" />
 
                         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                             style="@style/top_margin_home_textview"
@@ -504,7 +516,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/bypeople" />
+                            android:src="@drawable/bypeople"
+                            android:contentDescription="TODO" />
 
                         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                             style="@style/top_margin_home_textview"

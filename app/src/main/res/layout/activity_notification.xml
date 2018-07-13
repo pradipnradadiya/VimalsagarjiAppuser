@@ -30,7 +30,8 @@
         android:layout_below="@+id/toolbar"
         android:scaleType="centerCrop"
         android:src="@drawable/nonotification"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:contentDescription="TODO" />
 
 
 </RelativeLayout>

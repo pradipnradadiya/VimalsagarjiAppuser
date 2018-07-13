@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -19,8 +18,10 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 
+import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
 import com.vimalsagarji.vimalsagarjiapp.R;
 
 import java.io.IOException;
@@ -38,18 +39,23 @@ public class NotificationUtils {
 
     private static String TAG = NotificationUtils.class.getSimpleName();
 
-    public static final String NOTIFICATION_CHANNEL_ID = "10001";
-//    private NotificationCompat.Builder mBuilder;
-
-
     private Context mContext;
 
     public NotificationUtils(Context mContext) {
         this.mContext = mContext;
     }
 
+
+
     public void showNotificationMessage(String title, String message, String timeStamp, Intent intent) {
         showNotificationMessage(title, message, timeStamp, intent, null);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            showNotification(title, message,intent);
+        }
+
+
+        Log.e("title set", "-------------------" + title);
     }
 
     public void showNotificationMessage(final String title, final String message, final String timeStamp, Intent intent, String imageUrl) {
@@ -80,7 +86,6 @@ public class NotificationUtils {
                     showBigNotification(bitmap, mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
                 } else {
                     showSmallNotification(mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
-                    playNotificationSound();
                 }
             }
         } else {
@@ -88,7 +93,6 @@ public class NotificationUtils {
             playNotificationSound();
         }
     }
-
 
     private void showSmallNotification(NotificationCompat.Builder mBuilder, int icon, String title, String message, String timeStamp, PendingIntent resultPendingIntent, Uri alarmSound) {
 
@@ -110,29 +114,8 @@ public class NotificationUtils {
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        //Android orio
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String id = "id_product";
-            // The user-visible name of the channel.
-            CharSequence name = title;
-            // The user-visible description of the channel.
-            String description = message;
-            int importance = NotificationManager.IMPORTANCE_MAX;
-            NotificationChannel mChannel = new NotificationChannel(id,name,NotificationManager.IMPORTANCE_HIGH);
-            // Configure the notification channel.
-            mChannel.setDescription(description);
-            mChannel.enableLights(true);
-            // Sets the notification light color for notifications posted to this
-            // channel, if the device supports this feature.
-            mChannel.setLightColor(Color.RED);
-            assert notificationManager != null;
-            notificationManager.createNotificationChannel(mChannel);
-        }
-
         Random random = new Random();
         int randomNumber = random.nextInt(9999 - 1000) + 1000;
-        assert notificationManager != null;
         notificationManager.notify(randomNumber, notification);
     }
 
@@ -236,4 +219,32 @@ public class NotificationUtils {
         }
         return 0;
     }
+
+    void showNotification(String title, String content,Intent intent) {
+        NotificationManager mNotificationManager =
+                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("default",
+                    "Nayi Soch Sahi Disha",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("YOUR_NOTIFICATION_CHANNEL_DISCRIPTION");
+            mNotificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, "default")
+                .setSmallIcon(R.mipmap.push_notification) // notification icon
+                .setContentTitle(title) // title for notification
+                .setContentText(content)// message for notification
+                .setAutoCancel(true); // clear notification after click
+//        Intent intent = new Intent(mContext, ActivityHomeMain.class);
+        PendingIntent pi = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(pi);
+
+        Random random = new Random();
+        int randomNumber = random.nextInt(9999 - 1000) + 1000;
+        mNotificationManager.notify(randomNumber, mBuilder.build());
+
+    }
+
+
 }

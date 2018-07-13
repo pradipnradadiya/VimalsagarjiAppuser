@@ -67,7 +67,7 @@
             android:layout_gravity="right"
             android:src="@drawable/ic_f_new"
             android:visibility="gone"
-            />
+            android:contentDescription="TODO" />
 
 
         <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold

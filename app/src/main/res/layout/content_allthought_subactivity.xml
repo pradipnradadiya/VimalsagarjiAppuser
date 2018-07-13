@@ -77,7 +77,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="5dp"
-                android:src="@drawable/ic_share_black_24dp" />
+                android:src="@drawable/ic_share_black_24dp"
+                android:contentDescription="TODO" />
         </LinearLayout>
 
         <View
@@ -115,7 +116,8 @@
                     android:layout_height="150dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="2dp"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:contentDescription="TODO" />
 
 
                 <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView

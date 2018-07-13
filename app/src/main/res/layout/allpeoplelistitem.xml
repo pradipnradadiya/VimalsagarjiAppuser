@@ -45,7 +45,7 @@
                 android:src="@drawable/ic_f_new"
                 android:layout_gravity="right"
                 android:visibility="gone"
-                />
+                android:contentDescription="TODO" />
 
             <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                 android:id="@+id/txtTitle"

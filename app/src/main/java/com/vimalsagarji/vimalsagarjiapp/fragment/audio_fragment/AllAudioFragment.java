@@ -98,14 +98,7 @@ public class AllAudioFragment extends Fragment {
 
             }
         });
-        InputBox.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                v.setFocusable(true);
-                v.setFocusableInTouchMode(true);
-                return false;
-            }
-        });
+
 
 
         if (strCid.equalsIgnoreCase("e_alliamgeid")) {

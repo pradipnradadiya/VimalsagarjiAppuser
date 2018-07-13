@@ -67,7 +67,8 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="10dp"
                 android:padding="5dp"
-                android:src="@drawable/ic_share_black_24dp" />
+                android:src="@drawable/ic_share_black_24dp"
+                android:contentDescription="TODO" />
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -88,6 +89,7 @@
                     android:textColor="@color/textColor"
                     android:textSize="16sp"
                     tools:ignore="HardcodedText" />
+
             </ScrollView>
 
         </LinearLayout>

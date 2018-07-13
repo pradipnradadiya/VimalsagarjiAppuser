@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:padding="5dp"
             android:scaleType="centerCrop"
-             />
+            android:contentDescription="TODO" />
 
     </LinearLayout>
 

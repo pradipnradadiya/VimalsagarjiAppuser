@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -79,7 +80,7 @@ public class InformationDetailActivity extends AppCompatActivity {
     private TextView txt_comment;
     private TextView txt_nodata_today;
     private LinearLayout rl_layout;
-    private String approve = "";
+    //    private String approve = "";
     private final ArrayList<String> listname = new ArrayList<>();
     TextView etTitle;
     String title;
@@ -99,6 +100,7 @@ public class InformationDetailActivity extends AppCompatActivity {
     private String photo;
     private TextView txtlocation;
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -114,10 +116,23 @@ public class InformationDetailActivity extends AppCompatActivity {
         sharedpreferance = new Sharedpreferance(InformationDetailActivity.this);
         rl_layout = (LinearLayout) findViewById(R.id.rl_layout);
 
-        Intent intent1 = getIntent();
+        // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
 
-        strID = intent1.getStringExtra("listID");
-        click_action = intent1.getStringExtra("click_action");
+
+        if (appLinkData != null) {
+            Log.e("appLinkData", "--------------" + appLinkData.getQueryParameter("key"));
+
+            strID = appLinkData.getQueryParameter("key");
+            click_action="information_click";
+        } else {
+            Intent intent1 = getIntent();
+            strID = intent1.getStringExtra("listID");
+            click_action = intent1.getStringExtra("click_action");
+        }
+
 
         if (!sharedpreferance.getId().equalsIgnoreCase("")) {
             new checkViewed().execute();
@@ -180,9 +195,11 @@ public class InformationDetailActivity extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                    String sAux = "\n Information \n" + CommonMethod.decodeEmoji(title) + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
+                    String sAux = "\n Information \n" + CommonMethod.decodeEmoji(title) + "\n\n" +CommonUrl.Main_url+"infodetail?key="+strID+"\n\n" + getResources().getString(R.string.app_name) + "\n\n";
                     sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
                     intent.putExtra(Intent.EXTRA_TEXT, sAux);
+
+
                     startActivity(Intent.createChooser(intent, "Choose One"));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -231,7 +248,6 @@ public class InformationDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
 
                     showSnackbar(v);
@@ -272,13 +288,10 @@ public class InformationDetailActivity extends AppCompatActivity {
                                     etComment.setError("Please enter your comments!");
                                     etComment.requestFocus();
                                 } else {
-                                    if (approve.equalsIgnoreCase("1")) {
-                                        new CommentPost().execute(CommonMethod.encodeEmoji(etComment.getText().toString()));
-                                        etComment.setText("");
-                                    } else {
-//                                    Toast.makeText(InformationDetailActivity.this, "You are not approved user.", Toast.LENGTH_SHORT).show();
-                                        Log.e("status", "--------------------------" + sharedpreferance.getStatus());
-                                    }
+
+                                    new CommentPost().execute(CommonMethod.encodeEmoji(etComment.getText().toString()));
+                                    etComment.setText("");
+
                                 }
                             }
                         }
@@ -294,8 +307,8 @@ public class InformationDetailActivity extends AppCompatActivity {
                 }
             }
         });
-    }
 
+    }
 
     //Comment List
     private class CommentList extends AsyncTask<String, Void, String> {
@@ -462,77 +475,6 @@ public class InformationDetailActivity extends AppCompatActivity {
 
         }
     }
-
-    /*private class CountComment extends AsyncTask<String, Void, String> {
-        String responseJSON = "";
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-//            loadingProgressDialog = KProgressHUD.create(InformationDetailActivity.this)
-//                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-//                    .setLabel("Please Wait")
-//                    .setCancellable(true);
-//            loadingProgressDialog.show();
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
-            nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
-            return responseJSON;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Log.e("response", "----------------------------------" + s);
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
-                    listComments = new ArrayList<>();
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        String strID = object.getString("ID");
-                        String strInformationID = object.getString("InformationID");
-                        String strComment = object.getString("Comment");
-                        String strIs_Approved = object.getString("Is_Approved");
-                        Log.e("is apprived", "---------------------------------" + strIs_Approved);
-                        String strUserID = object.getString("UserID");
-                        Log.e("UserID", "---------------------------------" + strUserID);
-                        String strDate = object.getString("Date");
-
-                        ThisMonthComments thisMonthComments = new ThisMonthComments();
-                        thisMonthComments.setID(strID);
-                        thisMonthComments.setInformationID(strInformationID);
-                        thisMonthComments.setComment(strComment);
-                        thisMonthComments.setIs_Approved(strIs_Approved);
-                        thisMonthComments.setUserID(strUserID);
-                        thisMonthComments.setDate(strDate);
-                        listComments.add(thisMonthComments);
-
-                    }
-                    Log.e("Comment size", "---------------------" + listComments.size());
-                    count_comment = listComments.size();
-                    String count = String.valueOf(count_comment);
-                    txt_comment.setText(count);
-
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-//            if (loadingProgressDialog != null) {
-//                loadingProgressDialog.dismiss();
-//            }
-
-        }
-    }*/
 
 
     //Custom Adapter
@@ -747,48 +689,6 @@ public class InformationDetailActivity extends AppCompatActivity {
         }
     }
 
-    //Check user approve or not
-    private class CheckUserApprove extends AsyncTask<String, Void, String> {
-        String responseJSON = "";
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return responseJSON;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Log.e("response", "-------------------------" + s);
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        approve = jsonObject1.getString("Is_Active");
-                    }
-
-                } else {
-//                    Toast.makeText(InformationDetailActivity.this, "" + jsonObject.get("message"), Toast.LENGTH_SHORT).show();
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     private class countView extends AsyncTask<String, Void, String> {
         String responseJSON = "";
@@ -922,7 +822,7 @@ public class InformationDetailActivity extends AppCompatActivity {
                                 Glide.with(InformationDetailActivity.this).load(CommonURL.ImagePath + "infoimage/" + photo
                                         .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).dontAnimate().into(img_info);
 
-                                Log.e("info image","---------------------"+CommonURL.ImagePath + "infoimage/" + photo.replaceAll(" ", "%20"));
+                                Log.e("info image", "---------------------" + CommonURL.ImagePath + "infoimage/" + photo.replaceAll(" ", "%20"));
 
                             } else {
                                 img_info.setVisibility(View.GONE);
@@ -964,7 +864,7 @@ public class InformationDetailActivity extends AppCompatActivity {
             new CommentList2().execute(strID);
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
             } else {
-                new CheckUserApprove().execute();
+//                new CheckUserApprove().execute();
 //            new getLikeCount().execute(strID);
                 new CheckLike().execute(sharedpreferance.getId(), strID);
             }
@@ -997,8 +897,9 @@ public class InformationDetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("response","-----------------"+s);
+            Log.e("response", "-----------------" + s);
         }
+
 
     }
 

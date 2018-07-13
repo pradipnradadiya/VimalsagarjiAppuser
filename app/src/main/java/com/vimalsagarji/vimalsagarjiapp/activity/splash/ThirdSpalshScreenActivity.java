@@ -36,12 +36,17 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
     private Sharedpreferance sharedpreferance;
     private ProgressBar progress;
     private TextView txt_content,txt_timer;
+//    String str="pRadip PaTel N radaDiYA";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.content_third_spalsh_screen);
+
+//        Log.e("str","----------------"+CommonMethod.capitalizeString(str));
+
         sharedpreferance = new Sharedpreferance(ThirdSpalshScreenActivity.this);
         progress = (ProgressBar) findViewById(R.id.progress);
         txt_content = findViewById(R.id.txt_content);
@@ -52,7 +57,7 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
 
     private void askforPermission() {
 
-        askCompactPermissions(new String[]{ PermissionUtils.Manifest_RECEIVE_SMS,PermissionUtils.Manifest_READ_SMS}, new PermissionResult() {
+        askCompactPermissions(new String[]{ PermissionUtils.Manifest_RECEIVE_SMS,PermissionUtils.Manifest_READ_SMS,PermissionUtils.Manifest_SEND_SMS}, new PermissionResult() {
             @Override
             public void permissionGranted() {
                 Intent intent = new Intent(ThirdSpalshScreenActivity.this, RegisterActivity.class);
@@ -139,6 +144,7 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
                 } else {
 
                     Toast.makeText(ThirdSpalshScreenActivity.this, R.string.internet, Toast.LENGTH_LONG).show();
+
 //                    try {
 //                        Thread.sleep(2000);
 ////
@@ -146,6 +152,7 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
 //                    } catch (InterruptedException e) {
 //                        e.printStackTrace();
 //                    }
+
 
                 }
             }
@@ -272,9 +279,6 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
                         txt_content.setText(CommonMethod.decodeEmoji(object.getString("title")));
 
                         Log.e("array", "-----------------success");
-
-
-
 
 
                     progress.setVisibility(View.GONE);

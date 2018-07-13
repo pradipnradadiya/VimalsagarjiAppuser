@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -58,6 +59,17 @@
                 <action android:name="information_comment_click" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="www.aacharyavimalsagarsuriji.com"
+                    android:pathPrefix="/vimalsagarji/infodetail" />
             </intent-filter>
         </activity>
         <activity
@@ -121,10 +133,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Gallery_gridview_full_image"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+
+
         <activity
             android:name=".activity.VideoDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -135,7 +150,19 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="www.aacharyavimalsagarsuriji.com"
+                    android:pathPrefix="/vimalsagarji/videodetail" />
+            </intent-filter>
         </activity>
+
         <activity
             android:name=".today_week_month_year.QuestionAnswerActivity"
             android:screenOrientation="portrait"
@@ -146,6 +173,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".today_week_month_year.ThoughtsActivity"
             android:screenOrientation="portrait"
@@ -164,6 +192,17 @@
                 <action android:name="thought_comment_click" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="www.aacharyavimalsagarsuriji.com"
+                    android:pathPrefix="/vimalsagarji/thoughtdetail" />
             </intent-filter>
         </activity>
         <activity
@@ -228,6 +267,17 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="www.aacharyavimalsagarsuriji.com"
+                    android:pathPrefix="/vimalsagarji/eventdetail" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".RegisterActivity"
@@ -237,7 +287,19 @@
         <activity
             android:name=".activity.AudioDetail"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="www.aacharyavimalsagarsuriji.com"
+                    android:pathPrefix="/vimalsagarji/audiodetail" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".utils.AllQuestionDetail"
             android:screenOrientation="portrait"

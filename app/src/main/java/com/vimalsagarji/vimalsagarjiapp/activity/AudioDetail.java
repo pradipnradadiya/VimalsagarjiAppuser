@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -103,9 +104,9 @@ public class AudioDetail extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         sharedpreferance = new Sharedpreferance(AudioDetail.this);
-        img_share= (ImageView) findViewById(R.id.img_share);
+        img_share = (ImageView) findViewById(R.id.img_share);
         jcPlayerView = (JcPlayerView) findViewById(R.id.jcplayerview_audio);
-        txt_description= (TextView) findViewById(R.id.txt_description);
+        txt_description = (TextView) findViewById(R.id.txt_description);
         et_event = (EditText) findViewById(R.id.et_event);
         txt_title = (TextView) findViewById(R.id.txt_title);
 
@@ -138,9 +139,32 @@ public class AudioDetail extends AppCompatActivity {
         txt_like = (TextView) findViewById(R.id.txt_like_event);
         txt_comment = (TextView) findViewById(R.id.txt_comment_event);
 
+
+
         Intent intent = getIntent();
-        id = intent.getExtras().getString("id");
-        click_action = intent.getExtras().getString("click_action");
+        // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
+
+
+        if (appLinkData != null) {
+            Log.e("appLinkData", "--------------" + appLinkData.getQueryParameter("key"));
+
+            id = appLinkData.getQueryParameter("key");
+            click_action="information_click";
+        } else {
+
+            id = intent.getExtras().getString("id");
+            click_action = intent.getExtras().getString("click_action");
+        }
+
+
+
+
+
+
+
         Log.e("id", "------------------" + id);
 
         if (id.equalsIgnoreCase("eid")) {
@@ -170,8 +194,7 @@ public class AudioDetail extends AppCompatActivity {
             }
             txtDate.setText(date);
 
-        }
-        else if (id.equalsIgnoreCase("bid")) {
+        } else if (id.equalsIgnoreCase("bid")) {
             lin_like.setVisibility(View.GONE);
             lin_comment.setVisibility(View.GONE);
             String audioname = intent.getExtras().getString("AudioName");
@@ -220,7 +243,6 @@ public class AudioDetail extends AppCompatActivity {
         }
 
 
-
         lin_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -260,7 +282,7 @@ public class AudioDetail extends AppCompatActivity {
                     dialog = new Dialog(AudioDetail.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.custom_dialog_bypeople_comment);
-                    progressbar= (ProgressBar) dialog.findViewById(R.id.progressbar);
+                    progressbar = (ProgressBar) dialog.findViewById(R.id.progressbar);
                     if (CommonMethod.isInternetConnected(AudioDetail.this)) {
                         new CommentList().execute(id);
 
@@ -320,7 +342,6 @@ public class AudioDetail extends AppCompatActivity {
         });
 
 
-
         img_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -330,7 +351,7 @@ public class AudioDetail extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                    String sAux = "\n Audio \n" + CommonMethod.decodeEmoji(et_event.getText().toString()) + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
+                    String sAux = "\n Audio \n" + CommonMethod.decodeEmoji(et_event.getText().toString()) + "\n\n" +CommonUrl.Main_url+"audiodetail?key="+id+"\n\n"+ getResources().getString(R.string.app_name) + "\n\n";
                     sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
                     intent.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(intent, "Choose One"));
@@ -341,6 +362,7 @@ public class AudioDetail extends AppCompatActivity {
 
             }
         });
+
 
 
     }

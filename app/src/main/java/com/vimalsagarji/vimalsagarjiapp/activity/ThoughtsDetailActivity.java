@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -129,8 +130,8 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_allthoughtsubactivity);
         setSupportActionBar(toolbar);
 
-        img_thought= (ImageView) findViewById(R.id.img_thought);
-        txtlocation= (TextView) findViewById(R.id.txtlocation);
+        img_thought = (ImageView) findViewById(R.id.img_thought);
+        txtlocation = (TextView) findViewById(R.id.txtlocation);
         ImageView imgHomeBack = (ImageView) toolbar.findViewById(R.id.imgarrorback);
         ImageView imgHome = (ImageView) toolbar.findViewById(R.id.imgHome);
         rl_layout = (RelativeLayout) findViewById(R.id.rl_layout);
@@ -154,7 +155,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ThoughtsDetailActivity.this, ImageViewActivity.class);
-                intent.putExtra("imagePath",CommonURL.ImagePath + "thoughtimage/" + photo.replaceAll(" ", "%20"));
+                intent.putExtra("imagePath", CommonURL.ImagePath + "thoughtimage/" + photo.replaceAll(" ", "%20"));
                 startActivity(intent);
             }
         });
@@ -178,11 +179,39 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
         txt_comment = (TextView) findViewById(R.id.txt_comment_event);
         txt_title = (TextView) findViewById(R.id.txt_title);
 
+
+
+        // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
+
+
         Intent intent1 = getIntent();
-        tid = intent1.getStringExtra("thoughtid");
-        click_action = intent1.getStringExtra("click_action");
-        Log.e("tid", "-------------" + tid);
-        Log.e("uid", "--------------" + sharedpreferance.getId());
+
+
+        if (appLinkData != null) {
+            Log.e("appLinkData", "--------------" + appLinkData.getQueryParameter("key"));
+
+            tid = appLinkData.getQueryParameter("key");
+            click_action="information_click";
+        } else {
+            tid = intent1.getStringExtra("thoughtid");
+            click_action = intent1.getStringExtra("click_action");
+            Log.e("tid", "-------------" + tid);
+            Log.e("uid", "--------------" + sharedpreferance.getId());
+
+        }
+
+
+
+
+
+
+
+
+
+
         txt_title.setText("Thought Detail");
 
 //        if (CommonMethod.isInternetConnected(ThoughtsDetailActivity.this)) {
@@ -215,7 +244,7 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                    String sAux = "\n Thought \n" + CommonMethod.decodeEmoji(title) + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
+                    String sAux = "\n Thought \n" + CommonMethod.decodeEmoji(title) + "\n\n"  +CommonUrl.Main_url+"thoughtdetail?key="+tid+"\n\n" +getResources().getString(R.string.app_name) + "\n\n";
                     sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
                     intent.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(intent, "Choose One"));

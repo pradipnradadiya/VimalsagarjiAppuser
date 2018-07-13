@@ -15,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -40,9 +41,7 @@ import java.util.ArrayList;
 import ch.boye.httpclientandroidlib.NameValuePair;
 import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 
-/**
- * Created by Grapes-Pradip on 05-May-17.
- */
+
 
 public class AlreadyRegisterUser extends AppCompatActivity {
     KProgressHUD loadingProgressDialog;
@@ -126,7 +125,9 @@ public class AlreadyRegisterUser extends AppCompatActivity {
                     edit_mobile.requestFocus();
                 } else {
                     if (CommonMethod.isInternetConnected(AlreadyRegisterUser.this)) {
-                        new AllreadyRegisterUser().execute(edit_mobile.getText().toString());
+
+                        Log.e("new token","---------------------"+strDevicetoken);
+                        new AllreadyRegisterUser().execute(edit_mobile.getText().toString(),strDevicetoken);
 //                        new GenrateOTP().execute();
                     } else {
                         Toast.makeText(AlreadyRegisterUser.this, R.string.internet, Toast.LENGTH_SHORT).show();
@@ -176,7 +177,7 @@ public class AlreadyRegisterUser extends AppCompatActivity {
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
 //                nameValuePairs.add(new BasicNameValuePair("EmailID", params[0]));
                 nameValuePairs.add(new BasicNameValuePair("Phone", params[0]));
-//                nameValuePairs.add(new BasicNameValuePair("DeviceID", params[2]));
+                nameValuePairs.add(new BasicNameValuePair("DeviceID", params[1]));
                 responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/aluser/checkuser", nameValuePairs, AlreadyRegisterUser.this);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -206,11 +207,10 @@ public class AlreadyRegisterUser extends AppCompatActivity {
                         sharedpreferance.saveEmail(email);
                         sharedpreferance.saveMobile(mobile);
                         sharedpreferance.saveToken(strDevicetoken);
+                        sharedpreferance.savePushNotification("pushon");
 
                         Log.e("email", "---------------" + sharedpreferance.getEmail());
                         Log.e("uid", "---------------" + sharedpreferance.getId());
-
-
 
                     }
                     new GenrateOTP().execute();
@@ -277,6 +277,15 @@ public class AlreadyRegisterUser extends AppCompatActivity {
 
                     edit_otp = (EditText) dialog.findViewById(R.id.edit_otp);
                     Button btn_submit = (Button) dialog.findViewById(R.id.button_submit);
+                    ImageView img_close = (ImageView) dialog.findViewById(R.id.img_close);
+
+
+                    img_close.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
 
                     btn_submit.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -295,6 +304,7 @@ public class AlreadyRegisterUser extends AppCompatActivity {
                     getWindow().setAttributes(attrs);
                     dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 
                 } else {
                     progressDialog.dismiss();
