@@ -30,6 +30,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+
+        <!--android:name=".activity.splash.ThirdSpalshScreenActivity"-->
+
         <activity
             android:name=".activity.splash.ThirdSpalshScreenActivity"
             android:screenOrientation="portrait"
@@ -67,9 +71,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
                     android:host="www.aacharyavimalsagarsuriji.com"
-                    android:pathPrefix="/vimalsagarji/infodetail" />
+                    android:pathPrefix="/vimalsagarji/infodetail"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity
@@ -157,9 +161,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
                     android:host="www.aacharyavimalsagarsuriji.com"
-                    android:pathPrefix="/vimalsagarji/videodetail" />
+                    android:pathPrefix="/vimalsagarji/videodetail"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
 
@@ -200,9 +204,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
                     android:host="www.aacharyavimalsagarsuriji.com"
-                    android:pathPrefix="/vimalsagarji/thoughtdetail" />
+                    android:pathPrefix="/vimalsagarji/thoughtdetail"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity
@@ -274,9 +278,10 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
                     android:host="www.aacharyavimalsagarsuriji.com"
-                    android:pathPrefix="/vimalsagarji/eventdetail" />
+                    android:pathPrefix="/vimalsagarji/eventdetail"
+                    android:scheme="http" />
+
             </intent-filter>
         </activity>
         <activity
@@ -295,34 +300,52 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
                     android:host="www.aacharyavimalsagarsuriji.com"
-                    android:pathPrefix="/vimalsagarji/audiodetail" />
+                    android:pathPrefix="/vimalsagarji/audiodetail"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity
             android:name=".utils.AllQuestionDetail"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.aacharyavimalsagarsuriji.com"
+                    android:pathPattern="/vimalsagarji/questiondetail"
+                    android:scheme="http" />
+
+            </intent-filter>
+
+        </activity>
+
         <activity
             android:name=".categoryactivity.Gallery_All_Category"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".today_week_month_year.CompetitionListQuestion"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ActivityHomeMain"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-
-            />
         <activity
             android:name=".Splash_Activity2"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".AlreadyRegisterUser"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ImageViewActivity"
             android:screenOrientation="portrait" />
@@ -428,12 +451,14 @@
         <receiver
             android:name=".util.NetworkChangeReceiver"
             android:label="NetworkChangeReceiver">
+
             <intent-filter>
                 <action
                     android:name="android.net.conn.CONNECTIVITY_CHANGE"
                     tools:ignore="BatteryLife" />
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
+
         </receiver>
         <receiver android:name=".utils.IncomingSms">
             <intent-filter>

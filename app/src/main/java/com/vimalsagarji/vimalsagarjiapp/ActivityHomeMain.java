@@ -49,6 +49,7 @@ import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SettingActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.VisharMessageActivity;
 import com.vimalsagarji.vimalsagarjiapp.adpter.HomeSliderAdapter;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.AudioCategory;
+import com.vimalsagarji.vimalsagarjiapp.categoryactivity.CompetitionActivity;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.EventCategory;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.Gallery_All_Category;
 import com.vimalsagarji.vimalsagarjiapp.categoryactivity.VideoCategory;
@@ -80,7 +81,6 @@ import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ActivityHomeMain extends AppCompatActivity implements View.OnClickListener {
-
 
     private RelativeLayout rel_info;
     private RelativeLayout rel_event;
@@ -164,6 +164,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
 
 
 //        new FetchAppVersionFromGooglePlayStore().execute();
@@ -371,6 +372,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 
         lin_alert.setOnClickListener(this);
         lin_vichar.setOnClickListener(this);
+        lin_vichar.setVisibility(View.GONE);
         lin_info.setOnClickListener(this);
         lin_about.setOnClickListener(this);
         lin_event.setOnClickListener(this);
@@ -422,53 +424,63 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
             }, 2000);
 
         }
+
     }
 
     @SuppressLint("LongLogTag")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case R.id.rel_info:
                 intent = new Intent(ActivityHomeMain.this, InformationCategory.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
+
             case R.id.rel_event:
                 intent = new Intent(ActivityHomeMain.this, EventCategory.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
+
             case R.id.rel_audio:
                 intent = new Intent(ActivityHomeMain.this, AudioCategory.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
+
             case R.id.rel_video:
                 intent = new Intent(ActivityHomeMain.this, VideoCategory.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
+
             case R.id.rel_thought:
                 intent = new Intent(ActivityHomeMain.this, ThoughtsActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
+
             case R.id.rel_gallery:
                 intent = new Intent(ActivityHomeMain.this, Gallery_All_Category.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
+
             case R.id.rel_qa:
                 intent = new Intent(ActivityHomeMain.this, QuestionAnswerActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
+
             case R.id.rel_comp:
-                intent = new Intent(ActivityHomeMain.this, CompetitionAllActivity.class);
-//                intent = new Intent(ActivityHomeMain.this, CompetitionActivity.class);
+//                intent = new Intent(ActivityHomeMain.this, CompetitionAllActivity.class);
+                intent = new Intent(ActivityHomeMain.this, CompetitionActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
+
             case R.id.rel_bypeople:
                 intent = new Intent(ActivityHomeMain.this, ByPeople.class);
                 startActivity(intent);
@@ -490,6 +502,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
+
             case R.id.lin_alert:
                 intent = new Intent(ActivityHomeMain.this, NotificationActivity.class);
                 startActivity(intent);
@@ -497,14 +510,12 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 onBackPressed();
                 break;
 
-
             case R.id.lin_vichar:
                 intent = new Intent(ActivityHomeMain.this, VisharMessageActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
                 break;
-
 
             case R.id.lin_info:
                 Log.e("lin_info", "------------------" + "click");
@@ -526,7 +537,6 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                     img_hide_show.setImageResource(R.drawable.ic_add_black_24dp);
                     lin_show_hide.setVisibility(View.GONE);
                 }
-
                 break;
 
             case R.id.lin_event:
@@ -578,8 +588,8 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 
             case R.id.lin_comp:
                 Log.e("lin_comp", "------------------" + "click");
-                intent = new Intent(ActivityHomeMain.this, CompetitionAllActivity.class);
-//                intent = new Intent(ActivityHomeMain.this, CompetitionActivity.class);
+//                intent = new Intent(ActivityHomeMain.this, CompetitionAllActivity.class);
+                intent = new Intent(ActivityHomeMain.this, CompetitionActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onBackPressed();
@@ -647,6 +657,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                 getWindow().setAttributes(attrs);
                 dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));*/
+
                 break;
 
 
@@ -760,7 +771,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 
 
     public static void getOpenFacebookIntent(Context context) {
-        try{
+        try {
             // open in Facebook app
             context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
             new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/Vimalsagarsuruji"));
@@ -997,6 +1008,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class checkCount extends AsyncTask<String, Void, String> {
 
         String responseJson = "";
@@ -1117,6 +1129,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         return result;
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class GetAllNotes extends AsyncTask<String, Void, String> {
         String responseJSON = "";
 

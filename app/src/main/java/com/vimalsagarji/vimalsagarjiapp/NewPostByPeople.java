@@ -506,6 +506,8 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
                     FileBody fileBody1 = new FileBody(file1);
                     multipartEntity.addPart("Photo", fileBody1);
                 }
+
+
                 if (audioPath == null) {
                     Log.e("if call", "-----------");
                 } else {
@@ -513,6 +515,8 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
                     FileBody fileBody2 = new FileBody(file2);
                     multipartEntity.addPart("Audio", fileBody2);
                 }
+
+
                 if (videoPath == null) {
                     Log.e("if call", "-----------");
 

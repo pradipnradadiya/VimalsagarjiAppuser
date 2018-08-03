@@ -245,7 +245,6 @@ public class VideoTodayFragment extends Fragment {
 
                         Log.e("image", "---------------------" + Photo);
 
-
                         String Duration = jsonObject1.getString("Duration");
                         String Date = jsonObject1.getString("Date");
                         String View = jsonObject1.getString("View");

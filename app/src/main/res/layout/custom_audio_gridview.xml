@@ -22,6 +22,15 @@
 
             />
 
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+            android:id="@+id/txt_new"
+            style="@style/badge_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:visibility="gone"
+            android:layout_margin="2dp"/>
+
     </RelativeLayout>
 
     <RelativeLayout

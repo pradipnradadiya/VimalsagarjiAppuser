@@ -18,6 +18,8 @@ import com.vimalsagarji.vimalsagarjiapp.utils.AllQuestionDetail;
 
 import java.util.ArrayList;
 
+import static com.vimalsagarji.vimalsagarjiapp.fcm.MyFirebaseMessagingService.questionid;
+
 @SuppressWarnings("ALL")
 public class RecyclerQuestionAllAdapter extends RecyclerView.Adapter<RecyclerQuestionAllAdapter.ViewHolder> {
 
@@ -101,6 +103,8 @@ public class RecyclerQuestionAllAdapter extends RecyclerView.Adapter<RecyclerQue
             intent.putExtra("Answer", questionAllItem.getAnswer());
             intent.putExtra("view", questionAllItem.getView());
             intent.putExtra("qid",questionAllItem.getID());
+            questionid=questionAllItem.getID();
+
             activity.startActivity(intent);
             activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 

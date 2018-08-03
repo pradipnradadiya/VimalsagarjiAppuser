@@ -1,5 +1,6 @@
 package com.vimalsagarji.vimalsagarjiapp.activity.mainactivity;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.adpter.NotificationListAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
+import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.NotificationItem;
 
 import org.json.JSONArray;
@@ -46,12 +49,25 @@ public class NotificationActivity extends AppCompatActivity {
     ArrayList<NotificationItem> notificationItems;
     private TextView txt_title;
     private ImageView imgarrorback, img_search;
+    Sharedpreferance sharedpreferance;
+    String mainurl;
+    TextView txt_nodata;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+        sharedpreferance = new Sharedpreferance(NotificationActivity.this);
 
+        if (sharedpreferance.getId().equalsIgnoreCase("")) {
+            mainurl = CommonUrl.Main_url + "notificationcount/countnotification/?page=";
+
+        } else {
+            mainurl = CommonUrl.Main_url + "notificationcount/countnotification/?uid=" + sharedpreferance.getId() + "&page=";
+        }
+
+        txt_nodata=findViewById(R.id.txt_nodata);
         imgarrorback = (ImageView) findViewById(R.id.imgarrorback);
         img_search = (ImageView) findViewById(R.id.img_search);
         img_search.setVisibility(View.GONE);
@@ -92,6 +108,8 @@ public class NotificationActivity extends AppCompatActivity {
                 firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
 
                 if (flag_scroll) {
+
+
 //                                                                 Log.e("flag-Scroll", flag_scroll + "");
                 } else {
                     if (loading) {
@@ -103,8 +121,7 @@ public class NotificationActivity extends AppCompatActivity {
                         }
                     }
                     if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                        // End has been reached
-                        // Do something
+
                         Log.e("flag-Loading_second_if", loading + "");
                         if (CommonMethod.isInternetConnected(NotificationActivity.this)) {
 
@@ -116,7 +133,6 @@ public class NotificationActivity extends AppCompatActivity {
                             //internet not connected
                         }
                         loading = true;
-
 
                     }
 
@@ -135,6 +151,7 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     private class GetNotificationList extends AsyncTask<String, Void, String> {
 
         String responseString = "";
@@ -153,9 +170,10 @@ public class NotificationActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            responseString = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/notificationcount/countnotification/?page=" + page_count + "&psize=20");
+            responseString = CommonMethod.getStringResponse(mainurl + page_count + "&psize=20");
             return responseString;
         }
+
 
         @Override
         protected void onPostExecute(String s) {
@@ -165,12 +183,10 @@ public class NotificationActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     Log.e("json array", "-------------------" + jsonArray);
-                    /*if (jsonArray.length() < 20 || jsonArray.length() == 0) {
-                        flag_scroll = true;
-                        Log.e("length_array_news", flag_scroll + "" + "<30===OR(0)===" + jsonArray.length());
-                    }*/
+
                     for (int i = 0; i < jsonArray.length(); i++) {
 
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
@@ -180,11 +196,22 @@ public class NotificationActivity extends AppCompatActivity {
                         String title = jsonObject1.getString("Title");
                         String description = jsonObject1.getString("Description");
                         String date = jsonObject1.getString("Date");
+                        String nid = jsonObject1.getString("NID");
+
                         if (description.equalsIgnoreCase("null")) {
                             description = "Description not available";
                         } else {
 
                         }
+
+                        String is_viewed="";
+
+                       /* if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                            String flag = "true";
+                            is_viewed = flag;
+                        } else {
+                            is_viewed = jsonObject1.getString("is_viewed");
+                        }*/
 
                         Date dt = CommonMethod.convert_date(date);
                         Log.e("Convert date is", "------------------" + dt);
@@ -205,26 +232,32 @@ public class NotificationActivity extends AppCompatActivity {
                         String[] time = date.split("\\s+");
                         Log.e("time", "-----------------------" + time[1]);
 
-                        notificationItems.add(new NotificationItem(table, id, title, description, fulldate + ", " + time[1]));
+                        notificationItems.add(new NotificationItem(table, id, title, description, fulldate, nid, "true"));
+
+//                        notificationItems.add(new NotificationItem(table, id, title, description, fulldate + ", " + time[1]));
 
                     }
-
                     notificationListAdapter.notifyDataSetChanged();
 
                 } else {
 
                 }
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             progressbar.setVisibility(View.GONE);
+
+            if (notificationItems.isEmpty()){
+                txt_nodata.setVisibility(View.VISIBLE);
+            }
+
         /*    if (loadingProgressDialog != null) {
                 loadingProgressDialog.dismiss();
             }
 */
-
-
         }
 
     }

@@ -22,18 +22,16 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.vimalsagarji.vimalsagarjiapp.utils.CustomEditTextBold
-            android:id="@+id/etAudioCategory"
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+            android:id="@+id/txtCategory"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:background="@null"
-            android:focusable="false"
-            android:hint="Event Category"
             android:lines="1"
             android:padding="10dp"
             android:textColorHint="@color/black"
-            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             tools:ignore="HardcodedText" />
 
         <ImageView

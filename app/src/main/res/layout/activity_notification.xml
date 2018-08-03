@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/homepage_back"
-    >
+    android:orientation="vertical">
+
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar_home" />
@@ -28,10 +29,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
+        android:contentDescription="TODO"
         android:scaleType="centerCrop"
         android:src="@drawable/nonotification"
-        android:visibility="gone"
-        android:contentDescription="TODO" />
+        android:visibility="gone" />
 
+    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+        android:id="@+id/txt_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="No Data"
+        android:textColor="@color/colorTabColor"
+        android:textSize="40sp"
+        android:textStyle="italic"
+        android:visibility="gone"
+        tools:ignore="HardcodedText" />
 
 </RelativeLayout>

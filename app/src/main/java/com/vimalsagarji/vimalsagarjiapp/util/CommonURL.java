@@ -1,8 +1,6 @@
 package com.vimalsagarji.vimalsagarjiapp.util;
 
-/**
- * Created by Pradip on 17-Nov-16.
- */
+
 @SuppressWarnings("DefaultFileTemplate")
 public class CommonURL {
 

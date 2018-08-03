@@ -18,6 +18,7 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
 import com.vimalsagarji.vimalsagarjiapp.adpter.RecyclerEventCategoryAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.EventCategoryItem;
 import com.vimalsagarji.vimalsagarjiapp.util.CommonURL;
 
@@ -38,12 +39,14 @@ public class EventCategory extends AppCompatActivity implements View.OnClickList
     private RecyclerEventCategoryAdapter recyclerAudioCategoryAdapter;
     private ImageView img_nodata;
     ProgressBar progress_load;
+    private Sharedpreferance sharedpreferance;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_event_category);
+        sharedpreferance=new Sharedpreferance(EventCategory.this);
 
         linearLayoutManager = new GridLayoutManager(EventCategory.this,2);
         findID();
@@ -101,6 +104,9 @@ public class EventCategory extends AppCompatActivity implements View.OnClickList
     }
 
     private void findID() {
+        TextView txtCategory=findViewById(R.id.txtCategory);
+        txtCategory.setText("Event Category");
+
         swipe_refresh_information = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_information);
         recyclerView_audio_category = (RecyclerView) findViewById(R.id.recyclerView_audio_category);
         recyclerView_audio_category.setLayoutManager(linearLayoutManager);
@@ -133,7 +139,12 @@ public class EventCategory extends AppCompatActivity implements View.OnClickList
 
         @Override
         protected String doInBackground(String... params) {
-            responseJSON = CommonMethod.getStringResponse(CommonURL.Main_url + "event/getallcategory");
+
+            if (sharedpreferance.getId().equalsIgnoreCase("")) {
+                responseJSON = CommonMethod.getStringResponse(CommonURL.Main_url + "event/getallcategory");
+            }else{
+                responseJSON = CommonMethod.getStringResponse(CommonURL.Main_url + "event/getallcategory/"+"?uid="+sharedpreferance.getId());
+            }
             return responseJSON;
         }
 
@@ -153,8 +164,18 @@ public class EventCategory extends AppCompatActivity implements View.OnClickList
                         String id = jsonObject1.getString("id");
                         Log.e("id", "---------------" + id);
                         String name = jsonObject1.getString("Name");
-                        String categoryIcon = jsonObject1.getString("CategoryIcon");
-                        allAudioCategoryItems.add(new EventCategoryItem(id, name, categoryIcon));
+                        String categoryIcon =  CommonURL.ImagePath + "eventcategory/" + jsonObject1.getString("CategoryIcon").replaceAll(" ","%20");
+
+                        Log.e("imagepath","---------------"+categoryIcon);
+
+                        String newdata="";
+
+                        if (sharedpreferance.getId().equalsIgnoreCase("")){
+                            newdata="0";
+                        }else{
+                            newdata = jsonObject1.getString("new_event");
+                        }
+                        allAudioCategoryItems.add(new EventCategoryItem(id, name, categoryIcon,newdata,"event"));
                     }
                 }
 

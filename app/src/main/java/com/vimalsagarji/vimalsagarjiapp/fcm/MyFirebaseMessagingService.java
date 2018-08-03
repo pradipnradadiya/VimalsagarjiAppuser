@@ -37,6 +37,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
     private NotificationUtils notificationUtils;
     Sharedpreferance sharedpreferance;
+    public static String questionid;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -196,6 +197,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     }
                 } else if (click_action.equalsIgnoreCase("question_click")) {
                     Intent resultIntent = new Intent(getApplicationContext(), AllQuestionDetail.class);
+                    questionid=categoty_id;
                     resultIntent.putExtra("qid", categoty_id);
                     if (sharedpreferance.getPushNotification().equalsIgnoreCase("pushon")) {
 
@@ -498,6 +500,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 } else if (click_action.equalsIgnoreCase("question_click")) {
                     Intent resultIntent = new Intent(getApplicationContext(), AllQuestionDetail.class);
                     resultIntent.putExtra("qid", categoty_id);
+                    questionid=categoty_id;
                     if (sharedpreferance.getPushNotification().equalsIgnoreCase("pushon")) {
 
                         // check for image attachment

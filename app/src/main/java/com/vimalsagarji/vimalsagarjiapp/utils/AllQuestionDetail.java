@@ -1,6 +1,7 @@
 package com.vimalsagarji.vimalsagarjiapp.utils;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 
 import ch.boye.httpclientandroidlib.NameValuePair;
 import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
+
+import static com.vimalsagarji.vimalsagarjiapp.fcm.MyFirebaseMessagingService.questionid;
 
 /**
  * Created by Pradip-PC on 10/21/2016.
@@ -54,16 +57,33 @@ public class AllQuestionDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_detail);
-        sharedpreferance=new Sharedpreferance(AllQuestionDetail.this);
+        sharedpreferance = new Sharedpreferance(AllQuestionDetail.this);
+
+
+        // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
+        Intent intent = getIntent();
+        if (appLinkData != null) {
+            Log.e("appLinkData", "--------------" + appLinkData.getQueryParameter("key"));
+
+            questionid = appLinkData.getQueryParameter("key");
+
+        } else {
+            qid = intent.getStringExtra("qid");
+        }
+
+
         txt_question = (TextView) findViewById(R.id.txt_question);
         txt_answer = (TextView) findViewById(R.id.txt_answer);
         imgBack = (ImageView) findViewById(R.id.imgarrorback);
         imgHome = (ImageView) findViewById(R.id.imgHome);
-        img_share= (ImageView) findViewById(R.id.img_share);
+        img_share = (ImageView) findViewById(R.id.img_share);
         ImageView img_search = (ImageView) findViewById(R.id.img_search);
         img_search.setVisibility(View.GONE);
         imgHome.setVisibility(View.GONE);
-        Intent intent = getIntent();
+
         TextView txt_title = (TextView) findViewById(R.id.txt_title);
         txt_title.setText("Question Detail");
 
@@ -73,12 +93,9 @@ public class AllQuestionDetail extends AppCompatActivity {
 //        String que = intent.getStringExtra("Question");
 //        String ans = intent.getStringExtra("Answer");
 //        view = intent.getStringExtra("view");
-        qid = intent.getStringExtra("qid");
-
-        new viewQuestionAnswer().execute();
 
 
-        Log.e("uid","--------------"+sharedpreferance.getId());
+        Log.e("uid", "--------------" + sharedpreferance.getId());
         if (!sharedpreferance.getId().equalsIgnoreCase("")) {
             new checkViewed().execute();
         }
@@ -94,6 +111,7 @@ public class AllQuestionDetail extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
+
         imgHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,7 +123,6 @@ public class AllQuestionDetail extends AppCompatActivity {
             }
         });
 
-
         img_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +131,7 @@ public class AllQuestionDetail extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                    String sAux = "\n Q & A \n" + CommonMethod.decodeEmoji(ans) + "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
+                    String sAux = "\n Q & A \n" + CommonMethod.decodeEmoji(que) + "\n\n" +CommonUrl.Main_url+"questiondetail?key="+questionid+ "\n\n" + getResources().getString(R.string.app_name) + "\n\n";
                     sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
                     intent.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(intent, "Choose One"));
@@ -124,6 +141,7 @@ public class AllQuestionDetail extends AppCompatActivity {
 
             }
         });
+
 
     }
 
@@ -138,7 +156,7 @@ public class AllQuestionDetail extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/question/?qid=" + qid + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/question/?qid=" + questionid + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -170,7 +188,7 @@ public class AllQuestionDetail extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewquesansbyid/?qid=" + qid);
+                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewquesansbyid/?qid=" + questionid);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -194,9 +212,10 @@ public class AllQuestionDetail extends AppCompatActivity {
                         jsonObject1.getString("Date");
                         jsonObject1.getString("Is_Approved");
                         jsonObject1.getString("UserID");
-                        view=jsonObject1.getString("View");
+                        view = jsonObject1.getString("View");
                         txt_answer.setText("Answer: " + CommonMethod.decodeEmoji(ans));
                         txt_question.setText("Question: " + CommonMethod.decodeEmoji(que));
+
                         if (CommonMethod.isInternetConnected(AllQuestionDetail.this)) {
                             new countView().execute();
                         }
@@ -225,8 +244,8 @@ public class AllQuestionDetail extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
-            nameValuePairs.add(new BasicNameValuePair("uid",sharedpreferance.getId()));
-            nameValuePairs.add(new BasicNameValuePair("qid", qid));
+            nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
+            nameValuePairs.add(new BasicNameValuePair("qid", questionid));
 
             responseJson = CommonMethod.postStringResponse(CommonUrl.Main_url + "questionanswer/setqaviewed", nameValuePairs, AllQuestionDetail.this);
             return responseJson;
@@ -235,8 +254,16 @@ public class AllQuestionDetail extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("response","-----------------"+s);
+            Log.e("response", "-----------------" + s);
         }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        new viewQuestionAnswer().execute();
 
     }
 
