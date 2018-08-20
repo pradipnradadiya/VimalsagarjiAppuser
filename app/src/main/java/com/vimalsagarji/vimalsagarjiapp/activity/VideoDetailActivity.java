@@ -1011,7 +1011,7 @@ public class VideoDetailActivity extends AppCompatActivity {
                         if (video.equalsIgnoreCase("")) {
                             rel_video.setVisibility(View.GONE);
                         }else {
-
+                            rel_video.setVisibility(View.VISIBLE);
                             Glide.with(VideoDetailActivity.this).load(CommonURL.ImagePath + "videoimage/" + photo
                                     .replaceAll(" ", "%20")).crossFade().placeholder(R.drawable.loader).dontAnimate().into(img_thumb);
                         }

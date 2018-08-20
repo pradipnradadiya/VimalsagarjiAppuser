@@ -1162,10 +1162,7 @@ public class EventDetailActivity extends AppCompatActivity {
                                 }
                             });
                         }
-
-
-
-
+                        
                     }
                     JSONArray jsonArray1 = jsonObject.getJSONArray("Photo");
                     for (int i = 0; i < jsonArray1.length(); i++) {

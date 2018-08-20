@@ -35,7 +35,7 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorPrimary" />
+        android:background="@color/colorAccent" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,6 +43,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/rel_video"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -129,18 +130,17 @@
                 android:textSize="16sp"
                 tools:ignore="HardcodedText" />
 
-            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                 android:id="@+id/txtvideolink"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="2.7"
-                android:textColor="@color/textColor"
+                android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
                 tools:ignore="HardcodedText,RtlHardcoded" />
 
         </LinearLayout>
-
 
     </LinearLayout>
 

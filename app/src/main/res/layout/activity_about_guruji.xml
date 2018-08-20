@@ -88,19 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--<TextView
-            android:visibility="gone"
-            android:id="@+id/txt_description"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:text="@string/about_guruji_eng"
-            android:textColor="@color/textColor"
-            android:textSize="16dp"
 
-
-            />
--->
         <com.uncopt.android.widget.text.justify.JustifiedTextView
             android:id="@+id/txt_description"
             android:layout_width="match_parent"

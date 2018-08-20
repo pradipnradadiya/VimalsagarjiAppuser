@@ -16,8 +16,10 @@ import com.vimalsagarji.vimalsagarjiapp.activity.commentlist.EventCommentList;
 import com.vimalsagarji.vimalsagarjiapp.activity.commentlist.InformationCommentList;
 import com.vimalsagarji.vimalsagarjiapp.activity.commentlist.ThoughtCommentList;
 import com.vimalsagarji.vimalsagarjiapp.activity.commentlist.VideoCommentList;
+import com.vimalsagarji.vimalsagarjiapp.categoryactivity.EventCategory;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
+import com.vimalsagarji.vimalsagarjiapp.model.EventCategoryItem;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.AudioCategoryitem;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.ByPeople;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.CompetitionList;
@@ -147,7 +149,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 } else if (click_action.equalsIgnoreCase("event_click")) {
                     Log.e("click", "--------------event_click");
 
-                    Intent resultIntent = new Intent(getApplicationContext(), EventActivity.class);
+                    Intent resultIntent = new Intent(getApplicationContext(), EventCategory.class);
                     resultIntent.putExtra("message", message);
                     if (sharedpreferance.getPushNotification().equalsIgnoreCase("pushon")) {
 
@@ -449,7 +451,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 } else if (click_action.equalsIgnoreCase("event_click")) {
                     Log.e("click", "--------------event_click");
 
-                    Intent resultIntent = new Intent(getApplicationContext(), EventActivity.class);
+                    Intent resultIntent = new Intent(getApplicationContext(), EventCategory.class);
                     resultIntent.putExtra("message", message);
                     if (sharedpreferance.getPushNotification().equalsIgnoreCase("pushon")) {
 
@@ -545,6 +547,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     } else {
                         Toast.makeText(getApplicationContext(), "Push notification off", Toast.LENGTH_LONG).show();
                     }
+
                 } else if (click_action.equalsIgnoreCase("bypeople_click")) {
                     Intent resultIntent = new Intent(getApplicationContext(), ByPeople.class);
                     resultIntent.putExtra("message", message);

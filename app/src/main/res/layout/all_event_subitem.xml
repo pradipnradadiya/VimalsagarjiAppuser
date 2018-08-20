@@ -245,7 +245,7 @@
                     android:textSize="16sp"
                     tools:ignore="HardcodedText" />
 
-                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
                     android:id="@+id/txtvideolink"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -253,12 +253,10 @@
                     android:ellipsize="end"
                     android:lineSpacingExtra="7dp"
                     android:text=""
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
                     tools:ignore="HardcodedText,RtlHardcoded" />
             </LinearLayout>
-
-
 
             <LinearLayout
                 android:layout_marginLeft="15dp"

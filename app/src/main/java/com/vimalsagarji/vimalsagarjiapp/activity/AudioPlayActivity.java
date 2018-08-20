@@ -12,10 +12,6 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.jcplayer.JcPlayerView;
 
 
-/**
- * Created by Grapes-Pradip on 13-Oct-17.
- */
-
 public class AudioPlayActivity extends AppCompatActivity {
     private JcPlayerView jcplayer_audio;
     String audio;

@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textWebEmailAddress"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorPrimary"
                     android:lineSpacingExtra="7dp"
                     android:textSize="16dp" />
             </LinearLayout>
