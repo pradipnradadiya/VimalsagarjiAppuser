@@ -157,7 +157,6 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
                 }
             }
 
-
         }
     };
 

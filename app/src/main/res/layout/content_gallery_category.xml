@@ -15,68 +15,80 @@
         android:layout_height="wrap_content" />
 
 
-    <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
-        android:id="@+id/etGalleryTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_gallery"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/homepage_back"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="7dp"
-        android:padding="10dp"
-        android:textColor="@color/black"
-        android:textSize="16dp"
-        tools:ignore="HardcodedText" />
-
-
-    <View
-        android:id="@+id/gridview_viewline"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/etGalleryTitle"
-        android:background="@color/colorPrimary"
-        android:visibility="gone" />
-
-    <RelativeLayout
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/gridview_viewline"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:fillViewport="true"
+        android:layout_below="@+id/toolbar_gallery">
 
-        <GridView
-            android:id="@+id/gallery_gridview"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_margin="10dp"
-            android:columnWidth="100dp"
-            android:gravity="center"
-            android:horizontalSpacing="10dp"
-            android:numColumns="2"
-            android:stretchMode="columnWidth"
+        <LinearLayout
 
-            android:verticalSpacing="10dp" />
-
-        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
-            android:id="@+id/txt_nodata_today"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="No Data"
-            android:textColor="@color/colorTabColor"
-            android:textSize="40sp"
-            android:textStyle="italic"
-            android:visibility="gone"
-            tools:ignore="HardcodedText" />
+            android:orientation="vertical">
 
-        <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+                android:id="@+id/etGalleryTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/homepage_back"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="7dp"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                tools:ignore="HardcodedText" />
 
-    </RelativeLayout>
+            <View
+                android:id="@+id/gridview_viewline"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary"
+                android:visibility="gone" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <GridView
+                    android:id="@+id/gallery_gridview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="10dp"
+                    android:columnWidth="100dp"
+                    android:gravity="center"
+                    android:horizontalSpacing="10dp"
+                    android:numColumns="2"
+                    android:stretchMode="columnWidth"
+
+                    android:verticalSpacing="10dp" />
+
+                <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
+                    android:id="@+id/txt_nodata_today"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="No Data"
+                    android:textColor="@color/colorTabColor"
+                    android:textSize="40sp"
+                    android:textStyle="italic"
+                    android:visibility="gone"
+                    tools:ignore="HardcodedText" />
+
+                <ProgressBar
+                    android:id="@+id/progressbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

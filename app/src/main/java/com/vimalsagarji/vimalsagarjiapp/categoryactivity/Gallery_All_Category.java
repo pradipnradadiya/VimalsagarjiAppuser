@@ -85,6 +85,7 @@ public class Gallery_All_Category extends AppCompatActivity {
         etAudioCategory = (EditText) findViewById(R.id.etAudioCategory);
         etAudioCategory.setText("Gallery Category");
         etAudioCategory.setTextColor(getResources().getColor(R.color.black));
+
         img_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +104,7 @@ public class Gallery_All_Category extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
+
         imgHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

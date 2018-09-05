@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -57,6 +58,7 @@ public class GalleryCategory extends AppCompatActivity {
     private CustomImageAdapter customImageAdapter;
     private ProgressBar progressbar;
     private TextView etGalleryTitle;
+    private NestedScrollView nestedScrollview;
 
     @Override
     public void onBackPressed() {
@@ -69,11 +71,13 @@ public class GalleryCategory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_gallery_category);
+        nestedScrollview=findViewById(R.id.nestedScrollview);
         customImageAdapter = new CustomImageAdapter(GalleryCategory.this, itemSplashArrayList);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_gallery);
         setSupportActionBar(toolbar);
         progressbar = (ProgressBar) findViewById(R.id.progressbar);
         gridView = (GridView) findViewById(R.id.gallery_gridview);
+        gridView.setNestedScrollingEnabled(true);
         txt_nodata_today = (TextView) findViewById(R.id.txt_nodata_today);
         rel_gallary = (RelativeLayout) findViewById(R.id.rel_gallary);
         etGalleryTitle = (TextView) findViewById(R.id.etGalleryTitle);
@@ -96,6 +100,7 @@ public class GalleryCategory extends AppCompatActivity {
 
             }
         });
+
         ImageView img_search = (ImageView) toolbar.findViewById(R.id.img_search);
         img_search.setVisibility(View.GONE);
 

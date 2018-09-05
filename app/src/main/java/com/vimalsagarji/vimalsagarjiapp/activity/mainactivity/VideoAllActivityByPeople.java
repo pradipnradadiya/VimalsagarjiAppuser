@@ -164,6 +164,8 @@ public class VideoAllActivityByPeople extends AppCompatActivity {
                     String video = object.getString("Video");
                     videoItems.add(new VideoAllItem("bid",title, video, videolink));
                 }
+
+
                 videoAllAdapter.notifyDataSetChanged();
 
             } catch (JSONException e) {
