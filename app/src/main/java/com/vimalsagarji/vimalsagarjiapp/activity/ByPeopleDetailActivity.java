@@ -59,7 +59,9 @@ import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 
 import static com.vimalsagarji.vimalsagarjiapp.R.id.imgarrorback;
 import static com.vimalsagarji.vimalsagarjiapp.fragment.event_fragment.TodayEventFragment.video_play_url;
-
+/**
+ * Created by BHARAT on 04/02/2016.
+ */
 @SuppressWarnings("ALL")
 public class ByPeopleDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -580,7 +582,7 @@ public class ByPeopleDetailActivity extends AppCompatActivity implements View.On
                 holder.txtCommentUserName.setText("Admin");
                 holder.txtCommentDescription.setText(CommonMethod.decodeEmoji(listComment.get(position)));
             } else {
-                holder.txtCommentUserName.setText(listname.get(position));
+                holder.txtCommentUserName.setText(CommonMethod.decodeEmoji(listname.get(position)));
                 holder.txtCommentDescription.setText(CommonMethod.decodeEmoji(listComment.get(position)));
             }
             return convertView;

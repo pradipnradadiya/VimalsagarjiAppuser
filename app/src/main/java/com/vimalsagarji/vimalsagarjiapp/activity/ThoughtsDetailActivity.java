@@ -401,10 +401,10 @@ public class ThoughtsDetailActivity extends AppCompatActivity {
             // holder.txt_ID.setText(items.get(position));
             if (listUserName.get(position).equalsIgnoreCase("null")) {
                 holder.txtCommentUserName.setText("Admin");
-                holder.txtCommentDescription.setText(listComment.get(position));
+                holder.txtCommentDescription.setText(CommonMethod.decodeEmoji(listComment.get(position)));
             } else {
-                holder.txtCommentUserName.setText(listUserName.get(position));
-                holder.txtCommentDescription.setText(listComment.get(position));
+                holder.txtCommentUserName.setText(CommonMethod.decodeEmoji(listUserName.get(position)));
+                holder.txtCommentDescription.setText(CommonMethod.decodeEmoji(listComment.get(position)));
             }
             return convertView;
         }

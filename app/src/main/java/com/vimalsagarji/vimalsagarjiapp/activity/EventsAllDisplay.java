@@ -17,7 +17,9 @@ import com.vimalsagarji.vimalsagarjiapp.adpter.VideoListAdapter;
 import com.vimalsagarji.vimalsagarjiapp.model.PhotoAudioVideoItem;
 
 import java.util.ArrayList;
-
+/**
+ * Created by BHARAT on 04/02/2016.
+ */
 public class EventsAllDisplay extends AppCompatActivity {
 
     RecyclerView recycleview;

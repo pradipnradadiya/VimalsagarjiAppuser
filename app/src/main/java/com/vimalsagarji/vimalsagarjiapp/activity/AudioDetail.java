@@ -51,7 +51,9 @@ import java.util.List;
 
 import ch.boye.httpclientandroidlib.NameValuePair;
 import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
-
+/**
+ * Created by BHARAT on 04/02/2016.
+ */
 @SuppressWarnings("ALL")
 public class AudioDetail extends AppCompatActivity {
 
@@ -659,10 +661,10 @@ public class AudioDetail extends AppCompatActivity {
 
             if (listname.get(position).equalsIgnoreCase("null")) {
                 holder.txtCommentUserName.setText("Admin");
-                holder.txtCommentDescription.setText(monthComments.getComment());
+                holder.txtCommentDescription.setText(CommonMethod.decodeEmoji(monthComments.getComment()));
             } else {
-                holder.txtCommentUserName.setText(listname.get(position));
-                holder.txtCommentDescription.setText(monthComments.getComment());
+                holder.txtCommentUserName.setText(CommonMethod.decodeEmoji(listname.get(position)));
+                holder.txtCommentDescription.setText(CommonMethod.decodeEmoji(monthComments.getComment()));
             }
             return convertView;
         }

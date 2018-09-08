@@ -54,7 +54,9 @@ import ch.boye.httpclientandroidlib.NameValuePair;
 import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 
 import static com.vimalsagarji.vimalsagarjiapp.fragment.event_fragment.TodayEventFragment.video_play_url;
-
+/**
+ * Created by BHARAT on 04/02/2016.
+ */
 @SuppressWarnings("ALL")
 public class VideoDetailActivity extends AppCompatActivity {
 

@@ -55,7 +55,9 @@ import java.util.List;
 
 import ch.boye.httpclientandroidlib.NameValuePair;
 import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
-
+/**
+ * Created by BHARAT on 04/02/2016.
+ */
 @SuppressWarnings("ALL")
 public class InformationDetailActivity extends AppCompatActivity {
 
@@ -511,7 +513,7 @@ public class InformationDetailActivity extends AppCompatActivity {
 
             if (listname.get(position).equalsIgnoreCase("null")) {
                 holder.txtCommentUserName.setText("Admin");
-                holder.txtCommentDescription.setText(monthComments.getComment());
+                holder.txtCommentDescription.setText(CommonMethod.decodeEmoji(monthComments.getComment()));
             } else {
                 holder.txtCommentUserName.setText(CommonMethod.decodeEmoji(listname.get(position)));
                 holder.txtCommentDescription.setText(CommonMethod.decodeEmoji(monthComments.getComment()));

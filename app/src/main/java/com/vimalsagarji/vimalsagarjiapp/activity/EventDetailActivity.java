@@ -693,10 +693,10 @@ public class EventDetailActivity extends AppCompatActivity {
             EventComment comment = items.get(position);
             if (listname.get(position).equalsIgnoreCase("null")) {
                 holder.txtCommentUserName.setText("Admin");
-                holder.txtCommentDescription.setText(comment.getComment());
+                holder.txtCommentDescription.setText(CommonMethod.decodeEmoji(comment.getComment()));
             } else {
                 holder.txtCommentUserName.setText(listname.get(position));
-                holder.txtCommentDescription.setText(comment.getComment());
+                holder.txtCommentDescription.setText(CommonMethod.decodeEmoji(comment.getComment()));
             }
             return convertView;
         }
