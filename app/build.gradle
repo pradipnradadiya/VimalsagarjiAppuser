@@ -59,6 +59,7 @@ dependencies {
     //    implementation 'cn.jzvd:jiaozivideoplayer:6.2.9'
 
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
+
     implementation 'com.auron:permission-manage:1.1.7'
 
 }
