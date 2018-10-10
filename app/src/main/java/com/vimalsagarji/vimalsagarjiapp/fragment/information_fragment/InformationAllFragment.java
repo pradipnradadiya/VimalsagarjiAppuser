@@ -26,6 +26,7 @@ import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.adpter.RecyclerInformationAllAdapter;
 import com.vimalsagarji.vimalsagarjiapp.adpter.RecyclerThoughtAllAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.InformationItem;
 import com.vimalsagarji.vimalsagarjiapp.model.ThoughtItem;
@@ -74,10 +75,10 @@ public class InformationAllFragment extends Fragment {
         sharedpreferance = new Sharedpreferance(getActivity());
 
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getallinfo/?page=";
+            mainurl = CommonUrl.Main_url+"info/getallinfo/?page=";
 
         } else {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getallinfo/?uid=" + sharedpreferance.getId() + "&page=";
+            mainurl = CommonUrl.Main_url+"info/getallinfo/?uid=" + sharedpreferance.getId() + "&page=";
         }
 
         findID();

@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 
 import org.json.JSONException;
@@ -490,7 +491,7 @@ public class NewPostByPeople extends AppCompatActivity implements View.OnClickLi
             try {
 
                 HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/addpost/");
+                HttpPost httpPost = new HttpPost(CommonUrl.Main_url+"bypeople/addpost/");
                 MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 
                 multipartEntity.addPart("uid", new StringBody(sharedpreferance.getId()));

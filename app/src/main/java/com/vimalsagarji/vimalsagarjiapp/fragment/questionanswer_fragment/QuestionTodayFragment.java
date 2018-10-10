@@ -29,6 +29,7 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.adpter.RecyclerQuestionAllAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.QuestionAllItem;
 
@@ -75,10 +76,10 @@ public class QuestionTodayFragment extends Fragment {
         sharedpreferance = new Sharedpreferance(getActivity());
 
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquestoday/?page=";
+            mainurl = CommonUrl.Main_url+"questionanswer/viewallappquestoday/?page=";
 
         } else {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquestoday/?uid=" + sharedpreferance.getId()+"&page=";
+            mainurl = CommonUrl.Main_url+"questionanswer/viewallappquestoday/?uid=" + sharedpreferance.getId()+"&page=";
         }
 
         findID();
@@ -379,7 +380,7 @@ public class QuestionTodayFragment extends Fragment {
                 ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Question", params[0]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/", nameValuePairs, getActivity());
+                responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"questionanswer/askques/", nameValuePairs, getActivity());
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -25,6 +25,7 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.adpter.RecyclerVideoAllAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.VideoItem;
 import com.vimalsagarji.vimalsagarjiapp.util.AllOurCommonUrl;
@@ -74,10 +75,10 @@ public class VideoWeekFragment extends Fragment {
         sharedpreferance = new Sharedpreferance(getActivity());
 
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategoryweek/?cid="+video_cat_id+"&page=";
+            mainurl = CommonUrl.Main_url+"video/getvideobycategoryweek/?cid="+video_cat_id+"&page=";
 
         } else {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategoryweek/?cid="+video_cat_id+"&uid=" + sharedpreferance.getId() + "&page=";
+            mainurl = CommonUrl.Main_url+"video/getvideobycategoryweek/?cid="+video_cat_id+"&uid=" + sharedpreferance.getId() + "&page=";
         }
 
         findID();

@@ -77,10 +77,10 @@ public class VideoAllFragment extends Fragment {
         sharedpreferance = new Sharedpreferance(getActivity());
 
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategoryid/?cid="+video_cat_id+"&page=";
+            mainurl = CommonUrl.Main_url+"video/getvideobycategoryid/?cid="+video_cat_id+"&page=";
 
         } else {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategoryid/?cid="+video_cat_id+"&uid=" + sharedpreferance.getId() + "&page=";
+            mainurl = CommonUrl.Main_url+"video/getvideobycategoryid/?cid="+video_cat_id+"&uid=" + sharedpreferance.getId() + "&page=";
         }
 
         findID();

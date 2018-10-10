@@ -26,6 +26,7 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.EventGalleryAlbumActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.GalleryCategory;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
 
@@ -150,7 +151,7 @@ public class Gallery_All_Category extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallcategory");
+                responseJSON = CommonMethod.getStringResponse(CommonUrl.Main_url+"gallery/getallcategory");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -172,15 +173,15 @@ public class Gallery_All_Category extends AppCompatActivity {
                         strName = object.getString("Name");
                         listName.add(strName);
                         String strCategoryIcon = object.getString("CategoryIcon");
-                        listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/gallerycategory/" + strCategoryIcon);
+                        listIcon.add(CommonUrl.Main_url+"static/gallerycategory/" + strCategoryIcon);
                     }
                     listID.add("e_alliamgeid");
                     listName.add("Event");
-                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/event.png");
+                    listIcon.add(CommonUrl.Main_url+"static/Gallery/event.png");
 
                     listID.add("bypeopleidid");
                     listName.add("ByPeople");
-                    listIcon.add("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/bypeople.png");
+                    listIcon.add(CommonUrl.Main_url+"static/Gallery/bypeople.png");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

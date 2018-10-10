@@ -291,7 +291,7 @@ public class InformationDetailActivity extends AppCompatActivity {
                                     etComment.requestFocus();
                                 } else {
 
-                                    new CommentPost().execute(CommonMethod.encodeEmoji(etComment.getText().toString()));
+                                    new CommentPost().execute(CommonMethod.encodeEmoji(etComment.getText().toString().replaceAll("%","percent")));
                                     etComment.setText("");
 
                                 }
@@ -333,7 +333,7 @@ public class InformationDetailActivity extends AppCompatActivity {
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
             return responseJSON;
         }
 
@@ -423,7 +423,7 @@ public class InformationDetailActivity extends AppCompatActivity {
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"info/getallappcomments/?page=1&psize=1000", nameValuePairs, InformationDetailActivity.this);
             return responseJSON;
         }
 
@@ -554,7 +554,7 @@ public class InformationDetailActivity extends AppCompatActivity {
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", strID));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Comment", params[0]));
-            response = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/comment/", nameValuePairs, InformationDetailActivity.this);
+            response = CommonMethod.postStringResponse(CommonUrl.Main_url+"info/comment/", nameValuePairs, InformationDetailActivity.this);
 
 
             return response;
@@ -601,7 +601,7 @@ public class InformationDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
-            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/likeinfo/", nameValuePairs, InformationDetailActivity.this);
+            responeJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"info/likeinfo/", nameValuePairs, InformationDetailActivity.this);
             return responeJSON;
         }
 
@@ -629,7 +629,7 @@ public class InformationDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[0]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/countlikes/", nameValuePairs, InformationDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"info/countlikes/", nameValuePairs, InformationDetailActivity.this);
             return responseJSON;
         }
 
@@ -670,7 +670,7 @@ public class InformationDetailActivity extends AppCompatActivity {
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", params[0]));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("infoid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/checklike/", nameValuePairs, InformationDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"info/checklike/", nameValuePairs, InformationDetailActivity.this);
             return responseJSON;
         }
 
@@ -703,7 +703,7 @@ public class InformationDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/information/?infoid=" + strID + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse(CommonUrl.Main_url+"countviews/information/?infoid=" + strID + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }

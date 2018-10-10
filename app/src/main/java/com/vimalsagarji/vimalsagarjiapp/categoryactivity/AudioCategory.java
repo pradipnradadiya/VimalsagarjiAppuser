@@ -18,6 +18,7 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
 import com.vimalsagarji.vimalsagarjiapp.adpter.RecyclerEventCategoryAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.EventCategoryItem;
 import com.vimalsagarji.vimalsagarjiapp.util.CommonURL;
@@ -192,8 +193,8 @@ public class AudioCategory extends AppCompatActivity implements View.OnClickList
 
             if (recyclerView_audio_category != null) {
 
-                allAudioCategoryItems.add(new EventCategoryItem("e_alliamgeid", "Event", "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/event.png","0","e_alliamgeid"));
-                allAudioCategoryItems.add(new EventCategoryItem("bypeopleidid", "ByPeople", "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/bypeople.png","0","bypeopleidid"));
+                allAudioCategoryItems.add(new EventCategoryItem("e_alliamgeid", "Event", CommonUrl.Main_url+"static/Gallery/event.png","0","e_alliamgeid"));
+                allAudioCategoryItems.add(new EventCategoryItem("bypeopleidid", "ByPeople", CommonUrl.Main_url+"static/Gallery/bypeople.png","0","bypeopleidid"));
 
                 recyclerAudioCategoryAdapter = new RecyclerEventCategoryAdapter(AudioCategory.this, allAudioCategoryItems);
                 if (recyclerAudioCategoryAdapter.getItemCount() != 0) {

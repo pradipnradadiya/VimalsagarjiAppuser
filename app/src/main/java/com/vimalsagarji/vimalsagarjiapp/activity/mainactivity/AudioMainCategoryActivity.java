@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.adpter.CategoryAllAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.model.MainCategoryItem;
 
 import org.json.JSONArray;
@@ -90,7 +91,7 @@ public class AudioMainCategoryActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
 
-            responseJson = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getallcategory");
+            responseJson = CommonMethod.getStringResponse(CommonUrl.Main_url+"audio/getallcategory");
             return responseJson;
         }
 
@@ -106,11 +107,11 @@ public class AudioMainCategoryActivity extends AppCompatActivity {
                     String CAT_ID = "audio";
                     String ID = object.getString("ID");
                     String Name = object.getString("Name");
-                    String CategoryIcon = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audiocategory/"+object.getString("CategoryIcon");
+                    String CategoryIcon = CommonUrl.Main_url+"static/audiocategory/"+object.getString("CategoryIcon");
                     audioAllItems.add(new MainCategoryItem(CAT_ID,ID,Name,CategoryIcon));
                 }
 
-                audioAllItems.add(new MainCategoryItem("audio","e_alliamgeid","Event","http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/event.png"));
+                audioAllItems.add(new MainCategoryItem("audio","e_alliamgeid","Event",CommonUrl.Main_url+"static/Gallery/event.png"));
 
                 audioAllAdapter.notifyDataSetChanged();
 

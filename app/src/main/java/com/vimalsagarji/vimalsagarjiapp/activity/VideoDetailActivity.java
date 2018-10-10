@@ -77,8 +77,8 @@ public class VideoDetailActivity extends AppCompatActivity {
     String click_action;
     EditText et_event;
     TextView txtDate;
-    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videoimage/";
-    private final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videos/";
+    private final String ImgURL = CommonUrl.Main_url+"static/videoimage/";
+    private final String VideoPath = CommonUrl.Main_url+"static/videos/";
     String videoid;
     RelativeLayout rel_video;
     int flag = 0;
@@ -341,7 +341,7 @@ public class VideoDetailActivity extends AppCompatActivity {
                                 Toast.makeText(VideoDetailActivity.this, R.string.notregister, Toast.LENGTH_SHORT).show();
 
                             } else {
-                                String strComment = etComment.getText().toString();
+                                String strComment = etComment.getText().toString().replaceAll("%","percent");
                                 if (TextUtils.isEmpty(strComment)) {
                                     etComment.setError("Please enter your comments!");
                                     etComment.requestFocus();
@@ -425,7 +425,7 @@ public class VideoDetailActivity extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
             return responseJSON;
         }
 
@@ -510,7 +510,7 @@ public class VideoDetailActivity extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
             return responseJSON;
         }
 
@@ -580,7 +580,7 @@ public class VideoDetailActivity extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"video/getallappcomments/?page=1&psize=1000", nameValuePairs, VideoDetailActivity.this);
             return responseJSON;
         }
 
@@ -697,7 +697,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("vid", params[0]));
             nameValuePairs.add(new BasicNameValuePair("uid", params[1]));
             nameValuePairs.add(new BasicNameValuePair("Comment", params[2]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/comment/", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"video/comment/", nameValuePairs, VideoDetailActivity.this);
 
             return responseJSON;
         }
@@ -742,7 +742,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
-            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/videolike/", nameValuePairs, VideoDetailActivity.this);
+            responeJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"video/videolike/", nameValuePairs, VideoDetailActivity.this);
             return responeJSON;
         }
 
@@ -771,7 +771,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[0]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/countlikes/", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"video/countlikes/", nameValuePairs, VideoDetailActivity.this);
             return responseJSON;
         }
 
@@ -814,7 +814,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", params[0]));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("vid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/checklike/", nameValuePairs, VideoDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"video/checklike/", nameValuePairs, VideoDetailActivity.this);
             return responseJSON;
         }
 
@@ -847,7 +847,7 @@ public class VideoDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse(CommonUrl.Main_url+"userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -888,7 +888,7 @@ public class VideoDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/video/?vid=" + vid + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse(CommonUrl.Main_url+"countviews/video/?vid=" + vid + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,6 +15,7 @@ import com.vimalsagarji.vimalsagarjiapp.ActivityHomeMain;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 
 import org.json.JSONArray;
@@ -36,7 +36,6 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
     private Sharedpreferance sharedpreferance;
     private ProgressBar progress;
     private TextView txt_content,txt_timer;
-//    String str="pRadip PaTel N radaDiYA";
 
 
     @Override
@@ -44,8 +43,6 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.content_third_spalsh_screen);
-
-//        Log.e("str","----------------"+CommonMethod.capitalizeString(str));
 
         sharedpreferance = new Sharedpreferance(ThirdSpalshScreenActivity.this);
         progress = (ProgressBar) findViewById(R.id.progress);
@@ -57,7 +54,7 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
 
     private void askforPermission() {
 
-        askCompactPermissions(new String[]{ PermissionUtils.Manifest_RECEIVE_SMS,PermissionUtils.Manifest_READ_SMS,PermissionUtils.Manifest_SEND_SMS}, new PermissionResult() {
+        askCompactPermissions(new String[]{ PermissionUtils.Manifest_RECEIVE_SMS,PermissionUtils.Manifest_READ_SMS,PermissionUtils.Manifest_SEND_SMS,PermissionUtils.Manifest_READ_EXTERNAL_STORAGE,PermissionUtils.Manifest_WRITE_EXTERNAL_STORAGE}, new PermissionResult() {
             @Override
             public void permissionGranted() {
                 Intent intent = new Intent(ThirdSpalshScreenActivity.this, RegisterActivity.class);
@@ -77,6 +74,7 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
             public void permissionForeverDenied() {
                 askforPermission();
             }
+
         });
 
     }
@@ -131,15 +129,13 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
         public void onFinish() {
             txt_timer.setText("");
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
-//                Intent intent = new Intent(ThirdSpalshScreenActivity.this, RegisterActivity.class);
-//                startActivity(intent);
-//                finish();
 
                 askforPermission();
             }
 
             else {
                 if (CommonMethod.isInternetConnected(ThirdSpalshScreenActivity.this)) {
+
                     new AllreadyRegisterUser().execute(sharedpreferance.getEmail(), sharedpreferance.getMobile(), sharedpreferance.getToken());
                 } else {
 
@@ -177,7 +173,7 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
                 nameValuePairs.add(new BasicNameValuePair("EmailID", params[0]));
                 nameValuePairs.add(new BasicNameValuePair("Phone", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("DeviceID", params[2]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/aluser/checkuser", nameValuePairs, ThirdSpalshScreenActivity.this);
+                responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"aluser/checkuser", nameValuePairs, ThirdSpalshScreenActivity.this);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -213,10 +209,6 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
 
 
                         askforLogin();
-//                        Intent intent = new Intent(ThirdSpalshScreenActivity.this, ActivityHomeMain.class);
-//                        startActivity(intent);
-//                        finish();
-//                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 
                     }
 
@@ -238,7 +230,6 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
 
     }
 
-
     private class ContentGet extends AsyncTask<String, Void, String> {
         String responseJSON = "";
 
@@ -252,7 +243,7 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
         protected String doInBackground(String... params) {
             try {
 
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/quote/viewQuote");
+                responseJSON = CommonMethod.getStringResponse(CommonUrl.Main_url+"quote/viewQuote");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -269,7 +260,6 @@ public class ThirdSpalshScreenActivity extends ActivityManagePermission {
 
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     Log.e("status", "-----------------success");
-
 
                         JSONObject object = jsonArray.getJSONObject(0);
 

@@ -25,6 +25,7 @@ import com.vimalsagarji.vimalsagarjiapp.JSONParser;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.InformationDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.InformationCategory;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
@@ -45,7 +46,7 @@ public class ThisWeekInformationFragment extends Fragment {
 
     }
 
-    private final String WeekSearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/searchallinfobycidweek/?page=1&psize=1000";
+    private final String WeekSearch = CommonUrl.Main_url+"info/searchallinfobycidweek/?page=1&psize=1000";
     private KProgressHUD loadingProgressDialog;
     private static final String TAG = ThisWeekInformationFragment.class.getSimpleName();
     private List<InformationCategory> listThisWeekitem = new ArrayList<>();

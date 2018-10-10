@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.fcm.Config;
 
@@ -87,7 +88,11 @@ public class AlreadyRegisterUser extends AppCompatActivity {
                         // now subscribe to `global` topic to receive app wide notifications
                         FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
                         if (CommonMethod.isInternetConnected(AlreadyRegisterUser.this)) {
-                            displayFirebaseRegId();
+                            try {
+                                displayFirebaseRegId();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
 
                     } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
@@ -106,7 +111,11 @@ public class AlreadyRegisterUser extends AppCompatActivity {
         }
 
         if (CommonMethod.isInternetConnected(AlreadyRegisterUser.this)) {
-            displayFirebaseRegId();
+            try {
+                displayFirebaseRegId();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 //        strDeviceToken = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID); //get android device id
         sharedpreferance = new Sharedpreferance(AlreadyRegisterUser.this);
@@ -179,7 +188,7 @@ public class AlreadyRegisterUser extends AppCompatActivity {
 //                nameValuePairs.add(new BasicNameValuePair("EmailID", params[0]));
                 nameValuePairs.add(new BasicNameValuePair("Phone", params[0]));
                 nameValuePairs.add(new BasicNameValuePair("DeviceID", params[1]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/aluser/checkuser", nameValuePairs, AlreadyRegisterUser.this);
+                responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"aluser/checkuser", nameValuePairs, AlreadyRegisterUser.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }

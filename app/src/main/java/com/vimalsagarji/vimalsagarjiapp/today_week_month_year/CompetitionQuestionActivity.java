@@ -416,7 +416,7 @@ public class CompetitionQuestionActivity extends AppCompatActivity {
                 nameValuePairs.add(new BasicNameValuePair("time", "10:15 am"));
 
 
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/competition/answer/", nameValuePairs, CompetitionQuestionActivity.this);
+                responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"competition/answer/", nameValuePairs, CompetitionQuestionActivity.this);
 
 
             } catch (Exception e) {

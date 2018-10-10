@@ -25,6 +25,7 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.fragment.bypeople_fragment.AllbyPeopleFragment;
 import com.vimalsagarji.vimalsagarjiapp.fragment.bypeople_fragment.ThisMonthbyPeopleFragment;
@@ -203,7 +204,7 @@ public class ByPeople extends AppCompatActivity implements View.OnClickListener 
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse(CommonUrl.Main_url+"userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }

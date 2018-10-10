@@ -29,6 +29,7 @@ import com.vimalsagarji.vimalsagarjiapp.VideoFullActivity;
 import com.vimalsagarji.vimalsagarjiapp.activity.EventsAllDisplay;
 import com.vimalsagarji.vimalsagarjiapp.activity.VideoDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 
 import org.json.JSONArray;
@@ -52,10 +53,10 @@ public class AllVideoFragment extends Fragment {
     }
 
     final static String TAG = AllVideoFragment.class.getSimpleName();
-    private final String urls = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategoryid/?page=1&psize=1000&cid=";
+    private final String urls = CommonUrl.Main_url+"video/getvideobycategoryid/?page=1&psize=1000&cid=";
     private static String URL = "";
-    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videoimage/";
-    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videos/";
+    private static final String ImgURL = CommonUrl.Main_url+"static/videoimage/";
+    private static final String VideoPath = CommonUrl.Main_url+"static/videos/";
     private final ArrayList<String> listid = new ArrayList<>();
     private final ArrayList<String> listcatid = new ArrayList<>();
     private ArrayList<String> listVideoName = new ArrayList<String>();
@@ -69,7 +70,7 @@ public class AllVideoFragment extends Fragment {
     private CustomAdpter customAdpter;
     private TextView txt_nodata_today;
     private EditText InputBox;
-    private final String AllSearchVideo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/searchvideobycategory/?page=1&psize=1000";
+    private final String AllSearchVideo = CommonUrl.Main_url+"video/searchvideobycategory/?page=1&psize=1000";
 
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
 
@@ -126,9 +127,9 @@ public class AllVideoFragment extends Fragment {
             activity_main_swipe_refresh_layout.setEnabled(false);
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new AllEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000");
+                    new AllEventVideo().execute(CommonUrl.Main_url+"event/geteventsbycategoryyear/?page=1&psize=1000");
                 } else {
-                    new AllEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryyear/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                    new AllEventVideo().execute(CommonUrl.Main_url+"event/geteventsbycategoryyear/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
                 }
             } else {
                 final Snackbar snackbar = Snackbar
@@ -150,9 +151,9 @@ public class AllVideoFragment extends Fragment {
             activity_main_swipe_refresh_layout.setEnabled(false);
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new AllByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000");
+                    new AllByPeopleVideo().execute(CommonUrl.Main_url+"bypeople/getallappposts/?page=1&psize=1000");
                 } else {
-                    new AllByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappposts/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                    new AllByPeopleVideo().execute(CommonUrl.Main_url+"bypeople/getallappposts/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
                 }
             } else {
                 final Snackbar snackbar = Snackbar
@@ -247,7 +248,7 @@ public class AllVideoFragment extends Fragment {
                         String date = listDate.get(position);
                         Log.e("date", "------------------" + date);
 
-                        video_play_url = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + strVideo;
+                        video_play_url = CommonUrl.Main_url+"static/bypeoplevideo/" + strVideo;
                         Intent intent = new Intent(getActivity(), VideoFullActivity.class);
 //                            intent.putExtra("click_action", "");
 //                            intent.putExtra("video", "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + strVideo);
@@ -763,12 +764,12 @@ public class AllVideoFragment extends Fragment {
                         listcatid.add(catid);
                         String video = object.getString("Video");
 
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/" + video;
+                        String vidio = CommonUrl.Main_url+"static/eventvideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(video);
                         String photo = object.getString("Photo");
                         String[] parray = photo.split(",");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + parray[0];
+                        String img = CommonUrl.Main_url+"static/eventimage/" + parray[0];
 
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
@@ -885,11 +886,11 @@ public class AllVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + video;
+                        String vidio = CommonUrl.Main_url+"static/bypeoplevideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(video);
                         String photo = object.getString("Photo");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + photo;
+                        String img = CommonUrl.Main_url+"static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");

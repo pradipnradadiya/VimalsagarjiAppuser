@@ -17,9 +17,6 @@ import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -35,11 +32,13 @@ import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.fcm.Config;
 import com.vimalsagarji.vimalsagarjiapp.fcm.NotificationUtils;
 import com.vimalsagarji.vimalsagarjiapp.utils.ValidationUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,7 +47,7 @@ import java.util.ArrayList;
 @SuppressWarnings("ALL")
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText etName,etlastName, etEmail, etMobile, etAddress;
+    private EditText etName, etlastName, etEmail, etMobile, etAddress;
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private Sharedpreferance sharedpreferance;
     private String strDeviceid;
@@ -209,7 +208,7 @@ public class RegisterActivity extends AppCompatActivity {
             Log.e("Firebase token id: ", regId);
 
             if (!TextUtils.isEmpty(regId)) {
-    //            txtRegId.setText("Firebase Reg Id: " + regId);
+                //            txtRegId.setText("Firebase Reg Id: " + regId);
                 Log.e("Firebase token id: ", regId);
                 strDevicetoken = regId;
             } else {
@@ -230,8 +229,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(strName)) {
             etName.setError("Please enter your name.");
             etName.requestFocus();
-        }
-        else if (TextUtils.isEmpty(strEmail) || !ValidationUtils.checkEmail(strEmail)) {
+        } else if (TextUtils.isEmpty(strEmail) || !ValidationUtils.checkEmail(strEmail)) {
             etEmail.setText(strName);
             etEmail.setError("Please enter valid email.");
             etEmail.requestFocus();
@@ -286,7 +284,7 @@ public class RegisterActivity extends AppCompatActivity {
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Address", params[3]));
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Phone", params[4]));
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("DeviceToken", params[5]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/adduser/", nameValuePairs, RegisterActivity.this);
+                responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url + "userregistration/signinsignup", nameValuePairs, RegisterActivity.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -299,45 +297,25 @@ public class RegisterActivity extends AppCompatActivity {
             Log.e("response", "-----------------------------" + s);
             try {
                 JSONObject jsonObject = new JSONObject(s);
-                if (jsonObject.getString("status").equalsIgnoreCase("1")) {
-                    Toast.makeText(RegisterActivity.this, "Email id already registerd.", Toast.LENGTH_SHORT).show();
-                    etEmail.setError("Email id already registerd.");
-                    etEmail.requestFocus();
-                    Log.e("1", "--------------" + "call");
-                }
-                else if (jsonObject.getString("status").equalsIgnoreCase("3")) {
-                    Toast.makeText(RegisterActivity.this, "Mobile Number already registerd.", Toast.LENGTH_SHORT).show();
-                    etMobile.setError("Mobile Number already registerd.");
-                    etMobile.requestFocus();
-                    Log.e("3", "--------------" + "call");
-                }
-                else if (jsonObject.getString("status").equalsIgnoreCase("4")) {
-                    Toast.makeText(RegisterActivity.this, "Email id & Mobile Number already registerd.", Toast.LENGTH_SHORT).show();
-                   Log.e("4", "--------------" + "call");
-                }
 
-                else if (jsonObject.getString("status").equalsIgnoreCase("success")) {
-                    Log.e("1 else ", "--------------" + "call");
-                    String status = jsonObject.getString("status");
-                    String message = jsonObject.getString("message");
-                    String uid = jsonObject.getString("uid");
-                    String email = jsonObject.getString("uemail");
-                    String mobile = jsonObject.getString("uphone");
+                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    JSONObject object = jsonArray.getJSONObject(0);
+                    String uid = object.getString("ID");
+                    String email = object.getString("EmailID");
+                    String mobile = object.getString("Phone");
+                    String token = object.getString("DeviceToken");
+                    Log.e("token", "------------" + token);
+                    Log.e("email", "------------" + email);
                     sharedpreferance.saveId(uid);
                     sharedpreferance.saveEmail(email);
                     sharedpreferance.saveMobile(mobile);
                     sharedpreferance.savePushNotification("pushon");
-                    sharedpreferance.saveToken(strDevicetoken);
+                    sharedpreferance.saveToken(token);
                     Toast.makeText(RegisterActivity.this, "Congratulations! You are successfully registered!", Toast.LENGTH_SHORT).show();
                     moveAhead();
-                } else if (jsonObject.getString("status").equalsIgnoreCase("2")) {
-                    Toast.makeText(RegisterActivity.this, "Already registerd user.", Toast.LENGTH_SHORT).show();
-                    Log.e("2", "--------------" + "call");
                 } else {
-                    Toast.makeText(RegisterActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(RegisterActivity.this, "Registerd successfull.", Toast.LENGTH_SHORT).show();
-//                    sharedpreferance.savePushNotification("pushon");
-//                    moveAhead();
+                    Toast.makeText(RegisterActivity.this, "User not registerd please try again.", Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -345,101 +323,6 @@ public class RegisterActivity extends AppCompatActivity {
             progressDialog.dismiss();
         }
     }
-
-    /*private class AllreadyRegisterUser extends AsyncTask<String, Void, String> {
-        String responseJSON = "";
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-          *//*  loadingProgressDialog = KProgressHUD.create(RegisterActivity.this)
-                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                    .setLabel("Please Wait")
-                    .setCancellable(false);
-            loadingProgressDialog.show();*//*
-
-            progressDialog = new ProgressDialog(RegisterActivity.this);
-            progressDialog.setMessage("Please wait..");
-            progressDialog.show();
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-
-                ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
-                nameValuePairs.add(new BasicNameValuePair("EmailID", params[0]));
-                nameValuePairs.add(new BasicNameValuePair("Phone", params[1]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/aluser/checkuser", nameValuePairs, RegisterActivity.this);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return responseJSON;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Log.e("reponse", "-----------------" + s);
-            progressDialog.dismiss();
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-                if (jsonObject.getString("status").equalsIgnoreCase("success")) {
-//                    dialog.dismiss();
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    Log.e("status", "-----------------success");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        Log.e("array", "-----------------success");
-                        String uid = jsonObject.getString("ID");
-                        String email = jsonObject.getString("EmailID");
-                        sharedpreferance.saveId(uid);
-                        sharedpreferance.saveEmail(email);
-                        moveAhead();
-                    }
-
-                } else {
-                    Toast.makeText(RegisterActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                    dialog = new Dialog(RegisterActivity.this);
-//                Window window = dialog.getWindow();
-//                window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.dialog_already_registr_user);
-                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                    final EditText edit_email = (EditText) dialog.findViewById(R.id.emailid);
-                    final EditText edit_mobile = (EditText) dialog.findViewById(R.id.mobileno);
-                    final Button btn_submit = (Button) dialog.findViewById(R.id.btn_submit);
-                    btn_submit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (TextUtils.isEmpty(edit_email.getText().toString())) {
-                                edit_email.setError("Please enter email id.");
-                                edit_email.requestFocus();
-                            } else if (TextUtils.isEmpty(edit_mobile.getText().toString())) {
-                                edit_mobile.setError("Please enter mobile no.");
-                                edit_mobile.requestFocus();
-                            } else {
-                                if (CommonMethod.isInternetConnected(RegisterActivity.this)) {
-                                    dialog.dismiss();
-                                    new AllreadyRegisterUser().execute(edit_email.getText().toString(), edit_mobile.getText().toString());
-                                } else {
-                                    Toast.makeText(RegisterActivity.this, R.string.internet, Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }
-                    });
-                    dialog.show();
-                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-    }*/
 
     @Override
     protected void onResume() {
@@ -525,8 +408,6 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onTick(long leftTimeInMilliseconds) {
                             long seconds = leftTimeInMilliseconds / 1000;
-
-
                             text_timer.setText(String.format("%02d", seconds / 60) + ":" + String.format("%02d", seconds % 60));
                             // format the textview to show the easily readable format
                         }
@@ -696,6 +577,12 @@ public class RegisterActivity extends AppCompatActivity {
         };
 
         editText.addTextChangedListener(textWatcher);
+    }
+
+    public void freeMemory() {
+        System.runFinalization();
+        Runtime.getRuntime().gc();
+        System.gc();
     }
 
 }

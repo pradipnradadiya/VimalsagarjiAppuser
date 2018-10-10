@@ -46,7 +46,6 @@ public class NotificationUtils {
     }
 
 
-
     public void showNotificationMessage(String title, String message, String timeStamp, Intent intent) {
         showNotificationMessage(title, message, timeStamp, intent, null);
 

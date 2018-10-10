@@ -32,6 +32,7 @@ import com.vimalsagarji.vimalsagarjiapp.JSONParser;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.ThoughtToday;
 import com.vimalsagarji.vimalsagarjiapp.utils.AllQuestionDetail;
@@ -67,9 +68,9 @@ public class AllQuetionAnswerFragment extends Fragment {
     private final String res = "";
 
 
-    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappques/?page=1&psize=1000";
+    private static final String URL = CommonUrl.Main_url+"questionanswer/viewallappques/?page=1&psize=1000";
 //    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesyear/?page=1&psize=1000";
-    static final String PostURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/";
+    static final String PostURL = CommonUrl.Main_url+"questionanswer/askques/";
     private ListView listView;
     private Dialog dialog;
 
@@ -78,7 +79,7 @@ public class AllQuetionAnswerFragment extends Fragment {
     private TextView txt_nodata_today;
     private EditText InputBox;
     List<ThoughtToday> listfilterdata = new ArrayList<>();
-    private final String AllSearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/searchallappques/?page=1&psize=1000";
+    private final String AllSearchQuestion = CommonUrl.Main_url+"questionanswer/searchallappques/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
 //    String approve = "";
     private ProgressBar progressbar;
@@ -572,7 +573,7 @@ public class AllQuetionAnswerFragment extends Fragment {
                 ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
                 nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("Question", params[0]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/", nameValuePairs, getActivity());
+                responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"questionanswer/askques/", nameValuePairs, getActivity());
             } catch (Exception e) {
                 e.printStackTrace();
             }

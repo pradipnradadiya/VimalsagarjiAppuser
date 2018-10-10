@@ -120,9 +120,9 @@ public class EventDetailActivity extends AppCompatActivity {
     private TextView txt_title;
     private EditText et_event;
 
-    private final String Photopath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/";
-    private final String Audiopath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/";
-    private final String Videopath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/";
+    private final String Photopath = CommonUrl.Main_url+"static/eventimage/";
+    private final String Audiopath = CommonUrl.Main_url+"static/eventaudio/";
+    private final String Videopath = CommonUrl.Main_url+"static/eventvideo/";
 
     String listtitle;
     String strDate;
@@ -368,7 +368,7 @@ public class EventDetailActivity extends AppCompatActivity {
                                 Toast.makeText(EventDetailActivity.this, R.string.notregister, Toast.LENGTH_SHORT).show();
 
                             } else {
-                                String strComment = etComment.getText().toString();
+                                String strComment = etComment.getText().toString().replaceAll("%","percent");
                                 if (TextUtils.isEmpty(strComment)) {
                                     etComment.setError("Please enter your comments!");
                                     etComment.requestFocus();
@@ -526,7 +526,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/getallcomments/?page=1&psize=1000", nameValuePairs, EventDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"event/getallcomments/?page=1&psize=1000", nameValuePairs, EventDetailActivity.this);
             return responseJSON;
         }
 
@@ -611,7 +611,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/getallcomments/?page=1&psize=1000", nameValuePairs, EventDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"event/getallcomments/?page=1&psize=1000", nameValuePairs, EventDetailActivity.this);
             return responseJSON;
         }
 
@@ -822,7 +822,7 @@ public class EventDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[0]));
-            responeJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/eventlike/", nameValuePairs, EventDetailActivity.this);
+            responeJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"event/eventlike/", nameValuePairs, EventDetailActivity.this);
             return responeJSON;
         }
 
@@ -860,7 +860,7 @@ public class EventDetailActivity extends AppCompatActivity {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[0]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/countlikes/", nameValuePairs, EventDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"event/countlikes/", nameValuePairs, EventDetailActivity.this);
             return responseJSON;
         }
 
@@ -904,7 +904,7 @@ public class EventDetailActivity extends AppCompatActivity {
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("uid", params[0]));
             nameValuePairs.add(new ch.boye.httpclientandroidlib.message.BasicNameValuePair("eid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/checklike/", nameValuePairs, EventDetailActivity.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"event/checklike/", nameValuePairs, EventDetailActivity.this);
             return responseJSON;
         }
 
@@ -944,7 +944,7 @@ public class EventDetailActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse(CommonUrl.Main_url+"userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -985,7 +985,7 @@ public class EventDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/event/?eid=" + strEventId + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse(CommonUrl.Main_url+"countviews/event/?eid=" + strEventId + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }

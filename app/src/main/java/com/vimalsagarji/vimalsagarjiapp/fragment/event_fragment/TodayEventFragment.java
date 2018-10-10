@@ -25,6 +25,7 @@ import com.vimalsagarji.vimalsagarjiapp.JSONParser;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.EventDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.EventAdpter;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
@@ -52,14 +53,14 @@ public class TodayEventFragment extends Fragment {
     private static final String strMonth = "geteventsbycategorytoday";
     private static String URL = "";
     private final List<EventAdpter> listAllEvent = new ArrayList<>();
-    private final String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/";
-    private final String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/";
-    private final String Video = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/";
+    private final String Photo = CommonUrl.Main_url+"static/eventimage/";
+    private final String Audio = CommonUrl.Main_url+"static/eventaudio/";
+    private final String Video = CommonUrl.Main_url+"static/eventvideo/";
     private TextView txt_nodata_today;
     private EditText InputBox;
     private CustomAdpter adpter;
     private List<EventAdpter> listfilterdata = new ArrayList<>();
-    private final String TodaySearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/searcheventsbycategorytoday/?page=1&psize=1000";
+    private final String TodaySearch = CommonUrl.Main_url+"event/searcheventsbycategorytoday/?page=1&psize=1000";
     private GridView gridView;
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     public static String video_play_url;
@@ -80,7 +81,7 @@ public class TodayEventFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         sharedpreferance = new Sharedpreferance(getActivity());
-        URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorytoday/?cid=" + cid + "&page=1&psize=1000";
+        URL = CommonUrl.Main_url+"event/geteventsbycategorytoday/?cid=" + cid + "&page=1&psize=1000";
 
         Log.e("cid","------------------"+cid);
 

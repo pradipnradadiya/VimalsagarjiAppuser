@@ -25,6 +25,7 @@ import com.vimalsagarji.vimalsagarjiapp.JSONParser;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.ByPeopleDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.AllByPeople;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
@@ -48,8 +49,8 @@ public class ThisMonthbyPeopleFragment extends Fragment {
 
     private static final String TAG = AllbyPeopleFragment.class.getSimpleName();
 
-    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/";
-    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/";
+    private static final String AudioPath = CommonUrl.Main_url+"static/bypeopleaudio/";
+    private static final String VideoPath = CommonUrl.Main_url+"static/bypeoplevideo/";
     private static final String strImageUrlName = "bypeopleimage";
     private static final String ImgURL = Constant.ImgURL;
     private static final String IMAGEURL = ImgURL.replace("audioimage", strImageUrlName);
@@ -71,7 +72,7 @@ public class ThisMonthbyPeopleFragment extends Fragment {
     private ListView listView;
     private String strImageUrl = "";
 
-    private final String strURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsmonth/?page=1&psize=1000";
+    private final String strURL = CommonUrl.Main_url+"bypeople/getallapppostsmonth/?page=1&psize=1000";
     //    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;

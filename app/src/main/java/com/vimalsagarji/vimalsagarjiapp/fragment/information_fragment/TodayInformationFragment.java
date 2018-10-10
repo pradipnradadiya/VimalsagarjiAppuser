@@ -26,6 +26,7 @@ import com.vimalsagarji.vimalsagarjiapp.JSONParser;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.InformationDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.InformationCategory;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
@@ -55,7 +56,7 @@ public class TodayInformationFragment extends Fragment {
     private ImageView imsearch;
     private EditText InputBox;
     private CustomAdpter adpter;
-    private final String TodaySearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/searchallinfobycidtoday/?page=1&psize=1000";
+    private final String TodaySearch = CommonUrl.Main_url+"info/searchallinfobycidtoday/?page=1&psize=1000";
     private List<InformationCategory> listfilterdata = new ArrayList<>();
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private Intent intent;

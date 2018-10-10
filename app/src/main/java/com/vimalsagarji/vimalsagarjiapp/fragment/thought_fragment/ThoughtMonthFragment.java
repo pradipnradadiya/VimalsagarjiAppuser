@@ -25,6 +25,7 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.adpter.RecyclerThoughtAllAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.ThoughtItem;
 
@@ -72,10 +73,10 @@ public class ThoughtMonthFragment extends Fragment {
         sharedpreferance = new Sharedpreferance(getActivity());
 
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidmonth/?page=";
+            mainurl = CommonUrl.Main_url+"thought/getallthoughtsbycidmonth/?page=";
 
         } else {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidmonth/?uid=" + sharedpreferance.getId() + "&page=";
+            mainurl = CommonUrl.Main_url+"thought/getallthoughtsbycidmonth/?uid=" + sharedpreferance.getId() + "&page=";
         }
 
         findID();

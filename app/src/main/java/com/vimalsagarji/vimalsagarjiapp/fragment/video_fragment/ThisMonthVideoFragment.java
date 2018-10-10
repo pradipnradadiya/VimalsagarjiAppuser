@@ -27,6 +27,7 @@ import com.squareup.picasso.Picasso;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.VideoDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 
 import org.json.JSONArray;
@@ -51,10 +52,10 @@ public class ThisMonthVideoFragment extends Fragment {
 
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     final static String TAG = AllVideoFragment.class.getSimpleName();
-    private final String urls = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategorymonth/?page=1&psize=1000&cid=";
+    private final String urls = CommonUrl.Main_url+"video/getvideobycategorymonth/?page=1&psize=1000&cid=";
     private static String URL = "";//http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategorymonth/?page=1&psize=100&cid=" + video_cat_id;
-    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videoimage/";
-    private final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videos/";
+    private final String ImgURL = CommonUrl.Main_url+"static/videoimage/";
+    private final String VideoPath = CommonUrl.Main_url+"static/videos/";
 
     private final ArrayList<String> listid = new ArrayList<>();
     private final ArrayList<String> listcatid = new ArrayList<>();
@@ -74,7 +75,7 @@ public class ThisMonthVideoFragment extends Fragment {
     private CustomAdpter customAdpter;
     private TextView txt_nodata_today;
     private EditText InputBox;
-    private final String MonthSearchVideo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/searchallvideosbycidthismonth/?page=1&psize=1000";
+    private final String MonthSearchVideo = CommonUrl.Main_url+"video/searchallvideosbycidthismonth/?page=1&psize=1000";
     private ProgressBar progressbar;
     Sharedpreferance sharedpreferance;
 
@@ -123,9 +124,9 @@ public class ThisMonthVideoFragment extends Fragment {
             listVideoName.clear();
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new MonthEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorymonth/?page=1&psize=1000");
+                    new MonthEventVideo().execute(CommonUrl.Main_url+"event/geteventsbycategorymonth/?page=1&psize=1000");
                 }else{
-                    new MonthEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorymonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+                    new MonthEventVideo().execute(CommonUrl.Main_url+"event/geteventsbycategorymonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
                 }
             } else {
                 final Snackbar snackbar = Snackbar
@@ -145,9 +146,9 @@ public class ThisMonthVideoFragment extends Fragment {
             listVideoName.clear();
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new MonthByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsmonth/?page=1&psize=1000");
+                    new MonthByPeopleVideo().execute(CommonUrl.Main_url+"bypeople/getallapppostsmonth/?page=1&psize=1000");
                 }else{
-                    new MonthByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsmonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+                    new MonthByPeopleVideo().execute(CommonUrl.Main_url+"bypeople/getallapppostsmonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
                 }
             } else {
                 final Snackbar snackbar = Snackbar
@@ -623,11 +624,11 @@ public class ThisMonthVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/" + video;
+                        String vidio = CommonUrl.Main_url+"static/eventvideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + photo;
+                        String img = CommonUrl.Main_url+"static/eventimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");
@@ -743,11 +744,11 @@ public class ThisMonthVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + video;
+                        String vidio = CommonUrl.Main_url+"static/bypeoplevideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + photo;
+                        String img = CommonUrl.Main_url+"static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String view = object.getString("View");

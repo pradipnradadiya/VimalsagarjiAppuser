@@ -25,6 +25,7 @@ import com.vimalsagarji.vimalsagarjiapp.JSONParser;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.mainactivity.SearchActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.CompetitionList;
 
@@ -40,8 +41,8 @@ public class CompetitionActivity extends AppCompatActivity {
     private TextView grid_txtTitle;
     //    private KProgressHUD loadingProgressDialog;
     private static final String TAG = CompetitionActivity.class.getSimpleName();
-    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/competition/getallcategory/?page=1&psize=1000";
-    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/competitioncategory/";
+    private static final String URL = CommonUrl.Main_url+"competition/getallcategory/?page=1&psize=1000";
+    private static final String ImgURL = CommonUrl.Main_url+"static/competitioncategory/";
     private final ArrayList<String> listID = new ArrayList<String>();
     private final ArrayList<String> listName = new ArrayList<String>();
     private final ArrayList<String> listIcon = new ArrayList<String>();
@@ -69,7 +70,6 @@ public class CompetitionActivity extends AppCompatActivity {
             setContentView(R.layout.content_competition);
         } else if (savedInstanceState != null) {
             onResume();
-
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_competition);
@@ -109,6 +109,8 @@ public class CompetitionActivity extends AppCompatActivity {
         });
 
 
+//        Temparory comment
+        /*
         if (CommonMethod.isInternetConnected(CompetitionActivity.this)) {
             JsonTask jsonTask = new JsonTask();
             jsonTask.execute(URL, ImgURL);
@@ -124,6 +126,9 @@ public class CompetitionActivity extends AppCompatActivity {
                 }
             });
         }
+        */
+
+
     }
 
     private class JsonTask extends AsyncTask<String, String, String> {

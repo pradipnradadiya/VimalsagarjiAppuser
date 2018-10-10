@@ -25,6 +25,7 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.adpter.RecyclerInformationAllAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.InformationItem;
 
@@ -72,10 +73,10 @@ public class InformationWeekFragment extends Fragment {
         sharedpreferance = new Sharedpreferance(getActivity());
 
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getallinfobycidweek/?page=";
+            mainurl = CommonUrl.Main_url+"info/getallinfobycidweek/?page=";
 
         } else {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getallinfobycidweek/?uid=" + sharedpreferance.getId() + "&page=";
+            mainurl = CommonUrl.Main_url+"info/getallinfobycidweek/?uid=" + sharedpreferance.getId() + "&page=";
         }
 
         findID();

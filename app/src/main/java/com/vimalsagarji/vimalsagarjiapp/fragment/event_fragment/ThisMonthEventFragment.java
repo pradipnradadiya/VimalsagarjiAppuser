@@ -25,6 +25,7 @@ import com.vimalsagarji.vimalsagarjiapp.JSONParser;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.EventDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.EventAdpter;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
@@ -56,9 +57,9 @@ public class ThisMonthEventFragment extends Fragment {
     String day = "";
     int dayOfWeek = 0;
     Date date;
-    private final String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/";
-    private final String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/";
-    private final String Video = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/";
+    private final String Photo = CommonUrl.Main_url+"static/eventimage/";
+    private final String Audio = CommonUrl.Main_url+"static/eventaudio/";
+    private final String Video = CommonUrl.Main_url+"static/eventvideo/";
     final int drawableImage = R.drawable.event;
 
     private TextView txt_nodata_today;
@@ -66,7 +67,7 @@ public class ThisMonthEventFragment extends Fragment {
     private CustomAdpter adpter;
 //    private KProgressHUD loadingProgressDialog;
     private List<EventAdpter> listfilterdata = new ArrayList<>();
-    private final String MonthSearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/searcheventsbycategorymonth/?page=1&psize=1000";
+    private final String MonthSearch = CommonUrl.Main_url+"event/searcheventsbycategorymonth/?page=1&psize=1000";
 
     private GridView gridView;
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
@@ -86,7 +87,7 @@ public class ThisMonthEventFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         sharedpreferance=new Sharedpreferance(getActivity());
-        URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorymonth/?cid=" + cid + "&page=1&psize=1000";
+        URL = CommonUrl.Main_url+"event/geteventsbycategorymonth/?cid=" + cid + "&page=1&psize=1000";
         progressbar= (ProgressBar) getActivity().findViewById(R.id.progressbar);
         gridView = (GridView) getActivity().findViewById(R.id.grid_thisMonth);
 //        gridView = (GridView) getActivity().findViewById(R.id.grid_thisMonth);

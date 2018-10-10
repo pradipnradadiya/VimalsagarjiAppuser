@@ -20,6 +20,7 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.adpter.SearchListAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.model.SearchItem;
 
 import org.json.JSONArray;
@@ -31,10 +32,6 @@ import java.util.Date;
 
 import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
 
-/**
- * Created by Grapes-Pradip on 02-Oct-17.
- */
-
 public class SearchActivity extends AppCompatActivity {
 
     private ImageView img_nosearch;
@@ -45,19 +42,19 @@ public class SearchActivity extends AppCompatActivity {
     private ProgressBar progressbar;
     SearchListAdapter searchListAdapter;
     ArrayList<SearchItem> searchItems;
-    private ImageView img_datasearch,img_close;
+    private ImageView img_datasearch, img_close;
     private TextView txt_title;
-    private ImageView imgarrorback,img_search;
+    private ImageView imgarrorback, img_search;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        imgarrorback= (ImageView) findViewById(R.id.imgarrorback);
-        img_search= (ImageView) findViewById(R.id.img_search);
+        imgarrorback = (ImageView) findViewById(R.id.imgarrorback);
+        img_search = (ImageView) findViewById(R.id.img_search);
         img_search.setVisibility(View.GONE);
 
-        txt_title= (TextView) findViewById(R.id.txt_title);
+        txt_title = (TextView) findViewById(R.id.txt_title);
         txt_title.setText("Search");
 
         imgarrorback.setOnClickListener(new View.OnClickListener() {
@@ -128,34 +125,34 @@ public class SearchActivity extends AppCompatActivity {
         edittext_search = (EditText) findViewById(R.id.edittext_search);
     }
 
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_menu, menu);
+    /*
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.home_menu, menu);
 
 
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_home) {
-            finish();
-            overridePendingTransition(R.anim.slide_out_right, R.anim.slide_out_left);
             return true;
         }
 
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            // Handle action bar item clicks here. The action bar will
+            // automatically handle clicks on the Home/Up button, so long
+            // as you specify a parent activity in AndroidManifest.xml.
+            int id = item.getItemId();
 
-        return super.onOptionsItemSelected(item);
-    }
-*/
+            //noinspection SimplifiableIfStatement
+            if (id == R.id.action_home) {
+                finish();
+                overridePendingTransition(R.anim.slide_out_right, R.anim.slide_out_left);
+                return true;
+            }
+
+
+            return super.onOptionsItemSelected(item);
+        }
+    */
     private class Search extends AsyncTask<String, Void, String> {
         String responseString = "";
 
@@ -171,7 +168,7 @@ public class SearchActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             ArrayList<ch.boye.httpclientandroidlib.NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("SearchTitle", params[0]));
-            responseString = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/search/searchdata/", nameValuePairs, SearchActivity.this);
+            responseString = CommonMethod.postStringResponse(CommonUrl.Main_url + "search/searchdata/", nameValuePairs, SearchActivity.this);
             return responseString;
         }
 

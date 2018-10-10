@@ -43,33 +43,34 @@
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
 
                             <EditText
                                 android:id="@+id/etName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/black"
+                                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                                 android:drawableLeft="@drawable/ic_action_user_black"
                                 android:hint="Full Name"
-                                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                                 android:inputType="textPersonName|textCapWords"
                                 android:singleLine="true" />
 
                         </android.support.design.widget.TextInputLayout>
+
                         <android.support.design.widget.TextInputLayout
-                            android:visibility="gone"
                             android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_height="wrap_content">
+                            android:visibility="gone">
 
                             <EditText
-                                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                 android:id="@+id/etlastName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/black"
+                                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                 android:drawableLeft="@drawable/ic_action_user_black"
                                 android:hint="Full Name"
                                 android:inputType="textPersonName|textCapWords"
@@ -132,7 +133,8 @@
                         android:background="?android:attr/selectableItemBackground"
                         android:padding="5dp"
                         android:text="Sign in?"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:visibility="gone" />
 
                     <Button
                         android:id="@+id/btnRegister"
@@ -141,7 +143,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="22dp"
                         android:background="@drawable/round_rect_shapeoneselect"
-                        android:text="Sign up"
+                        android:text="Login"
                         android:textAllCaps="false"
                         android:textColor="#fff"
                         android:textSize="18sp" />
@@ -154,10 +156,10 @@
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:layout_centerHorizontal="true"
+                android:contentDescription="TODO"
                 android:elevation="4dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/users"
-                android:contentDescription="TODO" />
+                android:src="@drawable/users" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -171,16 +173,16 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/diamond"
-                    android:contentDescription="TODO" />
+                    android:contentDescription="TODO"
+                    android:src="@drawable/diamond" />
 
                 <ImageView
                     android:id="@+id/img_close"
                     style="@style/relatibe_back"
                     android:layout_width="62dp"
                     android:layout_height="62dp"
-                    android:src="@drawable/close"
-                    android:contentDescription="TODO" />
+                    android:contentDescription="TODO"
+                    android:src="@drawable/close" />
 
             </LinearLayout>
 

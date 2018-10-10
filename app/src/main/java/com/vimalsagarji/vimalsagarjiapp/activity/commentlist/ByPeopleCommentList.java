@@ -19,6 +19,7 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.adpter.CommentAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommentsList;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 
 import org.json.JSONArray;
@@ -155,7 +156,7 @@ public class ByPeopleCommentList extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("pid", id));
             nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new BasicNameValuePair("Comment", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/comment/", nameValuePairs, ByPeopleCommentList.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"bypeople/comment/", nameValuePairs, ByPeopleCommentList.this);
 
             return responseJSON;
 
@@ -210,7 +211,7 @@ public class ByPeopleCommentList extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("pid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallappcomments/?page=" + page_count + "&psize=30", nameValuePairs, ByPeopleCommentList.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"bypeople/getallappcomments/?page=" + page_count + "&psize=30", nameValuePairs, ByPeopleCommentList.this);
             return responseJSON;
         }
 

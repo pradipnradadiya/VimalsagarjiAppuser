@@ -25,6 +25,7 @@ import com.vimalsagarji.vimalsagarjiapp.JSONParser;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.ThoughtsDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.AllThoughts;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
@@ -53,7 +54,7 @@ public class AllThoughtsFragment extends Fragment {
 
     private EditText InputBox;
     private List<AllThoughts> listfilterdata = new ArrayList<>();
-    private final String AllSearchThought = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/searchallthoughts/?page=1&psize=1000";
+    private final String AllSearchThought = CommonUrl.Main_url+"thought/searchallthoughts/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private String url;
     private ProgressBar progressbar;

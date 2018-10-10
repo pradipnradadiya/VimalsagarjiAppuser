@@ -19,6 +19,7 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.adpter.CommentAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommentsList;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 
 import org.json.JSONArray;
@@ -155,7 +156,7 @@ public class ThoughtCommentList extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("tid", id));
             nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
             nameValuePairs.add(new BasicNameValuePair("Comment", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/comment/", nameValuePairs, ThoughtCommentList.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"thought/comment/", nameValuePairs, ThoughtCommentList.this);
             return responseJSON;
         }
 
@@ -207,7 +208,7 @@ public class ThoughtCommentList extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
             nameValuePairs.add(new BasicNameValuePair("tid", params[0]));
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallappcomments/?page=" + page_count + "&psize=30", nameValuePairs, ThoughtCommentList.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"thought/getallappcomments/?page=" + page_count + "&psize=30", nameValuePairs, ThoughtCommentList.this);
             return responseJSON;
         }
 

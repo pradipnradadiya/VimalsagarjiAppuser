@@ -24,6 +24,7 @@ import com.vimalsagarji.vimalsagarjiapp.JSONParser;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.InformationDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.InformationCategory;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
@@ -57,7 +58,7 @@ public class AllInformationFragment extends Fragment {
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
 
     private List<InformationCategory> listallsearchdata = new ArrayList<>();
-    private final String SearchAll = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/searchallinfo/?page=1&psize=1000";
+    private final String SearchAll = CommonUrl.Main_url+"info/searchallinfo/?page=1&psize=1000";
     private String URL;
     private ProgressBar progressbar;
     private Sharedpreferance sharedpreferance;

@@ -25,6 +25,7 @@ import com.vimalsagarji.vimalsagarjiapp.JSONParser;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.EventDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.EventAdpter;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
@@ -57,9 +58,9 @@ public class ThisWeekEventFragment extends Fragment {
     String day = "";
     int dayOfWeek = 0;
     Date date;
-    private final String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/";
-    private final String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/";
-    private final String Video = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/";
+    private final String Photo = CommonUrl.Main_url+"static/eventimage/";
+    private final String Audio = CommonUrl.Main_url+"static/eventaudio/";
+    private final String Video = CommonUrl.Main_url+"static/eventvideo/";
     final int drawableImage = R.drawable.event;
 
 
@@ -67,7 +68,7 @@ public class ThisWeekEventFragment extends Fragment {
     private EditText InputBox;
     private CustomAdpter adpter;
     private List<EventAdpter> listfilterdata = new ArrayList<>();
-    private final String WeekSearch = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/searcheventsbycategoryweek/?page=1&psize=1000";
+    private final String WeekSearch = CommonUrl.Main_url+"event/searcheventsbycategoryweek/?page=1&psize=1000";
 
     private GridView gridView;
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
@@ -87,7 +88,7 @@ public class ThisWeekEventFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         sharedpreferance = new Sharedpreferance(getActivity());
-        URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryweek/?cid=" + cid + "&page=1&psize=1000";
+        URL = CommonUrl.Main_url+"event/geteventsbycategoryweek/?cid=" + cid + "&page=1&psize=1000";
 
 
         progressbar = (ProgressBar) getActivity().findViewById(R.id.progressbar);

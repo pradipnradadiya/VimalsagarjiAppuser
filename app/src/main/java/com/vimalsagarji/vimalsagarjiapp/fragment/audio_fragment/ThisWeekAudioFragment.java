@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.AudioDetail;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.ThisMonthAudio;
 import com.vimalsagarji.vimalsagarjiapp.today_week_month_year.AudioCategoryitem;
@@ -50,9 +51,9 @@ public class ThisWeekAudioFragment extends Fragment {
     }
 
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
-    private final static String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/getaudiobycategoryweek/?page=1&psize=1000";
-    private final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audioimage/";
-    private static final String AudioPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/audios/";
+    private final static String URL = CommonUrl.Main_url+"audio/getaudiobycategoryweek/?page=1&psize=1000";
+    private final String ImgURL = CommonUrl.Main_url+"static/audioimage/";
+    private static final String AudioPath = CommonUrl.Main_url+"static/audios/";
     private ArrayList<ThisMonthAudio> arrayList = new ArrayList<>();
     private static String strCid = "";
     private View view;
@@ -60,7 +61,7 @@ public class ThisWeekAudioFragment extends Fragment {
     //    private KProgressHUD loadingProgressDialog;
     private TextView txt_nodata_today;
     private EditText InputBox;
-    private final String MonthSearchAudio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/audio/searchallaudioweek/?page=1&psize=1000";
+    private final String MonthSearchAudio = CommonUrl.Main_url+"audio/searchallaudioweek/?page=1&psize=1000";
     private ListView listView;
     private ProgressBar progressbar;
     Sharedpreferance sharedpreferance;
@@ -108,9 +109,9 @@ public class ThisWeekAudioFragment extends Fragment {
         if (strCid.equalsIgnoreCase("e_alliamgeid")) {
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new GetWeekEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryweek/?page=1&psize=1000");
+                    new GetWeekEventAudio().execute(CommonUrl.Main_url+"event/geteventsbycategoryweek/?page=1&psize=1000");
                 } else {
-                    new GetWeekEventAudio().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategoryweek/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                    new GetWeekEventAudio().execute(CommonUrl.Main_url+"event/geteventsbycategoryweek/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
                 }
             } else {
                 Snackbar.make(getView(), R.string.internet, Snackbar.LENGTH_SHORT).show();
@@ -119,9 +120,9 @@ public class ThisWeekAudioFragment extends Fragment {
             if (CommonMethod.isInternetConnected(getActivity())) {
 
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new GetWeekByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsweek/?page=1&psize=1000");
+                    new GetWeekByPeople().execute(CommonUrl.Main_url+"bypeople/getallapppostsweek/?page=1&psize=1000");
                 } else {
-                    new GetWeekByPeople().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppostsweek/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+                    new GetWeekByPeople().execute(CommonUrl.Main_url+"bypeople/getallapppostsweek/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
                 }
             } else {
                 Snackbar.make(getView(), R.string.internet, Snackbar.LENGTH_SHORT).show();
@@ -332,8 +333,8 @@ public class ThisWeekAudioFragment extends Fragment {
                         String id = "eid";
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventaudio/" + object.getString("Audio");
-                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + object.getString("Photo");
+                        String Audio = CommonUrl.Main_url+"static/eventaudio/" + object.getString("Audio");
+                        String Photo = CommonUrl.Main_url+"static/eventimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");
@@ -650,8 +651,8 @@ public class ThisWeekAudioFragment extends Fragment {
                         String id = "bid";
                         String AudioName = object.getString("Title");
                         String CategoryID = "cid";
-                        String Audio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleaudio/" + object.getString("Audio");
-                        String Photo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + object.getString("Photo");
+                        String Audio = CommonUrl.Main_url+"static/bypeopleaudio/" + object.getString("Audio");
+                        String Photo = CommonUrl.Main_url+"static/bypeopleimage/" + object.getString("Photo");
                         String Duration = "5";
                         String Date = object.getString("Date");
                         String view = object.getString("View");

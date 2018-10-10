@@ -25,6 +25,7 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.adpter.RecyclerThoughtAllAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.ThoughtItem;
 
@@ -72,10 +73,10 @@ public class ThoughtWeekFragment extends Fragment {
         sharedpreferance = new Sharedpreferance(getActivity());
 
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidweek/?page=";
+            mainurl = CommonUrl.Main_url+"thought/getallthoughtsbycidweek/?page=";
 
         } else {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidweek/?uid=" + sharedpreferance.getId()+"&page=";
+            mainurl = CommonUrl.Main_url+"thought/getallthoughtsbycidweek/?uid=" + sharedpreferance.getId()+"&page=";
         }
 
         findID();

@@ -126,6 +126,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
     ToggleButton pushonoff;
     private Dialog dialog;
 
+
     private ImageView img_hide_show;
     private int flag = 0;
 
@@ -143,19 +144,6 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-       /* //make translucent statusBar on kitkat devices
-        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
-            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
-        }
-        if (Build.VERSION.SDK_INT >= 19) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
-        //make fully Android Transparent Status bar
-        if (Build.VERSION.SDK_INT >= 21) {
-            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }*/
-
 
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -164,75 +152,10 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
-
-
-//        new FetchAppVersionFromGooglePlayStore().execute();
-
-
-
-      /*  String newVersion = null;
-        try {
-            newVersion = Jsoup
-                    .connect(
-                            "https://play.google.com/store/apps/details?id="
-                                    + getPackageName() + "&hl=en")
-                    .timeout(30000)
-                    .userAgent(
-                            "Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                    .referrer("http://www.google.com")
-                    .get()
-                    .select("div[itemprop=softwareVersion]")
-                    .first()
-                    .ownText();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Log.e("new Version", newVersion);
-*/
-        /*
-
-        VersionChecker versionChecker = new VersionChecker();
-        try {
-            String latestVersion = versionChecker.execute().get();
-            Log.e("latest version","------------"+latestVersion);
-
-            if (currentVersion.equalsIgnoreCase(latestVersion)){
-
-            }else{
-
-                AlertDialog.Builder builder;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
-                } else {
-                    builder = new AlertDialog.Builder(this);
-                }
-                builder.setTitle("Alert")
-                        .setMessage("this app update version available in play store.")
-                        .setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
-                            }
-                        })
-                        .setNegativeButton("Remind me later", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-
-
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-*/
         sharedpreferance = new Sharedpreferance(ActivityHomeMain.this);
+
+       /*
+
         //Push Notification
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -243,7 +166,6 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                     // gcm successfully registered
                     // now subscribe to `global` topic to receive app wide notifications
                     FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-
                     displayFirebaseRegId();
 
                 } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
@@ -258,6 +180,8 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
             }
         };
 
+        */
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         headerLayout = navigationView.getHeaderView(0);
         findID();
@@ -267,14 +191,14 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         if (CommonMethod.isInternetConnected(ActivityHomeMain.this)) {
 
             new LoadSlideImage().execute();
-            new GetAllNotes().execute();
+//            new GetAllNotes().execute();
 
         } else {
             img_slide.setVisibility(View.VISIBLE);
         }
     }
 
-    //Drawer methos navigate slider
+    //Drawer method navigate slider
     private void openDrawerSlider() {
 
         if (drawer_layout.isDrawerOpen(Gravity.LEFT)) {
@@ -301,7 +225,6 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
     }
 
     private void findID() {
-
         img_slide = (ImageView) findViewById(R.id.img_slide);
         viewpager_slider = (ViewPager) findViewById(R.id.viewPager);
         indicator = (DashboardCirclePageIndicator) findViewById(R.id.indicator);
@@ -315,7 +238,6 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         rel_qa = (RelativeLayout) findViewById(R.id.rel_qa);
         rel_comp = (RelativeLayout) findViewById(R.id.rel_comp);
         rel_bypeople = (RelativeLayout) findViewById(R.id.rel_bypeople);
-
 
         img_youtube = (CircleImageView) headerLayout.findViewById(R.id.img_youtube);
         img_facebook = (CircleImageView) headerLayout.findViewById(R.id.img_facebook);
@@ -795,7 +717,6 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
             pushonoff.setChecked(false);
         }
 
-
         if (CommonMethod.isInternetConnected(ActivityHomeMain.this)) {
 //            new LoadSlideImage().execute();
             img_slide.setVisibility(View.GONE);
@@ -819,6 +740,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
 //
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class LoadSlideImage extends AsyncTask<String, Void, String> {
         String response = null;
         ProgressDialog progressDialog;
@@ -836,7 +758,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
             try {
 
 
-                response = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallbanner");
+                response = CommonMethod.getStringResponse(CommonUrl.Main_url + "gallery/getallbanner");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -863,7 +785,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        itemSplashArrayList.add(new SliderItem("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bannerimage/" + jsonObject1.getString("image")));
+                        itemSplashArrayList.add(new SliderItem(CommonUrl.Main_url + "static/bannerimage/" + jsonObject1.getString("image")));
                     }
 
 
@@ -907,7 +829,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
+    @SuppressLint("StaticFieldLeak")
     private class CheckVersion extends AsyncTask<String, Void, String> {
         String responseString = "";
 
@@ -919,7 +841,7 @@ public class ActivityHomeMain extends AppCompatActivity implements View.OnClickL
         @Override
         protected String doInBackground(String... strings) {
             try {
-                responseString = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/info/getversion");
+                responseString = CommonMethod.getStringResponse(CommonUrl.Main_url + "info/getversion");
             } catch (Exception e) {
                 e.printStackTrace();
             }

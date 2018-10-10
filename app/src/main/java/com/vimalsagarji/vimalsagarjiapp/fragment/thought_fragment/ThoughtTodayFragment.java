@@ -25,6 +25,7 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.adpter.RecyclerThoughtAllAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.ThoughtItem;
 
@@ -72,10 +73,10 @@ public class ThoughtTodayFragment extends Fragment {
         sharedpreferance = new Sharedpreferance(getActivity());
 
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidtoday/?page=";
+            mainurl = CommonUrl.Main_url+"thought/getallthoughtsbycidtoday/?page=";
 
         } else {
-            mainurl = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidtoday/?uid=" + sharedpreferance.getId()+"&page=";
+            mainurl = CommonUrl.Main_url+"thought/getallthoughtsbycidtoday/?uid=" + sharedpreferance.getId()+"&page=";
         }
 
         findID();

@@ -77,7 +77,6 @@ public class EventsAllDisplay extends AppCompatActivity {
         } else if (status.equalsIgnoreCase("a")) {
             Log.e("mylistaudio","------------"+photoAudioVideoItems);
 
-
             if (myList.isEmpty()) {
                 textview.setVisibility(View.VISIBLE);
                 textview.setText("No Audio Avalable.");

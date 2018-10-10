@@ -28,6 +28,7 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.OpinionPollAdpter;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
@@ -357,7 +358,7 @@ public class OpinionPoll extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("qid", params[0]));
             nameValuePairs.add(new BasicNameValuePair("uid", params[1]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/opinionpoll/checkuserpoll/", nameValuePairs, OpinionPoll.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"opinionpoll/checkuserpoll/", nameValuePairs, OpinionPoll.this);
             return responseJSON;
         }
 
@@ -410,7 +411,7 @@ public class OpinionPoll extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("uid", params[1]));
             nameValuePairs.add(new BasicNameValuePair("Poll", params[2]));
 
-            responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/opinionpoll/registerpoll/", nameValuePairs, OpinionPoll.this);
+            responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"opinionpoll/registerpoll/", nameValuePairs, OpinionPoll.this);
             return responseJSON;
         }
 
@@ -631,7 +632,7 @@ public class OpinionPoll extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
+                responseJSON = CommonMethod.getStringResponse(CommonUrl.Main_url+"userregistration/checkuserapproveornot/?uid=" + sharedpreferance.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }

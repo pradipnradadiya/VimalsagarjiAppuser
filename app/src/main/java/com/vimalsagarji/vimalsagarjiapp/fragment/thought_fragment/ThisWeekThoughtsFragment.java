@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.ThoughtsDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.ThoughtToday;
 
@@ -53,7 +54,7 @@ public class ThisWeekThoughtsFragment extends Fragment {
 
     private EditText InputBox;
     private List<ThoughtToday> listfilterdata = new ArrayList<>();
-    private final String WeekSearchThought = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/searchallthoughtsbycidweek/?page=1&psize=1000";
+    private final String WeekSearchThought = CommonUrl.Main_url+"thought/searchallthoughtsbycidweek/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private ProgressBar progressbar;
     Sharedpreferance sharedpreferance;
@@ -73,10 +74,10 @@ public class ThisWeekThoughtsFragment extends Fragment {
         if (CommonMethod.isInternetConnected(getActivity())) {
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
                 GetWeekThought getWeekThought = new GetWeekThought();
-                getWeekThought.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidweek/?page=1&psize=1000");
+                getWeekThought.execute(CommonUrl.Main_url+"thought/getallthoughtsbycidweek/?page=1&psize=1000");
             } else {
                 GetWeekThought getWeekThought = new GetWeekThought();
-                getWeekThought.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidweek/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                getWeekThought.execute(CommonUrl.Main_url+"thought/getallthoughtsbycidweek/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
             }
         } else {
             final Snackbar snackbar = Snackbar
@@ -167,9 +168,9 @@ public class ThisWeekThoughtsFragment extends Fragment {
 
     private void loadData() {
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
-            new LoadGetWeekThought().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidweek/?page=1&psize=1000");
+            new LoadGetWeekThought().execute(CommonUrl.Main_url+"thought/getallthoughtsbycidweek/?page=1&psize=1000");
         } else {
-            new LoadGetWeekThought().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidweek/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+            new LoadGetWeekThought().execute(CommonUrl.Main_url+"thought/getallthoughtsbycidweek/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
         }
     }
 

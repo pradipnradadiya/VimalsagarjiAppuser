@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,8 +31,8 @@ import static com.vimalsagarji.vimalsagarjiapp.today_week_month_year.GalleryCate
 public class Splash_Activity2 extends AppCompatActivity {
 
 
-    private static final String URL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallimages/?page=1&psize=1000";
-    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/Gallery/";
+    private static final String URL = CommonUrl.Main_url+"gallery/getallimages/?page=1&psize=1000";
+    private static final String ImgURL = CommonUrl.Main_url+"static/Gallery/";
     private ViewPager viewpager_splash;
     //    private CirclePageIndicator indicator;
     private static int currentPage = 0;
@@ -104,7 +105,7 @@ public class Splash_Activity2 extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/gallery/getallimagesbycid/?cid=" + cid + "&page=1&psize=1000");
+            responseJSON = CommonMethod.getStringResponse(CommonUrl.Main_url+"gallery/getallimagesbycid/?cid=" + cid + "&page=1&psize=1000");
 
             return responseJSON;
         }

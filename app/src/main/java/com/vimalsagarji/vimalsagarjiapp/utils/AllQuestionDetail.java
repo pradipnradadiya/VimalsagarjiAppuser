@@ -156,7 +156,7 @@ public class AllQuestionDetail extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/countviews/question/?qid=" + questionid + "&view=" + view);
+                responseJSON = CommonMethod.getStringResponse(CommonUrl.Main_url+"countviews/question/?qid=" + questionid + "&view=" + view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -188,7 +188,7 @@ public class AllQuestionDetail extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewquesansbyid/?qid=" + questionid);
+                responseJSON = CommonMethod.getStringResponse(CommonUrl.Main_url+"questionanswer/viewquesansbyid/?qid=" + questionid);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -31,6 +31,7 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.RegisterActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.ThoughtToday;
 import com.vimalsagarji.vimalsagarjiapp.utils.AllQuestionDetail;
@@ -73,7 +74,7 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
     private EditText InputBox;
     List<ThoughtToday> listfilterdata = new ArrayList<>();
     private Dialog dialog;
-    private final String MonthSearchQuestion = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/searchallappquesmonth/?page=1&psize=1000";
+    private final String MonthSearchQuestion = CommonUrl.Main_url+"questionanswer/searchallappquesmonth/?page=1&psize=1000";
     //    String approve = "";
     private ProgressBar progressbar;
 
@@ -114,10 +115,10 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
         if (CommonMethod.isInternetConnected(getActivity())) {
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
                 GetWeekQuestion getWeekQuestion = new GetWeekQuestion();
-                getWeekQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesmonth/?page=1&psize=1000");
+                getWeekQuestion.execute(CommonUrl.Main_url+"questionanswer/viewallappquesmonth/?page=1&psize=1000");
             }else{
                 GetWeekQuestion getWeekQuestion = new GetWeekQuestion();
-                getWeekQuestion.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesmonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+                getWeekQuestion.execute(CommonUrl.Main_url+"questionanswer/viewallappquesmonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
             }
         } else {
             final Snackbar snackbar = Snackbar
@@ -217,9 +218,9 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
     private void loadData() {
         adpter.clear();
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
-            new LoadGetWeekQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesmonth/?page=1&psize=1000");
+            new LoadGetWeekQuestion().execute(CommonUrl.Main_url+"questionanswer/viewallappquesmonth/?page=1&psize=1000");
         }else{
-            new LoadGetWeekQuestion().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/viewallappquesmonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+            new LoadGetWeekQuestion().execute(CommonUrl.Main_url+"questionanswer/viewallappquesmonth/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
         }
     }
 
@@ -516,7 +517,7 @@ public class ThisMonthQuetionAnswerFragment extends Fragment {
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new BasicNameValuePair("uid", sharedpreferance.getId()));
                 nameValuePairs.add(new BasicNameValuePair("Question", params[0]));
-                responseJSON = CommonMethod.postStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/questionanswer/askques/", nameValuePairs, getActivity());
+                responseJSON = CommonMethod.postStringResponse(CommonUrl.Main_url+"questionanswer/askques/", nameValuePairs, getActivity());
             } catch (Exception e) {
                 e.printStackTrace();
             }

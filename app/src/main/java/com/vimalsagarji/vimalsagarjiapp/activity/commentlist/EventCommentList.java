@@ -19,6 +19,7 @@ import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.adpter.CommentAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommentsList;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.utils.Constant;
 
@@ -211,7 +212,7 @@ public class EventCommentList extends AppCompatActivity {
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
 //            nameValuePairs.add(new BasicNameValuePair("eid", params[0]));
-            responseJSON = CommonMethod.getStringResponse("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/getallcomments/?page=" + page_count + "&psize=30&eid=" + id);
+            responseJSON = CommonMethod.getStringResponse(CommonUrl.Main_url+"event/getallcomments/?page=" + page_count + "&psize=30&eid=" + id);
             return responseJSON;
         }
 

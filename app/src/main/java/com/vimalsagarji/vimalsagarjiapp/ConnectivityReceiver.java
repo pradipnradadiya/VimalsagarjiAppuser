@@ -40,8 +40,8 @@ public class ConnectivityReceiver
                 && activeNetwork.isConnectedOrConnecting();
     }
 
-
     public interface ConnectivityReceiverListener {
         void onNetworkConnectionChanged(boolean isConnected);
     }
+
 }

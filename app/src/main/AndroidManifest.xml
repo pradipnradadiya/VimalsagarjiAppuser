@@ -22,11 +22,11 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:fullBackupContent="@xml/backup_descriptor"
+        android:largeHeap="true"
         android:hardwareAccelerated="false"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
@@ -44,6 +44,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.splash.SecondSplashScreenActivity"
             android:screenOrientation="portrait"
@@ -137,7 +138,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Gallery_gridview_full_image"
             android:screenOrientation="portrait"
@@ -341,11 +341,9 @@
         <activity
             android:name=".Splash_Activity2"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".AlreadyRegisterUser"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ImageViewActivity"
             android:screenOrientation="portrait" />

@@ -31,3 +31,29 @@
 -dontwarn android.support.**
 -dontwarn android.net.SSLCertificateSocketFactory
 
+
+# Basic proguard rules
+-optimizations !code/simplification/arithmetic
+-keepattributes <em>Annotation</em>
+-keepattributes InnerClasses
+-keepattributes EnclosingMethod
+-keep class *<em>.R$</em>
+
+-dontskipnonpubliclibraryclasses
+-forceprocessing
+-optimizationpasses 5
+-overloadaggressively
+
+# Removing logging code
+-assumenosideeffects class android.util.Log {
+public static *** d(...);
+public static *** v(...);
+public static *** i(...);
+public static *** w(...);
+public static *** e(...);
+}
+
+-dontwarn android.support.**
+-dontwarn android.app.Notification
+-dontwarn org.apache.log4j.**
+-dontwarn com.google.common.**

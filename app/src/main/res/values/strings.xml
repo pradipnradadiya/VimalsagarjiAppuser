@@ -65,6 +65,12 @@
     <string name="submit">Submit</string>
     <!--<string name="vichar_kranti">विचार क्रान्ति</string>-->
     <string name="vichar_kranti">Vichar Kranti</string>
-
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="mobile">Mobile</string>
+    <string name="location">Location</string>
+    <string name="sign_in">Sign in?</string>
+    <string name="login">Login</string>
+    <string name="skip">Skip</string>
 
 </resources>

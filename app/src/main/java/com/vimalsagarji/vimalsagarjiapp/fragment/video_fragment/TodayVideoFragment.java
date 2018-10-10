@@ -28,6 +28,7 @@ import com.squareup.picasso.Picasso;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.VideoDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 
 import org.json.JSONArray;
@@ -53,10 +54,10 @@ public class TodayVideoFragment extends Fragment {
     }
 
     final static String TAG = AllVideoFragment.class.getSimpleName();
-    private final String urls = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategorytoday/?page=1&psize=1000&cid=";
+    private final String urls = CommonUrl.Main_url+"video/getvideobycategorytoday/?page=1&psize=1000&cid=";
     private static String URL = "";// "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/getvideobycategorytoday/?page=1&psize=100&cid=" + video_cat_id;
-    private static final String ImgURL = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videoimage/";
-    private static final String VideoPath = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/videos/";
+    private static final String ImgURL = CommonUrl.Main_url+"static/videoimage/";
+    private static final String VideoPath = CommonUrl.Main_url+"static/videos/";
 
     private final ArrayList<String> listid = new ArrayList<>();
     private final ArrayList<String> listcatid = new ArrayList<>();
@@ -77,7 +78,7 @@ public class TodayVideoFragment extends Fragment {
     public static ListView listViewvideo;
     private TextView txt_nodata_today;
     private EditText InputBox;
-    private final String TodaySearchVideo = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/video/searchallvideosbycidtoday/?page=1&psize=1000";
+    private final String TodaySearchVideo = CommonUrl.Main_url+"video/searchallvideosbycidtoday/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private ProgressBar progressbar;
     Sharedpreferance sharedpreferance;
@@ -127,9 +128,9 @@ public class TodayVideoFragment extends Fragment {
             listVideoName.clear();
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new TodayEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorytoday/?page=1&psize=1000");
+                    new TodayEventVideo().execute(CommonUrl.Main_url+"event/geteventsbycategorytoday/?page=1&psize=1000");
                 } else {
-                    new TodayEventVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/event/geteventsbycategorytoday/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                    new TodayEventVideo().execute(CommonUrl.Main_url+"event/geteventsbycategorytoday/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
                 }
             } else {
                 final Snackbar snackbar = Snackbar
@@ -149,9 +150,9 @@ public class TodayVideoFragment extends Fragment {
             listVideoName.clear();
             if (CommonMethod.isInternetConnected(getActivity())) {
                 if (sharedpreferance.getId().equalsIgnoreCase("")) {
-                    new TodayByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppoststoday/?page=1&psize=1000");
+                    new TodayByPeopleVideo().execute(CommonUrl.Main_url+"bypeople/getallapppoststoday/?page=1&psize=1000");
                 } else {
-                    new TodayByPeopleVideo().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/bypeople/getallapppoststoday/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
+                    new TodayByPeopleVideo().execute(CommonUrl.Main_url+"bypeople/getallapppoststoday/?page=1&psize=1000"+"&uid="+sharedpreferance.getId());
                 }
 
             } else {
@@ -632,11 +633,11 @@ public class TodayVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventvideo/" + video;
+                        String vidio = CommonUrl.Main_url+"static/eventvideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + photo;
+                        String img = CommonUrl.Main_url+"static/eventimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String date = object.getString("Date");
@@ -756,11 +757,11 @@ public class TodayVideoFragment extends Fragment {
                         String catid = "cid";
                         listcatid.add(catid);
                         String video = object.getString("Video");
-                        String vidio = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeoplevideo/" + video;
+                        String vidio = CommonUrl.Main_url+"static/bypeoplevideo/" + video;
                         Log.e("vidio", "------------------------" + vidio);
                         listVideo.add(vidio.replaceAll(" ", "%20"));
                         String photo = object.getString("Photo");
-                        String img = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/bypeopleimage/" + photo;
+                        String img = CommonUrl.Main_url+"static/bypeopleimage/" + photo;
                         Log.e("img", "------------------------" + img);
                         listIcon.add(img.replaceAll(" ", "%20"));
                         String view = object.getString("View");

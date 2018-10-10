@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.adpter.EventGalleryAdapter;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.model.EventGalleryItem;
 import com.vimalsagarji.vimalsagarjiapp.util.AllOurApiName;
 import com.vimalsagarji.vimalsagarjiapp.util.AllOurCommonUrl;
@@ -176,7 +177,7 @@ public class EventGalleryAlbumActivity extends AppCompatActivity {
                         String title = object.getString("Title");
                         String photo = object.getString("Photo");
                         String[] photoarray = photo.split(",");
-                        eventGalleryItems.add(new EventGalleryItem(eid, title, "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/static/eventimage/" + photoarray[0]));
+                        eventGalleryItems.add(new EventGalleryItem(eid, title, CommonUrl.Main_url+"static/eventimage/" + photoarray[0]));
 
                     }
 

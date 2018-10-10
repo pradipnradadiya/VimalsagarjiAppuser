@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.vimalsagarji.vimalsagarjiapp.R;
 import com.vimalsagarji.vimalsagarjiapp.activity.ThoughtsDetailActivity;
 import com.vimalsagarji.vimalsagarjiapp.common.CommonMethod;
+import com.vimalsagarji.vimalsagarjiapp.common.CommonUrl;
 import com.vimalsagarji.vimalsagarjiapp.common.Sharedpreferance;
 import com.vimalsagarji.vimalsagarjiapp.model.ThoughtToday;
 
@@ -56,7 +57,7 @@ public class ThisMonthThoughtsFragment extends Fragment {
 
     private EditText InputBox;
     private List<ThoughtToday> listfilterdata = new ArrayList<>();
-    private final String MonthSearchThought = "http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/searchallthoughtsbycidmonth/?page=1&psize=1000";
+    private final String MonthSearchThought = CommonUrl.Main_url+"thought/searchallthoughtsbycidmonth/?page=1&psize=1000";
     private SwipeRefreshLayout activity_main_swipe_refresh_layout;
     private ProgressBar progressbar;
     Sharedpreferance sharedpreferance;
@@ -96,10 +97,10 @@ public class ThisMonthThoughtsFragment extends Fragment {
         if (CommonMethod.isInternetConnected(getActivity())) {
             if (sharedpreferance.getId().equalsIgnoreCase("")) {
                 GetMonthThought getMonthThought = new GetMonthThought();
-                getMonthThought.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidmonth/?page=1&psize=1000");
+                getMonthThought.execute(CommonUrl.Main_url+"thought/getallthoughtsbycidmonth/?page=1&psize=1000");
             } else {
                 GetMonthThought getMonthThought = new GetMonthThought();
-                getMonthThought.execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidmonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+                getMonthThought.execute(CommonUrl.Main_url+"thought/getallthoughtsbycidmonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
             }
 
         } else {
@@ -145,9 +146,9 @@ public class ThisMonthThoughtsFragment extends Fragment {
     private void loadData() {
         if (sharedpreferance.getId().equalsIgnoreCase("")) {
 
-            new LoadGetMonthThought().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidmonth/?page=1&psize=1000");
+            new LoadGetMonthThought().execute(CommonUrl.Main_url+"thought/getallthoughtsbycidmonth/?page=1&psize=1000");
         } else {
-            new LoadGetMonthThought().execute("http://www.aacharyavimalsagarsuriji.com/vimalsagarji/thought/getallthoughtsbycidmonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
+            new LoadGetMonthThought().execute(CommonUrl.Main_url+"thought/getallthoughtsbycidmonth/?page=1&psize=1000" + "&uid=" + sharedpreferance.getId());
         }
     }
 

@@ -82,9 +82,14 @@ public class InformationCategory extends AppCompatActivity implements View.OnCli
         view_all = findViewById(R.id.view_all);
         imgBack.setOnClickListener(this);
         imgHome.setOnClickListener(this);
+
+
         txt_today.setOnClickListener(this);
         txt_thisweek.setOnClickListener(this);
         txt_thismonth.setOnClickListener(this);
+
+
+
         img_search.setOnClickListener(this);
         txt_all.setOnClickListener(this);
 
@@ -103,9 +108,6 @@ public class InformationCategory extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
-
-
             case R.id.img_search:
                 Intent intent = new Intent(InformationCategory.this, SearchActivity.class);
                 startActivity(intent);

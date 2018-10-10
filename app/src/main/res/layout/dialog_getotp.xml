@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="15dp"
+    android:layout_margin="30dp"
     android:orientation="vertical"
     android:layout_gravity="center"
 
@@ -31,12 +31,21 @@
         </RelativeLayout>
 
 
-        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextViewBold
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Verify OTP"
+            android:text="Enter One Time OTP Password(OTP)"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <com.vimalsagarji.vimalsagarjiapp.utils.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="One Time Password(OTP) has been sent to your mobile, please enter the same here login."
             android:textColor="@color/black" />
 
         <com.vimalsagarji.vimalsagarjiapp.utils.CustomEditText
@@ -46,6 +55,7 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/corner"
             android:inputType="number"
+            android:hint="OTP"
             android:maxLength="6"
             android:padding="10dp"
 
